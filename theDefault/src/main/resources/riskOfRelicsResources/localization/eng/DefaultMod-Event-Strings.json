@@ -1,0 +1,22 @@
+{
+  "riskOfRelics:aspectEvent": {
+    "NAME": "Dead elemental",
+    "DESCRIPTIONS": [
+      "As you move through the gloom you come across a #pdead #pcreature. NL You inspect it, and see ",
+      "You leave and wonder what power might have slain that creature",
+      "You absorb it's power, ",
+      "it still smoking.",
+      "it has frosted over.",
+      "roots entangling the body.",
+      "dark spots of corruption covering the corpse.",
+      "perfection",
+      "sparks fly.",
+      "it ~shifting~ forms."
+    ],
+    "OPTIONS": [
+      "[Absorb] gain a #yspecial relic",
+      "[Leave]"
+
+    ]
+  }
+}

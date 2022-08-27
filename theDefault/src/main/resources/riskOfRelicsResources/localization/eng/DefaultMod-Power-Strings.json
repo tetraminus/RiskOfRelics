@@ -1,0 +1,39 @@
+{
+        "riskOfRelics:lightningPower": {
+                "NAME": "Sparking",
+                "DESCRIPTIONS": ["Deals #b", " damage to all enemies at the end of its turn."]
+        },
+        "riskOfRelics:Burning": {
+                "NAME": "Burning",
+                "DESCRIPTIONS": ["takes #b", " damage at the end of its turn. then, reduce this number by half", " keywords."]
+        },
+        "riskOfRelics:CommonPower": {
+                "NAME": "Placeholder Power",
+                "DESCRIPTIONS": ["You applied #b", " keyword.", " keywords."]
+        },
+        "riskOfRelics:EnergyDrinkPower": {
+                "NAME": "Energy Drink",
+                "DESCRIPTIONS": ["You have #b" , " free cards", " free card"]
+        },
+        "riskOfRelics:CBHeal": {
+                "NAME": "Healing...",
+                "DESCRIPTIONS": ["heal #b2 each turn until you have healed", "HP", " keywords."]
+        },
+
+
+        "riskOfRelics:RarePower": {
+                "NAME": "Placeholder Power",
+                "DESCRIPTIONS": ["At the start of your turn, TOUCH #b", " enemy." , " enemies."]
+        },
+        "riskOfRelics:TonicPower": {
+                "NAME": "Tonic Power",
+                "DESCRIPTIONS": ["Deal double #ydamage, gain double #yblock"]
+        },
+        "riskOfRelics:TonicDebuff": {
+                "NAME": "Tonic Affliction",
+                "DESCRIPTIONS": [
+                        "gain #b", "% less #yBlock and deal #b", "% less damage"
+                ]
+        }
+
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "PROPER_NAME": "Charge",
+    "NAMES": [
+      "Charge",
+      "charge",
+      "charges"
+    ],
+    "DESCRIPTION": "Can only be used this many times in one battle."
+  },
+  {
+    "PROPER_NAME": "Fragile",
+    "NAMES": [
+      "Fragile",
+      "fragile",
+      "breaks"
+    ],
+    "DESCRIPTION": "When you lose HP, stops working for the rest of the battle"
+  },
+
+    {
+      "PROPER_NAME": "Corrupts",
+      "NAMES": [
+        "Corrupts",
+        "corrupts"
+      ],
+      "DESCRIPTION": "This relic will replace the specified relic, and if you obtain the specified relic while you own this one, the specified relic is destroyed."
+    },
+  {
+    "PROPER_NAME": "Multiword Keyword",
+    "NAMES": [
+      "Multiword Keyword",
+      "multiword_keyword",
+      "multiword_keywords",
+      "multikey",
+      "multikeyword"
+    ],
+    "DESCRIPTION": "Make sure the first element in the NAMES is the same as your PROPER_NAME. The rest is to match keywords like the single word keyword."
+  }
+]
