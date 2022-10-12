@@ -136,7 +136,7 @@
     "NAME": "Bustling Fungus",
     "FLAVOR": "Engineers Best Friend",
     "DESCRIPTIONS": [
-      "if you don't play a card this turn, Heal #b2 HP."
+      "if you don't play a card this turn, gain #b3 #yRegen. if you complete combat without playing an attack, heal #b10% #yMax HP"
     ]
   }
 }

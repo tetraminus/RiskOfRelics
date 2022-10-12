@@ -1,23 +1,23 @@
 package riskOfRelics.relics;
 
-import basemod.abstracts.CustomRelic;
-import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.powers.RegenPower;
 import riskOfRelics.DefaultMod;
-import riskOfRelics.util.TextureLoader;
 
-import static riskOfRelics.DefaultMod.makeRelicOutlinePath;
-import static riskOfRelics.DefaultMod.makeRelicPath;
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 public class BustlingFungus extends BaseRelic {
 
-    public static boolean Canceled = false;
-    public static final int HEAL_AMOUNT = 2;
+    public static boolean Canceledthisturn = false;
+    public static boolean Canceledthisfight = false;
+    public static final int HEAL_AMOUNT = 3;
+    public static final int HEAL_AMOUNT_END = 10;
+
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("BustlingFungus");
     private static final String IMAGENAME = "bustlingFungus.png";
@@ -28,30 +28,47 @@ public class BustlingFungus extends BaseRelic {
 
     @Override
     public void atBattleStart() {
-
+        Canceledthisturn = false;
+        Canceledthisfight = false;
     }
 
     @Override
     public void atTurnStart() {
         beginLongPulse();
+        Canceledthisturn = false;
         super.atTurnStart();
     }
 
     @Override
     public void onPlayerEndTurn() {
 
-        if (!Canceled){
+        if (!Canceledthisturn){
             flash();
-            AbstractDungeon.actionManager.addToTop(new HealAction(AbstractDungeon.player, AbstractDungeon.player, HEAL_AMOUNT));
-            AbstractDungeon.actionManager.addToTop(new RelicAboveCreatureAction(AbstractDungeon.player, this));
+            this.addToBot(new ApplyPowerAction(player, player, new RegenPower(player, HEAL_AMOUNT)));
+            AbstractDungeon.actionManager.addToTop(new RelicAboveCreatureAction(player, this));
         }
+
 
         super.onPlayerEndTurn();
     }
 
     @Override
+    public void onVictory() {
+
+        if (!Canceledthisfight){
+            flash();
+        player.heal(player.maxHealth/HEAL_AMOUNT_END);
+        }
+        super.onVictory();
+    }
+
+    @Override
     public void onPlayCard(AbstractCard c, AbstractMonster m) {
-    Canceled = true;
+    Canceledthisturn = true;
+    if  (c.type == AbstractCard.CardType.ATTACK){
+        Canceledthisfight = true;
+    }
+
     stopPulse();
     }
 
