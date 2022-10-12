@@ -48,7 +48,7 @@ public class missileLauncher extends AbstractEquipmentCard {
 
     // public static final String ID = DefaultMod.makeID(missileLauncher.class.getSimpleName()); // USE THIS ONE FOR THE TEMPLATE;
     public static final String ID = DefaultMod.makeID("missileLauncher"); // DELETE THIS ONE.
-    public static final String IMG = makeCardPath("Attack.png");// "public static final String IMG = makeCardPath("missileLancher.png");
+    public static final String IMG = makeCardPath("missileLauncher.png");// "public static final String IMG = makeCardPath("missileLancher.png");
     // This does mean that you will need to have an image with the same NAME as the card in your image folder for it to run correctly.
 
 
@@ -57,10 +57,10 @@ public class missileLauncher extends AbstractEquipmentCard {
 
     // STAT DECLARATION
 
-    private static final CardRarity RARITY = CardRarity.COMMON; //  Up to you, I like auto-complete on these
+    //  Up to you, I like auto-complete on these
     private static final CardTarget TARGET = CardTarget.ALL_ENEMY;  //   since they don't change much.
     private static final CardType TYPE = CardType.ATTACK;       //
-    public static final CardColor COLOR = CardColor.COLORLESS;
+
 
     private static final int COST = 1;  // COST = 1
     private static final int UPGRADED_COST = 1; // UPGRADED_COST = 1
@@ -74,7 +74,7 @@ public class missileLauncher extends AbstractEquipmentCard {
 
 
     public missileLauncher() { // public missileLancher() - This one and the one right under the imports are the most important ones, don't forget them
-        super(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET);
+        super(ID, IMG, COST, TYPE, TARGET);
         baseDamage = DAMAGE;
         magicNumber = baseMagicNumber = AMOUNT;
 
