@@ -75,7 +75,6 @@ public class missileLauncher extends AbstractEquipmentCard {
 
     public missileLauncher() { // public missileLancher() - This one and the one right under the imports are the most important ones, don't forget them
         super(ID, IMG, COST, TYPE, COLOR, RARITY, TARGET);
-        tags.add(CustomTags.EQUIPMENT);
         baseDamage = DAMAGE;
         magicNumber = baseMagicNumber = AMOUNT;
 
