@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:BackupMag": {
+    "NAME": "Backup Mag",
+    "FLAVOR": "Always carry extra.",
+    "DESCRIPTIONS": [
+      "Gain a copy af a random relic you own."
+    ]
+  },
   "riskOfRelics:fuelCell": {
     "NAME": "Fuel Cell",
     "FLAVOR": "ZAP!",

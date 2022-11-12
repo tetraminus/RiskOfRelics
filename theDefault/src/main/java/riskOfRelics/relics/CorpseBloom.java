@@ -19,7 +19,7 @@ import static riskOfRelics.DefaultMod.makeRelicPath;
 public class CorpseBloom extends BaseRelic {
 
     boolean isCorpsebloomHeal;
-    public static final int HEAL_AMOUNT = 2;
+    public static final float HEAL_AMOUNT = 10.0f;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("corpsebloom");
 
@@ -40,8 +40,9 @@ public class CorpseBloom extends BaseRelic {
     public void onPlayerEndTurn() {
         if(AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && counter > 0) {
             isCorpsebloomHeal = true;
-            AbstractDungeon.actionManager.addToTop(new HealAction(AbstractDungeon.player, AbstractDungeon.player, HEAL_AMOUNT));
-            counter -= HEAL_AMOUNT;
+            float healed = counter/HEAL_AMOUNT;
+            AbstractDungeon.actionManager.addToTop(new HealAction(AbstractDungeon.player, AbstractDungeon.player, (int)Math.ceil(healed)));
+            counter -= healed;
             flash();
         }
         super.onPlayerEndTurn();
