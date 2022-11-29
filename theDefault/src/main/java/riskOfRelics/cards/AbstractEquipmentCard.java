@@ -7,8 +7,8 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 public abstract class AbstractEquipmentCard extends AbstractDynamicCard{
     public int MAX_CHARGES;
     public int CURRENT_CHARGES;
-    public AbstractEquipmentCard(String id, String img, int cost, CardType type, CardColor color, CardRarity rarity, CardTarget target) {
-        super(id, img, cost, type, color, rarity, target);
+    public AbstractEquipmentCard(String id, String img, int cost, CardType type, CardTarget target) {
+        super(id, img, cost, type, CardColor.COLORLESS, CardRarity.UNCOMMON, target);
 
         ExhaustiveField.ExhaustiveFields.baseExhaustive.set(this, MAX_CHARGES);// 57
         ExhaustiveField.ExhaustiveFields.exhaustive.set(this, MAX_CHARGES);// 58
