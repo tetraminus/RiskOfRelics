@@ -24,11 +24,11 @@ public class BackupMag extends BaseRelic {
     }
 
     @Override
-    public void obtain() {
+    public void onEquip() {
         int randomrelic = AbstractDungeon.relicRng.random(player.relics.size()-1);
 
         AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2), player.relics.get(randomrelic).makeCopy());
-        player.relics.remove(this);
+
     }
 
     @Override

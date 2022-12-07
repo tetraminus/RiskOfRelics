@@ -1,7 +1,7 @@
 {
   "riskOfRelics:missileLauncher": {
     "NAME": "Disposable missile launcher",
-    "DESCRIPTION": "Deal !D! damage to a random enemy !M! times. \n riskofrelics:Charges: !CHARGES!   "
+    "DESCRIPTION": "riskofrelics:Equipment \n Deal !D! damage to a random enemy !M! times. \n riskofrelics:Charges: !CHARGES!   "
   },
   "riskOfRelics:tonicAffliction": {
     "NAME": "Tonic Affliction",
