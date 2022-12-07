@@ -1,9 +1,9 @@
 {
   "riskOfRelics:BisonSteak": {
-    "NAME": "Backup Mag",
+    "NAME": "Bison Steak",
     "FLAVOR": "Always carry extra.",
     "DESCRIPTIONS": [
-      "When you enter a room with a chest, gain 2 Max HP"
+      "When you enter a room with a chest, gain #b2 Max HP"
     ]
   },
 
@@ -18,7 +18,7 @@
     "NAME": "Fuel Cell",
     "FLAVOR": "ZAP!",
     "DESCRIPTIONS": [
-      "Equipment gain #b1 #yriskofrelics:Charge"
+      "#yriskofrelics:Equipment gain #b1 #yriskofrelics:Charge"
     ]
   },
   "riskOfRelics:tougherTimes": {

@@ -1,5 +1,14 @@
 [
   {
+    "PROPER_NAME": "Equipment",
+    "NAMES": [
+      "Equipment",
+      "equipment"
+
+    ],
+    "DESCRIPTION": "A powerful card that exhausts after the charges are used"
+  },
+  {
     "PROPER_NAME": "Charge",
     "NAMES": [
       "Charge",
