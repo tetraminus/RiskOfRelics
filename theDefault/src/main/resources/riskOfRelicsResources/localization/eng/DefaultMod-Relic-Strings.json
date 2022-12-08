@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:MonsterTooth": {
+    "NAME": "Monster Tooth",
+    "FLAVOR": "Only a little stinky.",
+    "DESCRIPTIONS": [
+      "When you kill an enemy, heal #b2 HP."
+    ]
+  },
   "riskOfRelics:BisonSteak": {
     "NAME": "Bison Steak",
     "FLAVOR": "Always carry extra.",

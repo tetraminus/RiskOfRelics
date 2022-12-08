@@ -6,8 +6,8 @@
     <groupId>us.tetramin</groupId>
     <artifactId>RiskOfRelics</artifactId> <!--Keep a note of this one: this is the ID used in the "auto add cards" method-->
     <name>Risk Of Relics</name>
-    <version>0.10.0</version>
-    <description>A mod that adds items from Risk of Rain as relics, along with a few other surprises.</description>
+    <version>0.11.0</version>
+    <description>A mod that adds relics and mechanics from Risk of Rain 2 into slay the spire.</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
