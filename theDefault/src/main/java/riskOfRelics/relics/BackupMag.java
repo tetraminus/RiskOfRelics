@@ -20,7 +20,7 @@ public class BackupMag extends BaseRelic {
     private static final String IMAGENAME = "BackupMag.png";
 
     public BackupMag() {
-        super(ID, IMAGENAME, RelicTier.COMMON, LandingSound.MAGICAL);
+        super(ID, IMAGENAME, RelicTier.COMMON, LandingSound.FLAT);
     }
 
     @Override

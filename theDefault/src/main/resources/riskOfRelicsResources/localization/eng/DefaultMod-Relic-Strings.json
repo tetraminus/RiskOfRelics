@@ -1,4 +1,25 @@
 {
+  "riskOfRelics:CritGlasses": {
+    "NAME": "Lens Makers Glasses",
+    "FLAVOR": "Seeing red.",
+    "DESCRIPTIONS": [
+      "Every five attacks, deal 50% extra damage"
+    ]
+  },
+  "riskOfRelics:SoldiersSyringe": {
+    "NAME": "Soldiers Syringe",
+    "FLAVOR": "NYOOOOoom",
+    "DESCRIPTIONS": [
+      "Every #b10 turns, gain [E] and draw #b1 card."
+    ]
+  },
+  "riskOfRelics:MonsterTooth": {
+    "NAME": "Monster Tooth",
+    "FLAVOR": "Only a little stinky.",
+    "DESCRIPTIONS": [
+      "When you kill an enemy, heal #b2 HP."
+    ]
+  },
   "riskOfRelics:BisonSteak": {
     "NAME": "Bison Steak",
     "FLAVOR": "Always carry extra.",
