@@ -1,4 +1,18 @@
 {
+  "riskOfRelics:GoatHoof": {
+    "NAME": "Paul's Goat Hoof",
+    "FLAVOR": "Nyooom!",
+    "DESCRIPTIONS": [
+      "Every three turns, draw a card"
+    ]
+  },
+  "riskOfRelics:FrostRelic": {
+    "NAME": "Frost Relic",
+    "FLAVOR": "Used for cooling prime grade arugula.",
+    "DESCRIPTIONS": [
+      "At the start of your turn, channel Frost equal to the number of enemies killed this combat."
+    ]
+  },
   "riskOfRelics:CritGlasses": {
     "NAME": "Lens Makers Glasses",
     "FLAVOR": "Seeing red.",
@@ -8,7 +22,7 @@
   },
   "riskOfRelics:SoldiersSyringe": {
     "NAME": "Soldiers Syringe",
-    "FLAVOR": "NYOOOOoom",
+    "FLAVOR": "RATATATATATA",
     "DESCRIPTIONS": [
       "Every #b10 turns, gain [E] and draw #b1 card."
     ]
