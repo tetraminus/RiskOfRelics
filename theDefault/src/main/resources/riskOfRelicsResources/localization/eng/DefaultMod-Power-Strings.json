@@ -1,4 +1,8 @@
 {
+        "riskOfRelics:Crowdfunderpower": {
+                "NAME": "The Crowdfunder",
+                "DESCRIPTIONS": ["Deal #b3 damage to all enemies and lose #b4 gold #b", " time"," times"," at the start of your turn."]
+        },
         "riskOfRelics:lightningPower": {
                 "NAME": "Sparking",
                 "DESCRIPTIONS": ["Deals #b", " damage to all enemies at the end of its turn."]

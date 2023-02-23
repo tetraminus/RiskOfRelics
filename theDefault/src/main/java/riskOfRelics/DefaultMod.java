@@ -203,11 +203,11 @@ public class DefaultMod implements
 
         logger.info("Creating the color " + TheDefault.Enums.COLOR_GRAY.toString());
 
-        BaseMod.addColor(TheDefault.Enums.COLOR_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
-                DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
-                ATTACK_DEFAULT_GRAY, SKILL_DEFAULT_GRAY, POWER_DEFAULT_GRAY, ENERGY_ORB_DEFAULT_GRAY,
-                ATTACK_DEFAULT_GRAY_PORTRAIT, SKILL_DEFAULT_GRAY_PORTRAIT, POWER_DEFAULT_GRAY_PORTRAIT,
-                ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);
+//        BaseMod.addColor(TheDefault.Enums.COLOR_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
+//                DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
+//                ATTACK_DEFAULT_GRAY, SKILL_DEFAULT_GRAY, POWER_DEFAULT_GRAY, ENERGY_ORB_DEFAULT_GRAY,
+//                ATTACK_DEFAULT_GRAY_PORTRAIT, SKILL_DEFAULT_GRAY_PORTRAIT, POWER_DEFAULT_GRAY_PORTRAIT,
+//                ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);
 
         logger.info("Done creating the color");
 
@@ -406,12 +406,10 @@ public class DefaultMod implements
         new AutoAdd("RiskOfRelics")
                 .packageFilter(BaseRelic.class)
                 .any(BaseRelic.class, (info, relic) -> {
-                    logger.info("Adding relic: " + relic.getClass().getSimpleName());
-                    if (relic.pool == null) {
-                        BaseMod.addRelic(relic, RelicType.SHARED);
-                    } else {
-                        BaseMod.addRelicToCustomPool(relic, relic.pool);
-                    }
+                    logger.info("Adding relic: " + relic.getClass().getSimpleName() + " to pool: " + relic.relicType);
+
+                        BaseMod.addRelic(relic, relic.relicType);
+
                     if (!info.seen) {
                         UnlockTracker.markRelicAsSeen(relic.relicId);
                     }

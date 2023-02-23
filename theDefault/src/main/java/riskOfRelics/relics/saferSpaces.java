@@ -36,16 +36,23 @@ public class saferSpaces extends BaseRelic {
 
     @Override
     public void atTurnStart() {
-        if (counter == 6){
+        counter++;
+        if (counter > 3){
             this.addToBot(new ApplyPowerAction(player,player,new BufferPower(player,1)));
             this.addToBot(new RelicAboveCreatureAction(player, this));
             flash();
             counter = 0;
 
-        }else {
-            counter++;
         }
+
+
         super.atTurnStart();
+    }
+
+    @Override
+    public void onVictory() {
+        counter = -1;
+        super.onVictory();
     }
 
     @Override

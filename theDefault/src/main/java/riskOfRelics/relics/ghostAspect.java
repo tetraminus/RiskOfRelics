@@ -36,6 +36,7 @@ public class ghostAspect extends BaseRelic {
             this.addToBot(new ApplyPowerAction(player, player, new IntangiblePlayerPower(player, 1 )));
         }
         super.onMonsterDeath(m);
+
     }
 
     @Override

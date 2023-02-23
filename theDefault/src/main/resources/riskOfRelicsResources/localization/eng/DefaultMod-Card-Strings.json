@@ -1,7 +1,11 @@
 {
+  "riskOfRelics:Crowdfunder": {
+    "NAME": "The Crowdfunder",
+    "DESCRIPTION": "riskofrelics:Equipment NL At the start of your turn, lose 4 gold and deal 3 damage to a random enemy, !M! times. NL riskofrelics:Charges: !CHARGES!   "
+  },
   "riskOfRelics:missileLauncher": {
     "NAME": "Disposable missile launcher",
-    "DESCRIPTION": "riskofrelics:Equipment \n Deal !D! damage to a random enemy !M! times. \n riskofrelics:Charges: !CHARGES!   "
+    "DESCRIPTION": "riskofrelics:Equipment NL Deal !D! damage to a random enemy !M! times. NL riskofrelics:Charges: !CHARGES!   "
   },
   "riskOfRelics:tonicAffliction": {
     "NAME": "Tonic Affliction",

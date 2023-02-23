@@ -19,7 +19,7 @@ import static riskOfRelics.DefaultMod.makeRelicPath;
 public class CorpseBloom extends BaseRelic {
 
     boolean isCorpsebloomHeal;
-    public static final float HEAL_AMOUNT = 10.0f;
+    public static final float HEAL_AMOUNT = 50.0f;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("corpsebloom");
 

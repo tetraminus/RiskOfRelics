@@ -21,6 +21,7 @@ public abstract class BaseRelic extends CustomRelic {
         logger.info(makeRelicPath(imageName));
         setPool(pool);
 
+
         img = TextureLoader.getTexture(makeRelicPath(imageName));
         outlineImg = TextureLoader.getTexture(makeRelicOutlinePath(imageName));
     }
