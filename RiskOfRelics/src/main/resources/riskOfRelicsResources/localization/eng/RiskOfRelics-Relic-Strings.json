@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:Purity": {
+    "NAME": "Purity",
+    "FLAVOR": "Conformity",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. reduce rare card chance by #b75%."
+    ]
+  },
   "riskOfRelics:GoatHoof": {
     "NAME": "Paul's Goat Hoof",
     "FLAVOR": "Nyooom!",
