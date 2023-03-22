@@ -28,7 +28,7 @@ public class Purity extends BaseRelic {
         --AbstractDungeon.player.energy.energyMaster;// 54
     }// 55
     public int changeRareCardRewardChance(int rareCardChance) {
-        return (int) (rareCardChance * AMOUNT);// 19
+        return (int) (rareCardChance-(rareCardChance * AMOUNT));// 19
     }
 
 
