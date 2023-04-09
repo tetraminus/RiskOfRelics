@@ -5,10 +5,16 @@ A mod that adds relics and mechanics from Risk of Rain 2 into slay the spire. le
 Install on steam workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=2826958891
 
 Currently adds:
+
 20+ new relics
+
 2 potions
+
 1 special curse
+
 2 cards
+
 3 new boss relics
+
 1 event
 
