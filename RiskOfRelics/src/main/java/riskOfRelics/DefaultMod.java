@@ -39,6 +39,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+
 //TODO: DON'T MASS RENAME/REFACTOR
 //TODO: DON'T MASS RENAME/REFACTOR
 //TODO: DON'T MASS RENAME/REFACTOR
@@ -71,6 +73,7 @@ import java.util.Properties;
 @SpireInitializer
 public class DefaultMod implements
         EditCardsSubscriber,
+        PostUpdateSubscriber,
         EditRelicsSubscriber,
         EditStringsSubscriber,
         EditKeywordsSubscriber,
@@ -87,9 +90,9 @@ public class DefaultMod implements
     public static boolean enablePlaceholder = true; // The boolean we'll be setting on/off (true/false)
 
     //This is for the in-game mod settings panel.
-    private static final String MODNAME = "Default Mod";
-    private static final String AUTHOR = "Gremious"; // And pretty soon - You!
-    private static final String DESCRIPTION = "A base for Slay the Spire to start your own mod from, feat. the Default.";
+    private static final String MODNAME = "Risk of Relics";
+    private static final String AUTHOR = "Tetraminus"; // And pretty soon - You!
+    private static final String DESCRIPTION = "Risk of Rain 2 mod for Slay the Spire.";
 
     // =============== INPUT TEXTURE LOCATION =================
 
@@ -547,5 +550,18 @@ public class DefaultMod implements
     // in order to avoid conflicts if any other mod uses the same ID.
     public static String makeID(String idText) {
         return getModID() + ":" + idText;
+    }
+
+
+
+
+
+    @Override
+    public void receivePostUpdate() {
+        if (player != null ) {
+            if ( player.getRelic("riskOfRelics:Ego") instanceof Ego) {
+            ((Ego) player.getRelic("riskOfRelics:Ego")).postUpdate();
+            }
+        }
     }
 }
