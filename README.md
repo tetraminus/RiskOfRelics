@@ -1,6 +1,6 @@
 # RISK OF RELICS
 
-A mod that adds relics and mechanics from Risk of Rain 2 into slay the spire. leave any new item suggestions in the comments. Looking for balancing suggestions too, I'm open. I plan to have every single item(excepting things like the artifact key) implimented, but that will take a while.
+A mod that adds relics and mechanics from Risk of Rain 2 into slay the spire. leave any new item suggestions in the comments. Looking for balancing suggestions too, I'm open. I plan to have every single item(excepting things like the artifact key) implemented, but that will take a while.
 
 Install on steam workshop: https://steamcommunity.com/sharedfiles/filedetails/?id=2826958891
 
