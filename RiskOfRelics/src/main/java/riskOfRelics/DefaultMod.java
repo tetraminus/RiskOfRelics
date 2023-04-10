@@ -17,6 +17,7 @@ import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -558,9 +559,10 @@ public class DefaultMod implements
 
     @Override
     public void receivePostUpdate() {
-        if (player != null ) {
-            if ( player.getRelic("riskOfRelics:Ego") instanceof Ego) {
-            ((Ego) player.getRelic("riskOfRelics:Ego")).postUpdate();
+        if (player != null) {
+            AbstractRelic relic = player.getRelic(makeID("Ego"));
+            if (relic instanceof Ego) {
+                ((Ego) relic).postUpdate();
             }
         }
     }
