@@ -1,8 +1,6 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.DefaultMod;
 
@@ -24,10 +22,12 @@ public class tougherTimes extends BaseRelic {
     @Override
     public void obtain() {
         if (player.hasRelic(saferSpaces.ID)){
+            player.getRelic(saferSpaces.ID).flash();
+            player.loseRelic(this.relicId);
+         }else {
+            super.obtain();
+        }
 
-            player.loseRelic(ID);
-         }
-        super.obtain();
     }
 
     @Override

@@ -1,16 +1,13 @@
 package riskOfRelics.relics;
 
-import basemod.abstracts.CustomRelic;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.actions.UkuleleAction;
-import riskOfRelics.util.TextureLoader;
 
-import static riskOfRelics.DefaultMod.*;
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 
 public class Ukulele extends BaseRelic {
@@ -35,7 +32,16 @@ public class Ukulele extends BaseRelic {
 
     // Lose 1 energy on unequip.
 
+    @Override
+    public void obtain() {
+        if (player.hasRelic(Polylute.ID)){
+            player.getRelic(Polylute.ID).flash();
+            player.loseRelic(this.relicId);
+        }else {
+            super.obtain();
+        }
 
+    }
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {

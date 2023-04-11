@@ -1,4 +1,20 @@
 {
+  "riskOfRelics:Polylute": {
+    "NAME": "Polylute",
+    "FLAVOR": "d, d, d, a, G. A-e --- g-t-ing this? Th---'s m--e.",
+    "DESCRIPTIONS": [
+      "#b","% chance on hit to deal #b20% damage #b"," times. #yriskofrelics:Corrupts Ukulele"
+
+    ]
+  },
+  "riskOfRelics:KjarosBand": {
+    "NAME": "Kjaros Band",
+    "FLAVOR": "\"Should passion die down,\nShould light be extinguished,\nWill you bring me patience?\nWill you die with me?\"\n-The Syzygy of Io and Europa",
+    "DESCRIPTIONS": [
+      "If you hit and enemy for more than #b"," damage, Apply #b"," #yriskofrelics:Burning to all enemies."
+
+    ]
+  },
   "riskOfRelics:Recycler": {
     "NAME": "Recycler",
     "FLAVOR": "\"Thank you for recycling!\"",

@@ -1,5 +1,14 @@
 [
   {
+    "PROPER_NAME": "Burning",
+    "NAMES": [
+      "Burning",
+      "burning"
+
+    ],
+    "DESCRIPTION": "takes damage at the end of its turn. then, reduce the stacks by half."
+  },
+  {
     "PROPER_NAME": "Equipment",
     "NAMES": [
       "Equipment",

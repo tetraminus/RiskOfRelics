@@ -1,14 +1,11 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.SlowPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import riskOfRelics.DefaultMod;
-import riskOfRelics.powers.Burning;
 
 public class iceAspect extends BaseRelic{
 
