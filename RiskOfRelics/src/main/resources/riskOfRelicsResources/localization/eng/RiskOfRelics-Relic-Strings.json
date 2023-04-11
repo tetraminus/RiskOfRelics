@@ -1,4 +1,12 @@
 {
+  "riskOfRelics:Recycler": {
+    "NAME": "Recycler",
+    "FLAVOR": "\"Thank you for recycling!\"",
+    "DESCRIPTIONS": [
+      "You may reroll relic rewards.",
+      "Reroll relic rewards"
+    ]
+  },
   "riskOfRelics:ShapedGlass": {
     "NAME": "Shaped Glass",
     "FLAVOR": "\"<He> sunders a construct into a thousand pieces.\"",
