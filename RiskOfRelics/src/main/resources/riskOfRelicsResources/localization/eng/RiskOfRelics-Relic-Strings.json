@@ -1,4 +1,12 @@
 {
+  "riskOfRelics:Pennies": {
+    "NAME": "Roll of Pennies",
+    "FLAVOR": "\"At least I'm getting paid after this.\"",
+    "DESCRIPTIONS": [
+      "Gain #b"," gold when you lose HP."
+
+    ]
+  },
   "riskOfRelics:Polylute": {
     "NAME": "Polylute",
     "FLAVOR": "d, d, d, a, G. A-e --- g-t-ing this? Th---'s m--e.",

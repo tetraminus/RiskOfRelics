@@ -9,6 +9,8 @@
     <version>0.12.0</version>
     <description>A mod that adds relics and mechanics from Risk of Rain 2 into slay the spire.</description>
 
+
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -25,6 +27,7 @@
             <artifactId>slaythespire</artifactId>
             <version>${SlayTheSpire.version}</version>
             <scope>system</scope>
+            <!--suppress MavenModelInspection -->
             <systemPath>${Steam.path}/common/SlayTheSpire/desktop-1.0.jar</systemPath>
             <!--<systemPath>${basedir}/../lib/desktop-1.0.jar</systemPath>-->
         </dependency>
@@ -53,6 +56,58 @@
             <!--<systemPath>${basedir}/../lib/StSLib.jar</systemPath>-->
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <properties>
+
+                <Steam.path>${user.home}/Library/Application Support/Steam/steamapps</Steam.path>
+            </properties>
+            <dependencies>
+
+                <dependency>
+                    <groupId>com.megacrit.cardcrawl</groupId>
+                    <artifactId>slaythespire</artifactId>
+                    <version>${SlayTheSpire.version}</version>
+                    <scope>system</scope>
+                    <systemPath>${Steam.path}/common/SlayTheSpire/SlayTheSpire.app/Contents/Resources/desktop-1.0.jar</systemPath>
+                    <!--<systemPath>${basedir}/../lib/desktop-1.0.jar</systemPath>-->
+                </dependency>
+            </dependencies>
+            <build>
+
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <configuration>
+                                    <target>
+                                        <!-- This moves your mod into a common folder where all mods you make can go. -->
+                                        <copy file="target/${project.artifactId}.jar" tofile="${Steam.path}/common/SlayTheSpire/SlayTheSpire.app/Contents/Resources/mods/${project.artifactId}.jar"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+
+            </build>
+
+        </profile>
+    </profiles>
 
 
     <!-- This is how your code is packaged into the jar file-->

@@ -13,6 +13,8 @@ import riskOfRelics.util.TextureLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.combatRewardScreen;
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 import static riskOfRelics.DefaultMod.makeRelicPath;
 
 public class RerollReward extends CustomReward {
@@ -21,27 +23,30 @@ public class RerollReward extends CustomReward {
 
     public RerollReward() {
         super(ICON, Recycler.RerollText, RerollRewardPatch.RISKOFRELICS_REROLL);
+//        for (RewardItem r: AbstractDungeon.getCurrRoom().rewards) {
+//            relicLink = r;
+//
+//        }
 
 
     }
 
+
+
     @Override
     public boolean claimReward() {
-        List<RewardItem> toremove = new ArrayList<>();
-        AbstractDungeon.getCurrRoom().rewards.remove(this);
+
+
+
         for (RewardItem reward : AbstractDungeon.getCurrRoom().rewards) {
-            if (reward.type == RewardItem.RewardType.RELIC) {
-                toremove.add(reward);
+            if (reward.type == RewardItem.RewardType.RELIC && !reward.isDone && !reward.ignoreReward) {
+                reward.relic = AbstractDungeon.returnRandomRelic(AbstractDungeon.returnRandomRelicTier());
+                if(reward.text != null && reward.relic != null) {
+                    reward.text = reward.relic.name;
+                }
             }
         }
-
-        for (RewardItem reward : toremove) {
-            AbstractDungeon.getCurrRoom().rewards.remove(reward);
-            AbstractDungeon.getCurrRoom().rewards.add(new RewardItem(AbstractDungeon.returnRandomRelic(reward.relic.tier)));
-        }
-        AbstractDungeon.combatRewardScreen.open();
-
-
+        isDone = true;
         return true;
     }
 }

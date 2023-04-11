@@ -28,8 +28,14 @@ public class RecyclerPatches {
 
             )
             public static void RecyclerPatchMethod(AbstractRoom ___instance, AbstractRelic.RelicTier tier) {
+                boolean shouldtrigger = true;
+                for (RewardItem item: ___instance.rewards) {
+                    if (item.type == RerollRewardPatch.RISKOFRELICS_REROLL) {
+                        shouldtrigger = false;
+                    }
+                }
 
-                if (player.hasRelic(DefaultMod.makeID("Recycler"))) {
+                if (player.hasRelic(DefaultMod.makeID("Recycler")) && shouldtrigger) {
                     ___instance.rewards.add(new RerollReward());
                 }
 
@@ -57,7 +63,7 @@ public class RecyclerPatches {
 
 
                 @SpireInsertPatch(
-                        locator = RecyclerPatches.UntieredPatch.Locator.class
+                        locator = Locator.class
 
                 )
                 public static void RecyclerPatchMethod(AbstractRoom ___instance, AbstractRelic relic) {
