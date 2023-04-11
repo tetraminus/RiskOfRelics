@@ -1,5 +1,49 @@
 {
+  "riskOfRelics:Polylute": {
+    "NAME": "Polylute",
+    "FLAVOR": "d, d, d, a, G. A-e --- g-t-ing this? Th---'s m--e.",
+    "DESCRIPTIONS": [
+      "#b","% chance on hit to deal #b20% damage #b"," times. #yriskofrelics:Corrupts Ukulele"
 
+    ]
+  },
+  "riskOfRelics:KjarosBand": {
+    "NAME": "Kjaros Band",
+    "FLAVOR": "\"Should passion die down,\nShould light be extinguished,\nWill you bring me patience?\nWill you die with me?\"\n-The Syzygy of Io and Europa",
+    "DESCRIPTIONS": [
+      "If you hit and enemy for more than #b"," damage, Apply #b"," #yriskofrelics:Burning to all enemies."
+
+    ]
+  },
+  "riskOfRelics:Recycler": {
+    "NAME": "Recycler",
+    "FLAVOR": "\"Thank you for recycling!\"",
+    "DESCRIPTIONS": [
+      "You may reroll relic rewards.",
+      "Reroll relic rewards"
+    ]
+  },
+  "riskOfRelics:ShapedGlass": {
+    "NAME": "Shaped Glass",
+    "FLAVOR": "\"<He> sunders a construct into a thousand pieces.\"",
+    "DESCRIPTIONS": [
+      "Double #rALL damage."
+    ]
+  },
+  "riskOfRelics:Eulogy": {
+    "NAME": "Eulogy Zero",
+    "FLAVOR": "\"It's getting dark. If you get lost it's alright, for now. I hope you enjoy the shooting stars. Rest in peace.\"",
+    "DESCRIPTIONS": [
+      "Relics have a #b5% chance to become a boss relic instead."
+    ]
+  },
+  "riskOfRelics:Meteorite": {
+    "NAME": "Glowing Meteorite",
+    "FLAVOR": "\"What a... peculiar piece of the stars.\"",
+    "DESCRIPTIONS": [
+      "At the start of your turn, deal 5 damage to a random combatant."
+    ]
+  },
   "riskOfRelics:Purity": {
     "NAME": "Purity",
     "FLAVOR": "Conformity",
@@ -9,7 +53,7 @@
   },
   "riskOfRelics:Ego": {
     "NAME": "Egocentrism",
-    "FLAVOR": "...Say something.",
+    "FLAVOR": "\"...Say something.\"",
     "DESCRIPTIONS": [
       "At the start of your turn, deal #b10 damage to a random enemy a number of times equal to this relic's counter. NL at the end of the battle, a random relic is destroyed and added to the counter."
     ]

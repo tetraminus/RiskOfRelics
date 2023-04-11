@@ -17,6 +17,8 @@ import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,9 +27,11 @@ import riskOfRelics.cards.AbstractDynamicCard;
 import riskOfRelics.characters.TheDefault;
 import riskOfRelics.events.IdentityCrisisEvent;
 import riskOfRelics.events.aspectEvent;
+import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.EnergyDrink;
 import riskOfRelics.potions.TonicPotion;
 import riskOfRelics.relics.*;
+import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.util.ChargesVariable;
 import riskOfRelics.util.IDCheckDontTouchPls;
 import riskOfRelics.util.TextureLoader;
@@ -304,6 +308,7 @@ public class DefaultMod implements
 
     @Override
     public void receivePostInitialize() {
+
         logger.info("Loading badge image and mod options");
 
         // Load the Mod Badge
@@ -366,6 +371,14 @@ public class DefaultMod implements
 
         // =============== /EVENTS/ =================
         logger.info("Done loading badge Image and mod options");
+
+
+        BaseMod.registerCustomReward(RerollRewardPatch.RISKOFRELICS_REROLL, (rewardSave) -> { // this handles what to do when this quest type is loaded.
+                    return new RerollReward();
+                },
+                (customReward) -> { // this handles what to do when this quest type is saved.
+                    return new RewardSave(customReward.type.toString(), null,0, 0);
+                });
     }
 
     // =============== / POST-INITIALIZE/ =================
@@ -558,9 +571,10 @@ public class DefaultMod implements
 
     @Override
     public void receivePostUpdate() {
-        if (player != null ) {
-            if ( player.getRelic("riskOfRelics:Ego") instanceof Ego) {
-            ((Ego) player.getRelic("riskOfRelics:Ego")).postUpdate();
+        if (player != null) {
+            AbstractRelic relic = player.getRelic(makeID("Ego"));
+            if (relic instanceof Ego) {
+                ((Ego) relic).postUpdate();
             }
         }
     }
