@@ -1,5 +1,25 @@
 {
-
+  "riskOfRelics:ShapedGlass": {
+    "NAME": "Shaped Glass",
+    "FLAVOR": "\"<He> sunders a construct into a thousand pieces.\"",
+    "DESCRIPTIONS": [
+      "Double #rALL damage."
+    ]
+  },
+  "riskOfRelics:Eulogy": {
+    "NAME": "Eulogy Zero",
+    "FLAVOR": "\"It's getting dark. If you get lost it's alright, for now. I hope you enjoy the shooting stars. Rest in peace.\"",
+    "DESCRIPTIONS": [
+      "Relics have a #b5% chance to become a boss relic instead."
+    ]
+  },
+  "riskOfRelics:Meteorite": {
+    "NAME": "Glowing Meteorite",
+    "FLAVOR": "\"What a... peculiar piece of the stars.\"",
+    "DESCRIPTIONS": [
+      "At the start of your turn, deal 5 damage to a random combatant."
+    ]
+  },
   "riskOfRelics:Purity": {
     "NAME": "Purity",
     "FLAVOR": "Conformity",
@@ -9,7 +29,7 @@
   },
   "riskOfRelics:Ego": {
     "NAME": "Egocentrism",
-    "FLAVOR": "...Say something.",
+    "FLAVOR": "\"...Say something.\"",
     "DESCRIPTIONS": [
       "At the start of your turn, deal #b10 damage to a random enemy a number of times equal to this relic's counter. NL at the end of the battle, a random relic is destroyed and added to the counter."
     ]
