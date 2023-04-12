@@ -6,7 +6,7 @@
     <groupId>us.tetramin</groupId>
     <artifactId>RiskOfRelics</artifactId> <!--Keep a note of this one: this is the ID used in the "auto add cards" method-->
     <name>Risk Of Relics</name>
-    <version>0.12.0</version>
+    <version>0.13.0</version>
     <description>A mod that adds relics and mechanics from Risk of Rain 2 into slay the spire.</description>
 
 
@@ -76,6 +76,7 @@
                     <artifactId>slaythespire</artifactId>
                     <version>${SlayTheSpire.version}</version>
                     <scope>system</scope>
+                    <!--suppress MavenModelInspection -->
                     <systemPath>${Steam.path}/common/SlayTheSpire/SlayTheSpire.app/Contents/Resources/desktop-1.0.jar</systemPath>
                     <!--<systemPath>${basedir}/../lib/desktop-1.0.jar</systemPath>-->
                 </dependency>
