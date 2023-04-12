@@ -2,7 +2,7 @@ package riskOfRelics;
 
 import basemod.*;
 import basemod.eventUtil.AddEventParams;
-import basemod.helpers.RelicType;
+import basemod.eventUtil.EventUtils;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -22,12 +22,13 @@ import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import riskOfRelics.cards.AbstractDefaultCard;
 import riskOfRelics.cards.AbstractDynamicCard;
 import riskOfRelics.characters.TheDefault;
+import riskOfRelics.events.CleansingPoolEvent;
 import riskOfRelics.events.IdentityCrisisEvent;
 import riskOfRelics.events.aspectEvent;
 import riskOfRelics.patches.RerollRewardPatch;
+import riskOfRelics.potions.BottledChaos;
 import riskOfRelics.potions.EnergyDrink;
 import riskOfRelics.potions.TonicPotion;
 import riskOfRelics.relics.*;
@@ -369,6 +370,12 @@ public class DefaultMod implements
         // Add the event
         BaseMod.addEvent(eventParams);
 
+        eventParams = new AddEventParams.Builder(CleansingPoolEvent.ID, CleansingPoolEvent.class) // for this specific event
+                .eventType(EventUtils.EventType.SHRINE)
+                .create();
+
+        BaseMod.addEvent(eventParams);
+
         // =============== /EVENTS/ =================
         logger.info("Done loading badge Image and mod options");
 
@@ -393,6 +400,8 @@ public class DefaultMod implements
         // Remember, you can press ctrl+P inside parentheses like addPotions)
         BaseMod.addPotion(TonicPotion.class, TonicPotion.POTION_LIQUID, TonicPotion.POTION_HYBRID, null, TonicPotion.POTION_ID);
         BaseMod.addPotion(EnergyDrink.class, EnergyDrink.POTION_LIQUID, EnergyDrink.POTION_HYBRID, null, EnergyDrink.POTION_ID);
+        BaseMod.addPotion(BottledChaos.class, BottledChaos.POTION_LIQUID, BottledChaos.POTION_HYBRID, null, BottledChaos.POTION_ID);
+
         logger.info("Done editing potions");
     }
 

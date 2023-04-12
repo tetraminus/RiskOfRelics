@@ -10,7 +10,7 @@ import riskOfRelics.DefaultMod;
 public class Eulogy extends BaseRelic {
 
 
-    public static final int AMOUNT = 5;
+    public static final int AMOUNT = 20;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("Eulogy");
     private static final String IMAGENAME = "Eulogy.png";

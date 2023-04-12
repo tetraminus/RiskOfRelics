@@ -18,5 +18,21 @@
       "[Leave]"
 
     ]
+  },
+  "riskOfRelics:CleansingPoolEvent": {
+    "NAME": "Cleansing Pool",
+    "DESCRIPTIONS": [
+      "While traveling you come across a small ceramic pool filled with crystal clear water.",
+      "You drink, and feel more confident in your future.",
+      "You leave it alone, keeping what you've earned."
+
+    ],
+    "OPTIONS": [
+      "[Drink] Lose a random boss relic, Gain a special Relic.",
+      "[Leave]",
+      "[Locked] Requires a boss relic."
+
+
+    ]
   }
 }

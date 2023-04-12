@@ -1,10 +1,14 @@
 {
-"riskOfRelics:tonicPotion": {
-        "NAME": "Spinel Tonic",
-        "DESCRIPTIONS": ["this fight, deal double #ydamage and gain double #yBlock. Add a Tonic Affliction to your deck."]
-},
-"riskOfRelics:energyDrink": {
-        "NAME": "Energy Drink",
-        "DESCRIPTIONS": ["Play #b"," card"," cards", " for free."]
-}
+        "riskOfRelics:tonicPotion": {
+                "NAME": "Spinel Tonic",
+                "DESCRIPTIONS": ["this fight, deal double #ydamage and gain double #yBlock. Add a Tonic Affliction to your deck."]
+        },
+        "riskOfRelics:energyDrink": {
+                "NAME": "Energy Drink",
+                "DESCRIPTIONS": ["Play #b"," card"," cards", " for free."]
+        },
+        "riskOfRelics:BottledChaos": {
+                "NAME": "Bottled Chaos",
+                "DESCRIPTIONS": ["Use #b"," random potions."]
+        }
 }

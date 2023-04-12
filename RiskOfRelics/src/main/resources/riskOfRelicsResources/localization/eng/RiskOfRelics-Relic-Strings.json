@@ -1,4 +1,20 @@
 {
+  "riskOfRelics:IrradiantPearl": {
+    "NAME": "Irradiant Pearl",
+    "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
+    "DESCRIPTIONS": [
+      "Increase your max hp by #b","%, and at the start of battle gain #b"," Strength"," and Dexterity",", Dexterity, and Focus."
+
+    ]
+  },
+  "riskOfRelics:Pearl": {
+    "NAME": "Pearl",
+    "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
+    "DESCRIPTIONS": [
+      "Increase your max hp by #b","%"
+
+    ]
+  },
   "riskOfRelics:Feather": {
     "NAME": "Hopoo Feather",
     "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
@@ -243,7 +259,7 @@
     "NAME": "Ukulele",
     "FLAVOR": "And his music was electric.",
     "DESCRIPTIONS": [
-      "Attacking enemies has a #b25% chance to hit all enemies."
+      "Attacking enemies has a #b25% chance to hit all enemies for less damage."
     ]
   },
   "riskOfRelics:HandMirror": {
