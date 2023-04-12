@@ -8,7 +8,7 @@ Currently adds:
 
 40+ new relics
 
-2 potions
+3 potions
 
 1 special curse
 
