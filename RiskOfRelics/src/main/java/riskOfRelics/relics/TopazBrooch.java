@@ -9,13 +9,13 @@ import riskOfRelics.DefaultMod;
 public class TopazBrooch extends BaseRelic {
 
 
-    public static final int AMOUNT = 15;
+    public static final int AMOUNT = 8;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("TopazBrooch");
     private static final String IMAGENAME = "TopazBrooch.png";
 
     public TopazBrooch() {
-        super(ID, IMAGENAME, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+        super(ID, IMAGENAME, RelicTier.COMMON, LandingSound.MAGICAL);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class TopazBrooch extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0] + AMOUNT + DESCRIPTIONS[1];
     }
 
 }

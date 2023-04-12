@@ -1,25 +1,16 @@
 package riskOfRelics.relics;
 
-import basemod.AutoAdd;
-import basemod.abstracts.CustomRelic;
-import com.badlogic.gdx.graphics.Texture;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import riskOfRelics.DefaultMod;
-import riskOfRelics.powers.CBHeal;
-import riskOfRelics.util.TextureLoader;
-
-import static riskOfRelics.DefaultMod.makeRelicOutlinePath;
-import static riskOfRelics.DefaultMod.makeRelicPath;
 
 
 public class CorpseBloom extends BaseRelic {
 
     boolean isCorpsebloomHeal;
-    public static final float HEAL_AMOUNT = 50.0f;
+    public static final float HEAL_AMOUNT = 0.5f;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("corpsebloom");
 
@@ -40,7 +31,7 @@ public class CorpseBloom extends BaseRelic {
     public void onPlayerEndTurn() {
         if(AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && counter > 0) {
             isCorpsebloomHeal = true;
-            float healed = counter/HEAL_AMOUNT;
+            float healed = counter*HEAL_AMOUNT;
             AbstractDungeon.actionManager.addToTop(new HealAction(AbstractDungeon.player, AbstractDungeon.player, (int)Math.ceil(healed)));
             counter -= healed;
             flash();

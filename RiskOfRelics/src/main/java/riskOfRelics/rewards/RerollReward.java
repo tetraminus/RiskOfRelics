@@ -19,6 +19,7 @@ public class RerollReward extends CustomReward {
     public boolean claimReward() {
         for (RewardItem reward : AbstractDungeon.getCurrRoom().rewards) {
             if (reward.type == RewardItem.RewardType.RELIC && !reward.isDone && !reward.ignoreReward) {
+
                 reward.relic = AbstractDungeon.returnRandomRelic(AbstractDungeon.returnRandomRelicTier());
                 if(reward.text != null && reward.relic != null) {
                     reward.text = reward.relic.name;

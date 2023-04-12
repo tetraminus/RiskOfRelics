@@ -1,4 +1,36 @@
 {
+  "riskOfRelics:Feather": {
+    "NAME": "Hopoo Feather",
+    "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
+    "DESCRIPTIONS": [
+      "Skip the enemy's first turn."
+
+    ]
+  },
+  "riskOfRelics:MiredUrn": {
+    "NAME": "Mired Urn",
+    "FLAVOR": "\"The survey team went through a lot of trouble to bring this one back.\"",
+    "DESCRIPTIONS": [
+      "At the start of your turn, Deal #b"," damage to the front enemy and heal #b"," HP."
+
+    ]
+  },
+  "riskOfRelics:Gesture": {
+    "NAME": "Gesture of the Drowned",
+    "FLAVOR": "\"Fossils. Remnants. How cruel. \"",
+    "DESCRIPTIONS": [
+      "When you draw a colorless card, play it."
+
+    ]
+  },
+  "riskOfRelics:TopazBrooch": {
+    "NAME": "Topaz Brooch",
+    "FLAVOR": "\"the shield can be... reactivated, but we’d like to keep casualties to a minimum.\"",
+    "DESCRIPTIONS": [
+      "When you kill an enemy, gain #b"," Block."
+
+    ]
+  },
   "riskOfRelics:Pennies": {
     "NAME": "Roll of Pennies",
     "FLAVOR": "\"At least I'm getting paid after this.\"",
@@ -19,7 +51,7 @@
     "NAME": "Kjaros Band",
     "FLAVOR": "\"Should passion die down,\nShould light be extinguished,\nWill you bring me patience?\nWill you die with me?\"\n-The Syzygy of Io and Europa",
     "DESCRIPTIONS": [
-      "If you hit and enemy for more than #b"," damage, Apply #b"," #yriskofrelics:Burning to all enemies."
+      "If you hit an enemy for more than #b"," damage, Apply #b"," #yriskofrelics:Burning to all enemies."
 
     ]
   },
