@@ -1,7 +1,7 @@
 {
   "riskOfRelics:IrradiantPearl": {
     "NAME": "Irradiant Pearl",
-    "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
+    "FLAVOR": "Extra shiny!",
     "DESCRIPTIONS": [
       "Increase your max hp by #b","%, and at the start of battle gain #b"," Strength"," and Dexterity",", Dexterity, and Focus."
 
@@ -9,7 +9,7 @@
   },
   "riskOfRelics:Pearl": {
     "NAME": "Pearl",
-    "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
+    "FLAVOR": "Shiny!",
     "DESCRIPTIONS": [
       "Increase your max hp by #b","%"
 
@@ -83,7 +83,7 @@
     "NAME": "Shaped Glass",
     "FLAVOR": "\"<He> sunders a construct into a thousand pieces.\"",
     "DESCRIPTIONS": [
-      "Double #rALL damage."
+      "Double #rALL attack damage."
     ]
   },
   "riskOfRelics:Eulogy": {

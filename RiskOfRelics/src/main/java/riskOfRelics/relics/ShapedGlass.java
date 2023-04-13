@@ -20,15 +20,10 @@ public class ShapedGlass extends BaseRelic {
         super(ID, IMAGENAME, RelicTier.BOSS, LandingSound.MAGICAL);
     }
 
-    @Override
-    public float atDamageModify(float damage, AbstractCard c) {
-        return super.atDamageModify(damage*AMOUNT, c);
-    }
 
-    @Override
-    public int onAttackedToChangeDamage(DamageInfo info, int damageAmount) {
-        return super.onAttackedToChangeDamage(info, damageAmount*AMOUNT);
-    }
+
+
+
 
     @Override
     public String getUpdatedDescription() {
