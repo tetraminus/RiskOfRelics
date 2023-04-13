@@ -1,16 +1,12 @@
 package riskOfRelics.cards.colorless;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.cards.AbstractEquipmentCard;
 import riskOfRelics.powers.CrowdfunderPower;
 
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 import static riskOfRelics.DefaultMod.makeCardPath;
 
 // public class missileLancher extends AbstractDynamicCard
@@ -80,6 +76,7 @@ public class Crowdfunder extends AbstractEquipmentCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new ApplyPowerAction(p, p, new CrowdfunderPower(p, p, this.magicNumber), this.magicNumber));
+
         super.use(p, m);
     }
 

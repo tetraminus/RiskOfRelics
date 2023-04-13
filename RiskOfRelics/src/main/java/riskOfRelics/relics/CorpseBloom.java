@@ -1,25 +1,18 @@
 package riskOfRelics.relics;
 
-import basemod.AutoAdd;
-import basemod.abstracts.CustomRelic;
-import com.badlogic.gdx.graphics.Texture;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import riskOfRelics.DefaultMod;
-import riskOfRelics.powers.CBHeal;
-import riskOfRelics.util.TextureLoader;
 
-import static riskOfRelics.DefaultMod.makeRelicOutlinePath;
-import static riskOfRelics.DefaultMod.makeRelicPath;
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 
 public class CorpseBloom extends BaseRelic {
 
     boolean isCorpsebloomHeal;
-    public static final float HEAL_AMOUNT = 50.0f;
+    public static final float HEAL_AMOUNT = 0.25f;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("corpsebloom");
 
@@ -40,12 +33,24 @@ public class CorpseBloom extends BaseRelic {
     public void onPlayerEndTurn() {
         if(AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && counter > 0) {
             isCorpsebloomHeal = true;
-            float healed = counter/HEAL_AMOUNT;
-            AbstractDungeon.actionManager.addToTop(new HealAction(AbstractDungeon.player, AbstractDungeon.player, (int)Math.ceil(healed)));
+            float healed = counter*HEAL_AMOUNT;
+            AbstractDungeon.actionManager.addToTop(new HealAction(player, player, (int)Math.ceil(healed)));
             counter -= healed;
             flash();
         }
         super.onPlayerEndTurn();
+    }
+
+    @Override
+    public void onEnterRoom(AbstractRoom room) {
+        if(counter > 0) {
+            isCorpsebloomHeal = true;
+            float healed = counter*HEAL_AMOUNT;
+            player.heal((int)Math.ceil(healed));
+            counter -= healed;
+            flash();
+        }
+        super.onEnterRoom(room);
     }
 
     @Override
@@ -57,7 +62,7 @@ public class CorpseBloom extends BaseRelic {
 
             } else {
                 counter += healAmount * 2;
-                AbstractDungeon.actionManager.addToTop(new RelicAboveCreatureAction(AbstractDungeon.player, this));
+                AbstractDungeon.actionManager.addToTop(new RelicAboveCreatureAction(player, this));
                 return 0;
 
             }

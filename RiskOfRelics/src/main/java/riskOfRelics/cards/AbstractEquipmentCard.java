@@ -1,6 +1,7 @@
 package riskOfRelics.cards;
 
 import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.ExhaustiveField;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
@@ -15,6 +16,7 @@ public abstract class AbstractEquipmentCard extends AbstractDynamicCard{
         ExhaustiveField.ExhaustiveFields.isExhaustiveUpgraded.set(this, true);
         CURRENT_CHARGES = ExhaustiveField.ExhaustiveFields.exhaustive.get(this);
         initializeDescription();
+
     }
 
 
@@ -36,6 +38,13 @@ public abstract class AbstractEquipmentCard extends AbstractDynamicCard{
 
     @Override
     public void use(AbstractPlayer abstractPlayer, AbstractMonster abstractMonster) {
+        if (this.CURRENT_CHARGES > 1 && this.type == CardType.POWER) {
+            AbstractEquipmentCard copy = (AbstractEquipmentCard) this.makeStatEquivalentCopy();
+            copy.setCharges(CURRENT_CHARGES-1);
+            this.addToBot(new MakeTempCardInDiscardAction(this.makeStatEquivalentCopy(), 1));// 38
+        }
+
+
         CURRENT_CHARGES = ExhaustiveField.ExhaustiveFields.exhaustive.get(this);
         initializeDescription();
     }
