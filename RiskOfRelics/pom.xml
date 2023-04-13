@@ -122,6 +122,8 @@
                 <configuration>
                     <excludes>
                         <exclude>**/*.psd</exclude>
+                        <exclude>**/*.xcf</exclude>
+
                     </excludes>
                 </configuration>
             </plugin>
