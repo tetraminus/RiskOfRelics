@@ -6,15 +6,15 @@ Install on steam workshop: https://steamcommunity.com/sharedfiles/filedetails/?i
 
 Currently adds:
 
-20+ new relics
+40+ new relics
 
-2 potions
+3 potions
 
 1 special curse
 
 2 cards
 
-3 new boss relics
+4 new boss relics
 
-1 event
+2 events
 
