@@ -1,19 +1,13 @@
 package riskOfRelics.events;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.colorless.Apotheosis;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractImageEvent;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
-import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.relics.Akabeko;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
-import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.relics.IrradiantPearl;
 import riskOfRelics.relics.Pearl;
@@ -37,7 +31,7 @@ public class CleansingPoolEvent extends AbstractImageEvent {
 
     private int screenNum = 0; // The initial screen we will see when encountering the event - screen 0;
     private List<AbstractRelic> BossRelics = new ArrayList<>();
-    private int healthdamage; //The actual number of how much Max HP we're going to lose.
+    //The actual number of how much Max HP we're going to lose.
 
     public CleansingPoolEvent() {
         super(NAME, DESCRIPTIONS[0], IMG);
@@ -102,10 +96,8 @@ public class CleansingPoolEvent extends AbstractImageEvent {
                 break;
             case 1: // Welcome to screenNum = 1;
 
-                switch (i) {
-                    case 0: // If you press the first (and this should be the only) button,
-                        openMap(); // You'll open the map and end the event.
-                        break;
+                if (i == 0) { // If you press the first (and this should be the only) button,
+                    openMap(); // You'll open the map and end the event.
                 }
                 break;
         }
