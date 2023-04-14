@@ -1,6 +1,5 @@
 package riskOfRelics.patches;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -46,7 +45,7 @@ public class DoubleNumberPatches {
             method = "renderDynamicVariable" // This is the name of the method we will be patching.
 
     )
-    public static class DoubleCardSingleHitPatch {
+    public static class DoubleCardPatchModif {
 
 
         @SpireInsertPatch( // This annotation of our patch method specifies the type of patch we will be using. In our case - a Spire Insert Patch
@@ -58,7 +57,7 @@ public class DoubleNumberPatches {
         )
 
         //"A patch method must be a public static method."
-        public static void DoubleCardPatchMethod( AbstractCard __instance, @ByRef int[] num) {
+        public static void DoubleCardPatchMethod( @ByRef int[] num) {
             if (true) {
                 num[0] *= 2;
             }
@@ -67,9 +66,30 @@ public class DoubleNumberPatches {
         private static class Locator extends SpireInsertLocator { // Hey welcome to our SpireInsertLocator class!
             @Override
             public int[] Locate(CtBehavior ctMethodToPatch) throws Exception {
-                Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractCard.class,"isMagicNumberModified");
+                Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractCard.class, "baseDamage");
 
-                return new int[]{LineFinder.findInOrder(ctMethodToPatch, finalMatcher)[0] - 2};
+                return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
+
+            }
+        }
+    }
+    @SpirePatch2(
+            clz = AbstractCard.class,
+            method = "renderDynamicVariable"
+    )
+    public static class DoubleCardPatchUnmodif {
+        static Logger logger = LogManager.getLogger(DoubleCardPatchUnmodif.class.getName());
+        @SpireInsertPatch(locator = Locator.class, localvars = {"num"})
+        public static void DoubleCardPatchMethod(@ByRef int[] num) {
+            num[0] *= 2;
+
+        }
+        private static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctMethodToPatch) throws Exception {
+                Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractCard.class, "baseDamage");
+
+                return new int[]{LineFinder.findAllInOrder(ctMethodToPatch, finalMatcher)[1] + 1};
 
             }
         }
