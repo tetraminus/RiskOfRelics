@@ -112,15 +112,15 @@ public class DoubleNumberPatches {
     }
     @SpirePatch2(    // "Use the @SpirePatch annotation on the patch class."
             clz = DamageVariable.class, // This is the class where the method we will be patching is. In our case - Abstract Dungeon
-            method = "isModified" // This is the name of the method we will be patching.
+            method = "baseValue" // This is the name of the method we will be patching.
 
     )
     public static class DoubleCardPatchModif {
         @SpirePrefixPatch
         //"A patch method must be a public static method."
-        public static SpireReturn<Boolean> DoubleCardPatchMethod(AbstractCard card) {
+        public static SpireReturn<Integer> DoubleCardPatchMethod(AbstractCard card) {
             if (AbstractDungeon.isPlayerInDungeon() && player.hasRelic(ShapedGlass.ID) && AbstractDungeon.isPlayerInDungeon() && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-                return SpireReturn.Return(true);
+                return SpireReturn.Return(card.baseDamage * 2);
             }
             return SpireReturn.Continue();
         }
