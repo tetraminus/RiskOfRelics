@@ -46,10 +46,10 @@ public class Polylute extends BaseRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        int CHANCE = 25;
+
         if (AbstractDungeon.cardRandomRng.random(100) <= CHANCE && info.type == DamageInfo.DamageType.NORMAL) {
 
-            int HITS = 3;
+
             AbstractDungeon.actionManager.addToBottom(new PolyluteAction(target, Math.round(damageAmount*DAMAGESCALE), HITS));
 
 

@@ -119,12 +119,10 @@ public class DoubleNumberPatches {
         @SpirePrefixPatch
         //"A patch method must be a public static method."
         public static SpireReturn<Integer> DoubleCardPatchMethod(AbstractCard card) {
-            if (AbstractDungeon.isPlayerInDungeon() && player.hasRelic(ShapedGlass.ID) && AbstractDungeon.isPlayerInDungeon() && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
+            if (AbstractDungeon.isPlayerInDungeon() && player.hasRelic(ShapedGlass.ID)) {
                 return SpireReturn.Return(card.baseDamage * 2);
             }
             return SpireReturn.Continue();
         }
     }
-
-
 }

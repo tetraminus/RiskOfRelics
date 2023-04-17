@@ -1,4 +1,5 @@
 {
+
   "riskOfRelics:IrradiantPearl": {
     "NAME": "Irradiant Pearl",
     "FLAVOR": "Extra shiny!",
@@ -83,14 +84,14 @@
     "NAME": "Shaped Glass",
     "FLAVOR": "\"<He> sunders a construct into a thousand pieces.\"",
     "DESCRIPTIONS": [
-      "Double #rALL attack damage."
+      "Double #rALL damage."
     ]
   },
   "riskOfRelics:Eulogy": {
     "NAME": "Eulogy Zero",
     "FLAVOR": "\"It's getting dark. If you get lost it's alright, for now. I hope you enjoy the shooting stars. Rest in peace.\"",
     "DESCRIPTIONS": [
-      "Relics have a #b5% chance to become a boss relic instead."
+      "Relics have a #b","% chance to become a boss relic instead."
     ]
   },
   "riskOfRelics:Meteorite": {
