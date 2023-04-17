@@ -21,7 +21,7 @@ public class MiredUrn extends BaseRelic {
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("MiredUrn");
     private static final String IMAGENAME = "MiredUrn.png";
-    private int targetIndex = 0 ;
+    private int targetIndex = 0;
     public MiredUrn() {
         super(ID, IMAGENAME, RelicTier.RARE, LandingSound.MAGICAL);
     }
