@@ -1,13 +1,7 @@
 package riskOfRelics.relics;
 
-import basemod.abstracts.CustomRelic;
-import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import riskOfRelics.DefaultMod;
-import riskOfRelics.util.TextureLoader;
-
-import static riskOfRelics.DefaultMod.makeRelicOutlinePath;
-import static riskOfRelics.DefaultMod.makeRelicPath;
 
 public class DelicateWatch extends BaseRelic {
     /*
@@ -20,7 +14,7 @@ public class DelicateWatch extends BaseRelic {
     public static final String ID = DefaultMod.makeID("DelicateWatch");
 
 
-    public static final float DAMAGEMULTPERCENT = 0.5f;
+    public static final float DAMAGEMULTPERCENT = 50;
     private boolean broken = false;
 
     private static final String IMAGENAME = "DelicateWatch.png";
@@ -42,7 +36,7 @@ public class DelicateWatch extends BaseRelic {
         if (broken){
             return damage;
         } else {
-            return damage * (1 + DAMAGEMULTPERCENT);
+            return damage * (1 + (DAMAGEMULTPERCENT/100));
         }
     }
 
@@ -67,7 +61,7 @@ public class DelicateWatch extends BaseRelic {
     // Description
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0]+(int)DAMAGEMULTPERCENT+DESCRIPTIONS[1];
 
     }
 

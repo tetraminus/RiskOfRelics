@@ -10,6 +10,8 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.orbs.Frost;
 import riskOfRelics.DefaultMod;
 
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+
 
 public class FrostRelic extends BaseRelic {
 
@@ -47,6 +49,7 @@ public class FrostRelic extends BaseRelic {
     @Override
     public void onMonsterDeath(AbstractMonster m) {
         counter++;
+
         super.onMonsterDeath(m);
     }
 

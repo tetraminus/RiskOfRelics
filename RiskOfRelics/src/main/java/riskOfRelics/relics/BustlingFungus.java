@@ -1,7 +1,6 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -75,7 +74,7 @@ public class BustlingFungus extends BaseRelic {
     // Description
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0]+HEAL_AMOUNT+DESCRIPTIONS[1]+HEAL_AMOUNT_END+DESCRIPTIONS[2];
     }
 
 }

@@ -1,12 +1,8 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.combat.AdrenalineEffect;
 import riskOfRelics.DefaultMod;
 
@@ -15,6 +11,7 @@ public class SoldiersSyringe extends BaseRelic {
 
 
     public static final int AMOUNT = 10;
+    public static final int DRAW = 1;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("SoldiersSyringe");
     private static final String IMAGENAME = "SoldiersSyringe.png";
@@ -29,8 +26,8 @@ public class SoldiersSyringe extends BaseRelic {
         flash();
         counter++;
         if (counter >= AMOUNT) {
-            addToBot(new GainEnergyAction(1));
-            addToBot(new DrawCardAction(1));
+            addToBot(new GainEnergyAction(DRAW));
+            addToBot(new DrawCardAction(DRAW));
             addToBot(new VFXAction(new AdrenalineEffect(), 0.15F));
             counter = 0;
         }
@@ -40,7 +37,7 @@ public class SoldiersSyringe extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0] + AMOUNT + DESCRIPTIONS[1] +DRAW+ DESCRIPTIONS[2];
     }
 
 }

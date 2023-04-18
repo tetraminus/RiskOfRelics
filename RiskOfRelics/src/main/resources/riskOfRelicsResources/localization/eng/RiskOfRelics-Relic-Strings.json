@@ -1,7 +1,8 @@
 {
+
   "riskOfRelics:IrradiantPearl": {
     "NAME": "Irradiant Pearl",
-    "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
+    "FLAVOR": "Extra shiny!",
     "DESCRIPTIONS": [
       "Increase your max hp by #b","%, and at the start of battle gain #b"," Strength"," and Dexterity",", Dexterity, and Focus."
 
@@ -9,7 +10,7 @@
   },
   "riskOfRelics:Pearl": {
     "NAME": "Pearl",
-    "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
+    "FLAVOR": "Shiny!",
     "DESCRIPTIONS": [
       "Increase your max hp by #b","%"
 
@@ -59,7 +60,7 @@
     "NAME": "Polylute",
     "FLAVOR": "d, d, d, a, G. A-e --- g-t-ing this? Th---'s m--e.",
     "DESCRIPTIONS": [
-      "#b","% chance on hit to deal #b20% damage #b"," times. #yriskofrelics:Corrupts Ukulele"
+      "#b","% chance on hit to deal #b","% damage #b"," times. #yriskofrelics:Corrupts Ukulele"
 
     ]
   },
@@ -90,35 +91,35 @@
     "NAME": "Eulogy Zero",
     "FLAVOR": "\"It's getting dark. If you get lost it's alright, for now. I hope you enjoy the shooting stars. Rest in peace.\"",
     "DESCRIPTIONS": [
-      "Relics have a #b5% chance to become a boss relic instead."
+      "Relics have a #b","% chance to become a boss relic instead."
     ]
   },
   "riskOfRelics:Meteorite": {
     "NAME": "Glowing Meteorite",
     "FLAVOR": "\"What a... peculiar piece of the stars.\"",
     "DESCRIPTIONS": [
-      "At the start of your turn, deal 5 damage to a random combatant."
+      "At the start of your turn, deal #b"," damage to a random combatant."
     ]
   },
   "riskOfRelics:Purity": {
     "NAME": "Purity",
     "FLAVOR": "Conformity",
     "DESCRIPTIONS": [
-      "Gain [E] at the start of your turn. reduce rare card chance by #b75%."
+      "Gain [E] at the start of your turn. reduce rare card chance by #b","%."
     ]
   },
   "riskOfRelics:Ego": {
     "NAME": "Egocentrism",
     "FLAVOR": "\"...Say something.\"",
     "DESCRIPTIONS": [
-      "At the start of your turn, deal #b10 damage to a random enemy a number of times equal to this relic's counter. NL at the end of the battle, a random relic is destroyed and added to the counter."
+      "At the start of your turn, deal #b"," damage to a random enemy a number of times equal to this relic's counter. NL at the end of the battle, a random relic is #rdestroyed and added to the counter."
     ]
   },
   "riskOfRelics:GoatHoof": {
     "NAME": "Paul's Goat Hoof",
     "FLAVOR": "Nyooom!",
     "DESCRIPTIONS": [
-      "Every three turns, draw a card"
+      "Every #b"," turns, draw a card"
     ]
   },
   "riskOfRelics:FrostRelic": {
@@ -132,28 +133,28 @@
     "NAME": "Lens Makers Glasses",
     "FLAVOR": "Seeing red.",
     "DESCRIPTIONS": [
-      "Every five attacks, deal 50% extra damage"
+      "Every #b"," attacks, deal #b","% extra damage"
     ]
   },
   "riskOfRelics:SoldiersSyringe": {
     "NAME": "Soldiers Syringe",
     "FLAVOR": "RATATATATATA",
     "DESCRIPTIONS": [
-      "Every #b10 turns, gain [E] and draw #b1 card."
+      "Every #b"," turns, gain [E] and draw #b"," card."
     ]
   },
   "riskOfRelics:MonsterTooth": {
     "NAME": "Monster Tooth",
     "FLAVOR": "Only a little stinky.",
     "DESCRIPTIONS": [
-      "When you kill an enemy, heal #b2 HP."
+      "When you kill an enemy, heal #b"," HP."
     ]
   },
   "riskOfRelics:BisonSteak": {
     "NAME": "Bison Steak",
     "FLAVOR": "Always carry extra.",
     "DESCRIPTIONS": [
-      "When you enter a room with a chest, gain #b2 Max HP"
+      "When you enter a room with a chest, gain #b"," Max HP"
     ]
   },
 
@@ -168,35 +169,35 @@
     "NAME": "Fuel Cell",
     "FLAVOR": "ZAP!",
     "DESCRIPTIONS": [
-      "#yriskofrelics:Equipment gain #b1 #yriskofrelics:Charge"
+      "#yriskofrelics:Equipment gain #b"," #yriskofrelics:Charge"
     ]
   },
   "riskOfRelics:tougherTimes": {
     "NAME": "Tougher Times",
     "FLAVOR": "Could use some love",
     "DESCRIPTIONS": [
-      "#b10% chance to dodge attacks."
+      "#b","% chance to dodge attacks."
     ]
   },
   "riskOfRelics:saferSpaces": {
     "NAME": "Safer Spaces",
     "FLAVOR": "Oddly... squishy?",
     "DESCRIPTIONS": [
-      "Every #b5 turns, gain Buffer, #yriskofrelics:Corrupts Tougher Times"
+      "Every #b"," turns, gain Buffer, #yriskofrelics:Corrupts Tougher Times"
     ]
   },
   "riskOfRelics:Crowbar": {
     "NAME": "Crowbar",
     "FLAVOR": "Is this Half-Life 3?",
     "DESCRIPTIONS": [
-      "Deal #b+75% damage to enemies above #b90% health."
+      "Deal #b+","% damage to enemies above #b","% health."
     ]
   },
   "riskOfRelics:APRounds": {
     "NAME": "Armor-Piercing Rounds",
     "FLAVOR": "Cold Steel",
     "DESCRIPTIONS": [
-      "Deal an additional #b20% damage to bosses."
+      "Deal an additional #b","% damage in boss combat."
     ]
   },
   "riskOfRelics:ghostAspect": {
@@ -259,7 +260,7 @@
     "NAME": "Ukulele",
     "FLAVOR": "And his music was electric.",
     "DESCRIPTIONS": [
-      "Attacking enemies has a #b25% chance to hit all enemies for less damage."
+      "Attacking enemies has a #b","% chance to hit all enemies for less damage."
     ]
   },
   "riskOfRelics:HandMirror": {
@@ -274,9 +275,9 @@
     "NAME": "Delicate Watch",
     "FLAVOR": "Make sure to keep it wound",
     "DESCRIPTIONS": [
-      "Deal #b50% extra damage. #yriskofrelics:Fragile",
-      "At least its right twice a day",
-      "Make sure to keep it wound"
+      "Deal #b","% extra damage. #yriskofrelics:Fragile",
+      "At least its right twice a day.",
+      "Make sure to keep it wound."
     ]
   },
   "riskOfRelics:DefaultClickableRelic": {
@@ -301,7 +302,7 @@
     "NAME": "Bustling Fungus",
     "FLAVOR": "Engineers Best Friend",
     "DESCRIPTIONS": [
-      "if you don't play a card this turn, gain #b3 #yRegen. if you complete combat without playing an attack, heal #b10% #yMax HP"
+      "If you don't play a card this turn, gain #b"," #yRegen. if you complete combat without playing an attack, heal #b","% #yMax HP"
     ]
   }
 }

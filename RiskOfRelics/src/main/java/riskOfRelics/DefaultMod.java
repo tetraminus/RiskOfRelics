@@ -209,7 +209,7 @@ public class DefaultMod implements
 
         logger.info("Done subscribing");
 
-        logger.info("Creating the color " + TheDefault.Enums.COLOR_GRAY.toString());
+        //logger.info("Creating the color " + TheDefault.Enums.COLOR_GRAY.toString());
 
 //        BaseMod.addColor(TheDefault.Enums.COLOR_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
 //                DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
@@ -281,9 +281,9 @@ public class DefaultMod implements
 
 
     public static void initialize() {
-        logger.info("========================= Initializing Default Mod. Hi. =========================");
+        logger.info("========================= Initializing Risk Of Relics. Hi. =========================");
         DefaultMod defaultmod = new DefaultMod();
-        logger.info("========================= /Default Mod Initialized. Hello World./ =========================");
+        logger.info("========================= /Risk Of Relics Initialized. Hello World./ =========================");
     }
 
     // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
@@ -299,7 +299,7 @@ public class DefaultMod implements
         //THE_DEFAULT_BUTTON, THE_DEFAULT_PORTRAIT, TheDefault.Enums.THE_DEFAULT);
 
         // receiveEditPotions();
-        logger.info("Added " + TheDefault.Enums.THE_DEFAULT.toString());
+        //logger.info("Added " + TheDefault.Enums.THE_DEFAULT.toString());
     }
 
     // =============== /LOAD THE CHARACTER/ =================
@@ -319,26 +319,26 @@ public class DefaultMod implements
         ModPanel settingsPanel = new ModPanel();
 
         // Create the on/off button:
-        ModLabeledToggleButton enableNormalsButton = new ModLabeledToggleButton("This is the text which goes next to the checkbox.",
-                350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
-                enablePlaceholder, // Boolean it uses
-                settingsPanel, // The mod panel in which this button will be in
-                (label) -> {
-                }, // thing??????? idk
-                (button) -> { // The actual button:
+//        ModLabeledToggleButton enableNormalsButton = new ModLabeledToggleButton("This is the text which goes next to the checkbox.",
+//                350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
+//                enablePlaceholder, // Boolean it uses
+//                settingsPanel, // The mod panel in which this button will be in
+//                (label) -> {
+//                }, // thing??????? idk
+//                (button) -> { // The actual button:
+//
+//                    enablePlaceholder = button.enabled; // The boolean true/false will be whether the button is enabled or not
+//                    try {
+//                        // And based on that boolean, set the settings and save them
+//                        SpireConfig config = new SpireConfig("defaultMod", "theDefaultConfig", theDefaultDefaultSettings);
+//                        config.setBool(ENABLE_PLACEHOLDER_SETTINGS, enablePlaceholder);
+//                        config.save();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                });
 
-                    enablePlaceholder = button.enabled; // The boolean true/false will be whether the button is enabled or not
-                    try {
-                        // And based on that boolean, set the settings and save them
-                        SpireConfig config = new SpireConfig("defaultMod", "theDefaultConfig", theDefaultDefaultSettings);
-                        config.setBool(ENABLE_PLACEHOLDER_SETTINGS, enablePlaceholder);
-                        config.save();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-
-        settingsPanel.addUIElement(enableNormalsButton); // Add the button to the settings panel. Button is a go.
+//        settingsPanel.addUIElement(enableNormalsButton); // Add the button to the settings panel. Button is a go.
 
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
@@ -500,7 +500,7 @@ public class DefaultMod implements
 
     @Override
     public void receiveEditStrings() {
-        logger.info("You seeing this?");
+        //logger.info("You seeing this?");
         logger.info("Beginning to edit strings for mod with ID: " + getModID());
 
         // CardStrings

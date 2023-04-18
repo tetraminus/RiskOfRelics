@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class UrnSuckParticle extends AbstractGameEffect {
     private TextureAtlas.AtlasRegion img;
-    private CatmullRomSpline<Vector2> crs = new CatmullRomSpline();
-    private ArrayList<Vector2> controlPoints = new ArrayList();
+    private CatmullRomSpline<Vector2> crs = new CatmullRomSpline<>();
+    private ArrayList<Vector2> controlPoints = new ArrayList<>();
     private static final int TRAIL_ACCURACY = 60;
     private Vector2[] points = new Vector2[60];
     private Vector2 pos;

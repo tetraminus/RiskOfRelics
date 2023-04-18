@@ -1,12 +1,9 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import riskOfRelics.DefaultMod;
-
-import java.util.Iterator;
 
 
 public class APRounds extends BaseRelic {
@@ -56,7 +53,7 @@ public class APRounds extends BaseRelic {
     }// 57
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0]+(int)AMOUNT+DESCRIPTIONS[1];
     }
 
 }

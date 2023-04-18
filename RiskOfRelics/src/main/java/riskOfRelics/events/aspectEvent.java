@@ -1,22 +1,19 @@
 package riskOfRelics.events;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.colorless.Apotheosis;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.AbstractImageEvent;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
-import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
-import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.relics.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 import static riskOfRelics.DefaultMod.makeEventPath;
 
@@ -39,14 +36,14 @@ public class aspectEvent extends AbstractImageEvent {
 
 
     private final AbstractRelic relic;
-    private String desc;
+
     public aspectEvent() {
 
         super(NAME, DESCRIPTIONS[0], IMG);
         relic = RelicLibrary.getRelic((RELICS.get(AbstractDungeon.miscRng.random(RELICS.size()-1))));
 
 
-        desc = DESCRIPTIONS[0] + getEventText(relic);
+        String desc = DESCRIPTIONS[0] + getEventText(relic);
 
         // The first dialogue options available to us.
         this.body = desc;

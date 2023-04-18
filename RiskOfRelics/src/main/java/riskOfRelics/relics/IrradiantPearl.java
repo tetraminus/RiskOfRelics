@@ -23,12 +23,15 @@ public class IrradiantPearl extends BaseRelic {
 
     public IrradiantPearl() {
         super(ID, IMAGENAME, RelicTier.SPECIAL, LandingSound.MAGICAL);
+        description =  getUpdatedDescription();
     }
 
     @Override
     public void obtain() {
         player.increaseMaxHp(Math.round(player.maxHealth * (((float) AMOUNT /100))), true);
+
         super.obtain();
+
     }
 
     @Override

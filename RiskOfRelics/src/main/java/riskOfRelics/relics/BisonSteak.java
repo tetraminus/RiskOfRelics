@@ -1,12 +1,6 @@
 package riskOfRelics.relics;
 
-import basemod.BaseMod;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.megacrit.cardcrawl.rooms.ShopRoom;
 import com.megacrit.cardcrawl.rooms.TreasureRoom;
 import riskOfRelics.DefaultMod;
 
@@ -36,7 +30,7 @@ public class BisonSteak extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
     }
 
 }

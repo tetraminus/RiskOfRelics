@@ -71,6 +71,7 @@ public class RecyclerPatches {
                     for (RewardItem item: ___instance.rewards) {
                         if (item.type == RerollRewardPatch.RISKOFRELICS_REROLL) {
                             shouldtrigger = false;
+
                         }
                     }
                     if (player.hasRelic(DefaultMod.makeID("Recycler")) && shouldtrigger) {
