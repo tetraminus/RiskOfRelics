@@ -60,7 +60,7 @@ public class Ukulele extends BaseRelic {
     // Description
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0]+CHANCE+DESCRIPTIONS[1];
     }
 
 }

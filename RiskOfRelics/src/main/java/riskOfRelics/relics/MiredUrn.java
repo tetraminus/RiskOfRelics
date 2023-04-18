@@ -29,14 +29,19 @@ public class MiredUrn extends BaseRelic {
     @Override
     public void atBattleStart() {
         target = AbstractDungeon.getMonsters().monsters.get(targetIndex);
+        while (target == null || target.isDeadOrEscaped()) {
+            target = FindNext();
+
+        }
+
         super.atBattleStart();
     }
 
     @Override
     public void atTurnStart() {
-        if (target.isDeadOrEscaped()) {
-            targetIndex++;
-            target = AbstractDungeon.getMonsters().monsters.get(targetIndex);
+        if (target == null||target.isDeadOrEscaped()) {
+            target = FindNext();
+
         }
         if (target != null){
             this.flash();
@@ -46,6 +51,17 @@ public class MiredUrn extends BaseRelic {
         }
 
         super.atTurnStart();
+    }
+
+    private AbstractMonster FindNext() {
+
+        for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
+            if (m != null && !m.isDeadOrEscaped()) {
+                return m;
+            }
+
+        }
+        return null;
     }
 
     @Override

@@ -53,7 +53,7 @@ public class APRounds extends BaseRelic {
     }// 57
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
+        return DESCRIPTIONS[0]+(int)AMOUNT+DESCRIPTIONS[1];
     }
 
 }

@@ -1,4 +1,8 @@
 {
+  "riskOfRelics:BlastShower": {
+    "NAME": "Blast Shower",
+    "DESCRIPTION": "riskofrelics:Equipment NL Remove all of your debuffs. NL riskofrelics:Charges: !CHARGES!"
+  },
   "riskOfRelics:Crowdfunder": {
     "NAME": "The Crowdfunder",
     "DESCRIPTION": "riskofrelics:Equipment NL At the start of your turn, lose 4 gold and deal 3 damage to a random enemy, !M! times. NL riskofrelics:Charges: !CHARGES!   "

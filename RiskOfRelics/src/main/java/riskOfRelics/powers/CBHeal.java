@@ -68,7 +68,7 @@ public class CBHeal extends AbstractPower implements CloneablePowerInterface {
         if (amount>=2) {
             AbstractDungeon.actionManager.addToBottom(new ReducePowerAction(owner, owner, POWER_ID, 2));
         } else {
-            AbstractDungeon.actionManager.addToBottom(new ReducePowerAction(owner, owner, POWER_ID, amount));;
+            AbstractDungeon.actionManager.addToBottom(new ReducePowerAction(owner, owner, POWER_ID, amount));
         }
 
 

@@ -61,7 +61,7 @@ public class DelicateWatch extends BaseRelic {
     // Description
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0]+DAMAGEMULTPERCENT+DESCRIPTIONS[1];
+        return DESCRIPTIONS[0]+(int)DAMAGEMULTPERCENT+DESCRIPTIONS[1];
 
     }
 
