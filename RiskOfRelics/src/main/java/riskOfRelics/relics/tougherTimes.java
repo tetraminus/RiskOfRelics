@@ -32,7 +32,7 @@ public class tougherTimes extends BaseRelic {
 
     @Override
     public int onAttackedToChangeDamage(DamageInfo info, int damageAmount) {
-        int ran = AbstractDungeon.miscRng.random(100);
+        int ran = AbstractDungeon.relicRng.random(100);
         //logger.info(ran);
         if (ran<=AMOUNT && info.type != DamageInfo.DamageType.HP_LOSS){
             flash();
@@ -43,7 +43,7 @@ public class tougherTimes extends BaseRelic {
     }
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
     }
 
 }

@@ -1,10 +1,7 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.DefaultMod;
 
@@ -15,6 +12,7 @@ public class CritGlasses extends BaseRelic {
 
 
     public static final int AMOUNT = 5;
+    public static final float MULT = 50;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("CritGlasses");
     private static final String IMAGENAME = "CritGlasses.png";
@@ -36,7 +34,7 @@ public class CritGlasses extends BaseRelic {
             stopPulse();
             flash();
             this.addToBot(new RelicAboveCreatureAction(player, this));
-            return Math.round(damageAmount*1.5f);
+            return Math.round(damageAmount+(damageAmount*(MULT/100)));
 
         }
         return super.onAttackToChangeDamage(info, damageAmount);
@@ -44,7 +42,7 @@ public class CritGlasses extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0] + AMOUNT + DESCRIPTIONS[1]+ (int)MULT + DESCRIPTIONS[2];
     }
 
 }

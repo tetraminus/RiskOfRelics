@@ -1,9 +1,7 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.actions.DamageRandomEntityAction;
@@ -33,7 +31,7 @@ public class Meteorite extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0] +  AMOUNT + DESCRIPTIONS[1];
     }
 
 }

@@ -1,17 +1,13 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.DefaultMod;
 
 
 public class GoatHoof extends BaseRelic {
 
 
-    public static final int AMOUNT = 1;
+    public static final int AMOUNT = 3;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("GoatHoof");
     private static final String IMAGENAME = "GoatHoof.png";
@@ -31,7 +27,7 @@ public class GoatHoof extends BaseRelic {
     @Override
     public void atTurnStart() {
         counter++;
-        if (counter % 3 == 0){
+        if (counter % AMOUNT == 0){
             flash();
             addToBot(new DrawCardAction(1));
             counter=0;
@@ -48,7 +44,7 @@ public class GoatHoof extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
     }
 
 }

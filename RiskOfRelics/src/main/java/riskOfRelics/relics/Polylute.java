@@ -21,7 +21,7 @@ public class Polylute extends BaseRelic {
     public static final String ID = DefaultMod.makeID("Polylute");
 
 
-    public static final float DAMAGESCALE = 0.2f;
+    public static final float DAMAGESCALE = 20;
     private static final String IMAGENAME = "Polylute.png";
     private static final int CHANCE = 25;
     private static final int HITS = 3;
@@ -50,7 +50,7 @@ public class Polylute extends BaseRelic {
         if (AbstractDungeon.cardRandomRng.random(100) <= CHANCE && info.type == DamageInfo.DamageType.NORMAL) {
 
 
-            AbstractDungeon.actionManager.addToBottom(new PolyluteAction(target, Math.round(damageAmount*DAMAGESCALE), HITS));
+            AbstractDungeon.actionManager.addToBottom(new PolyluteAction(target, Math.round(damageAmount*(DAMAGESCALE/100f)), HITS));
 
 
         }
@@ -62,7 +62,7 @@ public class Polylute extends BaseRelic {
     // Description
     @Override
     public String getUpdatedDescription() {
-        return (DESCRIPTIONS[0] + CHANCE + DESCRIPTIONS[1] + HITS + DESCRIPTIONS[2]);
+        return (DESCRIPTIONS[0] + CHANCE + DESCRIPTIONS[1] + (int)DAMAGESCALE + DESCRIPTIONS[2] + HITS + DESCRIPTIONS[3]);
     }
 
 }

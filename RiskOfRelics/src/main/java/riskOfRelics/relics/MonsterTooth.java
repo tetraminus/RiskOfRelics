@@ -27,7 +27,7 @@ public class MonsterTooth extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
     }
 
 }

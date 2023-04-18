@@ -23,6 +23,7 @@ public class Ukulele extends BaseRelic {
 
 
     public float DAMAGESCALE = 0.5f;
+    public static int CHANCE = 25;
     private boolean chaining = false;
     private static final String IMAGENAME = "Ukulele.png";
 
@@ -45,7 +46,7 @@ public class Ukulele extends BaseRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (AbstractDungeon.cardRandomRng.random(100) <= 25 && info.type == DamageInfo.DamageType.NORMAL) {
+        if (AbstractDungeon.cardRandomRng.random(100) <= CHANCE && info.type == DamageInfo.DamageType.NORMAL) {
 
             AbstractDungeon.actionManager.addToBottom(new UkuleleAction(info.owner, target, Math.round(damageAmount*DAMAGESCALE), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.LIGHTNING));
 
