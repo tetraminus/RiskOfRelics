@@ -38,7 +38,7 @@ public class DoubleNumberPatches {
                 for (AbstractRelic r: player.relics) {
                     if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
                 }
-                dmg[0] = dmg[0] * (ShapedGlass.AMOUNT*num);
+                dmg[0] = dmg[0] * (int) Math.pow(ShapedGlass.AMOUNT,num);
             }
         }
 
@@ -122,7 +122,7 @@ public class DoubleNumberPatches {
                 for (AbstractRelic r: player.relics) {
                     if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
                 }
-                    return SpireReturn.Return(card.damage * (ShapedGlass.AMOUNT*num));
+                    return SpireReturn.Return(card.damage * (int) Math.pow(ShapedGlass.AMOUNT,num));
             }
             return SpireReturn.Continue();
         }
@@ -141,7 +141,7 @@ public class DoubleNumberPatches {
                 for (AbstractRelic r: player.relics) {
                     if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
                 }
-                return SpireReturn.Return(card.baseDamage * (ShapedGlass.AMOUNT*num));
+                return SpireReturn.Return(card.baseDamage * (int) Math.pow(ShapedGlass.AMOUNT,num));
             }
             return SpireReturn.Continue();
         }

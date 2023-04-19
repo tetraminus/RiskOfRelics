@@ -41,7 +41,7 @@ public class ShapedGlassPatch {// Don't worry about the "never used" warning - *
                     if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
                 }
 
-                damageAmount[0] *= (ShapedGlass.AMOUNT*num);
+                damageAmount[0] *= Math.pow(ShapedGlass.AMOUNT,num);
             }
 
         }
@@ -80,7 +80,7 @@ public class ShapedGlassPatch {// Don't worry about the "never used" warning - *
                 for (AbstractRelic r: player.relics) {
                     if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
                 }
-                damageAmount[0] *= ShapedGlass.AMOUNT*num;
+                damageAmount[0] *= Math.pow(ShapedGlass.AMOUNT,num);
             }
 
         }
