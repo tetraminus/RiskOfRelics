@@ -12,6 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.relics.ShapedGlass;
 
+import java.util.Objects;
+
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 
@@ -33,7 +35,13 @@ public class ShapedGlassPatch {// Don't worry about the "never used" warning - *
         //"A patch method must be a public static method."
         public static void thisIsOurActualPatchMethod(AbstractPlayer ___instance, DamageInfo info, @ByRef int[] damageAmount) {
             if (___instance.hasRelic(ShapedGlass.ID)) {
-                damageAmount[0] *= 2;
+                int num = 0;
+
+                for (AbstractRelic r: player.relics) {
+                    if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
+                }
+
+                damageAmount[0] *= (ShapedGlass.AMOUNT*num);
             }
 
         }
@@ -67,7 +75,12 @@ public class ShapedGlassPatch {// Don't worry about the "never used" warning - *
         //"A patch method must be a public static method."
         public static void thisIsOurActualPatchMethod(AbstractMonster ___instance, DamageInfo info, @ByRef int[] damageAmount) {
             if (player.hasRelic(ShapedGlass.ID)) {
-                damageAmount[0] *= 2;
+                int num = 0;
+
+                for (AbstractRelic r: player.relics) {
+                    if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
+                }
+                damageAmount[0] *= ShapedGlass.AMOUNT*num;
             }
 
         }
