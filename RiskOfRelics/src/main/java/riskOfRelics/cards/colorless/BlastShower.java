@@ -1,13 +1,12 @@
 package riskOfRelics.cards.colorless;
 
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
+import com.megacrit.cardcrawl.actions.unique.RemoveDebuffsAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.cards.AbstractEquipmentCard;
 
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 import static riskOfRelics.DefaultMod.makeCardPath;
 
 // public class missileLancher extends AbstractDynamicCard
@@ -52,7 +51,7 @@ public class BlastShower extends AbstractEquipmentCard {
 
 
     private static final int COST = 3;  // COST = 1
-    private static final int UPGRADED_COST = 2; // UPGRADED_COST = 1
+    private static final int UPGRADED_COST = -1; // UPGRADED_COST = 1
 
     private static final int DAMAGE = 0;    // DAMAGE = 4
 
@@ -76,11 +75,7 @@ public class BlastShower extends AbstractEquipmentCard {
     // Actions the card should do.
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        for (AbstractPower pow : player.powers) {
-            if (pow.type == AbstractPower.PowerType.DEBUFF) {
-                this.addToBot(new RemoveSpecificPowerAction(p, p, pow));
-            }
-        }
+        this.addToBot(new RemoveDebuffsAction(AbstractDungeon.player));
         super.use(p, m);
     }
 

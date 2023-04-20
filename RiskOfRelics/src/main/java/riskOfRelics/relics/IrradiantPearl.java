@@ -1,13 +1,10 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.integrations.steam.SRCallback;
 import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.FocusPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import riskOfRelics.DefaultMod;
-
-import javax.print.DocFlavor;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -15,7 +12,7 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class IrradiantPearl extends BaseRelic {
 
 
-    public static final int AMOUNT = 10;
+    public static final int AMOUNT = 30;
     public static final int AMOUNT2 = 2;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("IrradiantPearl");

@@ -52,7 +52,7 @@ public class Ego extends BaseRelic {
     @Override
     public void atTurnStart() {
         for (int i = 0; i < this.counter; i++) {
-            this.addToBot(new DamageRandomEnemyAction(new DamageInfo(null, AMOUNT, DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.FIRE));
+            this.addToBot(new DamageRandomEnemyAction(new DamageInfo(player, AMOUNT, DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.FIRE));
         }
         super.atTurnStart();
     }

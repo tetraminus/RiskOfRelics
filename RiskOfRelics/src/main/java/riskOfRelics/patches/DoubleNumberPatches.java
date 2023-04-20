@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 import com.megacrit.cardcrawl.powers.IntangiblePower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import javassist.CtBehavior;
 import riskOfRelics.relics.ShapedGlass;
 
@@ -116,7 +115,7 @@ public class DoubleNumberPatches {
         @SpirePrefixPatch
         //"A patch method must be a public static method."
         public static SpireReturn<Integer> DoubleCardPatchMethod(AbstractCard card) {
-            if (player.hasRelic(ShapedGlass.ID)) {
+            if (AbstractDungeon.isPlayerInDungeon() && player != null && player.hasRelic(ShapedGlass.ID)) {
                 int num = 0;
 
                 for (AbstractRelic r: player.relics) {
@@ -135,7 +134,7 @@ public class DoubleNumberPatches {
         @SpirePrefixPatch
         //"A patch method must be a public static method."
         public static SpireReturn<Integer> DoubleCardPatchMethod(AbstractCard card) {
-            if (AbstractDungeon.isPlayerInDungeon() && player.hasRelic(ShapedGlass.ID)) {
+            if (AbstractDungeon.isPlayerInDungeon() && player != null&& player.hasRelic(ShapedGlass.ID)) {
                 int num = 0;
 
                 for (AbstractRelic r: player.relics) {
