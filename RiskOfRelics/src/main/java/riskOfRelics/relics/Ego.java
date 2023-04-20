@@ -33,10 +33,7 @@ public class Ego extends BaseRelic {
             otherRelics.remove(this);
             if (otherRelics.size() > 0) {
                 relicToremove = otherRelics.get(AbstractDungeon.relicRng.random(otherRelics.size() - 1));
-                if (counter < 0) {
-                    counter = 0;
-                }
-                this.counter += 1;
+
             }
     }
     public void postUpdate(){
@@ -45,6 +42,10 @@ public class Ego extends BaseRelic {
                 this.counter += relicToremove.counter;
             }
             player.loseRelic(relicToremove.relicId);
+            if (counter < 0) {
+                counter = 0;
+            }
+            this.counter += 1;
             relicToremove = null;
         }
     }

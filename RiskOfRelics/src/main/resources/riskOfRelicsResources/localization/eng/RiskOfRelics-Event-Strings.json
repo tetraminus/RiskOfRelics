@@ -1,4 +1,20 @@
 {
+  "riskOfRelics:ShrineOfChance": {
+    "NAME": "ShrineOfChance",
+    "DESCRIPTIONS": [
+      "As you walk into the room you are confronted by a large statue in the shape of a golem. You feel it invite you to take a ~chance~.",
+      "You offer to the shrine, but gain nothing",
+      "#gJackpot! NL th",
+      "You decide to leave the area. NL The slime pays no attention, content with its meal."
+    ],
+    "OPTIONS": [
+      "[Offer] #rLose #r",
+      " #rGold. #g",
+      "%: #gFind #ga #gRelic.",
+      "[Leave]",
+      "[Again] #rLose #r"
+    ]
+  },
   "riskOfRelics:aspectEvent": {
     "NAME": "Dead elemental",
     "DESCRIPTIONS": [

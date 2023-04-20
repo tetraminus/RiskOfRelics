@@ -31,6 +31,7 @@ import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.BottledChaos;
 import riskOfRelics.potions.EnergyDrink;
 import riskOfRelics.potions.TonicPotion;
+import riskOfRelics.relics.BackupMag;
 import riskOfRelics.relics.BaseRelic;
 import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
@@ -43,6 +44,8 @@ import riskOfRelics.variables.DefaultSecondMagicNumber;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -583,9 +586,29 @@ public class DefaultMod implements
     @Override
     public void receivePostUpdate() {
         if (player != null) {
-            AbstractRelic relic = player.getRelic(makeID("Ego"));
-            if (relic instanceof Ego) {
-                ((Ego) relic).postUpdate();
+            List<Ego> playeregos = new ArrayList<>();
+            for (AbstractRelic r:
+                 player.relics) {
+                if (r instanceof Ego) {
+                    playeregos.add((Ego)r);
+                }
+            }
+
+            for (Ego e:
+                 playeregos) {
+                e.postUpdate();
+            }
+            List<BackupMag> playerMags = new ArrayList<>();
+            for (AbstractRelic r:
+                    player.relics) {
+                if (r instanceof BackupMag) {
+                    playerMags.add((BackupMag)r);
+                }
+            }
+
+            for (BackupMag b:
+                    playerMags) {
+                b.postUpdate();
             }
         }
     }
