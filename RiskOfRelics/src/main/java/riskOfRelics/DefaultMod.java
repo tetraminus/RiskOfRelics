@@ -1,6 +1,8 @@
 package riskOfRelics;
 
-import basemod.*;
+import basemod.AutoAdd;
+import basemod.BaseMod;
+import basemod.ModPanel;
 import basemod.eventUtil.AddEventParams;
 import basemod.eventUtil.EventUtils;
 import basemod.interfaces.*;
@@ -12,10 +14,9 @@ import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
-import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.helpers.CardHelper;
-import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.RewardSave;
@@ -23,7 +24,6 @@ import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.cards.AbstractDynamicCard;
-import riskOfRelics.characters.TheDefault;
 import riskOfRelics.events.CleansingPoolEvent;
 import riskOfRelics.events.IdentityCrisisEvent;
 import riskOfRelics.events.aspectEvent;
@@ -31,7 +31,8 @@ import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.BottledChaos;
 import riskOfRelics.potions.EnergyDrink;
 import riskOfRelics.potions.TonicPotion;
-import riskOfRelics.relics.*;
+import riskOfRelics.relics.BaseRelic;
+import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.util.ChargesVariable;
 import riskOfRelics.util.IDCheckDontTouchPls;
@@ -372,6 +373,7 @@ public class DefaultMod implements
 
         eventParams = new AddEventParams.Builder(CleansingPoolEvent.ID, CleansingPoolEvent.class) // for this specific event
                 .eventType(EventUtils.EventType.SHRINE)
+                .spawnCondition(() -> AbstractDungeon.actNum > 1)
                 .create();
 
         BaseMod.addEvent(eventParams);

@@ -5,7 +5,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.DexterityPower;
-import com.megacrit.cardcrawl.powers.LoseDexterityPower;
 import riskOfRelics.DefaultMod;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -15,6 +14,7 @@ public class perfAspect extends BaseRelic {
 
 
     public static final int AMOUNT = 2;
+    public static final int TRIGGERAMOUNT = 3;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("perfAspect");
     private static final String IMAGENAME = "perfAspect.png";
@@ -33,7 +33,7 @@ public class perfAspect extends BaseRelic {
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
         this.counter++;
-        if (this.counter == AMOUNT) {
+        if (this.counter == TRIGGERAMOUNT) {
             flash();
             AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(target, player, new DexterityPower(target, -AMOUNT), -AMOUNT));
             //add one dex to player
@@ -50,7 +50,7 @@ public class perfAspect extends BaseRelic {
 
     @Override
     public void onVictory() {
-        this.counter = 0;
+        this.counter = -1;
         super.onVictory();
     }
 
