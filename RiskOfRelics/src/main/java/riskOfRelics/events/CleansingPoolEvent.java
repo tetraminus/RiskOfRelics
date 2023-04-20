@@ -71,7 +71,7 @@ public class CleansingPoolEvent extends AbstractImageEvent {
                         player.loseRelic(BossRelics.get(
                                 AbstractDungeon.eventRng.random(BossRelics.size()-1)).relicId);
 
-                        if (AbstractDungeon.eventRng.random(99) < 5){
+                        if (AbstractDungeon.eventRng.random(99) < 33){
                             AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2), new IrradiantPearl());
 
                         } else {

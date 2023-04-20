@@ -28,7 +28,7 @@
 
     ],
     "OPTIONS": [
-      "[Drink] Lose a random boss relic, Gain a special Relic.",
+      "[Drink] Lose a random boss relic, #b67% Gain a special Relic. #b33% Gain an ~extra~ special relic.",
       "[Leave]",
       "[Locked] Requires a boss relic."
 
