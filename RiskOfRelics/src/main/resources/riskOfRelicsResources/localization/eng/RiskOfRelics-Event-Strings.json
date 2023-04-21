@@ -1,26 +1,27 @@
 {
   "riskOfRelics:ShrineOfChance": {
-    "NAME": "ShrineOfChance",
+    "NAME": "Shrine Of Chance",
     "DESCRIPTIONS": [
-      "As you walk into the room you are confronted by a large statue in the shape of a golem. You feel it invite you to take a ~chance~.",
-      "You offer to the shrine, but gain nothing",
-      "#gJackpot! NL th",
-      "You decide to leave the area. NL The slime pays no attention, content with its meal."
+      "As you walk into the room you are confronted by a large statue in the shape of a golem. You feel it invite you to take a ~chance~ .",
+      "You offer to the shrine, but gain nothing, and say to yourself, 'Just one more time...'",
+      "#gJackpot! NL The statue rumbles, shifting positions, and offers you a #yRelic.",
+      "You decide to leave the shrine alone, and continue on your way. although, you can't help but feel like you missed out on something."
     ],
     "OPTIONS": [
       "[Offer] #rLose #r",
       " #rGold. #g",
       "%: #gFind #ga #gRelic.",
       "[Leave]",
-      "[Again] #rLose #r"
+      "[Again] #rLose #r",
+      "[Locked] Not enough gold."
     ]
   },
-  "riskOfRelics:aspectEvent": {
+  "riskOfRelics:AspectEvent": {
     "NAME": "Dead elemental",
     "DESCRIPTIONS": [
       "As you move through the gloom you come across a #pdead #pcreature. NL You inspect it, and see ",
       "You leave and wonder what power might have slain that creature",
-      "You absorb it's power, ",
+      "You absorb it's power, and feel yourself grow stronger.",
       "it still smoking.",
       "it has frosted over.",
       "roots entangling the body.",
@@ -30,7 +31,7 @@
       "it ~shifting~ forms."
     ],
     "OPTIONS": [
-      "[Absorb] gain a #yspecial relic",
+      "[Absorb] #gGain #ga #yspecial #grelic",
       "[Leave]"
 
     ]
@@ -44,7 +45,7 @@
 
     ],
     "OPTIONS": [
-      "[Drink] Lose a random boss relic, #b67% Gain a special Relic. #b33% Gain an ~extra~ special relic.",
+      "[Drink] #rLose #ra #rrandom #rboss #rrelic, #g67% #gGain #ga #gspecial #gRelic. #g33% #gGain #gan #yextra #gspecial #grelic.",
       "[Leave]",
       "[Locked] Requires a boss relic."
 
