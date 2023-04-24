@@ -18,6 +18,7 @@ public class BrittleCrown extends BaseRelic {
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("BrittleCrown");
     private static final String IMAGENAME = "BrittleCrown.png";
+    private static final float AMOUNTLOSS = 2f;
 
     public BrittleCrown() {
         super(ID, IMAGENAME, RelicTier.BOSS, LandingSound.MAGICAL);
@@ -32,7 +33,7 @@ public class BrittleCrown extends BaseRelic {
 
     @Override
     public void onLoseHp(int damageAmount) {
-        this.addToBot(new LoseGoldAction((damageAmount/player.maxHealth)*100));
+        this.addToBot(new LoseGoldAction(Math.round(((float)damageAmount/(float)player.maxHealth)*AMOUNTLOSS*100f)));
         super.onLoseHp(damageAmount);
     }
 
