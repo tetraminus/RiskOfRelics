@@ -13,8 +13,8 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class perfAspect extends BaseRelic {
 
 
-    public static final int AMOUNT = 2;
-    public static final int TRIGGERAMOUNT = 3;
+    public static final int AMOUNT = 1;
+    public static final int TRIGGERAMOUNT = 4;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("perfAspect");
     private static final String IMAGENAME = "perfAspect.png";
@@ -32,12 +32,14 @@ public class perfAspect extends BaseRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        this.counter++;
-        if (this.counter == TRIGGERAMOUNT) {
-            flash();
-            AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(target, player, new DexterityPower(target, -AMOUNT), -AMOUNT));
-            //add one dex to player
-            AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(player, player, new DexterityPower(player, AMOUNT), AMOUNT));
+        if (target != player) {
+            this.counter++;
+            if (this.counter == TRIGGERAMOUNT) {
+                flash();
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(target, player, new DexterityPower(target, -AMOUNT), -AMOUNT));
+                //add one dex to player
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(player, player, new DexterityPower(player, AMOUNT), AMOUNT));
+            }
         }
 
     }

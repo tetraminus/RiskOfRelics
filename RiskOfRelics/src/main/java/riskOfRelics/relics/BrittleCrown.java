@@ -26,7 +26,9 @@ public class BrittleCrown extends BaseRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        this.addToBot(new GainGoldAction(AMOUNT));
+        if (target != player) {
+            this.addToBot(new GainGoldAction(AMOUNT));
+        }
         super.onAttack(info, damageAmount, target);
     }
 

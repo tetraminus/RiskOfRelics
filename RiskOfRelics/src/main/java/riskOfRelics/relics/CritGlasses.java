@@ -24,6 +24,7 @@ public class CritGlasses extends BaseRelic {
 
     @Override
     public int onAttackToChangeDamage(DamageInfo info, int damageAmount) {
+
         counter++;
         if (counter == AMOUNT-1){
             this.beginLongPulse();

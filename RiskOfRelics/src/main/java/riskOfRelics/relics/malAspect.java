@@ -25,12 +25,6 @@ public class malAspect extends BaseRelic {
     }
 
     @Override
-    public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-
-
-    }
-
-    @Override
     public void onPlayerEndTurn() {
         //deal damage to all enemies
 
