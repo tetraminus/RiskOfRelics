@@ -6,7 +6,7 @@
     <groupId>us.tetramin</groupId>
     <artifactId>RiskOfRelics</artifactId> <!--Keep a note of this one: this is the ID used in the "auto add cards" method-->
     <name>Risk Of Relics</name>
-    <version>0.13.7</version>
+    <version>0.13.8</version>
     <description>A mod that adds relics and mechanics from Risk of Rain 2 into slay the spire.</description>
 
 
