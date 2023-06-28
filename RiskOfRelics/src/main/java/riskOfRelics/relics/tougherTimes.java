@@ -1,7 +1,5 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.DefaultMod;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -30,17 +28,8 @@ public class tougherTimes extends BaseRelic {
 
     }
 
-    @Override
-    public int onAttackedToChangeDamage(DamageInfo info, int damageAmount) {
-        int ran = AbstractDungeon.relicRng.random(100);
-        //logger.info(ran);
-        if (ran<=AMOUNT && info.type != DamageInfo.DamageType.HP_LOSS){
-            flash();
 
-            return 0;
-        }
-        return super.onAttackedToChangeDamage(info, damageAmount);
-    }
+
     @Override
     public String getUpdatedDescription() {
         return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];

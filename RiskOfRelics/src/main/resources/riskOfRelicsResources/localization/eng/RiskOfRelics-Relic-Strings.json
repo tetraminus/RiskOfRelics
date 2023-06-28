@@ -191,7 +191,8 @@
     "NAME": "Tougher Times",
     "FLAVOR": "Could use some love",
     "DESCRIPTIONS": [
-      "#b","% chance to dodge attacks."
+      "#b","% chance to dodge attacks.",
+      "Blocked!"
     ]
   },
   "riskOfRelics:saferSpaces": {
