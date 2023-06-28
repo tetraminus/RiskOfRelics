@@ -3,7 +3,7 @@ package riskOfRelics.relics;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class FocusedConvergence extends BaseRelic {
@@ -11,7 +11,7 @@ public class FocusedConvergence extends BaseRelic {
 
     public static final float AMOUNT = 50;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("FocusedConvergence");
+    public static final String ID = RiskOfRelics.makeID("FocusedConvergence");
     private static final String IMAGENAME = "FocusedConvergence.png";
 
     public FocusedConvergence() {

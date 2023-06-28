@@ -1,6 +1,6 @@
 package riskOfRelics.relics;
 
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -10,7 +10,7 @@ public class Pearl extends BaseRelic {
 
     public static final int AMOUNT = 30;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Pearl");
+    public static final String ID = RiskOfRelics.makeID("Pearl");
     private static final String IMAGENAME = "Pearl.png";
 
     public Pearl() {

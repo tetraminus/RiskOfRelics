@@ -7,10 +7,10 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.characters.TheDefault;
 
-import static riskOfRelics.DefaultMod.makeCardPath;
+import static riskOfRelics.RiskOfRelics.makeCardPath;
 
 // public class ${NAME} extends AbstractDynamicCard
 @AutoAdd.Ignore // Remove this line when you make a template. Refer to https://github.com/daviscook477/BaseMod/wiki/AutoAdd if you want to know what it does.
@@ -37,7 +37,7 @@ public class CardTemplate extends AbstractDynamicCard {
     // TEXT DECLARATION
 
     // public static final String ID = DefaultMod.makeID(${NAME}.class.getSimpleName()); // USE THIS ONE FOR THE TEMPLATE;
-    public static final String ID = DefaultMod.makeID("DefaultCommonAttack"); // DELETE THIS ONE.
+    public static final String ID = RiskOfRelics.makeID("DefaultCommonAttack"); // DELETE THIS ONE.
     public static final String IMG = makeCardPath("Attack.png");// "public static final String IMG = makeCardPath("${NAME}.png");
     // This does mean that you will need to have an image with the same NAME as the card in your image folder for it to run correctly.
 

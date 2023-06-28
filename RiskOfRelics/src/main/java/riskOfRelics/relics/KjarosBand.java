@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.vfx.FireBurstParticleEffect;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.KjarosBandAction;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -16,7 +16,7 @@ public class KjarosBand extends BaseRelic {
     public static final int AMOUNT = 16;
     public static final int THRESHOLD = 20;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("KjarosBand");
+    public static final String ID = RiskOfRelics.makeID("KjarosBand");
     private static final String IMAGENAME = "KjarosBand.png";
 
     public KjarosBand() {

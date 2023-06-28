@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -15,7 +15,7 @@ public class Crowbar extends BaseRelic {
     public static final int AMOUNT = 75;
     public static final int THRESH = 90;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Crowbar");
+    public static final String ID = RiskOfRelics.makeID("Crowbar");
     private static final String IMAGENAME = "Crowbar.png";
 
     public Crowbar() {

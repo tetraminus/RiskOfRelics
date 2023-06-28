@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import javassist.CtBehavior;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.rewards.RerollReward;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -35,7 +35,7 @@ public class RecyclerPatches {
                     }
                 }
 
-                if (player.hasRelic(DefaultMod.makeID("Recycler")) && shouldtrigger) {
+                if (player.hasRelic(RiskOfRelics.makeID("Recycler")) && shouldtrigger) {
                     ___instance.rewards.add(new RerollReward());
                 }
 
@@ -74,7 +74,7 @@ public class RecyclerPatches {
 
                         }
                     }
-                    if (player.hasRelic(DefaultMod.makeID("Recycler")) && shouldtrigger) {
+                    if (player.hasRelic(RiskOfRelics.makeID("Recycler")) && shouldtrigger) {
                         ___instance.rewards.add(new RerollReward());
                     }
 

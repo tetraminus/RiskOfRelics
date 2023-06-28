@@ -3,7 +3,7 @@ package riskOfRelics.relics;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.PolyluteAction;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -18,7 +18,7 @@ public class Polylute extends BaseRelic {
      */
 
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Polylute");
+    public static final String ID = RiskOfRelics.makeID("Polylute");
 
 
     public static final float DAMAGESCALE = 20;

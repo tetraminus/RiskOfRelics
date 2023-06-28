@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.RegenPower;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -18,7 +18,7 @@ public class BustlingFungus extends BaseRelic {
     public static final int HEAL_AMOUNT_END = 10;
 
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("BustlingFungus");
+    public static final String ID = RiskOfRelics.makeID("BustlingFungus");
     private static final String IMAGENAME = "bustlingFungus.png";
 
     public BustlingFungus() {super(ID,IMAGENAME, RelicTier.COMMON, LandingSound.MAGICAL);}

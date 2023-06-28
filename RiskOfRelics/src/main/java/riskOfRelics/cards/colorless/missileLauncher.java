@@ -1,25 +1,15 @@
 package riskOfRelics.cards.colorless;
 
-import basemod.AutoAdd;
-import basemod.helpers.CardTags;
-import com.evacipated.cardcrawl.mod.stslib.StSLib;
-import com.evacipated.cardcrawl.mod.stslib.fields.cards.AbstractCard.ExhaustiveField;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
-import riskOfRelics.cards.AbstractDynamicCard;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.cards.AbstractEquipmentCard;
 
-import riskOfRelics.characters.TheDefault;
-import riskOfRelics.util.CustomTags;
-
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
-import static riskOfRelics.DefaultMod.makeCardPath;
+import static riskOfRelics.RiskOfRelics.makeCardPath;
 
 // public class missileLancher extends AbstractDynamicCard
 
@@ -47,7 +37,7 @@ public class missileLauncher extends AbstractEquipmentCard {
     // TEXT DECLARATION
 
     // public static final String ID = DefaultMod.makeID(missileLauncher.class.getSimpleName()); // USE THIS ONE FOR THE TEMPLATE;
-    public static final String ID = DefaultMod.makeID("missileLauncher"); // DELETE THIS ONE.
+    public static final String ID = RiskOfRelics.makeID("missileLauncher"); // DELETE THIS ONE.
     public static final String IMG = makeCardPath("missileLauncher.png");// "public static final String IMG = makeCardPath("missileLancher.png");
     // This does mean that you will need to have an image with the same NAME as the card in your image folder for it to run correctly.
 

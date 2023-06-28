@@ -1,7 +1,7 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 public class DelicateWatch extends BaseRelic {
     /*
@@ -11,7 +11,7 @@ public class DelicateWatch extends BaseRelic {
      */
 
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("DelicateWatch");
+    public static final String ID = RiskOfRelics.makeID("DelicateWatch");
 
 
     public static final float DAMAGEMULTPERCENT = 50;

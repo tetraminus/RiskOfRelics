@@ -3,7 +3,7 @@ package riskOfRelics.relics;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.DamageRandomEntityAction;
 
 
@@ -12,7 +12,7 @@ public class Meteorite extends BaseRelic {
 
     public static final int AMOUNT = 5;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Meteorite");
+    public static final String ID = RiskOfRelics.makeID("Meteorite");
     private static final String IMAGENAME = "Meteorite.png";
 
     public Meteorite() {

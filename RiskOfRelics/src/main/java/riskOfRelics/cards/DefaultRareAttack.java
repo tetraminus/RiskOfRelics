@@ -9,10 +9,10 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.combat.WeightyImpactEffect;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.characters.TheDefault;
 
-import static riskOfRelics.DefaultMod.makeCardPath;
+import static riskOfRelics.RiskOfRelics.makeCardPath;
 @AutoAdd.Ignore
 public class DefaultRareAttack extends AbstractDynamicCard {
 
@@ -25,7 +25,7 @@ public class DefaultRareAttack extends AbstractDynamicCard {
 
     // TEXT DECLARATION 
 
-    public static final String ID = DefaultMod.makeID(DefaultRareAttack.class.getSimpleName());
+    public static final String ID = RiskOfRelics.makeID(DefaultRareAttack.class.getSimpleName());
     public static final String IMG = makeCardPath("Attack.png");
 
     // /TEXT DECLARATION/

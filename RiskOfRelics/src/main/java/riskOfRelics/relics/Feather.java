@@ -1,7 +1,7 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.watcher.SkipEnemiesTurnAction;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class Feather extends BaseRelic {
@@ -9,7 +9,7 @@ public class Feather extends BaseRelic {
 
     public static final int AMOUNT = 1;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Feather");
+    public static final String ID = RiskOfRelics.makeID("Feather");
     private static final String IMAGENAME = "Feather.png";
 
     public Feather() {

@@ -1,18 +1,12 @@
 package riskOfRelics.relics;
 
 import basemod.AutoAdd;
-import basemod.abstracts.CustomRelic;
-import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.HandMirrorAction;
-import riskOfRelics.util.TextureLoader;
-
-import static riskOfRelics.DefaultMod.makeRelicOutlinePath;
-import static riskOfRelics.DefaultMod.makeRelicPath;
 
 @AutoAdd.Ignore
 public class HandMirror extends BaseRelic implements ClickableRelic { // You must implement things you want to use from StSlib
@@ -24,7 +18,7 @@ public class HandMirror extends BaseRelic implements ClickableRelic { // You mus
      */
 
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("HandMirror");
+    public static final String ID = RiskOfRelics.makeID("HandMirror");
 
 
 

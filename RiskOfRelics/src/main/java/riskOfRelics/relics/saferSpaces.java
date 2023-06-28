@@ -3,7 +3,7 @@ package riskOfRelics.relics;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.powers.BufferPower;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -13,7 +13,7 @@ public class saferSpaces extends BaseRelic {
 
     public static final int AMOUNT = 5;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("saferSpaces");
+    public static final String ID = RiskOfRelics.makeID("saferSpaces");
     private static final String IMAGENAME = "saferSpaces.png";
 
     public saferSpaces() {

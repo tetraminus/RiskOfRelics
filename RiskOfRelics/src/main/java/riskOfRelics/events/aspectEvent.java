@@ -7,19 +7,19 @@ import com.megacrit.cardcrawl.events.AbstractImageEvent;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.relics.*;
 import riskOfRelics.util.TextureLoader;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static riskOfRelics.DefaultMod.makeEventPath;
+import static riskOfRelics.RiskOfRelics.makeEventPath;
 
 public class aspectEvent extends AbstractImageEvent {
 
 
-    public static final String ID = DefaultMod.makeID("AspectEvent");
+    public static final String ID = RiskOfRelics.makeID("AspectEvent");
     private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
 
     private static final List<String> RELICS = Arrays.asList(fireAspect.ID, iceAspect.ID, earthAspect.ID, malAspect.ID, perfAspect.ID, lightningAspect.ID, ghostAspect.ID );

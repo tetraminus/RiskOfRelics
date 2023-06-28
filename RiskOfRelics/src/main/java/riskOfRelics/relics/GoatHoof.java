@@ -1,7 +1,7 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class GoatHoof extends BaseRelic {
@@ -9,7 +9,7 @@ public class GoatHoof extends BaseRelic {
 
     public static final int AMOUNT = 3;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("GoatHoof");
+    public static final String ID = RiskOfRelics.makeID("GoatHoof");
     private static final String IMAGENAME = "GoatHoof.png";
 
     public GoatHoof() {

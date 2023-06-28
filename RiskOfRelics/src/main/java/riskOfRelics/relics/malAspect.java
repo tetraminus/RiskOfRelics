@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.PoisonPower;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -17,7 +17,7 @@ public class malAspect extends BaseRelic {
 
     public static final int AMOUNT = 2;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("malAspect");
+    public static final String ID = RiskOfRelics.makeID("malAspect");
     private static final String IMAGENAME = "malAspect.png";
 
     public malAspect() {
@@ -40,6 +40,10 @@ public class malAspect extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
+        if (RiskOfRelics.AspectDescEnabled){
+            return DESCRIPTIONS[1] + AMOUNT + DESCRIPTIONS[2] + AMOUNT + DESCRIPTIONS[3];
+        }
+
         return DESCRIPTIONS[0];
     }
 

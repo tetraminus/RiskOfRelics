@@ -1,6 +1,6 @@
 package riskOfRelics.relics;
 
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -10,7 +10,7 @@ public class tougherTimes extends BaseRelic {
 
     public static final int AMOUNT = 10;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("tougherTimes");
+    public static final String ID = RiskOfRelics.makeID("tougherTimes");
     private static final String IMAGENAME = "tougherTimes.png";
 
     public tougherTimes() {

@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.events.AbstractImageEvent;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.relics.IrradiantPearl;
 import riskOfRelics.relics.Pearl;
 
@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
-import static riskOfRelics.DefaultMod.makeEventPath;
+import static riskOfRelics.RiskOfRelics.makeEventPath;
 
 public class CleansingPoolEvent extends AbstractImageEvent {
 
 
-    public static final String ID = DefaultMod.makeID("CleansingPoolEvent");
+    public static final String ID = RiskOfRelics.makeID("CleansingPoolEvent");
     private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
 
     private static final String NAME = eventStrings.NAME;

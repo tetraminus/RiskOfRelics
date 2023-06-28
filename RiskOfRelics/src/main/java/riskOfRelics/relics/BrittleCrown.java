@@ -3,7 +3,7 @@ package riskOfRelics.relics;
 import com.megacrit.cardcrawl.actions.common.GainGoldAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.LoseGoldAction;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -16,7 +16,7 @@ public class BrittleCrown extends BaseRelic {
     public static final int AMOUNT = 5;
 
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("BrittleCrown");
+    public static final String ID = RiskOfRelics.makeID("BrittleCrown");
     private static final String IMAGENAME = "BrittleCrown.png";
     private static final float AMOUNTLOSS = 2f;
 

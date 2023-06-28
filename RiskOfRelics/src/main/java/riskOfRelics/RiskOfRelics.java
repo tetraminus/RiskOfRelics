@@ -2,6 +2,7 @@ package riskOfRelics;
 
 import basemod.AutoAdd;
 import basemod.BaseMod;
+import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
 import basemod.eventUtil.AddEventParams;
 import basemod.eventUtil.EventUtils;
@@ -14,9 +15,11 @@ import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.helpers.CardHelper;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.RewardSave;
@@ -81,7 +84,7 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
  */
 
 @SpireInitializer
-public class DefaultMod implements
+public class RiskOfRelics implements
         EditCardsSubscriber,
         PostUpdateSubscriber,
         EditRelicsSubscriber,
@@ -91,13 +94,13 @@ public class DefaultMod implements
         PostInitializeSubscriber {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
     // Making relics? EditRelicsSubscriber. etc., etc., for a full list and how to make your own, visit the basemod wiki.
-    public static final Logger logger = LogManager.getLogger(DefaultMod.class.getName());
+    public static final Logger logger = LogManager.getLogger(RiskOfRelics.class.getName());
     private static String modID;
 
     // Mod-settings settings. This is if you want an on/off savable button
-    public static Properties theDefaultDefaultSettings = new Properties();
-    public static final String ENABLE_PLACEHOLDER_SETTINGS = "enablePlaceholder";
-    public static boolean enablePlaceholder = true; // The boolean we'll be setting on/off (true/false)
+    public static Properties riskOfRelicsDefaultSettings = new Properties();
+    public static final String ENABLE_ASPECT_DESC_SETTINGS = "enablePlaceholder";
+    public static boolean AspectDescEnabled = true; // The boolean we'll be setting on/off (true/false)
 
     //This is for the in-game mod settings panel.
     private static final String MODNAME = "Risk of Relics";
@@ -180,7 +183,7 @@ public class DefaultMod implements
 
     // =============== SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE =================
 
-    public DefaultMod() {
+    public RiskOfRelics() {
         logger.info("Subscribe to BaseMod hooks");
 
         BaseMod.subscribe(this);
@@ -228,12 +231,12 @@ public class DefaultMod implements
         logger.info("Adding mod settings");
         // This loads the mod settings.
         // The actual mod Button is added below in receivePostInitialize()
-        theDefaultDefaultSettings.setProperty(ENABLE_PLACEHOLDER_SETTINGS, "FALSE"); // This is the default setting. It's actually set...
+        riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE"); // This is the default setting. It's actually set...
         try {
-            SpireConfig config = new SpireConfig("defaultMod", "theDefaultConfig", theDefaultDefaultSettings); // ...right here
+            SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
             // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
             config.load(); // Load the setting and set the boolean to equal it
-            enablePlaceholder = config.getBool(ENABLE_PLACEHOLDER_SETTINGS);
+            AspectDescEnabled = config.getBool(ENABLE_ASPECT_DESC_SETTINGS);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -248,7 +251,7 @@ public class DefaultMod implements
     public static void setModID(String ID) { // DON'T EDIT
         Gson coolG = new Gson(); // EY DON'T EDIT THIS
         //   String IDjson = Gdx.files.internal("IDCheckStringsDONT-EDIT-AT-ALL.json").readString(String.valueOf(StandardCharsets.UTF_8)); // i hate u Gdx.files
-        InputStream in = DefaultMod.class.getResourceAsStream("/IDCheckStringsDONT-EDIT-AT-ALL.json"); // DON'T EDIT THIS ETHER
+        InputStream in = RiskOfRelics.class.getResourceAsStream("/IDCheckStringsDONT-EDIT-AT-ALL.json"); // DON'T EDIT THIS ETHER
         IDCheckDontTouchPls EXCEPTION_STRINGS = coolG.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), IDCheckDontTouchPls.class); // OR THIS, DON'T EDIT IT
         logger.info("You are attempting to set your mod ID as: " + ID); // NO WHY
         if (ID.equals(EXCEPTION_STRINGS.DEFAULTID)) { // DO *NOT* CHANGE THIS ESPECIALLY, TO EDIT YOUR MOD ID, SCROLL UP JUST A LITTLE, IT'S JUST ABOVE
@@ -268,9 +271,9 @@ public class DefaultMod implements
     private static void pathCheck() { // ALSO NO
         Gson coolG = new Gson(); // NOPE DON'T EDIT THIS
         //   String IDjson = Gdx.files.internal("IDCheckStringsDONT-EDIT-AT-ALL.json").readString(String.valueOf(StandardCharsets.UTF_8)); // i still hate u btw Gdx.files
-        InputStream in = DefaultMod.class.getResourceAsStream("/IDCheckStringsDONT-EDIT-AT-ALL.json"); // DON'T EDIT THISSSSS
+        InputStream in = RiskOfRelics.class.getResourceAsStream("/IDCheckStringsDONT-EDIT-AT-ALL.json"); // DON'T EDIT THISSSSS
         IDCheckDontTouchPls EXCEPTION_STRINGS = coolG.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), IDCheckDontTouchPls.class); // NAH, NO EDIT
-        String packageName = DefaultMod.class.getPackage().getName(); // STILL NO EDIT ZONE
+        String packageName = RiskOfRelics.class.getPackage().getName(); // STILL NO EDIT ZONE
         FileHandle resourcePathExists = Gdx.files.internal(getModID() + "Resources"); // PLEASE DON'T EDIT THINGS HERE, THANKS
         if (!modID.equals(EXCEPTION_STRINGS.DEVID)) { // LEAVE THIS EDIT-LESS
             if (!packageName.equals(getModID())) { // NOT HERE ETHER
@@ -287,7 +290,7 @@ public class DefaultMod implements
 
     public static void initialize() {
         logger.info("========================= Initializing Risk Of Relics. Hi. =========================");
-        DefaultMod defaultmod = new DefaultMod();
+        RiskOfRelics defaultmod = new RiskOfRelics();
         logger.info("========================= /Risk Of Relics Initialized. Hello World./ =========================");
     }
 
@@ -323,27 +326,27 @@ public class DefaultMod implements
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
 
-        // Create the on/off button:
-//        ModLabeledToggleButton enableNormalsButton = new ModLabeledToggleButton("This is the text which goes next to the checkbox.",
-//                350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
-//                enablePlaceholder, // Boolean it uses
-//                settingsPanel, // The mod panel in which this button will be in
-//                (label) -> {
-//                }, // thing??????? idk
-//                (button) -> { // The actual button:
-//
-//                    enablePlaceholder = button.enabled; // The boolean true/false will be whether the button is enabled or not
-//                    try {
-//                        // And based on that boolean, set the settings and save them
-//                        SpireConfig config = new SpireConfig("defaultMod", "theDefaultConfig", theDefaultDefaultSettings);
-//                        config.setBool(ENABLE_PLACEHOLDER_SETTINGS, enablePlaceholder);
-//                        config.save();
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                });
+//         Create the on/off button:
+        ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton("Enable Aspect Descriptions(Default: OFF) | Restart required.",
+                350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
+                AspectDescEnabled, // Boolean it uses
+                settingsPanel, // The mod panel in which this button will be in
+                (label) -> {
+                }, // thing??????? idk
+                (button) -> { // The actual button:
 
-//        settingsPanel.addUIElement(enableNormalsButton); // Add the button to the settings panel. Button is a go.
+                    AspectDescEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
+                    try {
+                        // And based on that boolean, set the settings and save them
+                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);;
+                        config.setBool(ENABLE_ASPECT_DESC_SETTINGS, AspectDescEnabled);
+                        config.save();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        settingsPanel.addUIElement(enableAspectDescButton); // Add the button to the settings panel. Button is a go.
 
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 

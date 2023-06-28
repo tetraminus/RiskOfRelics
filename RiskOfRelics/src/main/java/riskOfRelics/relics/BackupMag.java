@@ -1,18 +1,12 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.relics.Anchor;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.getCardWithoutRng;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 
@@ -21,7 +15,7 @@ public class BackupMag extends BaseRelic {
 
     public static final int AMOUNT = 1;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("BackupMag");
+    public static final String ID = RiskOfRelics.makeID("BackupMag");
     private static final String IMAGENAME = "BackupMag.png";
 
     public BackupMag() {

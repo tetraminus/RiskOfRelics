@@ -1,11 +1,7 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.HealAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class earthAspect extends BaseRelic {
@@ -13,7 +9,7 @@ public class earthAspect extends BaseRelic {
 
     public static final int AMOUNT = 5;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("earthAspect");
+    public static final String ID = RiskOfRelics.makeID("earthAspect");
     private static final String IMAGENAME = "earthAspect.png";
 
     public earthAspect() {
@@ -31,6 +27,9 @@ public class earthAspect extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
+        if (RiskOfRelics.AspectDescEnabled) {
+            return DESCRIPTIONS[1] + AMOUNT + DESCRIPTIONS[2];
+        }
         return DESCRIPTIONS[0];
     }
 

@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -14,7 +14,7 @@ public class CorpseBloom extends BaseRelic {
     boolean isCorpsebloomHeal;
     public static final float HEAL_AMOUNT = 0.25f;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("corpsebloom");
+    public static final String ID = RiskOfRelics.makeID("corpsebloom");
 
 
     private static final String IMAGENAME = "Corpsebloom.png";

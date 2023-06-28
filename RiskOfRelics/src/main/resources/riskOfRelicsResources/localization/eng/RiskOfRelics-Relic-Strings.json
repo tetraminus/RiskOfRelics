@@ -220,49 +220,57 @@
     "NAME": "Spectral Circlet",
     "FLAVOR": "You can't quite keep hold.",
     "DESCRIPTIONS": [
-      "Become an aspect of incorporeality."
+      "Become an aspect of incorporeality.",
+      "When you kill an enemy, gain #b"," #yIntangible."
     ]
   },
   "riskOfRelics:lightningAspect": {
     "NAME": "Silence Between Two Strikes",
     "FLAVOR": "Bzzt! Bzzt! Bzzt!",
     "DESCRIPTIONS": [
-      "Become an aspect of electricity."
+      "Become an aspect of electricity.",
+      "Your first attack each turn deals half damage to ALL enemies at the start of their turn."
     ]
   },
   "riskOfRelics:perfAspect": {
     "NAME": "Shared Design",
     "FLAVOR": "It's hard to look away",
     "DESCRIPTIONS": [
-      "Become an aspect of perfection."
+      "Become an aspect of perfection.",
+      "when you play #b"," attack cards in on turn, steal #b"," #yDexterity."
+
     ]
   },
   "riskOfRelics:malAspect": {
     "NAME": "N'kuhana's Retort",
     "FLAVOR": "Pure malice.",
     "DESCRIPTIONS": [
-      "Become an aspect of corruption."
+      "Become an aspect of corruption.",
+      "At the start of your turn, deal #b"," damage and apply #b"," #yPoison to ALL enemies."
     ]
   },
   "riskOfRelics:earthAspect": {
     "NAME": "His Reassurance",
     "FLAVOR": "Emits a comforting glow.",
     "DESCRIPTIONS": [
-      "Become an aspect of earth."
+      "Become an aspect of earth.",
+      "At the end of combat, heal #b","% of your Max HP."
     ]
   },
   "riskOfRelics:fireAspect": {
     "NAME": "Ifrit's Distinction",
     "FLAVOR": "spicy.",
     "DESCRIPTIONS": [
-      "Become an aspect of fire."
+      "Become an aspect of fire.",
+      "When you attack, apply #b"," Burning."
     ]
   },
   "riskOfRelics:iceAspect": {
     "NAME": "Her Biting Embrace",
     "FLAVOR": "You might want a blanket.",
     "DESCRIPTIONS": [
-      "Become an aspect of ice."
+      "Become an aspect of ice.",
+      "At the the start of combat, apply Slow to all enemies"
     ]
   },
   "riskOfRelics:corpsebloom": {

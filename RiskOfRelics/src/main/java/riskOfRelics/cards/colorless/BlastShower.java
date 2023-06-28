@@ -4,10 +4,10 @@ import com.megacrit.cardcrawl.actions.unique.RemoveDebuffsAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.cards.AbstractEquipmentCard;
 
-import static riskOfRelics.DefaultMod.makeCardPath;
+import static riskOfRelics.RiskOfRelics.makeCardPath;
 
 // public class missileLancher extends AbstractDynamicCard
 
@@ -35,7 +35,7 @@ public class BlastShower extends AbstractEquipmentCard {
     // TEXT DECLARATION
 
     // public static final String ID = DefaultMod.makeID(missileLauncher.class.getSimpleName()); // USE THIS ONE FOR THE TEMPLATE;
-    public static final String ID = DefaultMod.makeID("BlastShower"); // DELETE THIS ONE.
+    public static final String ID = RiskOfRelics.makeID("BlastShower"); // DELETE THIS ONE.
     public static final String IMG = makeCardPath("BlastShower.png");// "public static final String IMG = makeCardPath("missileLancher.png");
     // This does mean that you will need to have an image with the same NAME as the card in your image folder for it to run correctly.
 
