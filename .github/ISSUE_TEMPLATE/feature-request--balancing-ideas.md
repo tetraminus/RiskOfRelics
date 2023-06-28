@@ -1,9 +1,9 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: Feature request/ Balancing ideas
+about: Suggest an idea for this project, or suggest balance changes.
 title: ''
 labels: ''
-assignees: ''
+assignees: tetraminus
 
 ---
 
