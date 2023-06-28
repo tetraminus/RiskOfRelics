@@ -5,9 +5,13 @@ import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
+import com.megacrit.cardcrawl.powers.IntangiblePower;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import javassist.CtBehavior;
 import riskOfRelics.relics.ShapedGlass;
+
+import java.util.Objects;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -25,8 +29,15 @@ public class DoubleNumberPatches {
 
         )
         public static void DoubleIntentPatchMethod(AbstractMonster __instance, @ByRef int[] dmg) {
-            if (player.hasRelic(ShapedGlass.ID)) {
-                dmg[0] = dmg[0] * 2;
+            if (player.hasRelic(ShapedGlass.ID) &&
+                    !(player.hasPower(IntangiblePower.POWER_ID )||
+                            (player.hasPower(IntangiblePlayerPower.POWER_ID )))) {
+                int num = 0;
+
+                for (AbstractRelic r: player.relics) {
+                    if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
+                }
+                dmg[0] = dmg[0] * (int) Math.pow(ShapedGlass.AMOUNT,num);
             }
         }
 
@@ -104,8 +115,13 @@ public class DoubleNumberPatches {
         @SpirePrefixPatch
         //"A patch method must be a public static method."
         public static SpireReturn<Integer> DoubleCardPatchMethod(AbstractCard card) {
-            if (player.hasRelic(ShapedGlass.ID)) {
-                    return SpireReturn.Return(card.damage * 2);
+            if (AbstractDungeon.isPlayerInDungeon() && player != null && player.hasRelic(ShapedGlass.ID)) {
+                int num = 0;
+
+                for (AbstractRelic r: player.relics) {
+                    if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
+                }
+                    return SpireReturn.Return(card.damage * (int) Math.pow(ShapedGlass.AMOUNT,num));
             }
             return SpireReturn.Continue();
         }
@@ -113,14 +129,18 @@ public class DoubleNumberPatches {
     @SpirePatch2(    // "Use the @SpirePatch annotation on the patch class."
             clz = DamageVariable.class, // This is the class where the method we will be patching is. In our case - Abstract Dungeon
             method = "baseValue" // This is the name of the method we will be patching.
-
     )
     public static class DoubleCardPatchModif {
         @SpirePrefixPatch
         //"A patch method must be a public static method."
         public static SpireReturn<Integer> DoubleCardPatchMethod(AbstractCard card) {
-            if (AbstractDungeon.isPlayerInDungeon() && player.hasRelic(ShapedGlass.ID)) {
-                return SpireReturn.Return(card.baseDamage * 2);
+            if (AbstractDungeon.isPlayerInDungeon() && player != null&& player.hasRelic(ShapedGlass.ID)) {
+                int num = 0;
+
+                for (AbstractRelic r: player.relics) {
+                    if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
+                }
+                return SpireReturn.Return(card.baseDamage * (int) Math.pow(ShapedGlass.AMOUNT,num));
             }
             return SpireReturn.Continue();
         }

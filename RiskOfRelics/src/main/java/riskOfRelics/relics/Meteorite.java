@@ -20,13 +20,11 @@ public class Meteorite extends BaseRelic {
     }
 
 
-
     @Override
-    public void onPlayerEndTurn() {
+    public void atTurnStart() {
         this.addToBot(new DamageRandomEntityAction(new DamageInfo(AbstractDungeon.player, AMOUNT, DamageInfo.DamageType.THORNS),
-        AbstractGameAction.AttackEffect.FIRE));
-
-        super.onPlayerEndTurn();
+                AbstractGameAction.AttackEffect.FIRE));
+        super.atTurnStart();
     }
 
     @Override

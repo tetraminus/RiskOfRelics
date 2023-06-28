@@ -1,6 +1,5 @@
 package riskOfRelics.events;
 
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -8,9 +7,9 @@ import com.megacrit.cardcrawl.events.AbstractImageEvent;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.relics.*;
+import riskOfRelics.util.TextureLoader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +19,7 @@ import static riskOfRelics.DefaultMod.makeEventPath;
 public class aspectEvent extends AbstractImageEvent {
 
 
-    public static final String ID = DefaultMod.makeID("aspectEvent");
+    public static final String ID = DefaultMod.makeID("AspectEvent");
     private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
 
     private static final List<String> RELICS = Arrays.asList(fireAspect.ID, iceAspect.ID, earthAspect.ID, malAspect.ID, perfAspect.ID, lightningAspect.ID, ghostAspect.ID );
@@ -30,7 +29,8 @@ public class aspectEvent extends AbstractImageEvent {
     private static final String NAME = eventStrings.NAME;
     private static final String[] DESCRIPTIONS = eventStrings.DESCRIPTIONS;
     private static final String[] OPTIONS = eventStrings.OPTIONS;
-    public static final String IMG = makeEventPath("aspectEvent.png");
+    public static final String IMG = makeEventPath("AspectEvent.png");
+    private final int relicNum;
 
     private int screenNum = 0; // The initial screen we will see when encountering the event - screen 0;
 
@@ -40,17 +40,21 @@ public class aspectEvent extends AbstractImageEvent {
     public aspectEvent() {
 
         super(NAME, DESCRIPTIONS[0], IMG);
-        relic = RelicLibrary.getRelic((RELICS.get(AbstractDungeon.miscRng.random(RELICS.size()-1))));
+        relicNum = AbstractDungeon.miscRng.random(RELICS.size()-1);
+        relic = RelicLibrary.getRelic((RELICS.get(relicNum)));
+        this.img = TextureLoader.getTexture(getEventImage(relicNum));
 
+        String desc = DESCRIPTIONS[0] + getEventText(relicNum);
 
-        String desc = DESCRIPTIONS[0] + getEventText(relic);
-
+        imageEventText.loadImage(getEventImage(relicNum));
         // The first dialogue options available to us.
         this.body = desc;
         imageEventText.setDialogOption(OPTIONS[0]); // Inspiration - Gain a Random Starting Relic
         imageEventText.setDialogOption(OPTIONS[1]); // Denial - lose healthDamage Max HP
 
     }
+
+
 
     @Override
     protected void buttonEffect(int i) { // This is the event:
@@ -93,41 +97,61 @@ public class aspectEvent extends AbstractImageEvent {
         }
     }
 
-    public void update() { // We need the update() when we use grid screens (such as, in this case, the screen for selecting a card to remove)
-        super.update(); // Do everything the original update()
-        if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) { // Once the grid screen isn't empty (we selected a card for removal)
-            AbstractCard c = (AbstractCard)AbstractDungeon.gridSelectScreen.selectedCards.get(0); // Get the card
-            AbstractDungeon.topLevelEffects.add(new PurgeCardEffect(c, (float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2))); // Create the card removal effect
-            AbstractDungeon.player.masterDeck.removeCard(c); // Remove it from the deck
-            AbstractDungeon.gridSelectScreen.selectedCards.clear(); // Or you can .remove(c) instead of clear,
-            // if you want to continue using the other selected cards for something
+
+    private String getEventImage(int num) {
+        switch (num) {
+            case 0:
+                return makeEventPath("AspectEvent0.png"); //fire
+
+            case 1:
+                return makeEventPath("AspectEvent1.png"); //ice
+
+            case 2:
+                return makeEventPath("AspectEvent2.png"); //earth
+
+            case 3:
+                return makeEventPath("AspectEvent3.png");//mal
+
+            case 4:
+                return makeEventPath("AspectEvent4.png");//perf
+
+            case 5:
+                return makeEventPath("AspectEvent5.png");//lightning
+
+            case 6:
+                return makeEventPath("AspectEvent6.png");//celestine
+
+            default:
+                return makeEventPath("AspectEvent.png");//default
+
         }
 
     }
-    private String getEventText(AbstractRelic r){
-        if (r == RelicLibrary.getRelic(RELICS.get(0))){//fire
-            return DESCRIPTIONS[3];
-        }
-        else if (r == RelicLibrary.getRelic(RELICS.get(1))){//Ice
-            return DESCRIPTIONS[4];
-        }
-        else if (r == RelicLibrary.getRelic(RELICS.get(2))){//Earth
-            return DESCRIPTIONS[5];
-        }
-        else if (r == RelicLibrary.getRelic(RELICS.get(3))){//Malachite
-            return DESCRIPTIONS[6];
-        }
-        else if (r == RelicLibrary.getRelic(RELICS.get(4))){//Perfect
-            return DESCRIPTIONS[7];
-        }
-        else if (r == RelicLibrary.getRelic(RELICS.get(5))){//Lightning
-            return DESCRIPTIONS[8];
-        }
-        else if (r == RelicLibrary.getRelic(RELICS.get(6))){//Celestine
-            return DESCRIPTIONS[9];
-        }
-        else{
-            return "COULD NOT GET TEXT";
+    private String getEventText(int num){
+        switch (num) {
+            case 0:
+                return DESCRIPTIONS[3];
+
+            case 1:
+                return DESCRIPTIONS[4];
+
+            case 2:
+                return DESCRIPTIONS[5];
+
+            case 3:
+                return DESCRIPTIONS[6];
+
+            case 4:
+                return DESCRIPTIONS[7];
+
+            case 5:
+                return DESCRIPTIONS[8];
+
+            case 6:
+                return DESCRIPTIONS[9];
+
+            default:
+                return "Couldn't find text";
         }
 
     }

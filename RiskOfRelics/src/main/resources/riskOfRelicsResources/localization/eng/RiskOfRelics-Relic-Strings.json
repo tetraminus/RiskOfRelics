@@ -1,5 +1,20 @@
 {
+  "riskOfRelics:FocusedConvergence": {
+    "NAME": "Focused Convergence",
+    "FLAVOR": "Do not let it take you. Take it instead. Here.",
+    "DESCRIPTIONS": [
+      "Bosses start with #b","% health, #rbut have less rewards."
 
+    ]
+  },
+  "riskOfRelics:BrittleCrown": {
+    "NAME": "Brittle Crown",
+    "FLAVOR": "Your death is fated. When you die - and you WILL die - I will be ready.",
+    "DESCRIPTIONS": [
+      "When you attack an enemy, gain #b"," gold, #rbut when you lose hp, lose gold based on health lost."
+
+    ]
+  },
   "riskOfRelics:IrradiantPearl": {
     "NAME": "Irradiant Pearl",
     "FLAVOR": "Extra shiny!",

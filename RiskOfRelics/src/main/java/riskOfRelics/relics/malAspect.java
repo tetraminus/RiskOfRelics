@@ -25,19 +25,13 @@ public class malAspect extends BaseRelic {
     }
 
     @Override
-    public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-
-
-    }
-
-    @Override
     public void onPlayerEndTurn() {
         //deal damage to all enemies
 
-            AbstractDungeon.actionManager.addToBottom(new DamageAllEnemiesAction(player, DamageInfo.createDamageMatrix(1, true), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.POISON));
+            AbstractDungeon.actionManager.addToBottom(new DamageAllEnemiesAction(player, DamageInfo.createDamageMatrix(AMOUNT, true), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.POISON));
         for (AbstractCreature m : AbstractDungeon.getMonsters().monsters) {
 
-            AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(m, player, new PoisonPower(m,player, 1), 1));
+            AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(m, player, new PoisonPower(m,player, AMOUNT), AMOUNT));
         }
 
 

@@ -7,6 +7,8 @@ import com.megacrit.cardcrawl.vfx.FireBurstParticleEffect;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.actions.KjarosBandAction;
 
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+
 
 public class KjarosBand extends BaseRelic {
 
@@ -23,7 +25,7 @@ public class KjarosBand extends BaseRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (info.type == DamageInfo.DamageType.NORMAL && damageAmount > THRESHOLD) {
+        if (target != player && info.type == DamageInfo.DamageType.NORMAL && damageAmount > THRESHOLD) {
             flash();
             this.addToBot(new VFXAction(new FireBurstParticleEffect(target.hb.cX, target.hb.cY)));
             this.addToBot(new KjarosBandAction(AMOUNT));

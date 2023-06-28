@@ -7,6 +7,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.DefaultMod;
 import riskOfRelics.powers.BurningPower;
 
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+
 public class fireAspect extends BaseRelic{
 
 
@@ -20,8 +22,9 @@ public class fireAspect extends BaseRelic{
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        flash();
-        if (info.type== DamageInfo.DamageType.NORMAL && info.owner != null && damageAmount > 0) {
+
+        if (target != player && info.type== DamageInfo.DamageType.NORMAL && info.owner != null && damageAmount > 0) {
+            flash();
             AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(target, info.owner, new BurningPower(target, info.owner, Math.round(AMOUNT)), AMOUNT));
         }
 

@@ -46,7 +46,7 @@ public class Ukulele extends BaseRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (AbstractDungeon.cardRandomRng.random(100) <= CHANCE && info.type == DamageInfo.DamageType.NORMAL) {
+        if (target != player && AbstractDungeon.cardRandomRng.random(100) <= CHANCE && info.type == DamageInfo.DamageType.NORMAL) {
 
             AbstractDungeon.actionManager.addToBottom(new UkuleleAction(info.owner, target, Math.round(damageAmount*DAMAGESCALE), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.LIGHTNING));
 

@@ -5,7 +5,12 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.Anchor;
 import riskOfRelics.DefaultMod;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.getCardWithoutRng;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -22,13 +27,29 @@ public class BackupMag extends BaseRelic {
     public BackupMag() {
         super(ID, IMAGENAME, RelicTier.COMMON, LandingSound.FLAT);
     }
-
+    public AbstractRelic relToAdd;
     @Override
     public void onEquip() {
-        int randomrelic = AbstractDungeon.relicRng.random(player.relics.size()-2);
+        ArrayList<AbstractRelic> otherRelics = new ArrayList<AbstractRelic>();
 
-        AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float)(Settings.WIDTH / 2), (float)(Settings.HEIGHT / 2), player.relics.get(randomrelic).makeCopy());
+        for (AbstractRelic r : player.relics) {
+            if (!Objects.equals(r.relicId, this.relicId)){
+                otherRelics.add(r);
+            }
+        }
 
+        if (otherRelics.size() > 0) {
+            relToAdd = player.relics.get(AbstractDungeon.relicRng.random(otherRelics.size()-1));
+
+        }
+    }
+
+    public void postUpdate() {
+
+        if (relToAdd != null){
+            AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) (this.currentX), (float) (this.currentY), relToAdd.makeCopy());
+            relToAdd = null;
+        }
     }
 
     @Override

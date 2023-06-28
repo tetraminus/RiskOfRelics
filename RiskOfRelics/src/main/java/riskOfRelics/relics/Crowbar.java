@@ -24,7 +24,7 @@ public class Crowbar extends BaseRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (target.currentHealth >= (target.maxHealth*(THRESH/100f)) && info.type == DamageInfo.DamageType.NORMAL){
+        if (target != player && target.currentHealth >= (target.maxHealth*(THRESH/100f)) && info.type == DamageInfo.DamageType.NORMAL){
 
             this.addToBot(new DamageAction(target, new DamageInfo(player, Math.round(info.base*(AMOUNT/100f)), DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.BLUNT_LIGHT));
         }

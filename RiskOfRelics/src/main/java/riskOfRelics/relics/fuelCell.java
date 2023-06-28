@@ -21,11 +21,6 @@ public class fuelCell extends BaseRelic {
         super(ID, IMAGENAME, RelicTier.UNCOMMON, LandingSound.MAGICAL);
     }
 
-    @Override
-    public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-
-
-    }
 
 
     @Override

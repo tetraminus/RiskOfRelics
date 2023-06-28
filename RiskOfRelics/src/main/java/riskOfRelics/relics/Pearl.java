@@ -1,7 +1,5 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.megacrit.cardcrawl.rooms.TreasureRoom;
 import riskOfRelics.DefaultMod;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -10,7 +8,7 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class Pearl extends BaseRelic {
 
 
-    public static final int AMOUNT = 10;
+    public static final int AMOUNT = 30;
     // ID, images, text.
     public static final String ID = DefaultMod.makeID("Pearl");
     private static final String IMAGENAME = "Pearl.png";
