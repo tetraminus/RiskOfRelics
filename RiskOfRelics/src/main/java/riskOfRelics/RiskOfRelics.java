@@ -15,6 +15,7 @@ import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheCity;
@@ -46,6 +47,7 @@ import riskOfRelics.util.TextureLoader;
 import riskOfRelics.variables.DefaultCustomVariable;
 import riskOfRelics.variables.DefaultSecondMagicNumber;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -93,6 +95,7 @@ public class RiskOfRelics implements
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
 
+
         PostInitializeSubscriber {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
     // Making relics? EditRelicsSubscriber. etc., etc., for a full list and how to make your own, visit the basemod wiki.
@@ -108,6 +111,10 @@ public class RiskOfRelics implements
     private static final String MODNAME = "Risk of Relics";
     private static final String AUTHOR = "Tetraminus"; // And pretty soon - You!
     private static final String DESCRIPTION = "Risk of Rain 2 mod for Slay the Spire.";
+
+    public static ArrayList<Artifacts> ActiveArtifacts = new ArrayList<Artifacts>();
+    public static ArrayList<Artifacts> UnlockedArtifacts = new ArrayList<Artifacts>();
+    public static SpireConfig ModConfig;
 
     // =============== INPUT TEXTURE LOCATION =================
 
@@ -137,7 +144,7 @@ public class RiskOfRelics implements
     private static final String SKILL_DEFAULT_GRAY_PORTRAIT = "riskOfRelicsResources/images/1024/bg_skill_default_gray.png";
     private static final String POWER_DEFAULT_GRAY_PORTRAIT = "riskOfRelicsResources/images/1024/bg_power_default_gray.png";
     private static final String ENERGY_ORB_DEFAULT_GRAY_PORTRAIT = "riskOfRelicsResources/images/1024/card_default_gray_orb.png";
-
+    public static SpireConfig modConfig;
     // Character assets
     private static final String THE_DEFAULT_BUTTON = "riskOfRelicsResources/images/charSelect/DefaultCharacterButton.png";
     private static final String THE_DEFAULT_PORTRAIT = "riskOfRelicsResources/images/charSelect/DefaultCharacterPortraitBG.png";
@@ -235,10 +242,10 @@ public class RiskOfRelics implements
         // The actual mod Button is added below in receivePostInitialize()
         riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE"); // This is the default setting. It's actually set...
         try {
-            SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
+            ModConfig = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
             // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
-            config.load(); // Load the setting and set the boolean to equal it
-            AspectDescEnabled = config.getBool(ENABLE_ASPECT_DESC_SETTINGS);
+            ModConfig.load(); // Load the setting and set the boolean to equal it
+            AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -294,7 +301,38 @@ public class RiskOfRelics implements
         logger.info("========================= Initializing Risk Of Relics. Hi. =========================");
         RiskOfRelics defaultmod = new RiskOfRelics();
         logger.info("========================= /Risk Of Relics Initialized. Hello World./ =========================");
+
+    try {
+        for (String A:
+                ModConfig.getString("Artifacts").split(",")) {
+            UnlockedArtifacts.add(getArtifactfromName(A));
+
+        }
+    } catch (Exception e) {
+        ModConfig.setString("Artifacts","");
     }
+        try {
+            ModConfig.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void saveData() {
+        try {
+            for (Artifacts A:
+                    UnlockedArtifacts) {
+                ModConfig.setString("Artifacts",ModConfig.getString("Artifacts")+A.name()+",");
+
+            }
+            ModConfig.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
 
@@ -553,6 +591,10 @@ public class RiskOfRelics implements
         BaseMod.loadCustomStringsFile(OrbStrings.class,
                 getModID() + "Resources/localization/eng/RiskOfRelics-Orb-Strings.json");
 
+        // UIStrings
+        BaseMod.loadCustomStringsFile(UIStrings.class,
+                getModID() + "Resources/localization/eng/RiskOfRelics-UI-Strings.json");
+
         logger.info("Done editing strings");
     }
 
@@ -598,6 +640,74 @@ public class RiskOfRelics implements
 
 
 
+    public enum Artifacts {
+        SPITE,
+        SOUL,
+        GLASS,
+        COMMAND,
+        DEATH,
+        CHAOS,
+        ENIGMA,
+        EVOLUTION,
+        WEAKASSKNEES,
+        SACRIFICE,
+        DISSONANCE,
+        METAMORPHOSIS,
+        KIN,
+        HONOR,
+        VENGEANCE,
+        SWARMS
+    }
+
+    public static Artifacts getArtifact(int artifactNum) {
+        switch (artifactNum) {
+            case 0:
+                return Artifacts.SPITE;
+            case 1:
+                return Artifacts.COMMAND;
+            case 2:
+                return Artifacts.DEATH;
+            case 3:
+                return Artifacts.HONOR;
+            case 4:
+                return Artifacts.EVOLUTION;
+            case 5:
+                return Artifacts.WEAKASSKNEES;
+            case 6:
+                return Artifacts.CHAOS;
+            case 7:
+                return Artifacts.GLASS;
+            case 8:
+                return Artifacts.KIN;
+            case 9:
+                return Artifacts.METAMORPHOSIS;
+            case 10:
+                return Artifacts.DISSONANCE;
+            case 11:
+                return Artifacts.ENIGMA;
+            case 12:
+                return Artifacts.SACRIFICE;
+            case 13:
+                return Artifacts.VENGEANCE;
+            case 14:
+                return Artifacts.SWARMS;
+            case 15:
+                return Artifacts.SOUL;
+            default:
+                return Artifacts.SPITE;
+
+        }
+    }
+    private static Artifacts getArtifactfromName(String a) {
+        return Artifacts.valueOf(a);
+    }
+
+    public static String getArtifactName(Artifacts a){
+        UIStrings Str = CardCrawlGame.languagePack.getUIString(makeID(a.toString()));
+        return Str.TEXT[0];
+
+
+    }
 
 
     @Override
