@@ -1,4 +1,12 @@
 {
+  "riskOfRelics:YellowKey": {
+    "NAME": "Artifact Key",
+    "FLAVOR": "\"Two brothers, one composed of ambition and the other compassion\"",
+    "DESCRIPTIONS": [
+      "Opens the way to the Bulwark's Ambry."
+
+    ]
+  },
   "riskOfRelics:FocusedConvergence": {
     "NAME": "Focused Convergence",
     "FLAVOR": "Do not let it take you. Take it instead. Here.",
@@ -254,7 +262,7 @@
     "FLAVOR": "Emits a comforting glow.",
     "DESCRIPTIONS": [
       "Become an aspect of earth.",
-      "At the end of combat, heal #b","% of your Max HP."
+      "Every #b"," enemies killed, heal for #b"," HP."
     ]
   },
   "riskOfRelics:fireAspect": {

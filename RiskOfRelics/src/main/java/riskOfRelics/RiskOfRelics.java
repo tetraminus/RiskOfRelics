@@ -39,6 +39,7 @@ import riskOfRelics.relics.BackupMag;
 import riskOfRelics.relics.BaseRelic;
 import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
+import riskOfRelics.screens.ArtifactSelectScreen;
 import riskOfRelics.util.ChargesVariable;
 import riskOfRelics.util.IDCheckDontTouchPls;
 import riskOfRelics.util.TextureLoader;
@@ -91,6 +92,7 @@ public class RiskOfRelics implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
+
         PostInitializeSubscriber {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
     // Making relics? EditRelicsSubscriber. etc., etc., for a full list and how to make your own, visit the basemod wiki.
@@ -322,6 +324,7 @@ public class RiskOfRelics implements
 
         // Load the Mod Badge
         Texture badgeTexture = TextureLoader.getTexture(BADGE_IMAGE);
+        BaseMod.addCustomScreen(new ArtifactSelectScreen());
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
@@ -395,6 +398,8 @@ public class RiskOfRelics implements
         logger.info("Done loading badge Image and mod options");
 
 
+
+
         BaseMod.registerCustomReward(RerollRewardPatch.RISKOFRELICS_REROLL, (rewardSave) -> { // this handles what to do when this quest type is loaded.
                     return new RerollReward();
                 },
@@ -404,6 +409,8 @@ public class RiskOfRelics implements
     }
 
     // =============== / POST-INITIALIZE/ =================
+
+
 
     // ================ ADD POTIONS ===================
 

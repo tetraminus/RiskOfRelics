@@ -98,7 +98,7 @@ public class ShrineOfChance extends AbstractImageEvent {
 
     }
 
-    public void update() { // We need the update() when we use grid screens (such as, in this case, the screen for selecting a card to remove)
+    public void update() { // We need the update() when we use grid riskOfRelics.screens (such as, in this case, the screen for selecting a card to remove)
         super.update(); // Do everything the original update()
         if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) { // Once the grid screen isn't empty (we selected a card for removal)
             AbstractCard c = (AbstractCard)AbstractDungeon.gridSelectScreen.selectedCards.get(0); // Get the card
