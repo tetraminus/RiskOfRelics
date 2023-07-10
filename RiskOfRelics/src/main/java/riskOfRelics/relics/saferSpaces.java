@@ -46,6 +46,8 @@ public class saferSpaces extends BaseRelic {
         super.atTurnStart();
     }
 
+
+
     @Override
     public void onVictory() {
         counter = -1;
