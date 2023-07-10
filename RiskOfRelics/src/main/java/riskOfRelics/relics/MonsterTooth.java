@@ -2,7 +2,7 @@ package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -12,7 +12,7 @@ public class MonsterTooth extends BaseRelic {
 
     public static final int AMOUNT = 2;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("MonsterTooth");
+    public static final String ID = RiskOfRelics.makeID("MonsterTooth");
     private static final String IMAGENAME = "MonsterTooth.png";
 
     public MonsterTooth() {

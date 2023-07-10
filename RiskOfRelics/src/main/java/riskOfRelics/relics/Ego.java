@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class Ego extends BaseRelic {
 
     public static final int AMOUNT = 10;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Ego");
+    public static final String ID = RiskOfRelics.makeID("Ego");
     private static final String IMAGENAME = "Ego.png";
     public AbstractRelic relicToremove = null;
 

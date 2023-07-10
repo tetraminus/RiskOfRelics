@@ -1,11 +1,6 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class ShapedGlass extends BaseRelic {
@@ -13,7 +8,7 @@ public class ShapedGlass extends BaseRelic {
 
     public static final int AMOUNT = 2;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("ShapedGlass");
+    public static final String ID = RiskOfRelics.makeID("ShapedGlass");
     private static final String IMAGENAME = "ShapedGlass.png";
 
     public ShapedGlass() {

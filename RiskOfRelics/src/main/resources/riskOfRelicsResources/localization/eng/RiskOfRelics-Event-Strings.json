@@ -1,4 +1,15 @@
 {
+  "riskOfRelics:AmbrySelectEvent": {
+    "NAME": "???",
+    "DESCRIPTIONS": [
+      "You come across a strange room, filled with a variety of artifact. NL You feel a strange power emanating from them, and wonder what they are."
+
+    ],
+    "OPTIONS": [
+      "[Choose] #gChoose #ga #gArtifact."
+
+    ]
+  },
   "riskOfRelics:ShrineOfChance": {
     "NAME": "Shrine Of Chance",
     "DESCRIPTIONS": [

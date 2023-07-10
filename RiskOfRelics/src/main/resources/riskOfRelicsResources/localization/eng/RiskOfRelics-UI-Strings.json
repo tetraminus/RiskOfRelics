@@ -1,0 +1,118 @@
+{
+        "riskOfRelics:ArtifactSelect" : {
+                "TEXT": [
+                        "Artifact Selection",
+                        "Select your artifacts",
+                        "You have no artifacts to activate."
+                ]
+        },
+        "riskOfRelics:ArtifactTopPanelItem": {
+                "TEXT": [
+                        "Artifacts",
+                        "Shows your active artifacts.",
+                        "You have no active artifacts."
+                ]
+
+
+        },
+
+        "riskOfRelics:SPITE": {
+                "TEXT": [
+                "Spite",
+                "Spite description"
+                ]
+        },
+        "riskOfRelics:COMMAND": {
+                "TEXT": [
+                "Command",
+                "Command description"
+                ]
+        },
+        "riskOfRelics:DEATH": {
+                "TEXT": [
+                "Death",
+                "Death description"
+                ]
+        },
+        "riskOfRelics:HONOR": {
+                "TEXT": [
+                "Honor",
+                "Honor description"
+                ]
+        },
+        "riskOfRelics:EVOLUTION": {
+                "TEXT": [
+                "Evolution",
+                "Evolution description"
+                ]
+        },
+        "riskOfRelics:WEAKASSKNEES":{
+                "TEXT": [
+                        "Frailty",
+                        "Frailty description"
+                ]
+
+        },
+        "riskOfRelics:CHAOS": {
+                "TEXT": [
+                "Chaos",
+                "Chaos description"
+                ]
+        },
+        "riskOfRelics:GLASS": {
+                "TEXT": [
+                "Glass",
+                "Glass description"
+                ]
+        },
+        "riskOfRelics:KIN": {
+                "TEXT": [
+                "Kin",
+                "Kin description"
+                ]
+        },
+        "riskOfRelics:METAMORPHOSIS": {
+                "TEXT": [
+                "Metamorphosis",
+                "Metamorphosis description"
+                ]
+        },
+        "riskOfRelics:DISSONANCE": {
+                "TEXT": [
+                "Dissonance",
+                "Dissonance description"
+                ]
+        },
+        "riskOfRelics:ENIGMA": {
+                "TEXT": [
+                "Enigma",
+                "Enigma description"
+                ]
+        },
+        "riskOfRelics:SACRIFICE": {
+                "TEXT": [
+                "Sacrifice",
+                "Sacrifice description"
+                ]
+        },
+        "riskOfRelics:VENGEANCE": {
+                "TEXT": [
+                "Vengeance",
+                "Vengeance description"
+                ]
+        },
+        "riskOfRelics:SWARMS": {
+                "TEXT": [
+                "Swarms",
+                "Swarms description"
+                ]
+        },
+        "riskOfRelics:SOUL": {
+                "TEXT": [
+                "Soul",
+                "Soul description"
+                ]
+        }
+
+
+}

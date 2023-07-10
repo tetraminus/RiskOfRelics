@@ -3,7 +3,7 @@ package riskOfRelics.relics;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class APRounds extends BaseRelic {
@@ -11,7 +11,7 @@ public class APRounds extends BaseRelic {
     public boolean isBoss;
     public static final float AMOUNT = 20;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("APRounds");
+    public static final String ID = RiskOfRelics.makeID("APRounds");
     private static final String IMAGENAME = "APRounds.png";
 
     public APRounds() {

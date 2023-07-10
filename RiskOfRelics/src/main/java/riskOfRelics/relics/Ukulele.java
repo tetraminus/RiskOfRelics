@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.UkuleleAction;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -19,7 +19,7 @@ public class Ukulele extends BaseRelic {
      */
 
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Ukulele");
+    public static final String ID = RiskOfRelics.makeID("Ukulele");
 
 
     public float DAMAGESCALE = 0.5f;

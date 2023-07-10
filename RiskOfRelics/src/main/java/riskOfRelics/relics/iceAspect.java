@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.SlowPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 public class iceAspect extends BaseRelic{
 
@@ -13,7 +13,7 @@ public class iceAspect extends BaseRelic{
     public static final float SCALAR = 0.2f;
     public static final int AMOUNT = 2;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("iceAspect");
+    public static final String ID = RiskOfRelics.makeID("iceAspect");
     private static final String IMAGENAME = "iceAspect.png";
 
     public iceAspect() {super(ID,IMAGENAME, RelicTier.SPECIAL, LandingSound.MAGICAL);}
@@ -32,6 +32,9 @@ public class iceAspect extends BaseRelic{
 
     @Override
     public String getUpdatedDescription() {
+        if (RiskOfRelics.AspectDescEnabled){
+            return DESCRIPTIONS[1];
+        }
         return DESCRIPTIONS[0] ;
     }
 

@@ -1,8 +1,6 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -12,7 +10,7 @@ public class tougherTimes extends BaseRelic {
 
     public static final int AMOUNT = 10;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("tougherTimes");
+    public static final String ID = RiskOfRelics.makeID("tougherTimes");
     private static final String IMAGENAME = "tougherTimes.png";
 
     public tougherTimes() {
@@ -30,17 +28,8 @@ public class tougherTimes extends BaseRelic {
 
     }
 
-    @Override
-    public int onAttackedToChangeDamage(DamageInfo info, int damageAmount) {
-        int ran = AbstractDungeon.relicRng.random(100);
-        //logger.info(ran);
-        if (ran<=AMOUNT && info.type != DamageInfo.DamageType.HP_LOSS){
-            flash();
 
-            return 0;
-        }
-        return super.onAttackedToChangeDamage(info, damageAmount);
-    }
+
     @Override
     public String getUpdatedDescription() {
         return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];

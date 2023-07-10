@@ -3,7 +3,7 @@ package riskOfRelics.relics;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class TopazBrooch extends BaseRelic {
@@ -11,7 +11,7 @@ public class TopazBrooch extends BaseRelic {
 
     public static final int AMOUNT = 8;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("TopazBrooch");
+    public static final String ID = RiskOfRelics.makeID("TopazBrooch");
     private static final String IMAGENAME = "TopazBrooch.png";
 
     public TopazBrooch() {

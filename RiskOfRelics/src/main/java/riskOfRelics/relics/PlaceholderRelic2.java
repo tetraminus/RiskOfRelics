@@ -7,11 +7,11 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.StrengthPower;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.util.TextureLoader;
 
-import static riskOfRelics.DefaultMod.makeRelicOutlinePath;
-import static riskOfRelics.DefaultMod.makeRelicPath;
+import static riskOfRelics.RiskOfRelics.makeRelicOutlinePath;
+import static riskOfRelics.RiskOfRelics.makeRelicPath;
 @AutoAdd.Ignore
 public class PlaceholderRelic2 extends CustomRelic {
     /*
@@ -21,7 +21,7 @@ public class PlaceholderRelic2 extends CustomRelic {
      */
 
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("PlaceholderRelic2");
+    public static final String ID = RiskOfRelics.makeID("PlaceholderRelic2");
 
     private static final Texture IMG = TextureLoader.getTexture(makeRelicPath("placeholder_relic2.png"));
     private static final Texture OUTLINE = TextureLoader.getTexture(makeRelicOutlinePath("placeholder_relic2.png"));
@@ -31,7 +31,7 @@ public class PlaceholderRelic2 extends CustomRelic {
     }
 
 
-    // Gain 1 Strength on on equip.
+    // Gain 1 Strength on equip.
     @Override
     public void atBattleStart() {
         flash();

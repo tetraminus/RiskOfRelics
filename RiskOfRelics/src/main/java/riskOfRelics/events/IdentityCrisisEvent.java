@@ -13,14 +13,14 @@ import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
-import static riskOfRelics.DefaultMod.makeEventPath;
+import static riskOfRelics.RiskOfRelics.makeEventPath;
 
 public class IdentityCrisisEvent extends AbstractImageEvent {
 
 
-    public static final String ID = DefaultMod.makeID("IdentityCrisisEvent");
+    public static final String ID = RiskOfRelics.makeID("IdentityCrisisEvent");
     private static final EventStrings eventStrings = CardCrawlGame.languagePack.getEventString(ID);
 
     private static final String NAME = eventStrings.NAME;
@@ -128,7 +128,7 @@ public class IdentityCrisisEvent extends AbstractImageEvent {
         }
     }
 
-    public void update() { // We need the update() when we use grid screens (such as, in this case, the screen for selecting a card to remove)
+    public void update() { // We need the update() when we use grid riskOfRelics.screens (such as, in this case, the screen for selecting a card to remove)
         super.update(); // Do everything the original update()
         if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) { // Once the grid screen isn't empty (we selected a card for removal)
             AbstractCard c = (AbstractCard)AbstractDungeon.gridSelectScreen.selectedCards.get(0); // Get the card

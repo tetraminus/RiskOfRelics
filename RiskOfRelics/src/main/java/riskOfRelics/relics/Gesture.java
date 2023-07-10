@@ -2,7 +2,7 @@ package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class Gesture extends BaseRelic {
@@ -10,7 +10,7 @@ public class Gesture extends BaseRelic {
 
     public static final int AMOUNT = 0;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Gesture");
+    public static final String ID = RiskOfRelics.makeID("Gesture");
     private static final String IMAGENAME = "Gesture.png";
 
     public Gesture() {

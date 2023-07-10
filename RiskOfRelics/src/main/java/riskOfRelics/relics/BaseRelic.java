@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import riskOfRelics.util.TextureLoader;
 
-import static riskOfRelics.DefaultMod.*;
+import static riskOfRelics.RiskOfRelics.*;
 
 public abstract class BaseRelic extends CustomRelic {
     public AbstractCard.CardColor pool = null;

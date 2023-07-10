@@ -1,7 +1,7 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 
 public class Purity extends BaseRelic {
@@ -9,7 +9,7 @@ public class Purity extends BaseRelic {
 
     public static final float AMOUNT = 75;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("Purity");
+    public static final String ID = RiskOfRelics.makeID("Purity");
     private static final String IMAGENAME = "Purity.png";
 
     public Purity() {

@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.vfx.UrnSuckEffect;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -19,7 +19,7 @@ public class MiredUrn extends BaseRelic {
     public AbstractMonster target;
 
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("MiredUrn");
+    public static final String ID = RiskOfRelics.makeID("MiredUrn");
     private static final String IMAGENAME = "MiredUrn.png";
     private int targetIndex = 0;
     public MiredUrn() {

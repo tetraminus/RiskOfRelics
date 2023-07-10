@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -13,9 +13,9 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class ghostAspect extends BaseRelic {
 
 
-    public static final int AMOUNT = 10;
+    public static final int AMOUNT = 1;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("ghostAspect");
+    public static final String ID = RiskOfRelics.makeID("ghostAspect");
     private static final String IMAGENAME = "ghostAspect.png";
 
     public ghostAspect() {
@@ -27,13 +27,16 @@ public class ghostAspect extends BaseRelic {
 
             this.flash();// 36
             this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
-            this.addToBot(new ApplyPowerAction(player, player, new IntangiblePlayerPower(player, 1 )));
+            this.addToBot(new ApplyPowerAction(player, player, new IntangiblePlayerPower(player, AMOUNT )));
         super.onMonsterDeath(m);
 
     }
 
     @Override
     public String getUpdatedDescription() {
+        if(RiskOfRelics.AspectDescEnabled){
+            return DESCRIPTIONS[1] + AMOUNT + DESCRIPTIONS[2];
+        }
         return DESCRIPTIONS[0];
     }
 

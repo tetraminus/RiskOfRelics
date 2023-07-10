@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.powers.BurningPower;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -12,10 +12,10 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class fireAspect extends BaseRelic{
 
 
-    public static final float SCALAR = 0.2f;
+
     public static final int AMOUNT = 2;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("fireAspect");
+    public static final String ID = RiskOfRelics.makeID("fireAspect");
     private static final String IMAGENAME = "fireAspect.png";
 
     public fireAspect() {super(ID,IMAGENAME, RelicTier.SPECIAL, LandingSound.MAGICAL);}
@@ -32,6 +32,9 @@ public class fireAspect extends BaseRelic{
 
     @Override
     public String getUpdatedDescription() {
+        if (RiskOfRelics.AspectDescEnabled) {
+            return DESCRIPTIONS[1] + AMOUNT + DESCRIPTIONS[2];
+        }
         return DESCRIPTIONS[0];
     }
 

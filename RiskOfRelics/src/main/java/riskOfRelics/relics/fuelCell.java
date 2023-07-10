@@ -1,9 +1,7 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.cards.AbstractEquipmentCard;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -14,7 +12,7 @@ public class fuelCell extends BaseRelic {
 
     public static final int AMOUNT = 1;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("fuelCell");
+    public static final String ID = RiskOfRelics.makeID("fuelCell");
     private static final String IMAGENAME = "fuelCell.png";
 
     public fuelCell() {

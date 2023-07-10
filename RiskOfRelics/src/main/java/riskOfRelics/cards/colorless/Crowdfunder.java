@@ -3,11 +3,11 @@ package riskOfRelics.cards.colorless;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.cards.AbstractEquipmentCard;
 import riskOfRelics.powers.CrowdfunderPower;
 
-import static riskOfRelics.DefaultMod.makeCardPath;
+import static riskOfRelics.RiskOfRelics.makeCardPath;
 
 // public class missileLancher extends AbstractDynamicCard
 
@@ -35,7 +35,7 @@ public class Crowdfunder extends AbstractEquipmentCard {
     // TEXT DECLARATION
 
     // public static final String ID = DefaultMod.makeID(missileLauncher.class.getSimpleName()); // USE THIS ONE FOR THE TEMPLATE;
-    public static final String ID = DefaultMod.makeID("Crowdfunder"); // DELETE THIS ONE.
+    public static final String ID = RiskOfRelics.makeID("Crowdfunder"); // DELETE THIS ONE.
     public static final String IMG = makeCardPath("Crowdfunder.png");// "public static final String IMG = makeCardPath("missileLancher.png");
     // This does mean that you will need to have an image with the same NAME as the card in your image folder for it to run correctly.
 

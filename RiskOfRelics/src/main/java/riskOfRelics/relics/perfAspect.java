@@ -1,11 +1,11 @@
 package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.DexterityPower;
-import riskOfRelics.DefaultMod;
+import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -16,7 +16,7 @@ public class perfAspect extends BaseRelic {
     public static final int AMOUNT = 1;
     public static final int TRIGGERAMOUNT = 4;
     // ID, images, text.
-    public static final String ID = DefaultMod.makeID("perfAspect");
+    public static final String ID = RiskOfRelics.makeID("perfAspect");
     private static final String IMAGENAME = "perfAspect.png";
 
     public perfAspect() {
@@ -31,17 +31,21 @@ public class perfAspect extends BaseRelic {
     }
 
     @Override
-    public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (target != player) {
-            this.counter++;
-            if (this.counter == TRIGGERAMOUNT) {
-                flash();
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(target, player, new DexterityPower(target, -AMOUNT), -AMOUNT));
-                //add one dex to player
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(player, player, new DexterityPower(player, AMOUNT), AMOUNT));
-            }
+    public void onUseCard(AbstractCard targetCard, UseCardAction useCardAction) {
+        if (targetCard.type == AbstractCard.CardType.ATTACK) {
+
+                this.counter++;
+                if (this.counter == TRIGGERAMOUNT) {
+                    flash();
+                    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(useCardAction.target, player, new DexterityPower(useCardAction.target, -AMOUNT), -AMOUNT));
+                    //add one dex to player
+                    AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(player, player, new DexterityPower(player, AMOUNT), AMOUNT));
+                }
+
         }
 
+
+        super.onUseCard(targetCard, useCardAction);
     }
 
     @Override
@@ -58,6 +62,11 @@ public class perfAspect extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
+        if(RiskOfRelics.AspectDescEnabled){
+            return DESCRIPTIONS[1] + TRIGGERAMOUNT + DESCRIPTIONS[2] + AMOUNT + DESCRIPTIONS[3];
+        }
+
+
         return DESCRIPTIONS[0];
     }
 
