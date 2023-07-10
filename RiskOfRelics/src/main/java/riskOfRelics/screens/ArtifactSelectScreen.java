@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -18,10 +19,14 @@ import riskOfRelics.RiskOfRelics;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import static com.megacrit.cardcrawl.core.CardCrawlGame.cancelButton;
+
 public class ArtifactSelectScreen extends CustomScreen
 {
 
         private ArrayList<Artifact> artifacts = new ArrayList<>();
+        private boolean CloseOnSelect;
+
         private static class Artifact
         {
                 public Texture texture;
@@ -50,11 +55,11 @@ public class ArtifactSelectScreen extends CustomScreen
                 }
 
         }
-        public ArtifactSelectScreen(){
+        public ArtifactSelectScreen() {
                 for (int i = 0; i < 16; i++) {
                         artifacts.add(new Artifact(ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_off.png"),
                                 ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_on.png"),
-                                RiskOfRelics.getArtifact(i),RiskOfRelics.getArtifactName(RiskOfRelics.getArtifact(i)), "Artifact" + i + " description",
+                                RiskOfRelics.getArtifact(i),RiskOfRelics.getArtifactName(RiskOfRelics.getArtifact(i)), RiskOfRelics.getArtifactDescription(RiskOfRelics.getArtifact(i)),
                                 (int) Settings.WIDTH / 2 - 200 + 100 * (i % 4),
                                 (int) Settings.HEIGHT / 2 - 200 + 100 * (i / 4)));
                         if (artifacts.get(i).texture == null){
@@ -81,12 +86,12 @@ public class ArtifactSelectScreen extends CustomScreen
         // Note that this can be private and take any parameters you want.
         // When you call openCustomScreen it finds the first method named "open"
         // and calls it with whatever arguments were passed to it.
-        private void open()
+        private void open(boolean CloseOnSelect)
         {
-                if (AbstractDungeon.screen != AbstractDungeon.CurrentScreen.NONE)
-                        AbstractDungeon.previousScreen = AbstractDungeon.screen;
+                if (AbstractDungeon.screen != AbstractDungeon.CurrentScreen.NONE) AbstractDungeon.previousScreen = AbstractDungeon.screen;
                 // Call reopen in this example because the basics of
                 // setting the current screen are the same across both
+                this.CloseOnSelect = CloseOnSelect;
                 reopen();
         }
 
@@ -96,6 +101,9 @@ public class ArtifactSelectScreen extends CustomScreen
                 Logger.getLogger(ArtifactSelectScreen.class.getName()).info("Reopening screen");
                 AbstractDungeon.screen = curScreen();
                 AbstractDungeon.isScreenUp = true;
+                if (!this.CloseOnSelect){
+                        cancelButton.show("Cancel");
+                }
                 //CardCrawlGame.fadeIn(0);
         }
 
@@ -113,18 +121,23 @@ public class ArtifactSelectScreen extends CustomScreen
 
 
                         a.Hovered = a.hb.hovered;
-                        if (a.hb.justHovered){
+                        if (a.hb.justHovered && !RiskOfRelics.UnlockedArtifacts.contains(a.artifact)){
                                 CardCrawlGame.sound.play("UI_HOVER");
                         }
 
-                        if (InputHelper.justClickedLeft && a.hb.hovered ){
-                                //RiskOfRelics.addArtifact(a.artifact);
+                        if (InputHelper.justClickedLeft && a.hb.hovered && !RiskOfRelics.UnlockedArtifacts.contains(a.artifact)){
+                                RiskOfRelics.ActiveArtifacts.add(a.artifact);
+                                if (this.CloseOnSelect){
+                                        CardCrawlGame.sound.play("UI_CLICK_1");
+                                        CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.HIGH, ScreenShake.ShakeDur.LONG, false);
+                                        AbstractDungeon.screen = AbstractDungeon.CurrentScreen.NONE;
+                                        AbstractDungeon.isScreenUp = false;
+                                        AbstractDungeon.overlayMenu.proceedButton.show();
+                                        AbstractDungeon.overlayMenu.endTurnButton.hide();
+                                        AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;
+                                }
 
-                                AbstractDungeon.screen = AbstractDungeon.CurrentScreen.NONE;
-                                AbstractDungeon.isScreenUp = false;
-                                AbstractDungeon.overlayMenu.proceedButton.show();
-                                AbstractDungeon.overlayMenu.endTurnButton.hide();
-                                AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;
+
                         }
 
 
@@ -147,9 +160,12 @@ public class ArtifactSelectScreen extends CustomScreen
                         for (int j = 0; j < 4; j++)
                         {
                                 Artifact artifact = artifacts.get(i * 4 + j);
-                                if (artifact != null){
+                                if (artifact != null && !RiskOfRelics.UnlockedArtifacts.contains(artifact.artifact)){
+                                        if (artifact.Hovered) {
+                                                TipHelper.renderGenericTip(InputHelper.mX+100, InputHelper.mY+100, artifact.name, artifact.description);
+                                        }
                                         if (artifact.hb.hovered){
-                                                TipHelper.renderGenericTip(200.0f * Settings.scale, 200.0f * Settings.scale, artifact.name, artifact.description);
+
                                                 spriteBatch.draw(artifact.ontexture,
                                                         artifact.CurrentX,
                                                         artifact.CurrentY,100,100);

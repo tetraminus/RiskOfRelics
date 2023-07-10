@@ -1,4 +1,21 @@
 {
+        "riskOfRelics:ArtifactSelect" : {
+                "TEXT": [
+                        "Artifact Selection",
+                        "Select your artifacts",
+                        "You have no artifacts to activate."
+                ]
+        },
+        "riskOfRelics:ArtifactTopPanelItem": {
+                "TEXT": [
+                        "Artifacts",
+                        "Shows your active artifacts.",
+                        "You have no active artifacts."
+                ]
+
+
+        },
+
         "riskOfRelics:SPITE": {
                 "TEXT": [
                 "Spite",

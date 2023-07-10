@@ -41,6 +41,8 @@ import riskOfRelics.relics.BaseRelic;
 import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
+import riskOfRelics.screens.ArtifactTopPanelItem;
+import riskOfRelics.util.ArtifactSaver;
 import riskOfRelics.util.ChargesVariable;
 import riskOfRelics.util.IDCheckDontTouchPls;
 import riskOfRelics.util.TextureLoader;
@@ -57,34 +59,6 @@ import java.util.Properties;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
-//TODO: DON'T MASS RENAME/REFACTOR
-//TODO: DON'T MASS RENAME/REFACTOR
-//TODO: DON'T MASS RENAME/REFACTOR
-//TODO: DON'T MASS RENAME/REFACTOR
-// Please don't just mass replace "theDefault" with "yourMod" everywhere.
-// It'll be a bigger pain for you. You only need to replace it in 4 places.
-// I comment those places below, under the place where you set your ID.
-
-//TODO: FIRST THINGS FIRST: RENAME YOUR PACKAGE AND ID NAMES FIRST-THING!!!
-// Right click the package (Open the project pane on the left. Folder with black dot on it. The name's at the very top) -> Refactor -> Rename, and name it whatever you wanna call your mod.
-// Scroll down in this file. Change the ID from "theDefault:" to "yourModName:" or whatever your heart desires (don't use spaces). Dw, you'll see it.
-// In the JSON strings (resources>localization>eng>[all them files] make sure they all go "yourModName:" rather than "theDefault", and change to "yourmodname" rather than "thedefault".
-// You can ctrl+R to replace in 1 file, or ctrl+shift+r to mass replace in specific files/directories, and press alt+c to make the replace case sensitive (Be careful.).
-// Start with the DefaultCommon cards - they are the most commented cards since I don't feel it's necessary to put identical comments on every card.
-// After you sorta get the hang of how to make cards, check out the card template which will make your life easier
-
-/*
- * With that out of the way:
- * Welcome to this super over-commented Slay the Spire modding base.
- * Use it to make your own mod of any type. - If you want to add any standard in-game content (character,
- * cards, relics), this is a good starting point.
- * It features 1 character with a minimal set of things: 1 card of each type, 1 debuff, couple of relics, etc.
- * If you're new to modding, you basically *need* the BaseMod wiki for whatever you wish to add
- * https://github.com/daviscook477/BaseMod/wiki - work your way through with this base.
- * Feel free to use this in any way you like, of course. MIT licence applies. Happy modding!
- *
- * And pls. Read the comments.
- */
 
 @SpireInitializer
 public class RiskOfRelics implements
@@ -94,8 +68,6 @@ public class RiskOfRelics implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
-
-
         PostInitializeSubscriber {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
     // Making relics? EditRelicsSubscriber. etc., etc., for a full list and how to make your own, visit the basemod wiki.
@@ -104,7 +76,7 @@ public class RiskOfRelics implements
 
     // Mod-settings settings. This is if you want an on/off savable button
     public static Properties riskOfRelicsDefaultSettings = new Properties();
-    public static final String ENABLE_ASPECT_DESC_SETTINGS = "enablePlaceholder";
+    public static final String ENABLE_ASPECT_DESC_SETTINGS = "enableAspectDesc";
     public static boolean AspectDescEnabled = true; // The boolean we'll be setting on/off (true/false)
 
     //This is for the in-game mod settings panel.
@@ -251,6 +223,8 @@ public class RiskOfRelics implements
         }
         logger.info("Done adding mod settings");
 
+        ActiveArtifacts = new ArrayList<>();
+
     }
 
     // ====== NO EDIT AREA ======
@@ -321,6 +295,7 @@ public class RiskOfRelics implements
 
     public static void saveData() {
         try {
+            ModConfig.setString("Artifacts","");
             for (Artifacts A:
                     UnlockedArtifacts) {
                 ModConfig.setString("Artifacts",ModConfig.getString("Artifacts")+A.name()+",");
@@ -363,6 +338,9 @@ public class RiskOfRelics implements
         // Load the Mod Badge
         Texture badgeTexture = TextureLoader.getTexture(BADGE_IMAGE);
         BaseMod.addCustomScreen(new ArtifactSelectScreen());
+        //BaseMod.addCustomScreen(new ArtifactInfoScreen());
+        BaseMod.addTopPanelItem(new ArtifactTopPanelItem());
+        BaseMod.addSaveField("ActiveArtifacts",new ArtifactSaver());
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
@@ -640,63 +618,29 @@ public class RiskOfRelics implements
 
 
 
+
+
     public enum Artifacts {
         SPITE,
-        SOUL,
-        GLASS,
         COMMAND,
         DEATH,
-        CHAOS,
-        ENIGMA,
+        HONOR,
         EVOLUTION,
         WEAKASSKNEES,
-        SACRIFICE,
-        DISSONANCE,
-        METAMORPHOSIS,
+        CHAOS,
+        GLASS,
         KIN,
-        HONOR,
+        METAMORPHOSIS,
+        DISSONANCE,
+        ENIGMA,
+        SACRIFICE,
         VENGEANCE,
-        SWARMS
+        SWARMS,
+        SOUL
     }
 
     public static Artifacts getArtifact(int artifactNum) {
-        switch (artifactNum) {
-            case 0:
-                return Artifacts.SPITE;
-            case 1:
-                return Artifacts.COMMAND;
-            case 2:
-                return Artifacts.DEATH;
-            case 3:
-                return Artifacts.HONOR;
-            case 4:
-                return Artifacts.EVOLUTION;
-            case 5:
-                return Artifacts.WEAKASSKNEES;
-            case 6:
-                return Artifacts.CHAOS;
-            case 7:
-                return Artifacts.GLASS;
-            case 8:
-                return Artifacts.KIN;
-            case 9:
-                return Artifacts.METAMORPHOSIS;
-            case 10:
-                return Artifacts.DISSONANCE;
-            case 11:
-                return Artifacts.ENIGMA;
-            case 12:
-                return Artifacts.SACRIFICE;
-            case 13:
-                return Artifacts.VENGEANCE;
-            case 14:
-                return Artifacts.SWARMS;
-            case 15:
-                return Artifacts.SOUL;
-            default:
-                return Artifacts.SPITE;
-
-        }
+        return Artifacts.values()[artifactNum];
     }
     private static Artifacts getArtifactfromName(String a) {
         return Artifacts.valueOf(a);
@@ -707,6 +651,11 @@ public class RiskOfRelics implements
         return Str.TEXT[0];
 
 
+    }
+
+    public static String getArtifactDescription(Artifacts a) {
+        UIStrings Str = CardCrawlGame.languagePack.getUIString(makeID(a.toString()));
+        return Str.TEXT[1];
     }
 
 

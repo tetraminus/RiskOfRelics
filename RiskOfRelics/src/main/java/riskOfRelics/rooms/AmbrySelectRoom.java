@@ -24,7 +24,7 @@ public class AmbrySelectRoom extends AbstractRoom {
         AbstractDungeon.overlayMenu.proceedButton.hide();
         AbstractDungeon.overlayMenu.endTurnButton.hide();
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.INCOMPLETE;
-        openCustomScreen(ArtifactSelectScreen.Enum.AMBRY_SCREEN);
+        openCustomScreen(ArtifactSelectScreen.Enum.AMBRY_SCREEN, true);
 
     }
 }
