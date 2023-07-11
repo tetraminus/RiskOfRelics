@@ -52,22 +52,12 @@ import org.apache.logging.log4j.Logger;
  * Let's get to it!
  */
 
-@SpirePatch(    // "Use the @SpirePatch annotation on the patch class."
-        clz = AbstractDungeon.class, // This is the class where the method we will be patching is. In our case - Abstract Dungeon
-        method = "returnRandomRelicKey" // This is the name of the method we will be patching.
-        /*
-        Now let's imagine for a second that there were two methods named returnRandomRelicKey()
-        The one we're patching - "String returnRandomRelicKey(RelicTier tier)" - that grabs a relic of specific tier
-        and a fictional one - "String returnRandomRelicKey(RelicTier tier, LandingSound sound)" - that grabs a relic of a specific tier AND with a specific landing sound.
-        How would we tell the code which of the two methods to put our patch in? We use paramtypez (read the docs too they have a good example!)
-        Let's say we wanted to patch the second fictional one - we would add
-        paramtypez={
-                AbstractRelic.RelicTier.class,
-                AbstractRelic.LandingSound.class
-        }
-        to this annotation, after the method parameter. (If we wanted to patch the first one, we'd only put "AbstractRelic.RelicTier.class".
-        */
-)
+//@SpirePatch(    // "Use the @SpirePatch annotation on the patch class."
+//        clz = AbstractDungeon.class, // This is the class where the method we will be patching is. In our case - Abstract Dungeon
+//        method = "returnRandomRelicKey" // This is the name of the method we will be patching.
+//
+//)
+
 public class DefaultInsertPatch {// Don't worry about the "never used" warning - *You* usually don't use/call them anywhere. Mod The Spire does.
     
     // You can have as many inner classes with patches as you want inside this one - you don't have to separate each patch into it's own file.
