@@ -67,11 +67,7 @@ public class ArtifactTopPanelItem extends TopPanelItem {
 
     @Override
     protected void onClick() {
-        if (ShouldRender){
-            ShouldRender = false;
-        } else {
-            ShouldRender = true;
-        }
+        ShouldRender = !ShouldRender;
 
     }
 

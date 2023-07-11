@@ -3,22 +3,26 @@ package riskOfRelics.patches;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.relics.ShapedGlass;
+import riskOfRelics.vfx.ArtifactAboveCreatureAction;
 
 import java.util.Objects;
 
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.effectsQueue;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 
 
-public class ShapedGlassPatch {// Don't worry about the "never used" warning - *You* usually don't use/call them anywhere. Mod The Spire does.
+public class GlassPatches {// Don't worry about the "never used" warning - *You* usually don't use/call them anywhere. Mod The Spire does.
 
     @SpirePatch(    // "Use the @SpirePatch annotation on the patch class."
             clz = AbstractPlayer.class, // This is the class where the method we will be patching is. In our case - Abstract Dungeon
@@ -34,8 +38,16 @@ public class ShapedGlassPatch {// Don't worry about the "never used" warning - *
         )
         //"A patch method must be a public static method."
         public static void thisIsOurActualPatchMethod(AbstractPlayer ___instance, DamageInfo info, @ByRef int[] damageAmount) {
+
+            if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.WEAKASSKNEES)
+                    && AbstractDungeon.getCurrRoom().phase != AbstractRoom.RoomPhase.COMBAT) {
+                damageAmount[0] *= 2;
+                effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH /2, (float) Settings.HEIGHT /2, RiskOfRelics.Artifacts.WEAKASSKNEES));
+            }
             if (___instance.hasRelic(ShapedGlass.ID)) {
                 int num = 0;
+
+
 
                 for (AbstractRelic r: player.relics) {
                     if (Objects.equals(r.relicId, ShapedGlass.ID)){num++;}
@@ -51,7 +63,7 @@ public class ShapedGlassPatch {// Don't worry about the "never used" warning - *
             public int[] Locate(CtBehavior ctMethodToPatch) throws Exception {// All the locator has and needs is an override of the Locate method
 
 
-                Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractPlayer.class, "hasPower");
+                Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractPlayer.class, "decrementBlock");
 
 
                 return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
@@ -74,6 +86,10 @@ public class ShapedGlassPatch {// Don't worry about the "never used" warning - *
         )
         //"A patch method must be a public static method."
         public static void thisIsOurActualPatchMethod(AbstractMonster ___instance, DamageInfo info, @ByRef int[] damageAmount) {
+            if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.GLASS)) {
+                damageAmount[0] *= 5;
+                effectsQueue.add(new ArtifactAboveCreatureAction(___instance, RiskOfRelics.Artifacts.GLASS));
+            }
             if (player.hasRelic(ShapedGlass.ID)) {
                 int num = 0;
 

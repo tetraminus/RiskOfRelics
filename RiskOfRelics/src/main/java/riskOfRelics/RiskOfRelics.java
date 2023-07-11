@@ -27,6 +27,7 @@ import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import riskOfRelics.artifacts.GlassArt;
 import riskOfRelics.cards.AbstractDynamicCard;
 import riskOfRelics.events.CleansingPoolEvent;
 import riskOfRelics.events.IdentityCrisisEvent;
@@ -68,7 +69,10 @@ public class RiskOfRelics implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
-        PostInitializeSubscriber {
+        PostInitializeSubscriber,
+        StartGameSubscriber,
+        MaxHPChangeSubscriber
+    {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
     // Making relics? EditRelicsSubscriber. etc., etc., for a full list and how to make your own, visit the basemod wiki.
     public static final Logger logger = LogManager.getLogger(RiskOfRelics.class.getName());
@@ -304,6 +308,14 @@ public class RiskOfRelics implements
             ModConfig.save();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static Texture getArtifactImage(Artifacts artifact, boolean On) {
+        if (On) {
+            return TextureLoader.getTexture("riskOfRelicsResources/images/ui/ambrySelect/Artifact" + (artifact.ordinal()+1) +  "_on.png");
+        } else {
+            return TextureLoader.getTexture("riskOfRelicsResources/images/ui/ambrySelect/Artifact" + (artifact.ordinal()+1) + "_off.png");
         }
     }
 
@@ -602,25 +614,27 @@ public class RiskOfRelics implements
         }
     }
 
-
-
-
-
-
-
-    // ================ /LOAD THE KEYWORDS/ ===================    
-    
-    // this adds "ModName:" before the ID of any card/relic/power etc.
-    // in order to avoid conflicts if any other mod uses the same ID.
-    public static String makeID(String idText) {
+        public static String makeID(String idText) {
         return getModID() + ":" + idText;
     }
 
+        @Override
+        public void receiveStartGame() {
+        if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
+                player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
+                player.currentHealth = player.maxHealth;
+            }
+        }
+        @Override
+        public int receiveMaxHPChange(int amount) {
+            if (ActiveArtifacts.contains(Artifacts.GLASS)) {
+                return Math.max(1, amount / GlassArt.GlassHealthReduction);
+            }
+            return amount;
+        }
 
 
-
-
-    public enum Artifacts {
+        public enum Artifacts {
         SPITE,
         COMMAND,
         DEATH,
