@@ -71,6 +71,8 @@ public class CharselectPatch {
         }
     }
 
+
+
     @SpirePatch2(clz = com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class,
             method = "render"
     )
@@ -152,6 +154,10 @@ public class CharselectPatch {
                     CardCrawlGame.sound.play("UI_CLICK_1");
                 }
             }
+            if (!ReflectionHacks.<Boolean>getPrivate(__instance, com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class, "anySelected")) {
+                ShouldRender = false;
+            }
+
             if (ShouldRender) {
                 for (Artifact a :
                         artifacts) {
@@ -178,4 +184,6 @@ public class CharselectPatch {
             }
         }
     }
+
+
 }

@@ -10,10 +10,7 @@ import com.megacrit.cardcrawl.dungeons.TheEnding;
 import com.megacrit.cardcrawl.map.MapEdge;
 import com.megacrit.cardcrawl.map.MapGenerator;
 import com.megacrit.cardcrawl.map.MapRoomNode;
-import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
-import com.megacrit.cardcrawl.rooms.RestRoom;
-import com.megacrit.cardcrawl.rooms.ShopRoom;
-import com.megacrit.cardcrawl.rooms.TrueVictoryRoom;
+import com.megacrit.cardcrawl.rooms.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.relics.YellowKey;
@@ -93,14 +90,17 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
             restNode.room = new RestRoom();// 81
             MapRoomNode shopNode = new MapRoomNode(3, 1);// 82
             shopNode.room = new ShopRoom();// 83
-            MapRoomNode enemyNode = new MapRoomNode(3, 2);// 84
-            enemyNode.room = new AmbrySelectRoom();// 85
-            MapRoomNode bossNode = new MapRoomNode(3, 3);// 86
+            MapRoomNode ambryNode = new MapRoomNode(3, 2);// 84
+            ambryNode.room = new AmbrySelectRoom();// 85
+            MapRoomNode enemyNode = new MapRoomNode(3, 3);// 84
+            enemyNode.room = new MonsterRoomElite();
+            MapRoomNode bossNode = new MapRoomNode(3, 4);// 86
             bossNode.room = new MonsterRoomBoss();// 87
-            MapRoomNode victoryNode = new MapRoomNode(3, 4);// 88
+            MapRoomNode victoryNode = new MapRoomNode(3, 5);// 88
             victoryNode.room = new TrueVictoryRoom();// 89
             ReflectionHacks.privateMethod(TheEnding.class,"connectNode", MapRoomNode.class, MapRoomNode.class).invoke(__instance , restNode, shopNode);// 92
-            ReflectionHacks.privateMethod(TheEnding.class,"connectNode", MapRoomNode.class, MapRoomNode.class).invoke(__instance , shopNode, enemyNode);
+            ReflectionHacks.privateMethod(TheEnding.class,"connectNode", MapRoomNode.class, MapRoomNode.class).invoke(__instance , shopNode, ambryNode);
+            ReflectionHacks.privateMethod(TheEnding.class,"connectNode", MapRoomNode.class, MapRoomNode.class).invoke(__instance , ambryNode, enemyNode);
             enemyNode.addEdge(new MapEdge(enemyNode.x, enemyNode.y, enemyNode.offsetX, enemyNode.offsetY, bossNode.x, bossNode.y, bossNode.offsetX, bossNode.offsetY, false));// 94
             row1.add(new MapRoomNode(0, 0));// 107
             row1.add(new MapRoomNode(1, 0));// 108
@@ -121,31 +121,40 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
             row3.add(new MapRoomNode(0, 2));// 127
             row3.add(new MapRoomNode(1, 2));// 128
             row3.add(new MapRoomNode(2, 2));// 129
-            row3.add(enemyNode);// 130
+            row3.add(ambryNode);// 130
             row3.add(new MapRoomNode(4, 2));// 131
             row3.add(new MapRoomNode(5, 2));// 132
             row3.add(new MapRoomNode(6, 2));// 133
-            ArrayList<MapRoomNode> row4 = new ArrayList();// 136
-            row4.add(new MapRoomNode(0, 3));// 137
-            row4.add(new MapRoomNode(1, 3));// 138
-            row4.add(new MapRoomNode(2, 3));// 139
-            row4.add(bossNode);// 140
-            row4.add(new MapRoomNode(4, 3));// 141
-            row4.add(new MapRoomNode(5, 3));// 142
-            row4.add(new MapRoomNode(6, 3));// 143
-            ArrayList<MapRoomNode> row5 = new ArrayList();// 146
-            row5.add(new MapRoomNode(0, 4));// 147
-            row5.add(new MapRoomNode(1, 4));// 148
-            row5.add(new MapRoomNode(2, 4));// 149
-            row5.add(victoryNode);// 150
-            row5.add(new MapRoomNode(4, 4));// 151
-            row5.add(new MapRoomNode(5, 4));// 152
-            row5.add(new MapRoomNode(6, 4));// 153
+            ArrayList<MapRoomNode> row4 = new ArrayList();// 126
+            row4.add(new MapRoomNode(0, 2));// 127
+            row4.add(new MapRoomNode(1, 2));// 128
+            row4.add(new MapRoomNode(2, 2));// 129
+            row4.add(enemyNode);// 130
+            row4.add(new MapRoomNode(4, 2));// 131
+            row4.add(new MapRoomNode(5, 2));// 132
+            row4.add(new MapRoomNode(6, 2));// 133
+            ArrayList<MapRoomNode> row5 = new ArrayList();// 136
+            row5.add(new MapRoomNode(0, 3));// 137
+            row5.add(new MapRoomNode(1, 3));// 138
+            row5.add(new MapRoomNode(2, 3));// 139
+            row5.add(bossNode);// 140
+            row5.add(new MapRoomNode(4, 3));// 141
+            row5.add(new MapRoomNode(5, 3));// 142
+            row5.add(new MapRoomNode(6, 3));// 143
+            ArrayList<MapRoomNode> row6 = new ArrayList();// 146
+            row6.add(new MapRoomNode(0, 4));// 147
+            row6.add(new MapRoomNode(1, 4));// 148
+            row6.add(new MapRoomNode(2, 4));// 149
+            row6.add(victoryNode);// 150
+            row6.add(new MapRoomNode(4, 4));// 151
+            row6.add(new MapRoomNode(5, 4));// 152
+            row6.add(new MapRoomNode(6, 4));// 153
             AbstractDungeon.map.add(row1);// 156
             AbstractDungeon.map.add(row2);// 157
             AbstractDungeon.map.add(row3);// 158
             AbstractDungeon.map.add(row4);// 159
             AbstractDungeon.map.add(row5);// 160
+            AbstractDungeon.map.add(row6);// 160
             logger.info("Generated the following dungeon map:");// 162
             logger.info(MapGenerator.toString(AbstractDungeon.map, true));// 163
             logger.info("Game Seed: " + Settings.seed);// 164
