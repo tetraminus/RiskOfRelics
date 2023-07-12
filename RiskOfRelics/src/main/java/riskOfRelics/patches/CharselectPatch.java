@@ -30,6 +30,9 @@ public class CharselectPatch {
     public static Hitbox buttonHB = new Hitbox(1000 * Settings.scale, 25* Settings.scale, tex.getWidth(), tex.getHeight());
     public static ArrayList<Artifact> artifacts = new ArrayList<>();
     public static boolean ShouldRender = false;
+    public static boolean AnyEnabled = false;
+    public static boolean CharSelected = false;
+    public static boolean FirstOpen = true;
     private static class Artifact
     {
         public Texture texture;
@@ -82,8 +85,9 @@ public class CharselectPatch {
         @SpirePrefixPatch
         public static void Prefix(com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen __instance) {
             if (!RiskOfRelics.ActiveArtifacts.isEmpty()){
-                ShouldRender = true;
+                AnyEnabled = true;
             }
+            FirstOpen = true;
         }
     }
 
@@ -114,7 +118,8 @@ public class CharselectPatch {
                 }
             }
 
-            if (ShouldRender){
+
+            if (CharSelected && (ShouldRender)){
 
 
                 for (int i = 0; i < 4; i++) {
@@ -161,6 +166,10 @@ public class CharselectPatch {
         @SpirePostfixPatch
 
         public static void Postfix(com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen __instance) {
+            if (FirstOpen && AnyEnabled) {
+                FirstOpen = false;
+                ShouldRender = true;
+            }
 
             buttonHB.update();
             if (ReflectionHacks.getPrivate(__instance, com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class, "anySelected")) {
@@ -169,11 +178,10 @@ public class CharselectPatch {
                     CardCrawlGame.sound.play("UI_CLICK_1");
                 }
             }
-            if (!ReflectionHacks.<Boolean>getPrivate(__instance, com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class, "anySelected")) {
-                ShouldRender = false;
-            }
+            CharSelected = ReflectionHacks.<Boolean>getPrivate(__instance, com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class, "anySelected");
 
-            if (ShouldRender) {
+
+            if (CharSelected && (ShouldRender)) {
                 for (Artifact a :
                         artifacts) {
                     a.hb.update();

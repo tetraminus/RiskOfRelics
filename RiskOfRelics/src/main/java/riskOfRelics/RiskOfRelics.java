@@ -17,7 +17,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
@@ -591,7 +591,7 @@ public class RiskOfRelics implements
                 for (AbstractRelic r:
                      player.relics) {
                     if (r.tier != AbstractRelic.RelicTier.STARTER) {
-                        relicsToAdd.add(GetActualNonScreenRelic(r));
+                        relicsToAdd.add(GetActualNonScreenRelic(r.tier));
                     }
                 }
                 for (AbstractRelic r:
@@ -608,8 +608,27 @@ public class RiskOfRelics implements
 
         }
 
-        private static AbstractRelic GetActualNonScreenRelic(AbstractRelic r) {
-            return AbstractDungeon.returnRandomScreenlessRelic(r.tier);
+        public static final ArrayList<String> NonScreenBlacklist = new ArrayList<String>() {{
+            add(EmptyCage.ID);
+            add(CallingBell.ID);
+            add(PandorasBox.ID);
+            add(Orrery.ID);
+
+        }};
+
+        private static AbstractRelic GetActualNonScreenRelic(AbstractRelic.RelicTier r) {
+            AbstractRelic relic;
+            do {
+                if (!(r == AbstractRelic.RelicTier.SPECIAL)) {
+                    relic = AbstractDungeon.returnRandomScreenlessRelic(r);
+                } else {
+                    relic = AbstractDungeon.returnRandomScreenlessRelic(AbstractRelic.RelicTier.RARE);
+                }
+            } while (NonScreenBlacklist.contains(relic.relicId));
+
+
+
+            return relic;
         }
 
 
