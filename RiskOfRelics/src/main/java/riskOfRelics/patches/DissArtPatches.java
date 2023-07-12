@@ -15,91 +15,103 @@ import com.megacrit.cardcrawl.dungeons.TheEnding;
 import com.megacrit.cardcrawl.monsters.MonsterInfo;
 import javassist.*;
 import org.clapper.util.classutil.*;
-import riskOfRelics.RiskOfRelics;
 
 import java.io.File;
 import java.lang.reflect.Modifier;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
 public class DissArtPatches {
-    public static List<String> MonsterStrings;
+    public static List<MonsterInfo> WeakMonsterStrings;
+    public static List<MonsterInfo> NormalMonsterStrings;
+    public static List<MonsterInfo> EliteMonsterStrings;
     public static List<String> BossStrings;
     public static ArrayList<String> dungeonIDs = new ArrayList();
-    public static ArrayList<String> encounterIDs = new ArrayList();
+    public static ArrayList<String> weakencounterIDs = new ArrayList();
+    public static ArrayList<String> strongencounterIDs = new ArrayList();
+    public static ArrayList<String> eliteencounterIDs = new ArrayList();
 
 
     public DissArtPatches() {
     }
     static {
 
-        MonsterStrings = new ArrayList<String>() {
+        WeakMonsterStrings = new ArrayList<MonsterInfo>() {
             {
-                this.add("Blue Slaver");
-                this.add("Cultist");
-                this.add("Jaw Worm");
-                this.add("Looter");
-                this.add("2 Louse");
-                this.add("Small Slimes");
-                this.add("Gremlin Gang");
-                this.add("Red Slaver");
-                this.add("Large Slime");
-                this.add("Exordium Thugs");
-                this.add("Exordium Wildlife");
-                this.add("3 Louse");
-                this.add("2 Fungi Beasts");
-                this.add("Lots of Slimes");
-                this.add("Gremlin Nob");
-                this.add("Lagavulin Event");
-                this.add("Lagavulin");
-                this.add("3 Sentries");
-                this.add("The Mushroom Lair");
-                this.add("2 Thieves");
-                this.add("3 Byrds");
-                this.add("Chosen");
-                this.add("Shell Parasite");
-                this.add("Spheric Guardian");
-                this.add("Cultist and Chosen");
-                this.add("3 Cultists");
-                this.add("4 Byrds");
-                this.add("Chosen and Byrds");
-                this.add("Sentry and Sphere");
-                this.add("Snake Plant");
-                this.add("Snecko");
-                this.add("Centurion and Healer");
-                this.add("Shelled Parasite and Fungi");
-                this.add("Book of Stabbing");
-                this.add("Gremlin Leader");
-                this.add("Slavers");
-                this.add("Masked Bandits");
-                this.add("Colosseum Slavers");
-                this.add("Colosseum Nobs");
-                this.add("3 Darklings");
-                this.add("3 Shapes");
-                this.add("Orb Walker");
-                this.add("Transient");
-                this.add("Reptomancer");
-                this.add("Spire Growth");
-                this.add("Maw");
-                this.add("4 Shapes");
-                this.add("Sphere and 2 Shapes");
-                this.add("Jaw Worm Horde");
-                this.add("Snecko and Mystics");
-                this.add("Writhing Mass");
-                this.add("2 Orb Walkers");
-                this.add("Nemesis");
-                this.add("Giant Head");
-                this.add("Mysterious Sphere");
-                this.add("Mind Bloom Boss Battle");
-                this.add("Shield and Spear");
-                this.add("The Eyes");
-                this.add("Apologetic Slime");
-                this.add("Flame Bruiser 1 Orb");
-                this.add("Flame Bruiser 2 Orb");
-                this.add("Slaver and Parasite");
+                this.add(new MonsterInfo("Cultist", 2.0F));// 155
+                this.add(new MonsterInfo("Jaw Worm", 2.0F));// 156
+                this.add(new MonsterInfo("2 Louse", 2.0F));// 157
+                this.add(new MonsterInfo("Small Slimes", 2.0F));// 158
+                
+                this.add(new MonsterInfo("Spheric Guardian", 2.0F));// 127
+                this.add(new MonsterInfo("Chosen", 2.0F));// 128
+                this.add(new MonsterInfo("Shell Parasite", 2.0F));// 129
+                this.add(new MonsterInfo("3 Byrds", 2.0F));// 130
+                this.add(new MonsterInfo("2 Thieves", 2.0F));// 131
+
+                this.add(new MonsterInfo("3 Darklings", 2.0F));// 118
+                this.add(new MonsterInfo("Orb Walker", 2.0F));// 119
+                this.add(new MonsterInfo("3 Shapes", 2.0F));// 120
+
+                //this.add(new MonsterInfo("The Mushroom Lair", 2.0F));// 120
+
+
+                
+
+
+
+            }
+        };
+        NormalMonsterStrings = new ArrayList<MonsterInfo>() {
+            {
+                this.add(new MonsterInfo("Blue Slaver", 2.0F));// 165
+                this.add(new MonsterInfo("Gremlin Gang", 1.0F));// 166
+                this.add(new MonsterInfo("Looter", 2.0F));// 167
+                this.add(new MonsterInfo("Large Slime", 2.0F));// 168
+                this.add(new MonsterInfo("Lots of Slimes", 1.0F));// 169
+                this.add(new MonsterInfo("Exordium Thugs", 1.5F));// 170
+                this.add(new MonsterInfo("Exordium Wildlife", 1.5F));// 171
+                this.add(new MonsterInfo("Red Slaver", 1.0F));// 172
+                this.add(new MonsterInfo("3 Louse", 2.0F));// 173
+                this.add(new MonsterInfo("2 Fungi Beasts", 2.0F));// 174
+
+                this.add(new MonsterInfo("Chosen and Byrds", 2.0F));// 138
+                this.add(new MonsterInfo("Sentry and Sphere", 2.0F));// 139
+                this.add(new MonsterInfo("Snake Plant", 6.0F));// 140
+                this.add(new MonsterInfo("Snecko", 4.0F));// 141
+                this.add(new MonsterInfo("Centurion and Healer", 6.0F));// 142
+                this.add(new MonsterInfo("Cultist and Chosen", 3.0F));// 143
+                this.add(new MonsterInfo("3 Cultists", 3.0F));// 144
+                this.add(new MonsterInfo("Shelled Parasite and Fungi", 3.0F));// 145
+
+                this.add(new MonsterInfo("Spire Growth", 1.0F));// 127
+                this.add(new MonsterInfo("Transient", 1.0F));// 128
+                this.add(new MonsterInfo("4 Shapes", 1.0F));// 129
+                this.add(new MonsterInfo("Maw", 1.0F));// 130
+                this.add(new MonsterInfo("Sphere and 2 Shapes", 1.0F));// 131
+                this.add(new MonsterInfo("Jaw Worm Horde", 1.0F));// 132
+                this.add(new MonsterInfo("3 Darklings", 1.0F));// 133
+                this.add(new MonsterInfo("Writhing Mass", 1.0F));// 134
+            }
+        };
+        EliteMonsterStrings = new ArrayList<MonsterInfo>() {
+            {
+                this.add(new MonsterInfo("Snecko and Mystics", 2.0F));// 120
+
+                this.add(new MonsterInfo("Gremlin Nob", 1.0F));// 182
+                this.add(new MonsterInfo("Lagavulin", 1.0F));// 183
+                this.add(new MonsterInfo("3 Sentries", 1.0F));// 184
+                
+                this.add(new MonsterInfo("Gremlin Leader", 1.0F));// 153
+                this.add(new MonsterInfo("Slavers", 1.0F));// 154
+                this.add(new MonsterInfo("Book of Stabbing", 1.0F));// 155
+                
+                this.add(new MonsterInfo("Giant Head", 2.0F));// 142
+                this.add(new MonsterInfo("Nemesis", 2.0F));// 143
+                this.add(new MonsterInfo("Reptomancer", 2.0F));// 144
+
             }
         };
         BossStrings = new ArrayList() {
@@ -121,9 +133,26 @@ public class DissArtPatches {
         dungeonIDs.add(id);
     }
 
-    public static void addEncounterID(String id) {
-        if (!encounterIDs.contains(id)) {
-            encounterIDs.add(id);
+    public static void addWeakEncounterID(String id) {
+        if (!weakencounterIDs.contains(id)) {
+            weakencounterIDs.add(id);
+        }
+
+    }
+    public static void addStrongEncounterID(String id) {
+        if (!strongencounterIDs.contains(id)) {
+            strongencounterIDs.add(id);
+        }
+    }
+    public static void addEliteEncounterID(String id) {
+        if (!eliteencounterIDs.contains(id)) {
+            eliteencounterIDs.add(id);
+        }
+    }
+    public static void addBossID(String id) {
+        if (!BossStrings.contains(id)) {
+            BossStrings.add(id);
+            weakencounterIDs.remove(id);
         }
     }
 
@@ -135,11 +164,11 @@ public class DissArtPatches {
 
     protected static void generateWeakEnemies(int count, AbstractDungeon __instance) {
         ArrayList<MonsterInfo> monsters = new ArrayList<>();
-        for (String s : encounterIDs) {
+        for (String s : weakencounterIDs) {
             monsters.add(new MonsterInfo(s, 1.0F));
         }
-        for(String s : MonsterStrings) {
-            monsters.add(new MonsterInfo(s, 1.0F));
+        for(MonsterInfo s : WeakMonsterStrings) {
+            monsters.add(new MonsterInfo(s.name, 1.0F));
         }
 
         MonsterInfo.normalizeWeights(monsters);
@@ -148,11 +177,11 @@ public class DissArtPatches {
 
     protected static void generateStrongEnemies(int count, AbstractDungeon __instance) {
         ArrayList<MonsterInfo> monsters = new ArrayList<>();
-        for (String s : encounterIDs) {
+        for (String s : weakencounterIDs) {
             monsters.add(new MonsterInfo(s, 1.0F));
         }
-        for(String s : MonsterStrings) {
-            monsters.add(new MonsterInfo(s, 1.0F));
+        for(MonsterInfo s : NormalMonsterStrings) {
+            monsters.add(new MonsterInfo(s.name, 1.0F));
         }
 
         MonsterInfo.normalizeWeights(monsters);
@@ -162,11 +191,11 @@ public class DissArtPatches {
 
     protected static void generateElites(int count, AbstractDungeon __instance) {
         ArrayList<MonsterInfo> monsters = new ArrayList();
-        for (String s : encounterIDs) {
+        for (String s : weakencounterIDs) {
             monsters.add(new MonsterInfo(s, 1.0F));
         }
-        for(String s : MonsterStrings) {
-            monsters.add(new MonsterInfo(s, 1.0F));
+        for(MonsterInfo s : EliteMonsterStrings) {
+            monsters.add(new MonsterInfo(s.name, 1.0F));
         }
 
         MonsterInfo.normalizeWeights(monsters);
@@ -211,14 +240,25 @@ public class DissArtPatches {
 
             CtClass ctClass;
             CtMethod[] methods;
-            
+
             for (ClassInfo classInfo : basemodFoundClasses) {
                 ctClass = pool.get(classInfo.getClassName());
                 methods = ctClass.getDeclaredMethods();
                 for(CtMethod m : methods) {
 
-                    if (m.getName().equals("addMonster")) {
-                        m.insertBefore("{riskOfRelics.patches.DissArtPatches.addEncounterID(encounterID);}");
+
+                    if (m.getName().equals("addMonsterEncounter")) {
+                        m.insertBefore("{riskOfRelics.patches.DissArtPatches.addWeakEncounterID(encounter.name);}");
+                    }
+                    if (m.getName().equals("addStrongMonsterEncounter")) {
+                        m.insertBefore("{riskOfRelics.patches.DissArtPatches.addStrongEncounterID(encounter.name);}");
+                    }
+                    if (m.getName().equals("addEliteEncounter")) {
+                        m.insertBefore("{riskOfRelics.patches.DissArtPatches.addEliteEncounterID(encounter.name);}");
+                    }
+
+                    if (m.getName().equals("addBoss")) {
+                        m.insertBefore("{riskOfRelics.patches.DissArtPatches.addBossID(bossID);}");
                     }
                 }
             }

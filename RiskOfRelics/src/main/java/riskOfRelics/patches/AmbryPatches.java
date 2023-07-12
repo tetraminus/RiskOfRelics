@@ -66,7 +66,7 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
                         count++;
 
                         if (count == 2) {
-                            logger.info("Found y");
+
                             m.replace("{" +
                                     "if (com.megacrit.cardcrawl.dungeons.AbstractDungeon.player.hasRelic(riskOfRelics.relics.YellowKey.ID)) {" +
                                     "$_ = $proceed()-1;" +
