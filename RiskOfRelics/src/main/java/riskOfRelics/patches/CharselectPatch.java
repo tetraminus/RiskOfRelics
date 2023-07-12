@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.Hitbox;
@@ -16,6 +17,8 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import riskOfRelics.RiskOfRelics;
 
 import java.util.ArrayList;
+
+import static riskOfRelics.RiskOfRelics.saveData;
 
 
 public class CharselectPatch {
@@ -70,7 +73,19 @@ public class CharselectPatch {
 
         }
     }
+    @SpirePatch2(
+            clz = com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class,
+            method = "open"
+    )
+    public static class OpenPatch {
 
+        @SpirePrefixPatch
+        public static void Prefix(com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen __instance) {
+            if (!RiskOfRelics.ActiveArtifacts.isEmpty()){
+                ShouldRender = true;
+            }
+        }
+    }
 
 
     @SpirePatch2(clz = com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class,
@@ -171,11 +186,13 @@ public class CharselectPatch {
                     if (InputHelper.justClickedLeft && a.hb.hovered) {
                         if (RiskOfRelics.UnlockedArtifacts.contains(a.artifact)) {
                             CardCrawlGame.sound.play("UI_CLICK_1");
+
                             if (RiskOfRelics.ActiveArtifacts.contains(a.artifact)) {
                                 RiskOfRelics.ActiveArtifacts.remove(a.artifact);
                             } else {
                                 RiskOfRelics.ActiveArtifacts.add(a.artifact);
                             }
+                            saveData();
                         } else {
                             CardCrawlGame.sound.play("RELIC_DROP_CLINK");
                         }

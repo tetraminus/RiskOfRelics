@@ -83,8 +83,9 @@
         "riskOfRelics:DISSONANCE": {
                 "TEXT": [
                 "Dissonance",
-                "Dissonance description"
+                "Encounters can be from any Act."
                 ]
+
         },
         "riskOfRelics:ENIGMA": {
                 "TEXT": [

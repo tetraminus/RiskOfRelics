@@ -8,7 +8,8 @@ package riskOfRelics.patches;
 import basemod.BaseMod;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.ModInfo;
-import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpireRawPatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheEnding;
@@ -233,21 +234,20 @@ public class DissArtPatches {
             };
             ArrayList<ClassInfo> abstractDungeonFoundClasses = new ArrayList<>();
             finder.findClasses(abstractDungeonFoundClasses, abstractDungeonFilter);
-            ArrayList<ClassInfo> basemodFoundClasses = new ArrayList<>();
-            finder.findClasses(basemodFoundClasses, baseModFilter);
+
 
 
 
             CtClass ctClass;
             CtMethod[] methods;
 
-            for (ClassInfo classInfo : basemodFoundClasses) {
-                ctClass = pool.get(classInfo.getClassName());
+
+                ctClass = pool.get(BaseMod.class.getName());
                 methods = ctClass.getDeclaredMethods();
                 for(CtMethod m : methods) {
 
 
-                    if (m.getName().equals("addMonsterEncounter")) {
+                    if (m.getName() .equals("addMonsterEncounter")) {
                         m.insertBefore("{riskOfRelics.patches.DissArtPatches.addWeakEncounterID(encounter.name);}");
                     }
                     if (m.getName().equals("addStrongMonsterEncounter")) {
@@ -260,7 +260,7 @@ public class DissArtPatches {
                     if (m.getName().equals("addBoss")) {
                         m.insertBefore("{riskOfRelics.patches.DissArtPatches.addBossID(bossID);}");
                     }
-                }
+
             }
 
             for(ClassInfo classInfo : abstractDungeonFoundClasses) {
