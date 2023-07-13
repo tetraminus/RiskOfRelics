@@ -158,9 +158,14 @@ public class DissArtPatches {
     }
 
     public static void generateMonsters(AbstractDungeon __instance) {
-        generateWeakEnemies(1, __instance);
-        generateStrongEnemies(14, __instance);
-        generateElites(14, __instance);
+
+
+            generateWeakEnemies(1, __instance);
+            generateStrongEnemies(14, __instance);
+            generateElites(14, __instance);
+
+
+
     }
 
     protected static void generateWeakEnemies(int count, AbstractDungeon __instance) {
@@ -178,12 +183,13 @@ public class DissArtPatches {
 
     protected static void generateStrongEnemies(int count, AbstractDungeon __instance) {
         ArrayList<MonsterInfo> monsters = new ArrayList<>();
-        for (String s : weakencounterIDs) {
+        for (String s : strongencounterIDs) {
             monsters.add(new MonsterInfo(s, 1.0F));
         }
         for(MonsterInfo s : NormalMonsterStrings) {
             monsters.add(new MonsterInfo(s.name, 1.0F));
         }
+
 
         MonsterInfo.normalizeWeights(monsters);
         __instance.populateFirstStrongEnemy(monsters, new ArrayList<>());
@@ -192,12 +198,14 @@ public class DissArtPatches {
 
     protected static void generateElites(int count, AbstractDungeon __instance) {
         ArrayList<MonsterInfo> monsters = new ArrayList();
-        for (String s : weakencounterIDs) {
+        for (String s : eliteencounterIDs) {
             monsters.add(new MonsterInfo(s, 1.0F));
         }
         for(MonsterInfo s : EliteMonsterStrings) {
             monsters.add(new MonsterInfo(s.name, 1.0F));
         }
+
+
 
         MonsterInfo.normalizeWeights(monsters);
         __instance.populateMonsterList(monsters, count, true);
@@ -271,7 +279,7 @@ public class DissArtPatches {
                     for (CtMethod m : methods) {
                         if (m.getName().equals("generateMonsters") && !m.isEmpty() && !Modifier.isNative(m.getModifiers())) {
                             m.insertBefore("{" +
-                                    "if (riskOfRelics.RiskOfRelics.ActiveArtifacts.contains(riskOfRelics.RiskOfRelics.Artifacts.DISSONANCE)) {" +
+                                    "if (riskOfRelics.RiskOfRelics.ActiveArtifacts.contains(riskOfRelics.RiskOfRelics.Artifacts.DISSONANCE) || riskOfRelics.RiskOfRelics.ActiveArtifacts.contains(riskOfRelics.RiskOfRelics.Artifacts.KIN)) {" +
                                     "riskOfRelics.patches.DissArtPatches.generateMonsters(this);" +
                                     "return;" +
                                     "}" +

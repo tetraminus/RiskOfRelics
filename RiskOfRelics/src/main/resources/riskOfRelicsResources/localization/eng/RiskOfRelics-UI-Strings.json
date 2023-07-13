@@ -19,7 +19,8 @@
         "riskOfRelics:SPITE": {
                 "TEXT": [
                 "Spite",
-                "Spite description"
+                "NOT IMPLEMENTED"
+
                 ]
         },
         "riskOfRelics:COMMAND": {
@@ -32,19 +33,18 @@
         "riskOfRelics:DEATH": {
                 "TEXT": [
                 "Death",
-                "Death description"
+                "NOT IMPLEMENTED"
                 ]
         },
         "riskOfRelics:HONOR": {
                 "TEXT": [
-                "Honor",
-                "Honor description"
+                "Honor", "NOT IMPLEMENTED"
                 ]
         },
         "riskOfRelics:EVOLUTION": {
                 "TEXT": [
                 "Evolution",
-                "Evolution description"
+                        "NOT IMPLEMENTED"
                 ]
         },
         "riskOfRelics:WEAKASSKNEES":{
@@ -57,7 +57,7 @@
         "riskOfRelics:CHAOS": {
                 "TEXT": [
                 "Chaos",
-                "Chaos description"
+                        "NOT IMPLEMENTED"
                 ]
         },
         "riskOfRelics:GLASS": {
@@ -71,13 +71,14 @@
         "riskOfRelics:KIN": {
                 "TEXT": [
                 "Kin",
-                "Kin description"
+                        "NOT IMPLEMENTED"
                 ]
         },
         "riskOfRelics:METAMORPHOSIS": {
                 "TEXT": [
                 "Metamorphosis",
-                "Metamorphosis description"
+                "Every 3 floors your card pool switches to a new character's card pool."
+
                 ]
         },
         "riskOfRelics:DISSONANCE": {
@@ -90,31 +91,32 @@
         "riskOfRelics:ENIGMA": {
                 "TEXT": [
                 "Enigma",
-                "Enigma description"
+                "Every 5 floors, Relics are replaced with a random Relic of the same rarity. (Starting Relics are not affected.)"
                 ]
+
         },
         "riskOfRelics:SACRIFICE": {
                 "TEXT": [
                 "Sacrifice",
-                "Sacrifice description"
+                        "NOT IMPLEMENTED"
                 ]
         },
         "riskOfRelics:VENGEANCE": {
                 "TEXT": [
                 "Vengeance",
-                "Vengeance description"
+                        "NOT IMPLEMENTED"
                 ]
         },
         "riskOfRelics:SWARMS": {
                 "TEXT": [
                 "Swarms",
-                "Swarms description"
+                        "NOT IMPLEMENTED"
                 ]
         },
         "riskOfRelics:SOUL": {
                 "TEXT": [
                 "Soul",
-                "Soul description"
+                        "NOT IMPLEMENTED"
                 ]
         }
 

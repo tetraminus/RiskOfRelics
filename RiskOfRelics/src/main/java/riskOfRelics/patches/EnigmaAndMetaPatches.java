@@ -1,16 +1,19 @@
 package riskOfRelics.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
 import javassist.CtBehavior;
 import riskOfRelics.RiskOfRelics;
 import riskOfRelics.artifacts.EnigmaArt;
+import riskOfRelics.artifacts.MetamorphosisArt;
 
 import java.util.ArrayList;
 
-public class EnigmaPatches {
-    private static int enigmaCounter = 0;
+public class EnigmaAndMetaPatches {
+    public static int enigmaCounter = 0;
+    public static int metamorphCounter = 0;
     @SpirePatch2(clz = AbstractDungeon.class, method = "nextRoomTransition", paramtypez = {SaveFile.class})
     public static class NextRoomTransitionPatch {
         @SpireInsertPatch(
@@ -23,6 +26,17 @@ public class EnigmaPatches {
                 RiskOfRelics.DoEnigmaShtuff();
             }
             enigmaCounter++;
+            if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.METAMORPHOSIS) && metamorphCounter % MetamorphosisArt.FREQUENCY == 0
+                && !CardCrawlGame.loadingSave) {
+                if(RiskOfRelics.justLoadedMetamorphosis){
+                    RiskOfRelics.justLoadedMetamorphosis = false;
+                    RiskOfRelics.MetamorphCharacter = null;
+                }
+                RiskOfRelics.DoMetamorphosisShtuff();
+
+            }
+            metamorphCounter++;
+
         }
 
         private static class Locator extends SpireInsertLocator {

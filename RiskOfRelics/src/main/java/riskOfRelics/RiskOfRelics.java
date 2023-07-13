@@ -7,15 +7,21 @@ import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheCity;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.RewardSave;
@@ -38,22 +44,22 @@ import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
 import riskOfRelics.screens.ArtifactTopPanelItem;
-import riskOfRelics.util.ArtifactSaver;
-import riskOfRelics.util.ChargesVariable;
-import riskOfRelics.util.IDCheckDontTouchPls;
-import riskOfRelics.util.TextureLoader;
+import riskOfRelics.util.*;
 import riskOfRelics.variables.DefaultCustomVariable;
 import riskOfRelics.variables.DefaultSecondMagicNumber;
+import riskOfRelics.vfx.ArtifactAboveCreatureAction;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+import static com.megacrit.cardcrawl.core.CardCrawlGame.dungeon;
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.*;
 
 
 @SpireInitializer
@@ -267,7 +273,8 @@ public class RiskOfRelics implements
 
 
 
-    // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
+
+        // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
 
 
     // =============== LOAD THE CHARACTER =================
@@ -299,6 +306,9 @@ public class RiskOfRelics implements
         //BaseMod.addCustomScreen(new ArtifactInfoScreen());
         BaseMod.addTopPanelItem(new ArtifactTopPanelItem());
         BaseMod.addSaveField("ActiveArtifacts",new ArtifactSaver());
+        BaseMod.addSaveField("MetamorphCharacter",new MetamorphSaver());
+        BaseMod.addSaveField("EnigmaCounter",new CounterSavers.EnigmaCounterSaver());
+        BaseMod.addSaveField("MetamorphCounter",new CounterSavers.MetamorphCounterSaver());
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
@@ -566,10 +576,17 @@ public class RiskOfRelics implements
 
         @Override
         public void receiveStartGame() {
-        if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
+            if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
                 player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
                 player.currentHealth = player.maxHealth;
             }
+            if (!CardCrawlGame.loadingSave){
+                MetamorphCharacter = null;
+            }
+            if (ActiveArtifacts.contains(Artifacts.METAMORPHOSIS)) {
+                DoMetamorphosisShtuff();
+            }
+
         }
         @Override
         public int receiveMaxHPChange(int amount) {
@@ -578,6 +595,118 @@ public class RiskOfRelics implements
             }
             return amount;
         }
+        public static String MetamorphCharacter;
+        public static boolean justLoadedMetamorphosis = false;
+
+
+
+        public static void DoMetamorphosisShtuff() {
+            if (MetamorphCharacter != null ) {
+                for (AbstractPlayer p : CardCrawlGame.characterManager.getAllCharacters()) {
+                    if (p.chosenClass.name().equals(MetamorphCharacter)) {
+                        ReinitializeCardPools(p,true);
+                        break;
+                    }
+                }
+            }else {
+                ReinitializeCardPools();
+            }
+            effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH /2, (float) Settings.HEIGHT /2, Artifacts.METAMORPHOSIS));
+        }
+
+        private static void ReinitializeCardPools() {
+            AbstractPlayer NewChar = CardCrawlGame.characterManager.getAllCharacters().get(MathUtils.random(0, CardCrawlGame.characterManager.getAllCharacters().size() - 1));
+            ReinitializeCardPools(NewChar, false);
+        }
+
+        public static void ReinitializeCardPools(AbstractPlayer NewChar, boolean isSave) {
+            logger.info("INIT CARD POOL");// 1419
+            long startTime = System.currentTimeMillis();// 1420
+            commonCardPool.clear();// 1423
+            uncommonCardPool.clear();// 1424
+            rareCardPool.clear();// 1425
+            colorlessCardPool.clear();// 1426
+            curseCardPool.clear();// 1427
+            ArrayList<AbstractCard> tmpPool = new ArrayList();// 1429
+            if (ModHelper.isModEnabled("Colorless Cards")) {// 1430
+                CardLibrary.addColorlessCards(tmpPool);// 1431
+            }
+
+
+            ReflectionHacks.privateMethod(AbstractDungeon.class, "addColorlessCards").invoke(dungeon);// 1447
+            ReflectionHacks.privateMethod(AbstractDungeon.class, "addCurseCards").invoke(dungeon);// 1448
+            tmpPool.addAll(NewChar.getCardPool(tmpPool));
+            if (!isSave) {
+                MetamorphCharacter = NewChar.chosenClass.name();
+            } else {
+                justLoadedMetamorphosis = true;
+            }
+
+            Iterator var4 = tmpPool.iterator();// 1449
+
+            AbstractCard c;
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                switch (c.rarity) {// 1450
+                    case COMMON:
+                        commonCardPool.addToTop(c);// 1452
+                        break;// 1453
+                    case UNCOMMON:
+                        uncommonCardPool.addToTop(c);// 1455
+                        break;// 1456
+                    case RARE:
+                        rareCardPool.addToTop(c);// 1458
+                        break;// 1459
+                    case CURSE:
+                        curseCardPool.addToTop(c);// 1461
+                        break;// 1462
+                    default:
+                        logger.info("Unspecified rarity: " + c.rarity.name() + " when creating pools! AbstractDungeon: Line 827");// 1464 1465
+                }
+            }
+
+            srcColorlessCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1471
+            srcCurseCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1472
+            srcRareCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1473
+            srcUncommonCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1474
+            srcCommonCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1475
+            var4 = colorlessCardPool.group.iterator();// 1477
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcColorlessCardPool.addToBottom(c);// 1478
+            }
+
+            var4 = curseCardPool.group.iterator();// 1480
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcCurseCardPool.addToBottom(c);// 1481
+            }
+
+            var4 = rareCardPool.group.iterator();// 1483
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcRareCardPool.addToBottom(c);// 1484
+            }
+
+            var4 = uncommonCardPool.group.iterator();// 1486
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcUncommonCardPool.addToBottom(c);// 1487
+            }
+
+            var4 = commonCardPool.group.iterator();// 1489
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcCommonCardPool.addToBottom(c);// 1490
+            }
+
+            logger.info("Cardpool load time: " + (System.currentTimeMillis() - startTime) + "ms");// 1493
+        }// 1494
 
         public static ArrayList<AbstractRelic> enigmatoremove = new ArrayList<>();
 
@@ -587,7 +716,7 @@ public class RiskOfRelics implements
                 enigmatoremove.addAll(player.relics);
                 enigmatoremove.removeIf(r -> r.tier == AbstractRelic.RelicTier.STARTER);
                 AbstractDungeon.relicsToRemoveOnStart.clear();
-                ReflectionHacks.privateMethod(AbstractDungeon.class, "initializeRelicList").invoke(CardCrawlGame.dungeon);
+                ReflectionHacks.privateMethod(AbstractDungeon.class, "initializeRelicList").invoke(dungeon);
                 for (AbstractRelic r:
                      player.relics) {
                     if (r.tier != AbstractRelic.RelicTier.STARTER) {

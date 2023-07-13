@@ -84,9 +84,7 @@ public class CharselectPatch {
 
         @SpirePrefixPatch
         public static void Prefix(com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen __instance) {
-            if (!RiskOfRelics.ActiveArtifacts.isEmpty()){
-                AnyEnabled = true;
-            }
+            AnyEnabled = !RiskOfRelics.ActiveArtifacts.isEmpty();
             FirstOpen = true;
         }
     }

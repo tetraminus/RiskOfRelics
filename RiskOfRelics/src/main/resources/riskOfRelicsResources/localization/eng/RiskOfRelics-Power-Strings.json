@@ -1,4 +1,8 @@
 {
+        "riskOfRelics:SpitePower": {
+                "NAME": "Spite",
+                "DESCRIPTIONS": ["Take #b"," damage in #b"," turns."]
+        },
         "riskOfRelics:Crowdfunderpower": {
                 "NAME": "The Crowdfunder",
                 "DESCRIPTIONS": ["Deal #b3 damage to all enemies and lose #b4 gold #b", " time"," times"," at the start of your turn."]
