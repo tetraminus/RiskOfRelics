@@ -19,7 +19,8 @@
         "riskOfRelics:SPITE": {
                 "TEXT": [
                 "Spite",
-                "NOT IMPLEMENTED"
+                "When you kill an enemy, Take #b30 damage in #b3 turns."
+
 
                 ]
         },
@@ -33,12 +34,14 @@
         "riskOfRelics:DEATH": {
                 "TEXT": [
                 "Death",
-                "NOT IMPLEMENTED"
+                "Lose #b2 Max HP when losing hp. Max HP increases are Multiplied by #b2."
                 ]
+
+
         },
         "riskOfRelics:HONOR": {
                 "TEXT": [
-                "Honor", "NOT IMPLEMENTED"
+                "Honor", "All fights are \"Burning\" fights."
                 ]
         },
         "riskOfRelics:EVOLUTION": {
@@ -63,7 +66,7 @@
         "riskOfRelics:GLASS": {
                 "TEXT": [
                 "Glass",
-                "Deal #b500% damage, but have #b10% Max HP. Max HP increases are divided by #b10."
+                "Deal #b500% damage, but have #b10% Max HP. Max HP increases and decreases are divided by #b10."
                 ]
 
 
@@ -77,21 +80,22 @@
         "riskOfRelics:METAMORPHOSIS": {
                 "TEXT": [
                 "Metamorphosis",
-                "Every 3 floors your card pool switches to a new character's card pool."
+                "Every #b3 floors, your card pool switches to a new character's card pool. (Including modded characters.)"
 
                 ]
         },
         "riskOfRelics:DISSONANCE": {
                 "TEXT": [
                 "Dissonance",
-                "Encounters can be from any Act."
+                "Encounters can be from any Act. (Respects encounter type.)"
+
                 ]
 
         },
         "riskOfRelics:ENIGMA": {
                 "TEXT": [
                 "Enigma",
-                "Every 5 floors, Relics are replaced with a random Relic of the same rarity. (Starting Relics are not affected.)"
+                "Every #b5 floors, Relics are replaced with a random Relic of the same rarity. (Starting Relics are not affected.)"
                 ]
 
         },
@@ -104,19 +108,19 @@
         "riskOfRelics:VENGEANCE": {
                 "TEXT": [
                 "Vengeance",
-                        "NOT IMPLEMENTED"
+                        "Every #b10th floor, you fight a boss."
                 ]
         },
         "riskOfRelics:SWARMS": {
                 "TEXT": [
                 "Swarms",
-                        "NOT IMPLEMENTED"
+                        "All fights are Elite fights, they have #50% HP."
                 ]
         },
         "riskOfRelics:SOUL": {
                 "TEXT": [
                 "Soul",
-                        "NOT IMPLEMENTED"
+                        "When you kill an enemy, spawn a louse."
                 ]
         }
 

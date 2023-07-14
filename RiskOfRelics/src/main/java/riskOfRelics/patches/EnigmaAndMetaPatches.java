@@ -8,12 +8,18 @@ import javassist.CtBehavior;
 import riskOfRelics.RiskOfRelics;
 import riskOfRelics.artifacts.EnigmaArt;
 import riskOfRelics.artifacts.MetamorphosisArt;
+import riskOfRelics.artifacts.SoulArt;
 
 import java.util.ArrayList;
 
 public class EnigmaAndMetaPatches {
     public static int enigmaCounter = 0;
     public static int metamorphCounter = 0;
+
+    public static int vengCounter = 0; //USED IN VENG PATCHES; DO NOT DELETE. WHY? I DON'T KNOW. BUT IT WORKS.
+    
+
+    
     @SpirePatch2(clz = AbstractDungeon.class, method = "nextRoomTransition", paramtypez = {SaveFile.class})
     public static class NextRoomTransitionPatch {
         @SpireInsertPatch(
@@ -21,6 +27,7 @@ public class EnigmaAndMetaPatches {
 
         )
         public static void Insert(AbstractDungeon __instance, SaveFile saveFile) {
+
 
             if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.ENIGMA) && enigmaCounter % EnigmaArt.FREQUENCY == 0) {
                 RiskOfRelics.DoEnigmaShtuff();
@@ -36,6 +43,11 @@ public class EnigmaAndMetaPatches {
 
             }
             metamorphCounter++;
+
+
+
+
+            SoulArt.ClearLice();
 
         }
 

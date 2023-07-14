@@ -26,5 +26,16 @@ public class CounterSavers {
             EnigmaAndMetaPatches.metamorphCounter = s;
         }
     }
+    public static class VengCounterSaver implements CustomSavable<Integer> {
+        @Override
+        public Integer onSave() {
+            return EnigmaAndMetaPatches.vengCounter;
+        }
+
+        @Override
+        public void onLoad(Integer s) {
+            EnigmaAndMetaPatches.vengCounter = s;
+        }
+    }
 
 }

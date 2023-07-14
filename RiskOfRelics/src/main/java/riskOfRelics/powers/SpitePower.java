@@ -22,10 +22,10 @@ public class SpitePower extends TwoAmountPower {
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     public static final String NAME = powerStrings.NAME;
     public static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
-    private int SpiteIdOffset;
+    private static int SpiteIdOffset;
     private static final Texture tex84 = TextureLoader.getTexture(makePowerPath("SpitePower_84.png"));
     private static final Texture tex32 = TextureLoader.getTexture(makePowerPath("SpitePower_32.png"));
-    public SpitePower(final AbstractCreature owner, final int amount) {
+    public SpitePower(AbstractCreature owner, int amount) {
         name = NAME;
         this.ID = POWER_ID + SpiteIdOffset;
         SpiteIdOffset++;
@@ -53,7 +53,7 @@ public class SpitePower extends TwoAmountPower {
         if (isPlayer) {
             this.addToBot(new ReducePowerAction(this.owner, this.owner, this, 1));// 35
             if (this.amount == 1) {// 36
-                this.addToBot(new DamageAction(player, new DamageInfo(null, amount2, DamageInfo.DamageType.THORNS));// 37 40
+                this.addToBot(new DamageAction(player, new DamageInfo(null, amount2, DamageInfo.DamageType.THORNS)));// 37 40
             }
         }
         super.atEndOfTurn(isPlayer);

@@ -28,12 +28,14 @@ import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import riskOfRelics.artifacts.DeathArt;
 import riskOfRelics.artifacts.GlassArt;
 import riskOfRelics.cards.AbstractDynamicCard;
 import riskOfRelics.events.CleansingPoolEvent;
 import riskOfRelics.events.IdentityCrisisEvent;
 import riskOfRelics.events.ShrineOfChance;
 import riskOfRelics.events.aspectEvent;
+import riskOfRelics.patches.EnigmaAndMetaPatches;
 import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.BottledChaos;
 import riskOfRelics.potions.EnergyDrink;
@@ -305,10 +307,11 @@ public class RiskOfRelics implements
         BaseMod.addCustomScreen(new ArtifactSelectScreen());
         //BaseMod.addCustomScreen(new ArtifactInfoScreen());
         BaseMod.addTopPanelItem(new ArtifactTopPanelItem());
-        BaseMod.addSaveField("ActiveArtifacts",new ArtifactSaver());
-        BaseMod.addSaveField("MetamorphCharacter",new MetamorphSaver());
-        BaseMod.addSaveField("EnigmaCounter",new CounterSavers.EnigmaCounterSaver());
-        BaseMod.addSaveField("MetamorphCounter",new CounterSavers.MetamorphCounterSaver());
+        BaseMod.addSaveField(makeID("ActiveArtifacts"),new ArtifactSaver());
+        BaseMod.addSaveField(makeID("MetamorphCharacter"),new MetamorphSaver());
+        BaseMod.addSaveField(makeID("EnigmaCounter"),new CounterSavers.EnigmaCounterSaver());
+        BaseMod.addSaveField(makeID("MetamorphCounter"),new CounterSavers.MetamorphCounterSaver());
+        BaseMod.addSaveField(makeID("VengCounter") ,new CounterSavers.VengCounterSaver());
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
@@ -579,6 +582,9 @@ public class RiskOfRelics implements
             if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
                 player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
                 player.currentHealth = player.maxHealth;
+                EnigmaAndMetaPatches.enigmaCounter = -1;
+                EnigmaAndMetaPatches.vengCounter = -1;
+                EnigmaAndMetaPatches.metamorphCounter = -1;
             }
             if (!CardCrawlGame.loadingSave){
                 MetamorphCharacter = null;
@@ -587,12 +593,27 @@ public class RiskOfRelics implements
                 DoMetamorphosisShtuff();
             }
 
+
         }
         @Override
         public int receiveMaxHPChange(int amount) {
-            if (ActiveArtifacts.contains(Artifacts.GLASS)) {
-                return Math.max(1, amount / GlassArt.GlassHealthReduction);
+            if (ActiveArtifacts.contains(Artifacts.DEATH)){
+                if (amount > 0) {
+                    amount = amount * DeathArt.MULTIPLIER;
+                }
+
             }
+            if (ActiveArtifacts.contains(Artifacts.GLASS)) {
+                amount = amount / GlassArt.GlassHealthReduction;
+
+                if (amount > 0) {
+                    amount = Math.max(amount, 1);
+                }
+            }
+
+
+
+
             return amount;
         }
         public static String MetamorphCharacter;
@@ -742,7 +763,11 @@ public class RiskOfRelics implements
             add(CallingBell.ID);
             add(PandorasBox.ID);
             add(Orrery.ID);
-
+            add(Strawberry.ID);
+            add(Pear.ID);
+            add(Mango.ID);
+            add(Waffle.ID);
+            add(TinyHouse.ID);
         }};
 
         private static AbstractRelic GetActualNonScreenRelic(AbstractRelic.RelicTier r) {

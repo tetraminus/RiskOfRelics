@@ -3,6 +3,7 @@ package riskOfRelics.patches;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import javassist.CtBehavior;
+import riskOfRelics.artifacts.SoulArt;
 import riskOfRelics.artifacts.SpiteArt;
 
 @SpirePatch2(
@@ -10,13 +11,15 @@ import riskOfRelics.artifacts.SpiteArt;
         method = "die",
         paramtypez = {boolean.class}
 )
-public class SpitePatch {
+public class SpiteSoulPatch {
     @SpireInsertPatch(
             locator = Locator.class
     )
     public static void Insert(AbstractMonster __instance, boolean triggerRelics) {
         if (triggerRelics) {
+
             SpiteArt.onMonsterDeath();
+            SoulArt.onMonsterDeath(__instance);
         }
     }
 
