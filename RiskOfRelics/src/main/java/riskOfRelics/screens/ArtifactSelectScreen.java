@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import riskOfRelics.RiskOfRelics;
 
@@ -20,11 +21,13 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import static com.megacrit.cardcrawl.core.CardCrawlGame.cancelButton;
+import static com.megacrit.cardcrawl.core.CardCrawlGame.languagePack;
 
 public class ArtifactSelectScreen extends CustomScreen
 {
 
         private ArrayList<Artifact> artifacts = new ArrayList<>();
+        public static String header;
         private boolean CloseOnSelect;
 
         private static class Artifact
@@ -32,6 +35,7 @@ public class ArtifactSelectScreen extends CustomScreen
                 public Texture texture;
                 public Texture ontexture;
                 public String name;
+
                 public String description;
                 public Hitbox hb;
 
@@ -70,6 +74,7 @@ public class ArtifactSelectScreen extends CustomScreen
                 }
 
 
+
         }
         public static class Enum
         {
@@ -104,11 +109,16 @@ public class ArtifactSelectScreen extends CustomScreen
                 if (!this.CloseOnSelect){
                         cancelButton.show("Cancel");
                 }
+
+                AbstractDungeon.dynamicBanner.appear((float)Settings.HEIGHT / 2.0F + 280.0F * Settings.scale ,header);
+                AbstractDungeon.overlayMenu.showBlackScreen();
                 //CardCrawlGame.fadeIn(0);
         }
 
         @Override
         public void close() {
+                AbstractDungeon.dynamicBanner.hide();
+                AbstractDungeon.overlayMenu.hideBlackScreen();
 
         }
 
@@ -132,9 +142,8 @@ public class ArtifactSelectScreen extends CustomScreen
                                         CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.HIGH, ScreenShake.ShakeDur.LONG, false);
                                         AbstractDungeon.screen = AbstractDungeon.CurrentScreen.NONE;
                                         AbstractDungeon.isScreenUp = false;
-                                        AbstractDungeon.overlayMenu.proceedButton.show();
-                                        AbstractDungeon.overlayMenu.endTurnButton.hide();
-                                        AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;
+                                        this.close();
+
                                 }
 
 
@@ -189,6 +198,10 @@ public class ArtifactSelectScreen extends CustomScreen
         {
                 // Required if you want to reopen your screen when the settings screen closes
                 AbstractDungeon.previousScreen = curScreen();
+        }
+
+        static {
+                header = languagePack.getUIString(RiskOfRelics.makeID("ArtifactSelect")).TEXT[3];
         }
 
 

@@ -9,6 +9,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
@@ -33,6 +34,8 @@ public class CharselectPatch {
     public static boolean AnyEnabled = false;
     public static boolean CharSelected = false;
     public static boolean FirstOpen = true;
+
+    public static boolean DimmerRendering = false;
     private static class Artifact
     {
         public Texture texture;
@@ -62,6 +65,7 @@ public class CharselectPatch {
         }
 
     }
+
     static {
         for (int i = 0; i < 16; i++) {
             artifacts.add(new Artifact(ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_off.png"),
@@ -86,6 +90,7 @@ public class CharselectPatch {
         public static void Prefix(com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen __instance) {
             AnyEnabled = !RiskOfRelics.ActiveArtifacts.isEmpty();
             FirstOpen = true;
+            DimmerRendering = false;
         }
     }
 
@@ -153,6 +158,7 @@ public class CharselectPatch {
                     }
                 }
             }
+
 
         }
     }

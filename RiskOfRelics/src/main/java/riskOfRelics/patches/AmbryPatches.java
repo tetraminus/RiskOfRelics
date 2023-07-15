@@ -172,7 +172,10 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
                 logger.info("Game Seed: " + Settings.seed);// 164
                 logger.info("Map generation time: " + (System.currentTimeMillis() - startTime) + "ms");// 165
                 AbstractDungeon.firstRoomChosen = false;// 166
+                logger.info(ambryNode.room.getClass().getName());
                 fadeIn();// 167
+
+
                 return SpireReturn.Return(null);
             }
             return SpireReturn.Continue();

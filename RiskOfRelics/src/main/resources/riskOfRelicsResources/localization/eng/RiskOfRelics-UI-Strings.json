@@ -3,7 +3,8 @@
                 "TEXT": [
                         "Artifact Selection",
                         "Select your artifacts",
-                        "You have no artifacts to activate."
+                        "You have no artifacts to activate.",
+                        "Choose an Artifact."
                 ]
         },
         "riskOfRelics:ArtifactTopPanelItem": {

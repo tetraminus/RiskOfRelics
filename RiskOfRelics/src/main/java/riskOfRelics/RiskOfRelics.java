@@ -31,10 +31,7 @@ import org.apache.logging.log4j.Logger;
 import riskOfRelics.artifacts.DeathArt;
 import riskOfRelics.artifacts.GlassArt;
 import riskOfRelics.cards.AbstractDynamicCard;
-import riskOfRelics.events.CleansingPoolEvent;
-import riskOfRelics.events.IdentityCrisisEvent;
-import riskOfRelics.events.ShrineOfChance;
-import riskOfRelics.events.aspectEvent;
+import riskOfRelics.events.*;
 import riskOfRelics.patches.EnigmaAndMetaPatches;
 import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.BottledChaos;
@@ -376,6 +373,12 @@ public class RiskOfRelics implements
         BaseMod.addEvent(eventParams);
         eventParams = new AddEventParams.Builder(ShrineOfChance.ID, ShrineOfChance.class) // for this specific event
                 .eventType(EventUtils.EventType.SHRINE)
+
+                .create();
+
+        BaseMod.addEvent(eventParams);
+        eventParams = new AddEventParams.Builder(ArtifactSelectEvent.ID, ArtifactSelectEvent.class) // for this specific event
+                .spawnCondition(() -> false)
 
                 .create();
 
