@@ -61,7 +61,7 @@ public class SpitePower extends TwoAmountPower {
 
     @Override
     public void updateDescription() {
-        description = DESCRIPTIONS[0] + amount + DESCRIPTIONS[1]  + amount2 + DESCRIPTIONS[2];
+        description = DESCRIPTIONS[0] + amount2 + DESCRIPTIONS[1]  + amount + DESCRIPTIONS[2];
     }
 
 }

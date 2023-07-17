@@ -221,7 +221,9 @@ public class RiskOfRelics implements
 
         try {
                 for (String A: ModConfig.getString("Artifacts").split(",")) {
-                    UnlockedArtifacts.add(getArtifactfromName(A));
+                    if (!UnlockedArtifacts.contains(getArtifactfromName(A))) {
+                        UnlockedArtifacts.add(getArtifactfromName(A));
+                    }
                 }
         } catch (Exception e) {
                 ModConfig.setString("Artifacts","");
@@ -586,7 +588,7 @@ public class RiskOfRelics implements
                 player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
                 player.currentHealth = player.maxHealth;
                 EnigmaAndMetaPatches.enigmaCounter = -1;
-                EnigmaAndMetaPatches.vengCounter = -1;
+                EnigmaAndMetaPatches.vengCounter = 0;
                 EnigmaAndMetaPatches.metamorphCounter = -1;
             }
             if (!CardCrawlGame.loadingSave){

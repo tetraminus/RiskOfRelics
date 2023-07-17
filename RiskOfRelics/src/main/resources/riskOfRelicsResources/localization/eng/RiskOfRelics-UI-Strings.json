@@ -61,7 +61,7 @@
         "riskOfRelics:CHAOS": {
                 "TEXT": [
                 "Chaos",
-                        "NOT IMPLEMENTED"
+                        "Numbers on cards are randomized between #b0.1X and #b2X."
                 ]
         },
         "riskOfRelics:GLASS": {
@@ -109,13 +109,13 @@
         "riskOfRelics:VENGEANCE": {
                 "TEXT": [
                 "Vengeance",
-                        "Every #b10th floor, you fight a boss."
+                        "Every #b10th fight, you fight a boss instead. (Respects Act.)"
                 ]
         },
         "riskOfRelics:SWARMS": {
                 "TEXT": [
                 "Swarms",
-                        "All fights are Elite fights, they have #50% HP."
+                        "All normal fights are Elite fights, they have #b50% HP."
                 ]
         },
         "riskOfRelics:SOUL": {
