@@ -3,7 +3,7 @@ package riskOfRelics.actions;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
-
+@Deprecated
 public class loseRelicAction extends AbstractGameAction {
     private final String relicId;
 

@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.relics.ChemicalX;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import riskOfRelics.powers.TonicPower;
-
+@Deprecated
 public class UncommonPowerAction extends AbstractGameAction {
     private boolean freeToPlayOnce;
     private int magicNumber;

@@ -16,7 +16,7 @@ import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
 import com.megacrit.cardcrawl.scenes.TheEndingScene;
 
 import java.util.ArrayList;
-
+@Deprecated
 public class Ambry extends AbstractDungeon {
     private static final UIStrings uiStrings;
     public static final String[] TEXT;
