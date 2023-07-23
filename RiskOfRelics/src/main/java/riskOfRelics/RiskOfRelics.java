@@ -396,8 +396,10 @@ public class RiskOfRelics implements
 
         BaseMod.addEvent(eventParams);
         eventParams = new AddEventParams.Builder(ArtifactSelectEvent.ID, ArtifactSelectEvent.class) // for this specific event
-                .spawnCondition(() -> false)
 
+                //can only spawn in endless
+                .eventType(EventUtils.EventType.SHRINE)
+                .spawnCondition(() -> Settings.isEndless )
                 .create();
 
         BaseMod.addEvent(eventParams);
