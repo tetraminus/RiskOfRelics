@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import javassist.CtBehavior;
 import riskOfRelics.actions.FixMonsterAction;
+import riskOfRelics.artifacts.KinArt;
 import riskOfRelics.artifacts.SoulArt;
 import riskOfRelics.artifacts.SpiteArt;
 public class SpiteSoulPatches {
@@ -24,6 +25,7 @@ public class SpiteSoulPatches {
 
                 SpiteArt.onMonsterDeath();
                 SoulArt.onMonsterDeath(__instance);
+                KinArt.onMonsterDeath();
             }
         }
 

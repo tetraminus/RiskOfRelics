@@ -279,7 +279,7 @@ public class DissArtPatches {
                     for (CtMethod m : methods) {
                         if (m.getName().equals("generateMonsters") && !m.isEmpty() && !Modifier.isNative(m.getModifiers())) {
                             m.insertBefore("{" +
-                                    "if (riskOfRelics.RiskOfRelics.ActiveArtifacts.contains(riskOfRelics.RiskOfRelics.Artifacts.DISSONANCE) || riskOfRelics.RiskOfRelics.ActiveArtifacts.contains(riskOfRelics.RiskOfRelics.Artifacts.KIN)) {" +
+                                    "if (riskOfRelics.RiskOfRelics.ActiveArtifacts.contains(riskOfRelics.RiskOfRelics.Artifacts.DISSONANCE)){" +
                                     "riskOfRelics.patches.DissArtPatches.generateMonsters(this);" +
                                     "return;" +
                                     "}" +

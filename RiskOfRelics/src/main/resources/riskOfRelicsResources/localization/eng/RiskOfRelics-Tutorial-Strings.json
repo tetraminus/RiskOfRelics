@@ -1,0 +1,12 @@
+{
+  "riskOfRelics:ArtifactTutorial": {
+    "TEXT": [
+      "The newly added artifacts are game-changing modifiers that are unlocked through a special event (I hear the shopkeeper has new stock!). They are all functional but may cause bugs and crashes. if you find any, please report them on the Github. Have fun!"
+   ],
+    "LABEL": [
+      "Risk of Relics: Artifacts!",
+      "Understood."
+
+    ]
+  }
+}

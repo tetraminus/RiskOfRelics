@@ -32,6 +32,7 @@ import riskOfRelics.artifacts.DeathArt;
 import riskOfRelics.artifacts.GlassArt;
 import riskOfRelics.cards.AbstractDynamicCard;
 import riskOfRelics.events.*;
+import riskOfRelics.patches.ArtifactFTUEPatches;
 import riskOfRelics.patches.EnigmaAndMetaPatches;
 import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.BottledChaos;
@@ -98,7 +99,7 @@ public class RiskOfRelics implements
 
 
 
-    public static SpireConfig modConfig;
+
 
 
     //Mod Badge - A small icon that appears in the mod settings menu next to your mod.
@@ -152,21 +153,7 @@ public class RiskOfRelics implements
         logger.info("Done creating the color");
 
 
-        logger.info("Adding mod settings");
-        // This loads the mod settings.
-        // The actual mod Button is added below in receivePostInitialize()
-        riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE"); // This is the default setting. It's actually set...
-        try {
-            ModConfig = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
-            // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
-            ModConfig.load(); // Load the setting and set the boolean to equal it
-            AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        logger.info("Done adding mod settings");
 
-        ActiveArtifacts = new ArrayList<>();
 
     }
 
@@ -216,9 +203,24 @@ public class RiskOfRelics implements
 
     public static void initialize() {
         logger.info("========================= Initializing Risk Of Relics. Hi. =========================");
-        RiskOfRelics defaultmod = new RiskOfRelics();
+        RiskOfRelics riskOfRelics = new RiskOfRelics();
         logger.info("========================= /Risk Of Relics Initialized. Hello World./ =========================");
+        logger.info("Adding mod settings");
+        // This loads the mod settings.
+        // The actual mod Button is added below in receivePostInitialize()
+        riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE");
+        riskOfRelicsDefaultSettings.setProperty("hasShownFTUE", "FALSE");
+        try {
+            ModConfig = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
+            // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
+            ModConfig.load(); // Load the setting and set the boolean to equal it
+            AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        logger.info("Done adding mod settings");
 
+        ActiveArtifacts = new ArrayList<>();
         try {
                 for (String A: ModConfig.getString("Artifacts").split(",")) {
                     if (!UnlockedArtifacts.contains(getArtifactfromName(A))) {
@@ -234,6 +236,15 @@ public class RiskOfRelics implements
                 throw new RuntimeException(e);
         }
 
+
+    }
+    public static boolean hasShownFTUE() {
+
+        return ModConfig.getBool("hasShownFTUE");
+    }
+    public static void setHasShownFTUE(boolean b) {
+        ModConfig.setBool("hasShownFTUE", b);
+        saveData();
 
     }
 
@@ -258,6 +269,11 @@ public class RiskOfRelics implements
                 ModConfig.setString("EnabledArtifacts",ModConfig.getString("EnabledArtifacts")+A.name()+",");
 
             }
+            ModConfig.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             ModConfig.save();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -398,6 +414,13 @@ public class RiskOfRelics implements
                 (customReward) -> { // this handles what to do when this quest type is saved.
                     return new RewardSave(customReward.type.toString(), null,0, 0);
                 });
+
+        if (!RiskOfRelics.hasShownFTUE()) {
+            ArtifactFTUEPatches.FTUEHandler.open();
+            RiskOfRelics.setHasShownFTUE(true);
+
+        }
+
     }
 
     // =============== / POST-INITIALIZE/ =================
@@ -548,6 +571,9 @@ public class RiskOfRelics implements
         // UIStrings
         BaseMod.loadCustomStringsFile(UIStrings.class,
                 getModID() + "Resources/localization/eng/RiskOfRelics-UI-Strings.json");
+
+        BaseMod.loadCustomStringsFile(TutorialStrings.class,
+                getModID() + "Resources/localization/eng/RiskOfRelics-Tutorial-Strings.json");
 
         logger.info("Done editing strings");
     }

@@ -48,7 +48,7 @@
         "riskOfRelics:EVOLUTION": {
                 "TEXT": [
                 "Evolution",
-                        "NOT IMPLEMENTED"
+                        "At the start of combat, all enemies gain #b2 random #yStrength, #yDexterity, or #yBuffer per act climbed."
                 ]
         },
         "riskOfRelics:WEAKASSKNEES":{
@@ -75,7 +75,7 @@
         "riskOfRelics:KIN": {
                 "TEXT": [
                 "Kin",
-                        "NOT IMPLEMENTED"
+                        "When you kill an enemy, all others gain #b10 Strength for the turn."
                 ]
         },
         "riskOfRelics:METAMORPHOSIS": {
@@ -103,7 +103,7 @@
         "riskOfRelics:SACRIFICE": {
                 "TEXT": [
                 "Sacrifice",
-                        "NOT IMPLEMENTED"
+                        "Non-boss chests are replaced with a Elite fight, Elite fights have a #b50% chance to drop another relic."
                 ]
         },
         "riskOfRelics:VENGEANCE": {

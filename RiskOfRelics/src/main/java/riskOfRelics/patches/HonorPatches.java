@@ -12,10 +12,13 @@ import com.megacrit.cardcrawl.powers.MetallicizePower;
 import com.megacrit.cardcrawl.powers.RegenerateMonsterPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import riskOfRelics.RiskOfRelics;
+import riskOfRelics.artifacts.EvoArt;
 import riskOfRelics.vfx.ArtifactAboveCreatureAction;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.actNum;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.effectsQueue;
 
 public class HonorPatches {
@@ -66,14 +69,20 @@ public class HonorPatches {
     )
     public static class HonorPatch {
         @SpirePostfixPatch
-        public static void Postfix(AbstractPlayer __instance) {
+        public static void Postfix(AbstractPlayer __instance) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
             if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.HONOR) ){
-
-                    ApplyBurningToRoom();
-                    effectsQueue.add(new ArtifactAboveCreatureAction(Settings.WIDTH/2, Settings.HEIGHT/2, RiskOfRelics.Artifacts.HONOR));
-
-
+                ApplyBurningToRoom();
+                effectsQueue.add(new ArtifactAboveCreatureAction(Settings.WIDTH/2, Settings.HEIGHT/2, RiskOfRelics.Artifacts.HONOR));
             }
+            if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.EVOLUTION)){
+                for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                    for (int i = 0; i < actNum * EvoArt.PowersPerAct; i++) {
+                        EvoArt.ApplyRandomPower(m);
+                    }
+
+                }
+            }
+
         }
     }
 
