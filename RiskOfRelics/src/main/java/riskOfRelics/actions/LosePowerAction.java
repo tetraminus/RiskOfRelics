@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
-
+@Deprecated
 public class LosePowerAction extends AbstractGameAction {
     private final AbstractPower Pow;
 

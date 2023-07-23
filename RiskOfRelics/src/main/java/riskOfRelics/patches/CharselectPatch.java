@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
@@ -16,6 +18,8 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import riskOfRelics.RiskOfRelics;
 
 import java.util.ArrayList;
+
+import static riskOfRelics.RiskOfRelics.saveData;
 
 
 public class CharselectPatch {
@@ -27,6 +31,11 @@ public class CharselectPatch {
     public static Hitbox buttonHB = new Hitbox(1000 * Settings.scale, 25* Settings.scale, tex.getWidth(), tex.getHeight());
     public static ArrayList<Artifact> artifacts = new ArrayList<>();
     public static boolean ShouldRender = false;
+    public static boolean AnyEnabled = false;
+    public static boolean CharSelected = false;
+    public static boolean FirstOpen = true;
+
+    public static boolean DimmerRendering = false;
     private static class Artifact
     {
         public Texture texture;
@@ -56,6 +65,7 @@ public class CharselectPatch {
         }
 
     }
+
     static {
         for (int i = 0; i < 16; i++) {
             artifacts.add(new Artifact(ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_off.png"),
@@ -70,6 +80,20 @@ public class CharselectPatch {
 
         }
     }
+    @SpirePatch2(
+            clz = com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class,
+            method = "open"
+    )
+    public static class OpenPatch {
+
+        @SpirePrefixPatch
+        public static void Prefix(com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen __instance) {
+            AnyEnabled = !RiskOfRelics.ActiveArtifacts.isEmpty();
+            FirstOpen = true;
+            DimmerRendering = false;
+        }
+    }
+
 
     @SpirePatch2(clz = com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class,
             method = "render"
@@ -97,7 +121,8 @@ public class CharselectPatch {
                 }
             }
 
-            if (ShouldRender){
+
+            if (CharSelected && (ShouldRender)){
 
 
                 for (int i = 0; i < 4; i++) {
@@ -134,6 +159,7 @@ public class CharselectPatch {
                 }
             }
 
+
         }
     }
 
@@ -144,6 +170,10 @@ public class CharselectPatch {
         @SpirePostfixPatch
 
         public static void Postfix(com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen __instance) {
+            if (FirstOpen && AnyEnabled) {
+                FirstOpen = false;
+                ShouldRender = true;
+            }
 
             buttonHB.update();
             if (ReflectionHacks.getPrivate(__instance, com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class, "anySelected")) {
@@ -152,7 +182,10 @@ public class CharselectPatch {
                     CardCrawlGame.sound.play("UI_CLICK_1");
                 }
             }
-            if (ShouldRender) {
+            CharSelected = ReflectionHacks.<Boolean>getPrivate(__instance, com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class, "anySelected");
+
+
+            if (CharSelected && (ShouldRender)) {
                 for (Artifact a :
                         artifacts) {
                     a.hb.update();
@@ -165,11 +198,13 @@ public class CharselectPatch {
                     if (InputHelper.justClickedLeft && a.hb.hovered) {
                         if (RiskOfRelics.UnlockedArtifacts.contains(a.artifact)) {
                             CardCrawlGame.sound.play("UI_CLICK_1");
+
                             if (RiskOfRelics.ActiveArtifacts.contains(a.artifact)) {
                                 RiskOfRelics.ActiveArtifacts.remove(a.artifact);
                             } else {
                                 RiskOfRelics.ActiveArtifacts.add(a.artifact);
                             }
+                            saveData();
                         } else {
                             CardCrawlGame.sound.play("RELIC_DROP_CLINK");
                         }
@@ -178,4 +213,6 @@ public class CharselectPatch {
             }
         }
     }
+
+
 }

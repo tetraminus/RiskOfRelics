@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 
-
+@Deprecated
 public class HandMirrorAction extends AbstractGameAction {
     private static final UIStrings uiStrings;
     public static final String[] TEXT;

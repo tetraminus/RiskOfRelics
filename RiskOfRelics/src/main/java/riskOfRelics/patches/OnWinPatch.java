@@ -14,10 +14,11 @@ public class OnWinPatch {
             if (!RiskOfRelics.UnlockedArtifacts.contains(a)) {
                 RiskOfRelics.UnlockedArtifacts.add(a);
             }
-
         }
         RiskOfRelics.saveData();
 
     }
 
 }
+
+// I say hi

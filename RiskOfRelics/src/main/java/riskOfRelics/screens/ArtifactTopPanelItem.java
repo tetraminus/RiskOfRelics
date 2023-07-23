@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
@@ -67,11 +68,14 @@ public class ArtifactTopPanelItem extends TopPanelItem {
 
     @Override
     protected void onClick() {
+        ShouldRender = !ShouldRender;
         if (ShouldRender){
-            ShouldRender = false;
-        } else {
-            ShouldRender = true;
+            AbstractDungeon.overlayMenu.showBlackScreen();
+        }else{
+            AbstractDungeon.overlayMenu.hideBlackScreen();
         }
+
+
 
     }
 

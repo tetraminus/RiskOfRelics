@@ -2,12 +2,14 @@
   "riskOfRelics:AmbrySelectEvent": {
     "NAME": "???",
     "DESCRIPTIONS": [
-      "You come across a strange room, filled with a variety of artifact. NL You feel a strange power emanating from them, and wonder what they are."
-
+      "You come across a strange room, filled with a variety of artifacts. NL You feel a strange power emanating from them, and wonder what they are.",
+      "You leave the room, and continue on your way.",
+      "You come across a strange room, filled with a variety of artifacts. NL You feel that the power they might have held is gone, but you spot something #gshiny in the corner."
     ],
     "OPTIONS": [
-      "[Choose] #gChoose #ga #gArtifact."
-
+      "[Choose] #gChoose #ga #gArtifact.",
+      "[Leave]",
+      "[Choose] #gGet #ga #grare #gRelic."
     ]
   },
   "riskOfRelics:ShrineOfChance": {

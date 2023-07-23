@@ -1,37 +1,39 @@
 package riskOfRelics;
 
-import basemod.AutoAdd;
-import basemod.BaseMod;
-import basemod.ModLabeledToggleButton;
-import basemod.ModPanel;
+import basemod.*;
 import basemod.eventUtil.AddEventParams;
 import basemod.eventUtil.EventUtils;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheCity;
-import com.megacrit.cardcrawl.helpers.CardHelper;
+import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.ModHelper;
 import com.megacrit.cardcrawl.localization.*;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import riskOfRelics.artifacts.DeathArt;
+import riskOfRelics.artifacts.GlassArt;
 import riskOfRelics.cards.AbstractDynamicCard;
-import riskOfRelics.events.CleansingPoolEvent;
-import riskOfRelics.events.IdentityCrisisEvent;
-import riskOfRelics.events.ShrineOfChance;
-import riskOfRelics.events.aspectEvent;
+import riskOfRelics.events.*;
+import riskOfRelics.patches.ArtifactFTUEPatches;
+import riskOfRelics.patches.EnigmaAndMetaPatches;
 import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.BottledChaos;
 import riskOfRelics.potions.EnergyDrink;
@@ -42,22 +44,22 @@ import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
 import riskOfRelics.screens.ArtifactTopPanelItem;
-import riskOfRelics.util.ArtifactSaver;
-import riskOfRelics.util.ChargesVariable;
-import riskOfRelics.util.IDCheckDontTouchPls;
-import riskOfRelics.util.TextureLoader;
+import riskOfRelics.util.*;
 import riskOfRelics.variables.DefaultCustomVariable;
 import riskOfRelics.variables.DefaultSecondMagicNumber;
+import riskOfRelics.vfx.ArtifactAboveCreatureAction;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+import static com.megacrit.cardcrawl.core.CardCrawlGame.dungeon;
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.*;
 
 
 @SpireInitializer
@@ -68,7 +70,11 @@ public class RiskOfRelics implements
         EditStringsSubscriber,
         EditKeywordsSubscriber,
         EditCharactersSubscriber,
-        PostInitializeSubscriber {
+        PostInitializeSubscriber,
+        StartGameSubscriber,
+        MaxHPChangeSubscriber
+
+    {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
     // Making relics? EditRelicsSubscriber. etc., etc., for a full list and how to make your own, visit the basemod wiki.
     public static final Logger logger = LogManager.getLogger(RiskOfRelics.class.getName());
@@ -90,46 +96,15 @@ public class RiskOfRelics implements
 
     // =============== INPUT TEXTURE LOCATION =================
 
-    // Colors (RGB)
-    // Character Color
-    public static final Color DEFAULT_GRAY = CardHelper.getColor(64.0f, 70.0f, 70.0f);
-
-    // Potion Colors in RGB
 
 
-    // ONCE YOU CHANGE YOUR MOD ID (BELOW, YOU CAN'T MISS IT) CHANGE THESE PATHS!!!!!!!!!!!
-    // ONCE YOU CHANGE YOUR MOD ID (BELOW, YOU CAN'T MISS IT) CHANGE THESE PATHS!!!!!!!!!!!
-    // ONCE YOU CHANGE YOUR MOD ID (BELOW, YOU CAN'T MISS IT) CHANGE THESE PATHS!!!!!!!!!!!
-    // ONCE YOU CHANGE YOUR MOD ID (BELOW, YOU CAN'T MISS IT) CHANGE THESE PATHS!!!!!!!!!!!
-    // ONCE YOU CHANGE YOUR MOD ID (BELOW, YOU CAN'T MISS IT) CHANGE THESE PATHS!!!!!!!!!!!
-    // ONCE YOU CHANGE YOUR MOD ID (BELOW, YOU CAN'T MISS IT) CHANGE THESE PATHS!!!!!!!!!!!
 
-    // Card backgrounds - The actual rectangular card.
-    private static final String ATTACK_DEFAULT_GRAY = "riskOfRelicsResources/images/512/bg_attack_default_gray.png";
-    private static final String SKILL_DEFAULT_GRAY = "riskOfRelicsResources/images/512/bg_skill_default_gray.png";
-    private static final String POWER_DEFAULT_GRAY = "riskOfRelicsResources/images/512/bg_power_default_gray.png";
 
-    private static final String ENERGY_ORB_DEFAULT_GRAY = "riskOfRelicsResources/images/512/card_default_gray_orb.png";
-    private static final String CARD_ENERGY_ORB = "riskOfRelicsResources/images/512/card_small_orb.png";
 
-    private static final String ATTACK_DEFAULT_GRAY_PORTRAIT = "riskOfRelicsResources/images/1024/bg_attack_default_gray.png";
-    private static final String SKILL_DEFAULT_GRAY_PORTRAIT = "riskOfRelicsResources/images/1024/bg_skill_default_gray.png";
-    private static final String POWER_DEFAULT_GRAY_PORTRAIT = "riskOfRelicsResources/images/1024/bg_power_default_gray.png";
-    private static final String ENERGY_ORB_DEFAULT_GRAY_PORTRAIT = "riskOfRelicsResources/images/1024/card_default_gray_orb.png";
-    public static SpireConfig modConfig;
-    // Character assets
-    private static final String THE_DEFAULT_BUTTON = "riskOfRelicsResources/images/charSelect/DefaultCharacterButton.png";
-    private static final String THE_DEFAULT_PORTRAIT = "riskOfRelicsResources/images/charSelect/DefaultCharacterPortraitBG.png";
-    public static final String THE_DEFAULT_SHOULDER_1 = "riskOfRelicsResources/images/char/defaultCharacter/shoulder.png";
-    public static final String THE_DEFAULT_SHOULDER_2 = "riskOfRelicsResources/images/char/defaultCharacter/shoulder2.png";
-    public static final String THE_DEFAULT_CORPSE = "riskOfRelicsResources/images/char/defaultCharacter/corpse.png";
 
     //Mod Badge - A small icon that appears in the mod settings menu next to your mod.
     public static final String BADGE_IMAGE = "riskOfRelicsResources/images/Badge.png";
 
-    // Atlas and JSON files for the Animations
-    public static final String THE_DEFAULT_SKELETON_ATLAS = "riskOfRelicsResources/images/char/defaultCharacter/skeleton.atlas";
-    public static final String THE_DEFAULT_SKELETON_JSON = "riskOfRelicsResources/images/char/defaultCharacter/skeleton.json";
 
     // =============== MAKE IMAGE PATHS =================
 
@@ -168,62 +143,17 @@ public class RiskOfRelics implements
         logger.info("Subscribe to BaseMod hooks");
 
         BaseMod.subscribe(this);
-        
-      /*
-           (   ( /(  (     ( /( (            (  `   ( /( )\ )    )\ ))\ )
-           )\  )\()) )\    )\()))\ )   (     )\))(  )\()|()/(   (()/(()/(
-         (((_)((_)((((_)( ((_)\(()/(   )\   ((_)()\((_)\ /(_))   /(_))(_))
-         )\___ _((_)\ _ )\ _((_)/(_))_((_)  (_()((_) ((_|_))_  _(_))(_))_
-        ((/ __| || (_)_\(_) \| |/ __| __| |  \/  |/ _ \|   \  |_ _||   (_)
-         | (__| __ |/ _ \ | .` | (_ | _|  | |\/| | (_) | |) |  | | | |) |
-          \___|_||_/_/ \_\|_|\_|\___|___| |_|  |_|\___/|___/  |___||___(_)
-      */
+
 
         setModID("riskOfRelics");
-        // cool
-        // TODO: NOW READ THIS!!!!!!!!!!!!!!!:
-
-        // 1. Go to your resources folder in the project panel, and refactor> rename theDefaultResources to
-        // yourModIDResources.
-
-        // 2. Click on the localization > eng folder and press ctrl+shift+r, then select "Directory" (rather than in Project) and press alt+c (or mark the match case option)
-        // replace all instances of theDefault with yourModID, and all instances of thedefault with yourmodid (the same but all lowercase).
-        // Because your mod ID isn't the default. Your cards (and everything else) should have Your mod id. Not mine.
-        // It's important that the mod ID prefix for keywords used in the cards descriptions is lowercase!
-
-        // 3. Scroll down (or search for "ADD CARDS") till you reach the ADD CARDS section, and follow the TODO instructions
-
-        // 4. FINALLY and most importantly: Scroll up a bit. You may have noticed the image locations above don't use getModID()
-        // Change their locations to reflect your actual ID rather than theDefault. They get loaded before getID is a thing.
 
         logger.info("Done subscribing");
 
-        //logger.info("Creating the color " + TheDefault.Enums.COLOR_GRAY.toString());
-
-//        BaseMod.addColor(TheDefault.Enums.COLOR_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
-//                DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
-//                ATTACK_DEFAULT_GRAY, SKILL_DEFAULT_GRAY, POWER_DEFAULT_GRAY, ENERGY_ORB_DEFAULT_GRAY,
-//                ATTACK_DEFAULT_GRAY_PORTRAIT, SKILL_DEFAULT_GRAY_PORTRAIT, POWER_DEFAULT_GRAY_PORTRAIT,
-//                ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);
 
         logger.info("Done creating the color");
 
 
-        logger.info("Adding mod settings");
-        // This loads the mod settings.
-        // The actual mod Button is added below in receivePostInitialize()
-        riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE"); // This is the default setting. It's actually set...
-        try {
-            ModConfig = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
-            // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
-            ModConfig.load(); // Load the setting and set the boolean to equal it
-            AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        logger.info("Done adding mod settings");
 
-        ActiveArtifacts = new ArrayList<>();
 
     }
 
@@ -273,25 +203,52 @@ public class RiskOfRelics implements
 
     public static void initialize() {
         logger.info("========================= Initializing Risk Of Relics. Hi. =========================");
-        RiskOfRelics defaultmod = new RiskOfRelics();
+        RiskOfRelics riskOfRelics = new RiskOfRelics();
         logger.info("========================= /Risk Of Relics Initialized. Hello World./ =========================");
-
-    try {
-        for (String A:
-                ModConfig.getString("Artifacts").split(",")) {
-            UnlockedArtifacts.add(getArtifactfromName(A));
-
-        }
-    } catch (Exception e) {
-        ModConfig.setString("Artifacts","");
-    }
+        logger.info("Adding mod settings");
+        // This loads the mod settings.
+        // The actual mod Button is added below in receivePostInitialize()
+        riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE");
+        riskOfRelicsDefaultSettings.setProperty("hasShownFTUE", "FALSE");
         try {
-            ModConfig.save();
+            ModConfig = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
+            // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
+            ModConfig.load(); // Load the setting and set the boolean to equal it
+            AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        logger.info("Done adding mod settings");
+
+        ActiveArtifacts = new ArrayList<>();
+        try {
+                for (String A: ModConfig.getString("Artifacts").split(",")) {
+                    if (!UnlockedArtifacts.contains(getArtifactfromName(A))) {
+                        UnlockedArtifacts.add(getArtifactfromName(A));
+                    }
+                }
+        } catch (Exception e) {
+                ModConfig.setString("Artifacts","");
+        }
+        try {
+                ModConfig.save();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+                throw new RuntimeException(e);
         }
 
+
     }
+    public static boolean hasShownFTUE() {
+
+        return ModConfig.getBool("hasShownFTUE");
+    }
+    public static void setHasShownFTUE(boolean b) {
+        ModConfig.setBool("hasShownFTUE", b);
+        saveData();
+
+    }
+
+
 
     public static void saveData() {
         try {
@@ -305,11 +262,36 @@ public class RiskOfRelics implements
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        try {
+            ModConfig.setString("EnabledArtifacts","");
+            for (Artifacts A:
+                    ActiveArtifacts) {
+                ModConfig.setString("EnabledArtifacts",ModConfig.getString("EnabledArtifacts")+A.name()+",");
+
+            }
+            ModConfig.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            ModConfig.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Texture getArtifactImage(Artifacts artifact, boolean On) {
+        if (On) {
+            return TextureLoader.getTexture("riskOfRelicsResources/images/ui/ambrySelect/Artifact" + (artifact.ordinal()+1) +  "_on.png");
+        } else {
+            return TextureLoader.getTexture("riskOfRelicsResources/images/ui/ambrySelect/Artifact" + (artifact.ordinal()+1) + "_off.png");
+        }
     }
 
 
 
-    // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
+
+        // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
 
 
     // =============== LOAD THE CHARACTER =================
@@ -340,7 +322,11 @@ public class RiskOfRelics implements
         BaseMod.addCustomScreen(new ArtifactSelectScreen());
         //BaseMod.addCustomScreen(new ArtifactInfoScreen());
         BaseMod.addTopPanelItem(new ArtifactTopPanelItem());
-        BaseMod.addSaveField("ActiveArtifacts",new ArtifactSaver());
+        BaseMod.addSaveField(makeID("ActiveArtifacts"),new ArtifactSaver());
+        BaseMod.addSaveField(makeID("MetamorphCharacter"),new MetamorphSaver());
+        BaseMod.addSaveField(makeID("EnigmaCounter"),new CounterSavers.EnigmaCounterSaver());
+        BaseMod.addSaveField(makeID("MetamorphCounter"),new CounterSavers.MetamorphCounterSaver());
+        BaseMod.addSaveField(makeID("VengCounter") ,new CounterSavers.VengCounterSaver());
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
@@ -409,6 +395,12 @@ public class RiskOfRelics implements
                 .create();
 
         BaseMod.addEvent(eventParams);
+        eventParams = new AddEventParams.Builder(ArtifactSelectEvent.ID, ArtifactSelectEvent.class) // for this specific event
+                .spawnCondition(() -> false)
+
+                .create();
+
+        BaseMod.addEvent(eventParams);
 
         // =============== /EVENTS/ =================
         logger.info("Done loading badge Image and mod options");
@@ -422,6 +414,13 @@ public class RiskOfRelics implements
                 (customReward) -> { // this handles what to do when this quest type is saved.
                     return new RewardSave(customReward.type.toString(), null,0, 0);
                 });
+
+        if (!RiskOfRelics.hasShownFTUE()) {
+            ArtifactFTUEPatches.FTUEHandler.open();
+            RiskOfRelics.setHasShownFTUE(true);
+
+        }
+
     }
 
     // =============== / POST-INITIALIZE/ =================
@@ -573,6 +572,9 @@ public class RiskOfRelics implements
         BaseMod.loadCustomStringsFile(UIStrings.class,
                 getModID() + "Resources/localization/eng/RiskOfRelics-UI-Strings.json");
 
+        BaseMod.loadCustomStringsFile(TutorialStrings.class,
+                getModID() + "Resources/localization/eng/RiskOfRelics-Tutorial-Strings.json");
+
         logger.info("Done editing strings");
     }
 
@@ -602,25 +604,220 @@ public class RiskOfRelics implements
         }
     }
 
-
-
-
-
-
-
-    // ================ /LOAD THE KEYWORDS/ ===================    
-    
-    // this adds "ModName:" before the ID of any card/relic/power etc.
-    // in order to avoid conflicts if any other mod uses the same ID.
-    public static String makeID(String idText) {
+        public static String makeID(String idText) {
         return getModID() + ":" + idText;
     }
 
+        @Override
+        public void receiveStartGame() {
+            if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
+                player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
+                player.currentHealth = player.maxHealth;
+                EnigmaAndMetaPatches.enigmaCounter = -1;
+                EnigmaAndMetaPatches.vengCounter = 0;
+                EnigmaAndMetaPatches.metamorphCounter = -1;
+            }
+            if (!CardCrawlGame.loadingSave){
+                MetamorphCharacter = null;
+            }
+            if (ActiveArtifacts.contains(Artifacts.METAMORPHOSIS)) {
+                DoMetamorphosisShtuff();
+            }
+
+
+        }
+        @Override
+        public int receiveMaxHPChange(int amount) {
+            if (ActiveArtifacts.contains(Artifacts.DEATH)){
+                if (amount > 0) {
+                    amount = amount * DeathArt.MULTIPLIER;
+                }
+
+            }
+            if (ActiveArtifacts.contains(Artifacts.GLASS)) {
+                amount = amount / GlassArt.GlassHealthReduction;
+
+                if (amount > 0) {
+                    amount = Math.max(amount, 1);
+                }
+            }
 
 
 
 
-    public enum Artifacts {
+            return amount;
+        }
+        public static String MetamorphCharacter;
+        public static boolean justLoadedMetamorphosis = false;
+
+
+
+        public static void DoMetamorphosisShtuff() {
+            if (MetamorphCharacter != null ) {
+                for (AbstractPlayer p : CardCrawlGame.characterManager.getAllCharacters()) {
+                    if (p.chosenClass.name().equals(MetamorphCharacter)) {
+                        ReinitializeCardPools(p,true);
+                        break;
+                    }
+                }
+            }else {
+                ReinitializeCardPools();
+            }
+            effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH /2, (float) Settings.HEIGHT /2, Artifacts.METAMORPHOSIS));
+        }
+
+        private static void ReinitializeCardPools() {
+            AbstractPlayer NewChar = CardCrawlGame.characterManager.getAllCharacters().get(MathUtils.random(0, CardCrawlGame.characterManager.getAllCharacters().size() - 1));
+            ReinitializeCardPools(NewChar, false);
+        }
+
+        public static void ReinitializeCardPools(AbstractPlayer NewChar, boolean isSave) {
+            logger.info("INIT CARD POOL");// 1419
+            long startTime = System.currentTimeMillis();// 1420
+            commonCardPool.clear();// 1423
+            uncommonCardPool.clear();// 1424
+            rareCardPool.clear();// 1425
+            colorlessCardPool.clear();// 1426
+            curseCardPool.clear();// 1427
+            ArrayList<AbstractCard> tmpPool = new ArrayList();// 1429
+            if (ModHelper.isModEnabled("Colorless Cards")) {// 1430
+                CardLibrary.addColorlessCards(tmpPool);// 1431
+            }
+
+
+            ReflectionHacks.privateMethod(AbstractDungeon.class, "addColorlessCards").invoke(dungeon);// 1447
+            ReflectionHacks.privateMethod(AbstractDungeon.class, "addCurseCards").invoke(dungeon);// 1448
+            tmpPool.addAll(NewChar.getCardPool(tmpPool));
+            if (!isSave) {
+                MetamorphCharacter = NewChar.chosenClass.name();
+            } else {
+                justLoadedMetamorphosis = true;
+            }
+
+            Iterator var4 = tmpPool.iterator();// 1449
+
+            AbstractCard c;
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                switch (c.rarity) {// 1450
+                    case COMMON:
+                        commonCardPool.addToTop(c);// 1452
+                        break;// 1453
+                    case UNCOMMON:
+                        uncommonCardPool.addToTop(c);// 1455
+                        break;// 1456
+                    case RARE:
+                        rareCardPool.addToTop(c);// 1458
+                        break;// 1459
+                    case CURSE:
+                        curseCardPool.addToTop(c);// 1461
+                        break;// 1462
+                    default:
+                        logger.info("Unspecified rarity: " + c.rarity.name() + " when creating pools! AbstractDungeon: Line 827");// 1464 1465
+                }
+            }
+
+            srcColorlessCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1471
+            srcCurseCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1472
+            srcRareCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1473
+            srcUncommonCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1474
+            srcCommonCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1475
+            var4 = colorlessCardPool.group.iterator();// 1477
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcColorlessCardPool.addToBottom(c);// 1478
+            }
+
+            var4 = curseCardPool.group.iterator();// 1480
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcCurseCardPool.addToBottom(c);// 1481
+            }
+
+            var4 = rareCardPool.group.iterator();// 1483
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcRareCardPool.addToBottom(c);// 1484
+            }
+
+            var4 = uncommonCardPool.group.iterator();// 1486
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcUncommonCardPool.addToBottom(c);// 1487
+            }
+
+            var4 = commonCardPool.group.iterator();// 1489
+
+            while(var4.hasNext()) {
+                c = (AbstractCard)var4.next();
+                srcCommonCardPool.addToBottom(c);// 1490
+            }
+
+            logger.info("Cardpool load time: " + (System.currentTimeMillis() - startTime) + "ms");// 1493
+        }// 1494
+
+        public static ArrayList<AbstractRelic> enigmatoremove = new ArrayList<>();
+
+        public static void DoEnigmaShtuff() {
+            ArrayList<AbstractRelic> relicsToAdd = new ArrayList<>();
+            if (ActiveArtifacts.contains(Artifacts.ENIGMA)) {
+                enigmatoremove.addAll(player.relics);
+                enigmatoremove.removeIf(r -> r.tier == AbstractRelic.RelicTier.STARTER);
+                AbstractDungeon.relicsToRemoveOnStart.clear();
+                ReflectionHacks.privateMethod(AbstractDungeon.class, "initializeRelicList").invoke(dungeon);
+                for (AbstractRelic r:
+                     player.relics) {
+                    if (r.tier != AbstractRelic.RelicTier.STARTER) {
+                        relicsToAdd.add(GetActualNonScreenRelic(r.tier));
+                    }
+                }
+                for (AbstractRelic r:
+                        enigmatoremove) {
+                    player.loseRelic(r.relicId);
+                }
+                for (AbstractRelic r:
+                        relicsToAdd) {
+                    r.instantObtain();
+                }
+            }
+
+
+
+        }
+
+        public static final ArrayList<String> NonScreenBlacklist = new ArrayList<String>() {{
+            add(EmptyCage.ID);
+            add(CallingBell.ID);
+            add(PandorasBox.ID);
+            add(Orrery.ID);
+            add(Strawberry.ID);
+            add(Pear.ID);
+            add(Mango.ID);
+            add(Waffle.ID);
+            add(TinyHouse.ID);
+        }};
+
+        private static AbstractRelic GetActualNonScreenRelic(AbstractRelic.RelicTier r) {
+            AbstractRelic relic;
+            do {
+                if (!(r == AbstractRelic.RelicTier.SPECIAL)) {
+                    relic = AbstractDungeon.returnRandomScreenlessRelic(r);
+                } else {
+                    relic = AbstractDungeon.returnRandomScreenlessRelic(AbstractRelic.RelicTier.RARE);
+                }
+            } while (NonScreenBlacklist.contains(relic.relicId));
+
+
+
+            return relic;
+        }
+
+
+        public enum Artifacts {
         SPITE,
         COMMAND,
         DEATH,
@@ -642,7 +839,7 @@ public class RiskOfRelics implements
     public static Artifacts getArtifact(int artifactNum) {
         return Artifacts.values()[artifactNum];
     }
-    private static Artifacts getArtifactfromName(String a) {
+    public static Artifacts getArtifactfromName(String a) {
         return Artifacts.valueOf(a);
     }
 

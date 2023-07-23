@@ -3,7 +3,8 @@
                 "TEXT": [
                         "Artifact Selection",
                         "Select your artifacts",
-                        "You have no artifacts to activate."
+                        "You have no artifacts to activate.",
+                        "Choose an Artifact."
                 ]
         },
         "riskOfRelics:ArtifactTopPanelItem": {
@@ -19,98 +20,108 @@
         "riskOfRelics:SPITE": {
                 "TEXT": [
                 "Spite",
-                "Spite description"
+                "When you kill an enemy, Take #b30 damage in #b3 turns."
+
+
                 ]
         },
         "riskOfRelics:COMMAND": {
                 "TEXT": [
                 "Command",
-                "Command description"
+                "Card rewards contain #b20 Additional Cards"
                 ]
+
         },
         "riskOfRelics:DEATH": {
                 "TEXT": [
                 "Death",
-                "Death description"
+                "Lose #b2 Max HP when losing hp. Max HP increases are Multiplied by #b2."
                 ]
+
+
         },
         "riskOfRelics:HONOR": {
                 "TEXT": [
-                "Honor",
-                "Honor description"
+                "Honor", "All fights are \"Burning\" fights."
                 ]
         },
         "riskOfRelics:EVOLUTION": {
                 "TEXT": [
                 "Evolution",
-                "Evolution description"
+                        "At the start of combat, all enemies gain #b2 random #yStrength, #yDexterity, or #yBuffer per act climbed."
                 ]
         },
         "riskOfRelics:WEAKASSKNEES":{
                 "TEXT": [
                         "Frailty",
-                        "Frailty description"
+                        "Take double damage outside of combat."
                 ]
 
         },
         "riskOfRelics:CHAOS": {
                 "TEXT": [
                 "Chaos",
-                "Chaos description"
+                        "Numbers on cards are randomized between #b0.1X and #b2X."
                 ]
         },
         "riskOfRelics:GLASS": {
                 "TEXT": [
                 "Glass",
-                "Glass description"
+                "Deal #b500% damage, but have #b10% Max HP. Max HP increases and decreases are divided by #b10."
                 ]
+
+
         },
         "riskOfRelics:KIN": {
                 "TEXT": [
                 "Kin",
-                "Kin description"
+                        "When you kill an enemy, all others gain #b10 Strength for the turn."
                 ]
         },
         "riskOfRelics:METAMORPHOSIS": {
                 "TEXT": [
                 "Metamorphosis",
-                "Metamorphosis description"
+                "Every #b3 floors, your card pool switches to a new character's card pool. (Including modded characters.)"
+
                 ]
         },
         "riskOfRelics:DISSONANCE": {
                 "TEXT": [
                 "Dissonance",
-                "Dissonance description"
+                "Encounters can be from any Act. (Respects encounter type.)"
+
                 ]
+
         },
         "riskOfRelics:ENIGMA": {
                 "TEXT": [
                 "Enigma",
-                "Enigma description"
+                "Every #b5 floors, Relics are replaced with a random Relic of the same rarity. (Starting Relics are not affected.)"
                 ]
+
         },
         "riskOfRelics:SACRIFICE": {
                 "TEXT": [
                 "Sacrifice",
-                "Sacrifice description"
+                        "Non-boss chests are replaced with a Elite fight, Elite fights have a #b50% chance to drop another relic."
                 ]
         },
         "riskOfRelics:VENGEANCE": {
                 "TEXT": [
                 "Vengeance",
-                "Vengeance description"
+                        "Every #b10th fight, you fight a boss instead. (Respects Act.)"
                 ]
         },
         "riskOfRelics:SWARMS": {
                 "TEXT": [
                 "Swarms",
-                "Swarms description"
+                        "All normal fights are Elite fights, they have #b50% HP."
                 ]
         },
         "riskOfRelics:SOUL": {
                 "TEXT": [
                 "Soul",
-                "Soul description"
+                        "When you kill an enemy, spawn a louse."
                 ]
         }
 

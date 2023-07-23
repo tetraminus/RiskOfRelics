@@ -34,8 +34,8 @@ public class YellowKeyPatches {
                 AbstractRelic r = new YellowKey();
                 StoreRelic sr = new StoreRelic(r, -1, __instance);
                 sr.price = 500;
-                sr.relic.currentX = 950.0F;
-                sr.relic.currentY = 950.0F;
+                sr.relic.currentX = 950.0F*Settings.scale;
+                sr.relic.currentY = 950.0F*Settings.scale;
                 ReflectionHacks.<ArrayList<StoreRelic>>getPrivate(__instance, ShopScreen.class, "relics").add(sr);
             }
         }
@@ -51,7 +51,7 @@ public class YellowKeyPatches {
             if (__instance.relic instanceof YellowKey) {
                 // 49
                 if (!__instance.isPurchased) {// 50
-                    __instance.relic.currentX = (((float) Settings.WIDTH /2)- 75)  * Settings.xScale ;// 52
+                    __instance.relic.currentX = (((float) Settings.WIDTH /2) - 75 * Settings.xScale);// 52
                     __instance.relic.currentY = rugY + 500 * Settings.yScale ;// 53
                     __instance.relic.hb.move(__instance.relic.currentX, __instance.relic.currentY);// 54
                     __instance.relic.hb.update();// 57

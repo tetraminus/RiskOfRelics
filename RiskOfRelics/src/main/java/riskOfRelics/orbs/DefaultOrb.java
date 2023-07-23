@@ -22,7 +22,7 @@ import com.megacrit.cardcrawl.vfx.combat.OrbFlareEffect;
 import riskOfRelics.RiskOfRelics;
 
 import static riskOfRelics.RiskOfRelics.makeOrbPath;
-
+@Deprecated
 public class DefaultOrb extends CustomOrb {
 
     // Standard ID/Description
