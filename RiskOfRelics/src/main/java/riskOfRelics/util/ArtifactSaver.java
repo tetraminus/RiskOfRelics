@@ -18,6 +18,9 @@ public class ArtifactSaver implements CustomSavable<Integer[]> {
 
     @Override
     public void onLoad(Integer[] artifacts) {
+        if (artifacts == null) {
+            return;
+        }
         for ( Integer i : artifacts){
             if (i != null) {
                 RiskOfRelics.ActiveArtifacts.add(RiskOfRelics.getArtifact(i));

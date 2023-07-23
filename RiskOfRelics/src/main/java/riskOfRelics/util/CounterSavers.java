@@ -12,6 +12,9 @@ public class CounterSavers {
 
         @Override
         public void onLoad(Integer s) {
+            if (s == null) {
+                s = 0;
+            }
             EnigmaAndMetaPatches.enigmaCounter = s;
         }
     }
@@ -23,6 +26,9 @@ public class CounterSavers {
 
         @Override
         public void onLoad(Integer s) {
+            if (s == null) {
+                s = 0;
+            }
             EnigmaAndMetaPatches.metamorphCounter = s;
         }
     }
@@ -34,6 +40,9 @@ public class CounterSavers {
 
         @Override
         public void onLoad(Integer s) {
+            if (s == null) {
+                s = 0;
+            }
             EnigmaAndMetaPatches.vengCounter = s;
         }
     }
