@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.EventHelper;
 import com.megacrit.cardcrawl.map.RoomTypeAssigner;
 import com.megacrit.cardcrawl.random.Random;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import com.megacrit.cardcrawl.rooms.TreasureRoom;
@@ -45,6 +46,11 @@ public class SacrificePatches {
         public static void insert(MonsterRoomElite __instance) {
             if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.SACRIFICE) && AbstractDungeon.treasureRng.randomBoolean()) {
                 __instance.addRelicToRewards(AbstractDungeon.returnRandomRelicTier());
+
+
+            }
+            if (Settings.isFinalActAvailable && !Settings.hasSapphireKey && !__instance.rewards.isEmpty()) {
+                __instance.rewards.add(new RewardItem((RewardItem)__instance.rewards.get(__instance.rewards.size() - 1),RewardItem.RewardType.SAPPHIRE_KEY));
             }
         }
 
