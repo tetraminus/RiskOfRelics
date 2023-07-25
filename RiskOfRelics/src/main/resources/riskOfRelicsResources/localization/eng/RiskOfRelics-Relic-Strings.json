@@ -1,4 +1,20 @@
 {
+  "riskOfRelics:EssenceOfHeresy": {
+    "NAME": "Essence of Heresy",
+    "FLAVOR": "\"…and her heart, too wicked and full of hate, was left where she once stood – at the site of her betrayal.\"",
+    "DESCRIPTIONS": [
+      "At the start of combat, lose #b"," #yStrength. When you deal unblocked damage, apply #b"," #yriskofrelics:Ruin to the enemy. Right click this relic to trigger all #yriskofrelics:Ruin effects."
+
+    ]
+  },
+  "riskOfRelics:Raincoat": {
+    "NAME": "Ben's Raincoat",
+    "FLAVOR": "\"Please send a replacement that's blue.\"",
+    "DESCRIPTIONS": [
+      "At the start of combat, gain #b"," #yArtifact. When #yArtifact is triggered, gain #b"," #yTemporary_HP."
+
+    ]
+  },
   "riskOfRelics:YellowKey": {
     "NAME": "Artifact Key",
     "FLAVOR": "\"Two brothers, one composed of ambition and the other compassion\"",
