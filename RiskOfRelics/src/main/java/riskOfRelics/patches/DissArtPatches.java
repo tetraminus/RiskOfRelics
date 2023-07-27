@@ -287,13 +287,13 @@ public class DissArtPatches {
                         }
                         if (m.getName().equals("initializeBoss") && !m.isEmpty() && !Modifier.isNative(m.getModifiers())) {
                             m.insertBefore("{" +
-                                    "if (riskOfRelics.RiskOfRelics.ActiveArtifacts.contains(riskOfRelics.RiskOfRelics.Artifacts.DISSONANCE) ) {" +
-                                    "for (int i = 0; i < riskOfRelics.patches.DissArtPatches.BossStrings.size(); i++) {" +
-                                    "bossList.add(riskOfRelics.patches.DissArtPatches.BossStrings.get(i));" +
-                                    "}" +
-                                    "java.util.Collections.shuffle(bossList, new java.util.Random(monsterRng.randomLong()));" +
-                                    "return;" +
-                                    "}" +
+                                        "if (riskOfRelics.RiskOfRelics.ActiveArtifacts.contains(riskOfRelics.RiskOfRelics.Artifacts.DISSONANCE) ) {" +
+                                            "for (int i = 0; i < riskOfRelics.patches.DissArtPatches.BossStrings.size(); i++) {" +
+                                                "bossList.add(riskOfRelics.patches.DissArtPatches.BossStrings.get(i));" +
+                                            "}" +
+                                            "java.util.Collections.shuffle(bossList, new java.util.Random(monsterRng.randomLong()));" +
+                                            "return;" +
+                                        "}" +
                                     "}");
                         }
 

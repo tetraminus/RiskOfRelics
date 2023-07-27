@@ -49,8 +49,27 @@ public class SacrificePatches {
 
 
             }
-            if (Settings.isFinalActAvailable && !Settings.hasSapphireKey && !__instance.rewards.isEmpty()) {
-                __instance.rewards.add(new RewardItem((RewardItem)__instance.rewards.get(__instance.rewards.size() - 1),RewardItem.RewardType.SAPPHIRE_KEY));
+            if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.SACRIFICE) && Settings.isFinalActAvailable
+                    && !Settings.hasSapphireKey && !__instance.rewards.isEmpty()) {
+                RewardItem link = null;
+                for (RewardItem r :
+                        __instance.rewards) {
+                     if (r.type == RewardItem.RewardType.RELIC) {
+                         link = r;
+                         __instance.rewards.remove(r);
+                         link = new RewardItem(link.relic);
+                         __instance.rewards.add(link);
+
+                         break;
+                     }
+
+                }
+                if (link == null) {
+                    RiskOfRelics.logger.info("Sacrifice Elite Patch failed to find relic");
+                    return;
+                }
+
+                __instance.rewards.add(new RewardItem(link, RewardItem.RewardType.SAPPHIRE_KEY));
             }
         }
 
@@ -60,7 +79,7 @@ public class SacrificePatches {
             @Override
             public int[] Locate(CtBehavior ctBehavior) throws Exception {
                 Matcher finalMatcher = new Matcher.MethodCallMatcher(MonsterRoomElite.class, "addRelicToRewards");
-                return LineFinder.findInOrder(ctBehavior, finalMatcher);
+                return new int[]{LineFinder.findAllInOrder(ctBehavior, finalMatcher)[0]+1};
             }
         }
     }
