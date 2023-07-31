@@ -55,7 +55,7 @@ public class CorpseBloom extends BaseRelic {
 
     @Override
     public int onPlayerHeal(int healAmount) {
-        if (AbstractDungeon.getCurrRoom().phase.equals(AbstractRoom.RoomPhase.COMBAT)) {
+        if (AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase.equals(AbstractRoom.RoomPhase.COMBAT)) {
             if (isCorpsebloomHeal) {
                 isCorpsebloomHeal = false;
                 return super.onPlayerHeal(healAmount);
