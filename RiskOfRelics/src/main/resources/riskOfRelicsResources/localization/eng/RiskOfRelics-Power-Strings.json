@@ -1,4 +1,9 @@
 {
+        "riskOfRelics:RuinPower": {
+                "NAME": "Ruin",
+                "DESCRIPTIONS": ["When triggered, this enemy takes #b"," damage, and loses this debuff."]
+        },
+
         "riskOfRelics:SpitePower": {
                 "NAME": "Spite",
                 "DESCRIPTIONS": ["Take #b"," damage in #b"," turns."]

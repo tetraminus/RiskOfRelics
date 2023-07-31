@@ -10,7 +10,7 @@ public class OnWinPatch {
     @SpirePrefixPatch
     public static void onPlayerEntry(TrueVictoryRoom __instance) {
         for (RiskOfRelics.Artifacts a:
-             RiskOfRelics.ActiveArtifacts) {
+                RiskOfRelics.ActiveArtifacts) {
             if (!RiskOfRelics.UnlockedArtifacts.contains(a)) {
                 RiskOfRelics.UnlockedArtifacts.add(a);
             }

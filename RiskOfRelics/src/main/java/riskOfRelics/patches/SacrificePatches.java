@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.EventHelper;
 import com.megacrit.cardcrawl.map.RoomTypeAssigner;
 import com.megacrit.cardcrawl.random.Random;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import com.megacrit.cardcrawl.rooms.TreasureRoom;
@@ -45,6 +46,30 @@ public class SacrificePatches {
         public static void insert(MonsterRoomElite __instance) {
             if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.SACRIFICE) && AbstractDungeon.treasureRng.randomBoolean()) {
                 __instance.addRelicToRewards(AbstractDungeon.returnRandomRelicTier());
+
+
+            }
+            if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.SACRIFICE) && Settings.isFinalActAvailable
+                    && !Settings.hasSapphireKey && !__instance.rewards.isEmpty()) {
+                RewardItem link = null;
+                for (RewardItem r :
+                        __instance.rewards) {
+                     if (r.type == RewardItem.RewardType.RELIC) {
+                         link = r;
+                         __instance.rewards.remove(r);
+                         link = new RewardItem(link.relic);
+                         __instance.rewards.add(link);
+
+                         break;
+                     }
+
+                }
+                if (link == null) {
+                    RiskOfRelics.logger.info("Sacrifice Elite Patch failed to find relic");
+                    return;
+                }
+
+                __instance.rewards.add(new RewardItem(link, RewardItem.RewardType.SAPPHIRE_KEY));
             }
         }
 
@@ -54,7 +79,7 @@ public class SacrificePatches {
             @Override
             public int[] Locate(CtBehavior ctBehavior) throws Exception {
                 Matcher finalMatcher = new Matcher.MethodCallMatcher(MonsterRoomElite.class, "addRelicToRewards");
-                return LineFinder.findInOrder(ctBehavior, finalMatcher);
+                return new int[]{LineFinder.findAllInOrder(ctBehavior, finalMatcher)[0]+1};
             }
         }
     }

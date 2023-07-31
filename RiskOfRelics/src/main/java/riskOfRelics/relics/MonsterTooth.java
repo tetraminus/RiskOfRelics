@@ -2,6 +2,7 @@ package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.MinionPower;
 import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -21,9 +22,14 @@ public class MonsterTooth extends BaseRelic {
 
     @Override
     public void onMonsterDeath(AbstractMonster m) {
-        this.addToBot(new HealAction(player, player, AMOUNT));
+        if (!m.hasPower(MinionPower.POWER_ID)){
+            this.addToBot(new HealAction(player, player, AMOUNT));
+        }
+
         super.onMonsterDeath(m);
     }
+
+
 
     @Override
     public String getUpdatedDescription() {
