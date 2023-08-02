@@ -22,7 +22,7 @@ public class ArtifactSaver implements CustomSavable<Integer[]> {
             return;
         }
         for ( Integer i : artifacts){
-            if (i != null) {
+            if (i != null && !RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.getArtifact(i))) {
                 RiskOfRelics.ActiveArtifacts.add(RiskOfRelics.getArtifact(i));
             }
 
