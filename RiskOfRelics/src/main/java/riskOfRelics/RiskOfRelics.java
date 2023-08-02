@@ -616,7 +616,7 @@ public class RiskOfRelics implements
                 player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
                 player.currentHealth = player.maxHealth;
                 EnigmaAndMetaPatches.enigmaCounter = -1;
-                EnigmaAndMetaPatches.vengCounter = 0;
+                EnigmaAndMetaPatches.vengCounter = 1;
                 EnigmaAndMetaPatches.metamorphCounter = -1;
             }
             if (!CardCrawlGame.loadingSave){

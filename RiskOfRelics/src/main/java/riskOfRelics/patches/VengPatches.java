@@ -43,7 +43,7 @@ public class VengPatches {
 
                 AbstractDungeon.eliteMonsterList.remove(0);
                 FinalFight.monsters.forEach(m -> {
-                    m.currentHealth = m.maxHealth/3;
+                    m.currentHealth = m.maxHealth/2;
                     m.healthBarUpdatedEvent();});
                 return SpireReturn.Return(FinalFight);
 
@@ -73,8 +73,10 @@ public class VengPatches {
     public static class RemoveFirstBossPatch{
         @SpirePostfixPatch
         public static void Postfix(){
+            if (AbstractDungeon.bossList.size() > 1){
+                AbstractDungeon.bossList.remove(AbstractDungeon.bossKey);
+            }
 
-            AbstractDungeon.bossList.remove(AbstractDungeon.bossKey);
 
         }
     }

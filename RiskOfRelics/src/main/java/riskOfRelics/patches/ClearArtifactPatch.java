@@ -3,6 +3,7 @@ package riskOfRelics.patches;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
+import riskOfRelics.RiskOfRelics;
 
 import static riskOfRelics.RiskOfRelics.*;
 
@@ -16,7 +17,10 @@ public class ClearArtifactPatch {
     public static void Postfix(com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen __instance, boolean playBgm) {
         try {
             for (String A: ModConfig.getString("EnabledArtifacts").split(",")) {
-                ActiveArtifacts.add(getArtifactfromName(A));
+                Artifacts a = getArtifactfromName(A);
+                if (UnlockedArtifacts.contains(a)) {
+                    ActiveArtifacts.add(a);
+                }
             }
         } catch (Exception e) {
             ModConfig.setString("EnabledArtifacts","");
