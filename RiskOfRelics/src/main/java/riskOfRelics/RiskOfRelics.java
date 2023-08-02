@@ -53,10 +53,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import static com.megacrit.cardcrawl.core.CardCrawlGame.dungeon;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.*;
@@ -255,7 +252,10 @@ public class RiskOfRelics implements
             ModConfig.setString("Artifacts","");
             for (Artifacts A:
                     UnlockedArtifacts) {
-                ModConfig.setString("Artifacts",ModConfig.getString("Artifacts")+A.name()+",");
+                if (!ModConfig.getString("Artifacts").contains(A.name()+",")) {
+                    ModConfig.setString("Artifacts",ModConfig.getString("Artifacts")+A.name()+",");
+                }
+
 
             }
             ModConfig.save();
@@ -264,8 +264,16 @@ public class RiskOfRelics implements
         }
         try {
             ModConfig.setString("EnabledArtifacts","");
+
+            //remove duplicates from ActiveArtifacts
+            Set<Artifacts> hs = new HashSet<>(ActiveArtifacts);
+            ActiveArtifacts.clear();
+            ActiveArtifacts.addAll(hs);
+
+
             for (Artifacts A:
                     ActiveArtifacts) {
+
                 ModConfig.setString("EnabledArtifacts",ModConfig.getString("EnabledArtifacts")+A.name()+",");
 
             }

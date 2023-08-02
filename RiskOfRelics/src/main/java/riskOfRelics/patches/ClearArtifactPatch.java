@@ -3,7 +3,6 @@ package riskOfRelics.patches;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
-import riskOfRelics.RiskOfRelics;
 
 import static riskOfRelics.RiskOfRelics.*;
 
@@ -18,7 +17,7 @@ public class ClearArtifactPatch {
         try {
             for (String A: ModConfig.getString("EnabledArtifacts").split(",")) {
                 Artifacts a = getArtifactfromName(A);
-                if (UnlockedArtifacts.contains(a)) {
+                if (UnlockedArtifacts.contains(a) && !ActiveArtifacts.contains(a)) {
                     ActiveArtifacts.add(a);
                 }
             }
