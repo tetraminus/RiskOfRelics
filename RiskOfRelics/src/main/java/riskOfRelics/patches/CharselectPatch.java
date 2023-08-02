@@ -9,7 +9,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
@@ -133,6 +132,13 @@ public class CharselectPatch {
                                 TipHelper.renderGenericTip(InputHelper.mX+100, InputHelper.mY+100, artifact.name, artifact.description);
                             }
                             if (artifact.hb.hovered || RiskOfRelics.ActiveArtifacts.contains(artifact.artifact)) {
+                                if (artifact.hb.hovered && RiskOfRelics.UnlockedArtifacts.contains(artifact.artifact)){
+                                    if (RiskOfRelics.ActiveArtifacts.contains(artifact.artifact)) {
+                                        sb.setColor(Color.RED);
+                                    } else {
+                                        sb.setColor(Color.GREEN);
+                                    }
+                                }
 
                                 sb.draw(artifact.ontexture,
                                         artifact.CurrentX,
@@ -140,6 +146,7 @@ public class CharselectPatch {
                                 if (!RiskOfRelics.UnlockedArtifacts.contains(artifact.artifact)) {
                                     sb.draw(ImageMaster.RELIC_LOCK, artifact.CurrentX, artifact.CurrentY,  100,  100);
                                 }
+                                sb.setColor(Color.WHITE);
 
                             } else {
                                 //draw a background
