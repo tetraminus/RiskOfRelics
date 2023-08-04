@@ -13,8 +13,6 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
-import com.megacrit.cardcrawl.localization.UIStrings;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import riskOfRelics.RiskOfRelics;
 
 import java.util.ArrayList;
@@ -138,6 +136,9 @@ public class ArtifactSelectScreen extends CustomScreen
                         if (InputHelper.justClickedLeft && a.hb.hovered && !RiskOfRelics.UnlockedArtifacts.contains(a.artifact)){
                                 RiskOfRelics.ActiveArtifacts.add(a.artifact);
                                 if (this.CloseOnSelect){
+                                        if (a.artifact == RiskOfRelics.Artifacts.GLASS){
+                                                RiskOfRelics.ApplyGlassArtHealth();
+                                        }
                                         CardCrawlGame.sound.play("UI_CLICK_1");
                                         CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.HIGH, ScreenShake.ShakeDur.LONG, false);
                                         AbstractDungeon.screen = AbstractDungeon.CurrentScreen.NONE;

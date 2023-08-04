@@ -621,12 +621,15 @@ public class RiskOfRelics implements
         @Override
         public void receiveStartGame() {
             if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
-                player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
-                player.currentHealth = player.maxHealth;
+                ApplyGlassArtHealth();
+
+            }
+            if(!CardCrawlGame.loadingSave){
                 EnigmaAndMetaPatches.enigmaCounter = -1;
                 EnigmaAndMetaPatches.vengCounter = 1;
                 EnigmaAndMetaPatches.metamorphCounter = -1;
             }
+
             if (!CardCrawlGame.loadingSave){
                 MetamorphCharacter = null;
             }
@@ -636,6 +639,12 @@ public class RiskOfRelics implements
 
 
         }
+
+        public static void ApplyGlassArtHealth() {
+            player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
+            player.currentHealth = player.maxHealth;
+        }
+
         @Override
         public int receiveMaxHPChange(int amount) {
             if (ActiveArtifacts.contains(Artifacts.DEATH)){
