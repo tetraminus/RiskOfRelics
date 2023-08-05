@@ -164,12 +164,38 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
     @Override
     public void renderInTopPanel(SpriteBatch sb) {
         if (EquipmentFieldPatch.PlayerEquipment.get(player) == this && this.hb.hovered){
-            this.renderTip(sb);
+            renderTip(sb);
         }
         super.renderInTopPanel(sb);
     }
 
+    @Override
+    public void renderBossTip(SpriteBatch sb) {
+        super.renderBossTip(sb);
+    }
 
+//    @Override
+//    public void renderTip(SpriteBatch sb) {
+//
+//
+//        if ((float) InputHelper.mX < 1400.0F * Settings.scale) {// 1346
+//            if (CardCrawlGame.mainMenuScreen.screen == MainMenuScreen.CurScreen.RELIC_VIEW) {// 1347
+//                TipHelper.queuePowerTips(180.0F * Settings.scale, (float)Settings.HEIGHT * 0.7F, this.tips);// 1348
+//            } else if (AbstractDungeon.screen == AbstractDungeon.CurrentScreen.SHOP && this.tips.size() > 2 && !AbstractDungeon.player.hasRelic(this.relicId)) {// 1349 1350
+//                TipHelper.queuePowerTips((float)InputHelper.mX + 60.0F * Settings.scale, (float)InputHelper.mY + 180.0F * Settings.scale, this.tips);// 1351
+//            } else if (AbstractDungeon.player != null && AbstractDungeon.player.hasRelic(this.relicId) && this.currentY > BattlePosY+10) {// 1355
+//                TipHelper.queuePowerTips((float)InputHelper.mX + 60.0F * Settings.scale, (float)InputHelper.mY - 30.0F * Settings.scale, this.tips);// 1356
+//            } else if (AbstractDungeon.player != null && AbstractDungeon.player.hasRelic(this.relicId) && this.currentY < BattlePosY+10) {// 1355
+//                TipHelper.queuePowerTips((float)Settings.WIDTH * 0.63F, (float)Settings.HEIGHT * 0.63F, this.tips);// 1342
+//            } else if (AbstractDungeon.screen == AbstractDungeon.CurrentScreen.COMBAT_REWARD) {// 1360
+//                TipHelper.queuePowerTips(360.0F * Settings.scale, (float)InputHelper.mY + 50.0F * Settings.scale, this.tips);// 1361
+//            } else {
+//                TipHelper.queuePowerTips((float)InputHelper.mX + 50.0F * Settings.scale, (float)InputHelper.mY + 50.0F * Settings.scale, this.tips);// 1363
+//            }
+//        } else {
+//            TipHelper.queuePowerTips((float)InputHelper.mX - 350.0F * Settings.scale, (float)InputHelper.mY + 2000.0F * Settings.scale, this.tips);// 1369
+//        }
+//    }
 
     static {
         BattlePosX = 190 * Settings.scale;

@@ -3,7 +3,7 @@
     "NAME": "Disposable Missile Launcher",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "#yriskofrelics:Equipment NL Deal #b"," (base) damage to a random enemy #b"," times. Affected by damage modifiers."
+      "#yriskofrelics:Equipment NL Deal #b"," damage to a random enemy #b"," times. Calculates damage like a card."
 
     ]
   },
