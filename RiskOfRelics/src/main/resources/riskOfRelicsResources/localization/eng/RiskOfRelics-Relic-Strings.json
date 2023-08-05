@@ -1,4 +1,12 @@
 {
+  "riskOfRelics:TestEquipment": {
+    "NAME": "test",
+    "FLAVOR": "test",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Deal #b"," damage to a to all enemies."
+
+    ]
+  },
   "riskOfRelics:EssenceOfHeresy": {
     "NAME": "Essence of Heresy",
     "FLAVOR": "\"…and her heart, too wicked and full of hate, was left where she once stood – at the site of her betrayal.\"",
