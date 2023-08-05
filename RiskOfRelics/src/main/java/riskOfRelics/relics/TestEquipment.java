@@ -17,7 +17,7 @@ public class TestEquipment extends AbstractEquipment {
     private static final String IMAGENAME = "TestEquipment.png";
 
     public TestEquipment() {
-        super(ID, IMAGENAME, RelicTier.BOSS, LandingSound.MAGICAL);
+        super(ID, IMAGENAME, RelicTier.COMMON, LandingSound.MAGICAL);
     }
 
     @Override
@@ -28,9 +28,13 @@ public class TestEquipment extends AbstractEquipment {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0];
+        return DESCRIPTIONS[0] + AMOUNT + DESCRIPTIONS[1];
     }
 
+    @Override
+    public String[] CLICKABLE_DESCRIPTIONS() {
+        return new String[]{DESCRIPTIONS[0] + AMOUNT + DESCRIPTIONS[1]};
+    }
 
     @Override
     public void onRightClick() {

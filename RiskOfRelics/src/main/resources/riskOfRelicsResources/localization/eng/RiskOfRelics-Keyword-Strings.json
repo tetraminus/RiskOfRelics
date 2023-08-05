@@ -24,7 +24,7 @@
       "equipment"
 
     ],
-    "DESCRIPTION": "A powerful card that exhausts after the charges are used"
+    "DESCRIPTION": "Right click to use. NL A powerful relic that you can only have one of. When you obtain a new one, the old one is destroyed. Displays the number of times you can use it in its counter during combat."
   },
   {
     "PROPER_NAME": "Charge",

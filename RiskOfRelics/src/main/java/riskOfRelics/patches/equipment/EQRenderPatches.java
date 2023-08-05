@@ -1,11 +1,8 @@
-package riskOfRelics.relics.equipment;
+package riskOfRelics.patches.equipment;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import riskOfRelics.patches.equipment.EquipmentFieldPatch;
-
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 public class EQRenderPatches {
     @SpirePatch2(
@@ -14,7 +11,7 @@ public class EQRenderPatches {
     )
     public static class RenderEquipment {
         public static void Postfix(AbstractPlayer __instance, SpriteBatch sb){
-            if (EquipmentFieldPatch.PlayerEquipment.get(__instance) != null && EquipmentFieldPatch.PlayerEquipment.get(player).isAvailable()) {
+            if (EquipmentFieldPatch.PlayerEquipment.get(__instance) != null) {
                 EquipmentFieldPatch.PlayerEquipment.get(__instance).renderInTopPanel(sb);
             }
         }

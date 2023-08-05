@@ -10,6 +10,9 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class EquipmentSaver implements CustomSavable<String> {
     @Override
     public String onSave() {
+        if (EquipmentFieldPatch.PlayerEquipment.get(player) == null) {
+            return null;
+        }
         return EquipmentFieldPatch.PlayerEquipment.get(player).relicId;
     }
 
