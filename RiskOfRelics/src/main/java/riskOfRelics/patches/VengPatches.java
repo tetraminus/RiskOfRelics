@@ -73,7 +73,7 @@ public class VengPatches {
     public static class RemoveFirstBossPatch{
         @SpirePostfixPatch
         public static void Postfix(){
-            if (AbstractDungeon.bossList.size() > 1){
+            if (AbstractDungeon.bossList.size() > 2){
                 AbstractDungeon.bossList.remove(AbstractDungeon.bossKey);
             }
 

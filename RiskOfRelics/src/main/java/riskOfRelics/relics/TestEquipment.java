@@ -1,5 +1,6 @@
 package riskOfRelics.relics;
 
+import basemod.AutoAdd;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -7,7 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.RiskOfRelics;
 import riskOfRelics.relics.equipment.AbstractEquipment;
 
-
+@AutoAdd.Ignore
 public class TestEquipment extends AbstractEquipment {
 
 

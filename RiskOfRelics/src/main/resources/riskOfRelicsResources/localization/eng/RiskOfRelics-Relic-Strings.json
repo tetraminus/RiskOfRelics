@@ -1,4 +1,12 @@
 {
+  "riskOfRelics:MissileLauncher": {
+    "NAME": "Disposable Missile Launcher",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Deal #b"," (base) damage to a random enemy #b"," times. Affected by damage modifiers."
+
+    ]
+  },
   "riskOfRelics:TestEquipment": {
     "NAME": "test",
     "FLAVOR": "test",
