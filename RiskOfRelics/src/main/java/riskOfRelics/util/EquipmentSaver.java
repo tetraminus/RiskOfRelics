@@ -22,7 +22,7 @@ public class EquipmentSaver implements CustomSavable<String> {
             return;
         }
         EquipmentFieldPatch.PlayerEquipment.set(player, (AbstractEquipment) RelicLibrary.getRelic(s).makeCopy());
-        EquipmentFieldPatch.PlayerEquipment.get(player).instantObtain();
+        EquipmentFieldPatch.PlayerEquipment.get(player).instantObtain(player, 0, false);
 
     }
 }

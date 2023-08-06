@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import riskOfRelics.patches.equipment.EquipmentFieldPatch;
 import riskOfRelics.relics.BaseRelic;
@@ -14,14 +16,16 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 public abstract class AbstractEquipment extends BaseRelic implements ClickableRelic {
 
-    private static int BASE_COUNTER = 1;
+    protected static int BASE_COUNTER = 1;
 
     public AbstractEquipment(String id, String texture, RelicTier tier, LandingSound sfx) {
         super(id, texture, tier, sfx);
         counter = -1;
     }
-    private boolean isPlayerTurn = false;
-    private boolean usedthisbattle = false;
+    protected boolean isPlayerTurn = false;
+    protected boolean usedthisbattle = false;
+    protected boolean lockedCharges = false;
+    protected boolean rechargeAuto = true;
 
     private static final float BattlePosX;
     private static final float BattlePosY;
@@ -84,19 +88,33 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
     @Override
     public void atBattleStart() {
 
-        Reposition(BattlePosX,BattlePosY, false);
+        Reposition(BattlePosX, BattlePosY, false);
 
-
-        counter = BASE_COUNTER;
-        for (AbstractRelic r : player.relics) {
-            if (r instanceof ChangeEQChargesRelic) {
-                counter = ((ChangeEQChargesRelic) r).changeCharges(counter);
-            }
-
+        if (this.rechargeAuto) {
+            Recharge();
         }
 
-        usedthisbattle = false;
         super.atBattleStart();
+    }
+
+    public void Recharge() {
+        counter = BASE_COUNTER;
+        if (!lockedCharges){
+            for (AbstractRelic r : player.relics) {
+                if (r instanceof ChangeEQChargesRelic) {
+                    counter = ((ChangeEQChargesRelic) r).changeCharges(counter);
+                }
+
+            }
+        }
+
+
+        usedthisbattle = false;
+    }
+
+    @Override
+    public void onEnterRoom(AbstractRoom room) {
+        super.onEnterRoom(room);
     }
 
     private static float getHomePosX() {
@@ -118,7 +136,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
     @Override
     public void onVictory() {
         Reposition(getHomePosX(),getHomePosY(), false);
-        counter = -1;
+
         super.onVictory();
     }
 
@@ -147,7 +165,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
     }
 
     public boolean canClick() {
-        return isPlayerTurn && counter > 0;
+        return isPlayerTurn && counter > 0 && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT;
     }
 
 

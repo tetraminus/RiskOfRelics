@@ -33,7 +33,7 @@
       "charge",
       "charges"
     ],
-    "DESCRIPTION": "Can only be used this many times in one battle."
+    "DESCRIPTION": "Can only be used this many times before it has to recharge."
   },
   {
     "PROPER_NAME": "Fragile",

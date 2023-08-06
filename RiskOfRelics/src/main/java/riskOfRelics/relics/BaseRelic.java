@@ -24,6 +24,9 @@ public abstract class BaseRelic extends CustomRelic {
 
         img = TextureLoader.getTexture(makeRelicPath(imageName));
         outlineImg = TextureLoader.getTexture(makeRelicOutlinePath(imageName));
+
+        this.imageName = imageName;
+        loadLargeImg();
     }
 
 
@@ -33,12 +36,14 @@ public abstract class BaseRelic extends CustomRelic {
 
         img = TextureLoader.getTexture(makeRelicPath(imageName));
         outlineImg = TextureLoader.getTexture(makeRelicOutlinePath(imageName));
+        this.imageName = imageName;
+        loadLargeImg();
     }
 
     @Override
     public void loadLargeImg() {
         if (largeImg == null) {
-            this.largeImg = ImageMaster.loadImage(("large/" + imageName + ".png"));
+            this.largeImg = ImageMaster.loadImage(makeRelicPath("large/" + imageName));
         }
     }
 

@@ -1,9 +1,15 @@
 package riskOfRelics.patches.equipment;
 
-import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
+import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
+import javassist.CtBehavior;
 
+import java.util.ArrayList;
+
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.nextRoom;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 public class EQTriggerPatches {
@@ -65,6 +71,29 @@ public class EQTriggerPatches {
         }
 
 
+    }
+    @SpirePatch2(clz = AbstractDungeon.class, method = "nextRoomTransition", paramtypez = {SaveFile.class})
+    public static class NextRoomTransitionPatch {
+        @SpireInsertPatch(
+                locator = Locator.class
+        )
+        public static void Insert(AbstractDungeon __instance, SaveFile saveFile) {
+            if (EquipmentFieldPatch.PlayerEquipment.get(player) != null) {
+                EquipmentFieldPatch.PlayerEquipment.get(player).onEnterRoom(nextRoom.room);
+            }
+
+        }
+
+        private static class Locator extends SpireInsertLocator {
+
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher finalMatcher = new Matcher.MethodCallMatcher(ArrayList.class, "iterator");
+
+                return new int[]{LineFinder.findAllInOrder(ctBehavior, finalMatcher)[1]};
+
+            }
+        }
     }
 
 }

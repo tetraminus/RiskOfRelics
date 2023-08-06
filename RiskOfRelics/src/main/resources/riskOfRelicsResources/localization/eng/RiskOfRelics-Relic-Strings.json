@@ -1,4 +1,37 @@
 {
+  "riskOfRelics:TricornUsed": {
+    "NAME": "Trophy Hunter's Tricorn",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL This item has been used.",
+      "Ahoy!"
+
+    ]
+  },
+  "riskOfRelics:Tricorn": {
+    "NAME": "Trophy Hunter's Tricorn",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL ONE USE. NL Can only be used in elite combat. All enemies lose #b"," HP. Add a extra relic to the rewards."
+
+    ]
+  },
+  "riskOfRelics:Crowdfunder": {
+    "NAME": "The Crowdfunder",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Lose #b"," gold. Deal #b"," damage to a random enemy, can be used any number of times."
+
+    ]
+  },
+  "riskOfRelics:BlastShower": {
+    "NAME": "Blast Shower",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Remove your debuffs. A charge comes back after #b"," rooms."
+
+    ]
+  },
   "riskOfRelics:MissileLauncher": {
     "NAME": "Disposable Missile Launcher",
     "FLAVOR": "",
@@ -224,7 +257,7 @@
     "NAME": "Fuel Cell",
     "FLAVOR": "ZAP!",
     "DESCRIPTIONS": [
-      "#yriskofrelics:Equipment gain #b"," #yriskofrelics:Charge"
+      "#yriskofrelics:Equipment gain #b"," max #yriskofrelics:Charge"
     ]
   },
   "riskOfRelics:tougherTimes": {

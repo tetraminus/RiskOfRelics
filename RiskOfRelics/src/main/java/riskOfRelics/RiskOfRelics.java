@@ -45,8 +45,6 @@ import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
 import riskOfRelics.screens.ArtifactTopPanelItem;
 import riskOfRelics.util.*;
-import riskOfRelics.variables.DefaultCustomVariable;
-import riskOfRelics.variables.DefaultSecondMagicNumber;
 import riskOfRelics.vfx.ArtifactAboveCreatureAction;
 
 import java.io.IOException;
@@ -337,6 +335,8 @@ public class RiskOfRelics implements
         BaseMod.addSaveField(makeID("MetamorphCounter"),new CounterSavers.MetamorphCounterSaver());
         BaseMod.addSaveField(makeID("VengCounter") ,new CounterSavers.VengCounterSaver());
         BaseMod.addSaveField(makeID("PlayerEquipment") , new EquipmentSaver());
+        BaseMod.addSaveField(makeID("BlastShowerCounter") , new BlastShowerSaver());
+        BaseMod.addSaveField(makeID("PlayerEquipmentCounter") , new EQCounterSaver());
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
@@ -510,9 +510,7 @@ public class RiskOfRelics implements
         // Add the Custom Dynamic Variables
         logger.info("Add variables");
         // Add the Custom Dynamic variables
-        BaseMod.addDynamicVariable(new DefaultCustomVariable());
-        BaseMod.addDynamicVariable(new DefaultSecondMagicNumber());
-        BaseMod.addDynamicVariable(new ChargesVariable());
+
 
 
         logger.info("Adding cards");
