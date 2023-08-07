@@ -53,7 +53,7 @@ public class ArtifactSelectScreen extends CustomScreen
                         this.description = description;
                         this.CurrentX = CurrentX;
                         this.CurrentY = CurrentY;
-                        this.hb = new Hitbox(CurrentX+ (float) texture.getWidth() /3.33f, CurrentY + (float) texture.getHeight() /3.33f , texture.getWidth(), texture.getHeight());
+                        this.hb = new Hitbox(CurrentX, CurrentY , 100*Settings.scale, 100*Settings.scale);
                 }
 
         }
@@ -178,14 +178,14 @@ public class ArtifactSelectScreen extends CustomScreen
 
                                                 spriteBatch.draw(artifact.ontexture,
                                                         artifact.CurrentX,
-                                                        artifact.CurrentY,100,100);
+                                                        artifact.CurrentY,100*Settings.scale,100*Settings.scale);
                                         }else {
                                                 //draw a background
 
 
                                                 spriteBatch.draw(artifact.texture,
                                                         artifact.CurrentX,
-                                                        artifact.CurrentY, 100, 100);
+                                                        artifact.CurrentY, 100*Settings.scale, 100*Settings.scale);
                                                 artifact.hb.render(spriteBatch);
                                         }
 
