@@ -1,4 +1,13 @@
 {
+  "riskOfRelics:MilkyChrysalis": {
+    "NAME": "Milky Chrysalis",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Stun an enemy. A charge comes back after #b"," rooms."
+
+
+    ]
+  },
   "riskOfRelics:TricornUsed": {
     "NAME": "Trophy Hunter's Tricorn",
     "FLAVOR": "",
@@ -124,7 +133,7 @@
     "NAME": "Gesture of the Drowned",
     "FLAVOR": "\"Fossils. Remnants. How cruel. \"",
     "DESCRIPTIONS": [
-      "When you draw a colorless card, play it."
+      "When you draw a colorless card, play it. If it is a status, take #b"," damage."
 
     ]
   },

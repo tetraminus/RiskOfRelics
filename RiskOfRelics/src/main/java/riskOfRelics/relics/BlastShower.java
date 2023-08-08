@@ -13,11 +13,12 @@ import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
 import riskOfRelics.RiskOfRelics;
 import riskOfRelics.relics.Interfaces.ChangeEQChargesRelic;
 import riskOfRelics.relics.equipment.AbstractEquipment;
+import riskOfRelics.relics.equipment.HasChargeTimerEQ;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 
-public class BlastShower extends AbstractEquipment {
+public class BlastShower extends AbstractEquipment implements HasChargeTimerEQ {
 
 
     public static final int AMOUNT = 3;
@@ -31,8 +32,18 @@ public class BlastShower extends AbstractEquipment {
     public BlastShower() {
         super(ID, IMAGENAME, RelicTier.RARE, LandingSound.MAGICAL);
         this.rechargeAuto = false;
-        this.counter = 0;
-        this.rechargeCount = 0;
+        this.counter = GetBaseCounter();
+        this.rechargeCount = -1;
+    }
+    @Override
+    public int getCharges() {
+        return rechargeCount;
+    }
+
+    @Override
+    public void setCharges(int charges) {
+        rechargeCount = charges;
+
     }
 
     @Override
@@ -51,9 +62,9 @@ public class BlastShower extends AbstractEquipment {
         if (this.rechargeCount > -1) {// 1119
             if (inTopPanel) {// 1120
 
-                FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.rechargeCount+1), this.currentX + 30.0F * Settings.scale, this.currentY - 7.0F * Settings.scale + offsetY, Color.WHITE);// 1121 1124
+                FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.rechargeCount), this.currentX + 30.0F * Settings.scale, this.currentY - 7.0F * Settings.scale + offsetY, Color.WHITE);// 1121 1124
             } else {
-                FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.rechargeCount+1), this.currentX + 30.0F * Settings.scale, this.currentY - 7.0F * Settings.scale + offsetY, Color.WHITE);// 1129 1132
+                FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.rechargeCount), this.currentX + 30.0F * Settings.scale, this.currentY - 7.0F * Settings.scale + offsetY, Color.WHITE);// 1129 1132
             }
         }
         super.renderCounter(sb, inTopPanel);
@@ -62,7 +73,7 @@ public class BlastShower extends AbstractEquipment {
 
     @Override
     public void Recharge() {
-        int maxCharge = BASE_COUNTER;
+        int maxCharge = GetBaseCounter();
         if (!lockedCharges) {
             for (AbstractRelic r : player.relics) {
                 if (r instanceof ChangeEQChargesRelic) {
@@ -80,7 +91,7 @@ public class BlastShower extends AbstractEquipment {
         } else {
             rechargeCount = -1;
         }
-        if (rechargeCount >= AMOUNT) {
+        if (rechargeCount > AMOUNT) {
             rechargeCount = 0;
             counter++;
             if (counter == maxCharge) {

@@ -18,8 +18,13 @@ public class TricornUsed extends AbstractEquipment {
 
     public TricornUsed() {
         super(ID, IMAGENAME, RelicTier.SPECIAL, LandingSound.MAGICAL);
-        BASE_COUNTER = -1;
+
         lockedCharges = true;
+    }
+
+    @Override
+    public int GetBaseCounter() {
+        return -1;
     }
 
     @Override

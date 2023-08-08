@@ -20,7 +20,7 @@ public class MissileLauncher extends AbstractEquipment {
 
 
     public static final int AMOUNT = 5;
-    public static final int DAMAGE= 5;
+    public static final int DAMAGE= 3;
     private AbstractCard dummyCard = new ThroughViolence();
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("MissileLauncher");

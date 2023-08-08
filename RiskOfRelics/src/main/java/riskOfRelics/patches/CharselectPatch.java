@@ -27,7 +27,7 @@ public class CharselectPatch {
     public static Texture ontex = new Texture("riskOfRelicsResources/images/ui/ambrySelect/Artifact1_on.png");
 
     public static UIStrings buttonstrs = CardCrawlGame.languagePack.getUIString("riskOfRelics:ArtifactSelect");
-    public static Hitbox buttonHB = new Hitbox(1300 * Settings.scale, 25* Settings.scale, 100*Settings.scale, 100*Settings.scale);
+    public static Hitbox buttonHB = new Hitbox(1350 * Settings.scale, 25* Settings.scale, 100*Settings.scale, 100*Settings.scale);
     public static ArrayList<Artifact> artifacts = new ArrayList<>();
     public static boolean ShouldRender = false;
     public static boolean AnyEnabled = false;
@@ -109,13 +109,13 @@ public class CharselectPatch {
                 if (buttonHB.hovered) {
                     TipHelper.renderGenericTip(InputHelper.mX + 100, InputHelper.mY + 100, buttonstrs.TEXT[0], (RiskOfRelics.UnlockedArtifacts.size() == 0) ? buttonstrs.TEXT[2] : buttonstrs.TEXT[1]);
                     sb.draw(ontex, buttonHB.x, buttonHB.y, (float) 100*Settings.scale, (float) 100*Settings.scale);
-                    if (RiskOfRelics.UnlockedArtifacts.size() == 0) {
-                        sb.draw(ImageMaster.RELIC_LOCK, buttonHB.x, buttonHB.y, (float) ontex.getWidth(), (float) ontex.getHeight());
+                    if (RiskOfRelics.UnlockedArtifacts.isEmpty()) {
+                        sb.draw(ImageMaster.RELIC_LOCK, buttonHB.x, buttonHB.y, (float) 100*Settings.scale, (float) 100*Settings.scale);
                     }
                 } else {
                     sb.draw(tex, buttonHB.x, buttonHB.y,(float) 100*Settings.scale, (float) 100*Settings.scale);
-                    if (RiskOfRelics.UnlockedArtifacts.size() == 0) {
-                        sb.draw(ImageMaster.RELIC_LOCK, buttonHB.x, buttonHB.y, (float) tex.getWidth(), (float) tex.getHeight());
+                    if (RiskOfRelics.UnlockedArtifacts.isEmpty()) {
+                        sb.draw(ImageMaster.RELIC_LOCK, buttonHB.x, buttonHB.y, (float) 100*Settings.scale, (float) 100*Settings.scale);
                     }
                 }
             }

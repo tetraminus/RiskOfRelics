@@ -23,11 +23,11 @@ public class Crowdfunder extends AbstractEquipment {
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("Crowdfunder");
     private static final String IMAGENAME = "Crowdfunder.png";
+    private static final int BASE_COUNTER = -1;
 
 
     public Crowdfunder() {
         super(ID, IMAGENAME, RelicTier.COMMON, LandingSound.MAGICAL);
-        BASE_COUNTER = -1;
         lockedCharges = true;
     }
 
@@ -42,6 +42,7 @@ public class Crowdfunder extends AbstractEquipment {
 
         return isPlayerTurn && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT;
     }
+
 
     @Override
     public void onRightClick() {

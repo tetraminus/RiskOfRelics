@@ -16,7 +16,7 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 public abstract class AbstractEquipment extends BaseRelic implements ClickableRelic {
 
-    protected static int BASE_COUNTER = 1;
+    private int BASE_COUNTER = 1;
 
     public AbstractEquipment(String id, String texture, RelicTier tier, LandingSound sfx) {
         super(id, texture, tier, sfx);
@@ -31,6 +31,10 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
     private static final float BattlePosY;
     private static final float HomePosX;
     private static final float HomePosY;
+
+    public int GetBaseCounter() {
+        return BASE_COUNTER;
+    }
 
     @Override
     public void obtain() {
@@ -98,7 +102,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
     }
 
     public void Recharge() {
-        counter = BASE_COUNTER;
+        counter = GetBaseCounter();
         if (!lockedCharges){
             for (AbstractRelic r : player.relics) {
                 if (r instanceof ChangeEQChargesRelic) {
@@ -184,6 +188,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
         if (EquipmentFieldPatch.PlayerEquipment.get(player) == this && this.hb.hovered){
             renderTip(sb);
         }
+        this.grayscale = !canClick();
         super.renderInTopPanel(sb);
     }
 
