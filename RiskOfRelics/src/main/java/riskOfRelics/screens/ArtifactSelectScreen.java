@@ -62,8 +62,8 @@ public class ArtifactSelectScreen extends CustomScreen
                         artifacts.add(new Artifact(ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_off.png"),
                                 ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_on.png"),
                                 RiskOfRelics.getArtifact(i),RiskOfRelics.getArtifactName(RiskOfRelics.getArtifact(i)), RiskOfRelics.getArtifactDescription(RiskOfRelics.getArtifact(i)),
-                                (int) Settings.WIDTH / 2 - 200 + 100 * (i % 4),
-                                (int) Settings.HEIGHT / 2 - 200 + 100 * (i / 4)));
+                                (int) ( Settings.WIDTH / 2 - (200*Settings.scale) + (100*Settings.scale) * (i % 4)),
+                                (int) ((int) Settings.HEIGHT / 2 - (200*Settings.scale) + (100*Settings.scale) * (i / 4))));
                         if (artifacts.get(i).texture == null){
                                 artifacts.get(i).texture = ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Badge.png");
                         }

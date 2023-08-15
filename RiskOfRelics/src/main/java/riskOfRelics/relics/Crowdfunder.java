@@ -43,6 +43,10 @@ public class Crowdfunder extends AbstractEquipment {
         return isPlayerTurn && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT;
     }
 
+    @Override
+    public int GetBaseCounter() {
+        return BASE_COUNTER;
+    }
 
     @Override
     public void onRightClick() {

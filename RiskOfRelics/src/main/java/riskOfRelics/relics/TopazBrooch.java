@@ -1,6 +1,6 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import riskOfRelics.RiskOfRelics;
@@ -20,7 +20,7 @@ public class TopazBrooch extends BaseRelic {
 
     @Override
     public void onMonsterDeath(AbstractMonster m) {
-        this.addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, AMOUNT));
+        this.addToBot(new AddTemporaryHPAction(AbstractDungeon.player, AbstractDungeon.player, AMOUNT));
         super.onMonsterDeath(m);
     }
 

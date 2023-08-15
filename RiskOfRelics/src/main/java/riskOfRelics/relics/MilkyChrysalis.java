@@ -64,7 +64,7 @@ public class MilkyChrysalis extends AbstractEquipment implements HasChargeTimerE
 
     @Override
     public int GetBaseCounter() {
-        return -1;
+        return 1;
     }
 
     @Override

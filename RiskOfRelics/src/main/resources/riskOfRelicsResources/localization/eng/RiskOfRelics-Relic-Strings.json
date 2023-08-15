@@ -141,7 +141,7 @@
     "NAME": "Topaz Brooch",
     "FLAVOR": "\"the shield can be... reactivated, but we’d like to keep casualties to a minimum.\"",
     "DESCRIPTIONS": [
-      "When you kill an enemy, gain #b"," Block."
+      "When you kill an enemy, gain #b"," #yTemporary_HP."
 
     ]
   },

@@ -335,7 +335,7 @@ public class RiskOfRelics implements
         BaseMod.addSaveField(makeID("MetamorphCounter"),new CounterSavers.MetamorphCounterSaver());
         BaseMod.addSaveField(makeID("VengCounter") ,new CounterSavers.VengCounterSaver());
         BaseMod.addSaveField(makeID("PlayerEquipment") , new EquipmentSaver());
-        BaseMod.addSaveField(makeID("BlastShowerCounter") , new ChargeTimerSaver());
+        BaseMod.addSaveField(makeID("ChargeTimer") , new ChargeTimerSaver());
         BaseMod.addSaveField(makeID("PlayerEquipmentCounter") , new EQCounterSaver());
 
         // Create the Mod Menu

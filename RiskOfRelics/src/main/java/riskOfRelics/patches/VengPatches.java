@@ -8,6 +8,8 @@ import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import javassist.CtBehavior;
 import riskOfRelics.RiskOfRelics;
 
+import java.util.Collections;
+
 import static com.megacrit.cardcrawl.core.CardCrawlGame.dungeon;
 
 public class VengPatches {
@@ -73,10 +75,8 @@ public class VengPatches {
     public static class RemoveFirstBossPatch{
         @SpirePostfixPatch
         public static void Postfix(){
-            if (AbstractDungeon.bossList.size() > 2){
-                AbstractDungeon.bossList.remove(AbstractDungeon.bossKey);
-            }
 
+            Collections.shuffle(AbstractDungeon.bossList);
 
         }
     }
