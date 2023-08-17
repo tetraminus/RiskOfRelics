@@ -21,18 +21,21 @@ public class MissileLauncher extends AbstractEquipment {
 
     public static final int AMOUNT = 5;
     public static final int DAMAGE= 3;
-    private AbstractCard dummyCard = new ThroughViolence();
+    private AbstractCard dummyCard;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("MissileLauncher");
     private static final String IMAGENAME = "MissileLauncher.png";
 
     public MissileLauncher() {
         super(ID, IMAGENAME, RelicTier.UNCOMMON, LandingSound.MAGICAL);
+        dummyCard = new ThroughViolence();
     }
 
     @Override
     public String getUpdatedDescription() {
-        if (!CardCrawlGame.isInARun() || player == null || AbstractDungeon.getCurrRoom().phase != AbstractRoom.RoomPhase.COMBAT){
+        if (!CardCrawlGame.isInARun() || player == null ||
+                AbstractDungeon.getCurrRoom().phase != AbstractRoom.RoomPhase.COMBAT ||
+                !player.hasRelic(ID) || dummyCard == null) {
             return DESCRIPTIONS[0] + DAMAGE + DESCRIPTIONS[1] + AMOUNT + DESCRIPTIONS[2];
         }
 
@@ -40,9 +43,6 @@ public class MissileLauncher extends AbstractEquipment {
         CalcDamage();
         int damage = dummyCard.damage;
         return DESCRIPTIONS[0] + damage + DESCRIPTIONS[1] + AMOUNT + DESCRIPTIONS[2];
-
-
-
     }
 
     private void CalcDamage() {
