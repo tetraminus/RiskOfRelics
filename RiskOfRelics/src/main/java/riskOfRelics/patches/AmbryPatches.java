@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.fadeIn;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+import static riskOfRelics.RiskOfRelics.makeID;
 
 
 public class AmbryPatches {// Don't worry about the "never used" warning - *You* usually don't use/call them anywhere. Mod The Spire does.
@@ -84,6 +85,25 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
 
 
     }
+    @SpirePatch2(
+            clz = TheEnding.class,
+            method = "initializeBoss"
+    )
+    public static class BossPatch{
+        @SpirePrefixPatch
+        //"A patch method must be a public static method."
+        public static SpireReturn<Object> PatchMethod(TheEnding __instance) { // This is the name of the method that will be inserted.
+            if (player.hasRelic(YellowKey.ID)) {
+                AbstractDungeon.bossList.add(makeID("BulwarksAmbry"));
+                AbstractDungeon.bossList.add(makeID("BulwarksAmbry"));
+                AbstractDungeon.bossList.add(makeID("BulwarksAmbry"));
+                return SpireReturn.Return(null);
+            }
+            return SpireReturn.Continue();
+        }
+
+    }
+
 
      @SpirePatch(    // "Use the @SpirePatch annotation on the patch class."
             clz = TheEnding.class, // This is the class where the method we will be patching is. In our case - Abstract Dungeon

@@ -1,4 +1,8 @@
 {
+        "riskOfRelics:UntargetablePower": {
+                "NAME": "Untargetable",
+                "DESCRIPTIONS": ["This enemy cannot be targeted. Must be killed with through other means"]
+        },
         "riskOfRelics:RuinPower": {
                 "NAME": "Ruin",
                 "DESCRIPTIONS": ["When triggered, this enemy takes #b"," damage, and loses this debuff."]

@@ -168,6 +168,22 @@ public class DissArtPatches {
 
     }
 
+    // function to get a random encounter
+    public static String getTrulyRandomEliteEncounter() {
+
+
+
+        ArrayList<String> encounterIDs = new ArrayList<>();
+
+        encounterIDs.addAll(eliteencounterIDs);
+        EliteMonsterStrings.forEach((monsterInfo) -> {
+            encounterIDs.add(monsterInfo.name);
+        });
+
+
+        return encounterIDs.get(AbstractDungeon.monsterRng.random(encounterIDs.size() - 1));
+    }
+
     protected static void generateWeakEnemies(int count, AbstractDungeon __instance) {
         ArrayList<MonsterInfo> monsters = new ArrayList<>();
         for (String s : weakencounterIDs) {

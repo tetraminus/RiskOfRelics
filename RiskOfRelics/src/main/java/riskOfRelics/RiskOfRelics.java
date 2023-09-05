@@ -30,6 +30,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.artifacts.DeathArt;
 import riskOfRelics.artifacts.GlassArt;
+import riskOfRelics.bosses.BulwarksAmbry;
 import riskOfRelics.cards.AbstractDynamicCard;
 import riskOfRelics.events.*;
 import riskOfRelics.patches.ArtifactFTUEPatches;
@@ -433,6 +434,9 @@ public class RiskOfRelics implements
 
         }
 
+        BaseMod.addMonster(BulwarksAmbry.ID , BulwarksAmbry::new);
+
+
     }
 
     // =============== / POST-INITIALIZE/ =================
@@ -584,6 +588,9 @@ public class RiskOfRelics implements
 
         BaseMod.loadCustomStringsFile(TutorialStrings.class,
                 getModID() + "Resources/localization/eng/RiskOfRelics-Tutorial-Strings.json");
+
+        BaseMod.loadCustomStringsFile(MonsterStrings.class,
+                getModID() + "Resources/localization/eng/RiskOfRelics-Monster-Strings.json");
 
         logger.info("Done editing strings");
     }

@@ -1,4 +1,8 @@
 {
+  "riskOfRelics:GlowingShard": {
+    "NAME": "Glowing Shard",
+    "DESCRIPTION": "The Bulwark's Ambry loses 250 HP"
+  },
   "riskOfRelics:BlastShower": {
     "NAME": "Blast Shower",
     "DESCRIPTION": "riskofrelics:Equipment NL Remove all of your debuffs. NL riskofrelics:Charges: !CHARGES!"
