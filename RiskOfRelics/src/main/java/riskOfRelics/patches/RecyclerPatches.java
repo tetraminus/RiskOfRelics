@@ -1,6 +1,5 @@
 package riskOfRelics.patches;
 
-import basemod.ReflectionHacks;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,7 +7,6 @@ import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
@@ -19,19 +17,11 @@ import com.megacrit.cardcrawl.rewards.chests.BossChest;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
 import com.megacrit.cardcrawl.screens.select.BossRelicSelectScreen;
-import de.robojumper.ststwitch.TwitchVoteOption;
-import de.robojumper.ststwitch.TwitchVoter;
-import javassist.CannotCompileException;
 import javassist.CtBehavior;
-import javassist.expr.ExprEditor;
-import javassist.expr.MethodCall;
 import riskOfRelics.RiskOfRelics;
 import riskOfRelics.rewards.RerollReward;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -130,23 +120,11 @@ public class RecyclerPatches {
         public static class BossChestPatch{
             public static void Postfix(BossChest __instance) {
                 usedThisRoom = false;
-                justHit = false;
+
 
             }
         }
-        public static TwitchVoter voter;
-        @SpirePatch2(
-            clz = BossRelicSelectScreen.class,
-            method = SpirePatch.CONSTRUCTOR
-        )
-        public static class setupvoter{
-            public static void Postfix(BossRelicSelectScreen __instance) {
-                Optional<TwitchVoter> twitchVoterOptional = ReflectionHacks.privateMethod(BossRelicSelectScreen.class, "getVoter").invoke(__instance);
 
-                twitchVoterOptional.ifPresent(twitchVoter -> voter = twitchVoter);
-
-            }
-        }
 
         @SpirePatch2(
                 clz = BossRelicSelectScreen.class,
@@ -165,11 +143,7 @@ public class RecyclerPatches {
                     RerollBossRelics(__instance);
 
                 }
-                if (justHit) {
-                    justHit = false;
 
-                    RerollBossRelics(__instance);
-                }
             }
 
         }
@@ -192,77 +166,16 @@ public class RecyclerPatches {
             ((BossChest) ((TreasureRoomBoss) (AbstractDungeon.getCurrRoom())).chest).relics = relics;
         }
 
-//        if (voter != null) {
-//            ReflectionHacks.setPrivate(__instance, BossRelicSelectScreen.class, "mayVote", false);
-//            ReflectionHacks.setPrivate(__instance, BossRelicSelectScreen.class, "isVoting", false);
-//            ReflectionHacks.setPrivate(voter, TwitchVoter.class, "triggered", false);
-//            ReflectionHacks.setPrivate(voter, TwitchVoter.class, "isVoting", false);
-//
-//            voter.update();
-//
-//
-//        }
 
         ((BossChest) ((TreasureRoomBoss) (AbstractDungeon.getCurrRoom())).chest).open(true);
 
 
     }
-    @SpirePatch2(
-            clz = BossRelicSelectScreen.class,
-            method = "renderTwitchVotes"
 
 
-    )
-    public static class VoteRender{
-        public static void Postfix(BossRelicSelectScreen __instance, SpriteBatch sb) {
-            if ((boolean)(ReflectionHacks.getPrivate(__instance, BossRelicSelectScreen.class, "isVoting")) && !usedThisRoom) {
-                TwitchVoteOption[] options = voter.getOptions();// 349
-                int sum = (Integer) Arrays.stream(options).map((c) -> {// 350
-                    return c.voteCount;
-                }).reduce(0, Integer::sum);
-                String s = "#4: " + options[4].voteCount;
-                if (sum > 0) {// 391
-                    s = s + " (" + options[4].voteCount * 100 / sum + "%)";// 392
-                }
 
-                FontHelper.renderFont(sb, FontHelper.panelNameFont, s, ((float) Settings.WIDTH /2)-32* Settings.scale, 400.0F * Settings.scale, Color.WHITE);// 395
-            }
-        }
 
-    }
 
-        public static boolean StartVote(BossRelicSelectScreen instance){
-            if (voter != null) {
-                if (usedThisRoom && player.hasRelic(RiskOfRelics.makeID("Recycler"))) {
-                    return voter.initiateSimpleNumberVote((String[]) Stream.concat(Stream.of("skip"), instance.relics.stream().map(AbstractRelic::toString))
-                            .toArray(String[]::new), instance::completeVoting);
-                } else {
-                    return voter.initiateSimpleNumberVote((String[]) Stream.concat(Stream.concat(Stream.of("skip"), instance.relics.stream().map(AbstractRelic::toString)), Stream.of("reroll"))
-                            .toArray(String[]::new), instance::completeVoting);
-                }
-
-            }
-            else {
-                return false;
-            }
-        }
-        public static boolean justHit;
-        @SpirePatch2(
-                clz = BossRelicSelectScreen.class,
-                method = "completeVoting"
-        )
-        public static class BossScreenCompletePatch{
-            public static void Postfix(BossRelicSelectScreen __instance, int option) {
-                if (voter != null) {
-                    if (option == __instance.relics.size()+1) {
-                        justHit = true;
-
-                    }
-
-                }
-            }
-
-        }
 
 
         @SpirePatch2(
@@ -282,60 +195,7 @@ public class RecyclerPatches {
             }
 
         }
-    @SpirePatch2(
-            clz = BossRelicSelectScreen.class,
-            method = "updateVote"
-    )
-    public static class voteCatch{
-            @SpireInstrumentPatch
-            public static ExprEditor Instrument() {
-                return new ExprEditor() {
-                    @Override
-                    public void edit(MethodCall m) throws CannotCompileException {
-                        if (m.getClassName().equals(TwitchVoter.class.getName()) && m.getMethodName().equals("initiateSimpleNumberVote")) {
-                            m.replace("$_ = riskOfRelics.patches.RecyclerPatches.StartVote(this);");
-                        }
-                    }
-                };
-            }
 
-
-    }
-//    @SpirePatch2(
-//            clz = TwitchVoter.class,
-//            method = "endVoting"
-//    )
-//    public static class CompleteVoteFixerPt1{
-//        @SpireInstrumentPatch
-//        public static ExprEditor Instrument() {
-//            return new ExprEditor() {
-//                @Override
-//                public void edit(MethodCall m) throws CannotCompileException {
-//                    if (m.getClassName().equals(TwitchVoter.class.getName()) && m.getMethodName().equals("isCurrentlyVoting")) {
-//                        m.replace("$_ = $proceed() && !riskOfRelics.patches.RecyclerPatches.justHit;");
-//
-//
-//                    }
-//
-//
-//                }
-//            };
-//        }
-//    }
-//    @SpirePatch2(
-//            clz = TwitchVoter.class,
-//            method = "endVoting"
-//    )
-//    public static class CompleteVoteFixerPt2{
-//        public static void Postfix(TwitchVoter __instance) {
-//            if (voter != null&& justHit) {
-//                ReflectionHacks.setPrivate(voter, TwitchVoter.class, "triggered", false);
-//            }
-//            justHit = false;
-//
-//
-//        }
-//    }
 }
 
 
