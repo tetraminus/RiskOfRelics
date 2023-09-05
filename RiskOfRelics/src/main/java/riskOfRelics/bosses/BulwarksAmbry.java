@@ -5,6 +5,21 @@
 
 package riskOfRelics.bosses;
 
+import basemod.ReflectionHacks;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.JsonReader;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
@@ -17,6 +32,8 @@ import com.megacrit.cardcrawl.helpers.MonsterHelper;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import org.lwjgl.opengl.GLContext;
 import riskOfRelics.actions.FixMonsterAction;
 import riskOfRelics.cards.colorless.GlowingShard;
 import riskOfRelics.patches.DissArtPatches;
@@ -41,11 +58,16 @@ public class BulwarksAmbry extends AbstractMonster {
     private int moveCount = 0;
     private int buffCount = 0;
 
+    private ModelBatch mb;
+    private ModelInstance modelInstance;
+    private Environment environment;
+    private AnimationController controller;
+
+    private Camera cam;
+
     public BulwarksAmbry() {
         super(NAME, ID, 750, 30.0F, -30.0F, 476.0F, 410.0F, (String)null, -50.0F, 30.0F);// 54
-        this.loadAnimation("images/npcs/heart/skeleton.atlas", "images/npcs/heart/skeleton.json", 1.0F);// 56
-        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);// 57
-        e.setTimeScale(1.5F);// 58
+        //
         this.type = EnemyType.BOSS;// 60
         if (AbstractDungeon.ascensionLevel >= 9) {// 62
             this.setHp(1250);// 63
@@ -65,9 +87,111 @@ public class BulwarksAmbry extends AbstractMonster {
             this.damage.add(new DamageInfo(this, 2));// 74
             this.bloodHitCount = 12;// 75
         }
+        SetupModel();
 
 
     }// 77
+
+    private void SetupModel(){
+        mb = new ModelBatch();
+        modelInstance = new ModelInstance(new G3dModelLoader(new JsonReader()).loadModel(Gdx.files.internal("riskOfRelicsResources/models/ambry.g3dj")));
+
+        modelInstance.transform.scale(100f,100f,100f);
+        modelInstance.animations.get(0).id = "idle";
+
+        controller = new AnimationController(modelInstance);
+        controller.setAnimation("idle", -1);
+
+
+
+
+        cam = new OrthographicCamera(Settings.WIDTH, Settings.HEIGHT);
+        cam.position.set(0, 0, 200);
+        cam.lookAt(0, 0, 0);
+        cam.near = 0.1f;
+        cam.far = 1000f;
+
+
+
+
+        cam.update();
+
+        environment = new Environment();
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+
+
+    }
+
+    @Override
+    public void dispose() {
+        mb.dispose();
+        modelInstance.model.dispose();
+
+        super.dispose();
+    }
+
+    @Override
+    public void update() {
+
+        controller.update(Gdx.graphics.getDeltaTime());
+
+        Vector3 screenpos = new Vector3(hb.cX, (float) (hb.cY-(hb.height/1.5)), 0);// 878
+
+        //screenpos.y += hb.height/2 * Settings.scale;// 879
+
+        //screenpos = screenpos.add(Gdx.graphics.getWidth() / 2.0F, Gdx.graphics.getHeight() / 2.0F, 0.0F);// 879
+        modelInstance.transform.setTranslation(cam.unproject(screenpos).add(0, 0, -cam.position.z));// 880
+
+        super.update();
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+        if (!this.isDead && !this.escaped) {// 862
+
+
+
+                sb.end();// 886
+                mb.begin(cam);// 887
+                mb.render(modelInstance,environment);// 888
+                mb.end();// 889
+                sb.begin();// 890
+
+                sb.setBlendFunction(770, 771);// 891
+
+
+            if (this == AbstractDungeon.getCurrRoom().monsters.hoveredMonster && this.atlas == null) {// 894 895
+                sb.setBlendFunction(770, 1);// 896
+                sb.setColor(new Color(1.0F, 1.0F, 1.0F, 0.1F));// 897
+                if (this.img != null) {// 898
+                    sb.draw(this.img, this.drawX - (float)this.img.getWidth() * Settings.scale / 2.0F + this.animX, this.drawY + this.animY, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);// 899 901 903 904 907 908
+                    sb.setBlendFunction(770, 771);// 911
+                }
+            }
+
+            if (!this.isDying && !this.isEscaping && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && !AbstractDungeon.player.isDead && !AbstractDungeon.player.hasRelic("Runic Dome") && this.intent != AbstractMonster.Intent.NONE && !Settings.hideCombatElements) {// 916 918
+
+                ReflectionHacks.privateMethod(AbstractMonster.class, "renderIntentVfxBehind", SpriteBatch.class).invoke(this, sb);// 924
+                ReflectionHacks.privateMethod(AbstractMonster.class, "renderIntent",SpriteBatch.class).invoke(this, sb);// 925
+                ReflectionHacks.privateMethod(AbstractMonster.class, "renderIntentVfxAfter",SpriteBatch.class).invoke(this, sb);// 926
+                ReflectionHacks.privateMethod(AbstractMonster.class, "renderDamageRange",SpriteBatch.class).invoke(this, sb);// 927
+
+
+            }
+
+            this.hb.render(sb);// 927
+            this.intentHb.render(sb);// 928
+            this.healthHb.render(sb);// 929
+        }
+
+        if (!AbstractDungeon.player.isDead) {// 932
+            this.renderHealth(sb);// 933
+
+
+            ReflectionHacks.privateMethod(AbstractMonster.class, "renderName",SpriteBatch.class).invoke(this, sb);// 935
+        }
+    }
 
     public void usePreBattleAction() {
         CardCrawlGame.music.unsilenceBGM();// 81
@@ -133,7 +257,7 @@ public class BulwarksAmbry extends AbstractMonster {
 
 
     static {
-        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(makeID(ID));// 39
+        monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);// 39
         NAME = monsterStrings.NAME;// 40
         MOVES = monsterStrings.MOVES;// 41
         DIALOG = monsterStrings.DIALOG;// 42
