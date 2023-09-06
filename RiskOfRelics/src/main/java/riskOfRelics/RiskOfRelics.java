@@ -109,6 +109,10 @@ public class RiskOfRelics implements
         return getModID() + "Resources/images/cards/" + resourcePath;
     }
 
+    public static String makeBossPath(String resourcePath) {
+        return getModID() + "Resources/images/ui/map/icon/" + resourcePath;
+    }
+
     public static String makeRelicPath(String resourcePath) {
         return getModID() + "Resources/images/relics/" + resourcePath;
     }

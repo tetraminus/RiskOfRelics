@@ -20,11 +20,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.relics.YellowKey;
 import riskOfRelics.rooms.AmbrySelectRoom;
+import riskOfRelics.util.TextureLoader;
 
 import java.util.ArrayList;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.fadeIn;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+import static riskOfRelics.RiskOfRelics.makeBossPath;
 import static riskOfRelics.RiskOfRelics.makeID;
 
 
@@ -102,6 +104,23 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
             return SpireReturn.Continue();
         }
 
+    }
+
+    @SpirePatch2(
+            clz = AbstractDungeon.class,
+            method = "setBoss"
+    )
+    public static class BossPatch2 {
+        @SpirePostfixPatch
+        //"A patch method must be a public static method."
+        public static void PatchMethod(AbstractDungeon __instance, String key) { // This is the name of the method that will be inserted.
+            if (player.hasRelic(YellowKey.ID) && AbstractDungeon.bossKey.equals(makeID("BulwarksAmbry"))) {
+                DungeonMap.boss = TextureLoader.getTexture(makeBossPath("Ambry.png"));// 436
+                DungeonMap.bossOutline = TextureLoader.getTexture(makeBossPath("AmbryOutline.png"));// 436
+
+            }
+
+        }
     }
 
 
