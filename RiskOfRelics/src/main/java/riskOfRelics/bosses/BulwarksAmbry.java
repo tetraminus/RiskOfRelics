@@ -31,13 +31,18 @@ import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.logging.log4j.Level;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.ApplyBlockAllEnemies;
 import riskOfRelics.actions.FixMonsterAction;
 import riskOfRelics.cards.colorless.GlowingShard;
 import riskOfRelics.patches.DissArtPatches;
 import riskOfRelics.powers.Untargetable;
+import riskOfRelics.util.TextureLoader;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.getCurrRoom;
+import static riskOfRelics.RiskOfRelics.Hack3dEnabled;
 import static riskOfRelics.RiskOfRelics.makeID;
 
 public class BulwarksAmbry extends AbstractMonster implements AnimationController.AnimationListener {
@@ -87,42 +92,49 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
             this.damage.add(new DamageInfo(this, 15));// 73
 
         }
-        SetupModel();
+        SetupGraphics();
 
 
     }// 77
 
-    private void SetupModel(){
-        mb = new ModelBatch();
-        modelInstance = new ModelInstance(new G3dModelLoader(new JsonReader()).loadModel(Gdx.files.internal("riskOfRelicsResources/models/ambry.g3dj")));
+    private void SetupGraphics(){
+        if (Hack3dEnabled) {
 
-        modelInstance.transform.scale(.8f*Settings.scale,.8f*Settings.scale,.8f*Settings.scale);
+            RiskOfRelics.logger.warn("3d Hack enabled, if you crash when fighting a certain boss, turn this off.");
+            RiskOfRelics.logger.log(Level.DEBUG, "SetupModel1");
+            mb = new ModelBatch();
+            modelInstance = new ModelInstance(new G3dModelLoader(new JsonReader()).loadModel(Gdx.files.internal("riskOfRelicsResources/models/ambry.g3dj")));
 
-        controller = new AnimationController(modelInstance);
-
-        onLoop(null);
-        //controller.action("Armature|bounce", -1,0.5f ,this,0);
-
-        fbo = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
-        //modelInstance.materials.get(2).set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, 1f));
-
-        cam = new OrthographicCamera(Settings.WIDTH/100f, Settings.HEIGHT/100f);
-        cam.position.set(0, 0, 5);
-        cam.lookAt(0, 0, 0);
-        cam.near = 0.1f;
-        cam.far = 10f;
-
-        cam.update();
-
-        environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
-        environment.add(pointLight = new PointLight().set(1f, 0.5f, 1f, 0, 0, 0, 5f));
+            modelInstance.transform.scale(.8f * Settings.scale, .8f * Settings.scale, .8f * Settings.scale);
+            //modelInstance.materials.get(2).set(new BlendingAttribute());
+            controller = new AnimationController(modelInstance);
 
 
+            onLoop(null);
+            //controller.action("Armature|bounce", -1,0.5f ,this,0);
+
+            fbo = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
+//        Gdx.gl.glEnable(GL20.GL_BLEND);
+//        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+            //modelInstance.materials.get(2).set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, 1f));
+
+            cam = new OrthographicCamera(Settings.WIDTH / 100f, Settings.HEIGHT / 100f);
+            cam.position.set(0, 0, 5);
+            cam.lookAt(0, 0, 0);
+            cam.near = 0.1f;
+            cam.far = 10f;
+
+            cam.update();
+
+            environment = new Environment();
+            environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+            environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+            environment.add(pointLight = new PointLight().set(1f, 0.5f, 1f, 0, 0, 0, 5f));
+
+            RiskOfRelics.logger.log(Level.DEBUG, "SetupModel3");
+        }
+        this.img = TextureLoader.getTexture("riskOfRelicsResources/models/textures/Fallback.png");// 81
     }
 
     @Override
@@ -130,7 +142,11 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
 
         super.dispose();
-        mb.dispose();
+        if (Hack3dEnabled) {
+            mb.dispose();
+            fbo.dispose();
+        }
+
 
     }
 
@@ -138,15 +154,20 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     public void update() {
 
 
+        Vector3 screenpos = new Vector3(hb.cX, (float) (hb.cY - hb_h * Settings.scale), 0);// 878
 
-        Vector3 screenpos = new Vector3(hb.cX, (float) (hb.cY - hb_h*Settings.scale), 0);// 878
+        if (Hack3dEnabled) {
+            if (controller != null){
+                controller.update(Gdx.graphics.getDeltaTime());
+            }
+            if (modelInstance != null){
+                modelInstance.transform.setTranslation(cam.unproject(screenpos).add(0, 0, -cam.position.z));// 880
+            }
+            if (pointLight != null){
+                pointLight.position.set(modelInstance.transform.getTranslation(Vector3.Zero).cpy());// 880
+            }
+        }
 
-        controller.update(Gdx.graphics.getDeltaTime());
-
-
-
-        modelInstance.transform.setTranslation(cam.unproject(screenpos).add(0, 0, -cam.position.z));// 880
-        pointLight.position.set(modelInstance.transform.getTranslation(Vector3.Zero).cpy());// 880
 
         super.update();
     }
@@ -154,26 +175,18 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     @Override
     public void render(SpriteBatch sb) {
         if (!this.isDead && !this.escaped) {// 862
+            sb.setColor(Color.WHITE);
+            if (Hack3dEnabled){
+                try {
+                    Render3D(sb);
+                } catch (NullPointerException e ){
+                    sb.draw(this.img, this.drawX -hb_w/3, this.drawY + this.animY, (float)this.hb.width, (float)this.hb.height, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);// 866 868 870 871 874 875
+                }
 
+            } else {
+                sb.draw(this.img, this.drawX - hb_w /3, this.drawY + this.animY, (float)this.hb.width, (float)this.hb.height, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);// 866 868 870 871 874 875
+            }
 
-
-                sb.end();// 886
-
-
-                fbo.begin();// 887
-                Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
-                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-                mb.begin(cam);// 887
-                mb.render(modelInstance,environment);// 888
-                mb.end();// 889
-                fbo.end();// 889
-                sb.begin();// 890
-                sb.setColor(Color.WHITE);
-                sb.draw(fbo.getColorBufferTexture(), 0, 0, Settings.WIDTH, Settings.HEIGHT, 0, 0, fbo.getWidth(), fbo.getHeight(), false, true);// 890
-
-
-
-                sb.setBlendFunction(770, 771);// 891
 
 
 
@@ -198,6 +211,21 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
             ReflectionHacks.privateMethod(AbstractMonster.class, "renderName",SpriteBatch.class).invoke(this, sb);// 935
         }
+    }
+
+    private void Render3D(SpriteBatch sb) {
+        sb.end();// 886
+        fbo.begin();// 887
+        Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        mb.begin(cam);// 887
+        mb.render(modelInstance,environment);// 888
+        mb.end();// 889
+        fbo.end();// 889
+        sb.begin();// 890
+
+        sb.draw(fbo.getColorBufferTexture(), 0, 0, Settings.WIDTH, Settings.HEIGHT, 0, 0, fbo.getWidth(), fbo.getHeight(), false, true);// 890
+        sb.setBlendFunction(770, 771);// 891
     }
 
     public void usePreBattleAction() {
