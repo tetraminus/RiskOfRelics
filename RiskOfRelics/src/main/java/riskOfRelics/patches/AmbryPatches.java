@@ -6,6 +6,7 @@ import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheEnding;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.map.DungeonMap;
 import com.megacrit.cardcrawl.map.MapEdge;
 import com.megacrit.cardcrawl.map.MapGenerator;
@@ -20,7 +21,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.relics.YellowKey;
 import riskOfRelics.rooms.AmbrySelectRoom;
-import riskOfRelics.util.TextureLoader;
 
 import java.util.ArrayList;
 
@@ -115,8 +115,8 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
         //"A patch method must be a public static method."
         public static void PatchMethod(AbstractDungeon __instance, String key) { // This is the name of the method that will be inserted.
             if (player.hasRelic(YellowKey.ID) && AbstractDungeon.bossKey.equals(makeID("BulwarksAmbry"))) {
-                DungeonMap.boss = TextureLoader.getTexture(makeBossPath("Ambry.png"));// 436
-                DungeonMap.bossOutline = TextureLoader.getTexture(makeBossPath("AmbryOutline.png"));// 436
+                DungeonMap.boss = ImageMaster.loadImage(makeBossPath("Ambry.png"));// 436
+                DungeonMap.bossOutline = ImageMaster.loadImage(makeBossPath("AmbryOutline.png"));// 436
 
             }
 

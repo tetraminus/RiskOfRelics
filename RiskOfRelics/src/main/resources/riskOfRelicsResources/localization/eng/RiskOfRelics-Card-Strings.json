@@ -1,32 +1,8 @@
 {
   "riskOfRelics:GlowingShard": {
     "NAME": "Glowing Shard",
-    "DESCRIPTION": "The Bulwark's Ambry loses 250 HP"
-  },
-  "riskOfRelics:BlastShower": {
-    "NAME": "Blast Shower",
-    "DESCRIPTION": "riskofrelics:Equipment NL Remove all of your debuffs. NL riskofrelics:Charges: !CHARGES!"
-  },
-  "riskOfRelics:Crowdfunder": {
-    "NAME": "The Crowdfunder",
-    "DESCRIPTION": "riskofrelics:Equipment NL At the start of your turn, lose 4 gold and deal 3 damage to a random enemy, !M! times. NL riskofrelics:Charges: !CHARGES!   "
-  },
-  "riskOfRelics:missileLauncher": {
-    "NAME": "Disposable missile launcher",
-    "DESCRIPTION": "riskofrelics:Equipment NL Deal !D! damage to a random enemy !M! times. NL riskofrelics:Charges: !CHARGES!   "
-  },
-  "riskOfRelics:tonicAffliction": {
-    "NAME": "Tonic Affliction",
-    "DESCRIPTION": "Reduce damage and Block by 20% when drawn."
-  },
-  "riskOfRelics:DefaultCommonSkill": {
-    "NAME": "Defend",
-    "DESCRIPTION": "Gain !B! Block. NL riskofrelics:Multiword_Keyword."
-  },
-  "riskOfRelics:DefaultCommonPower": {
-    "NAME": "Hold Place",
-    "DESCRIPTION": "Gain !M! riskofrelics:Keyword.",
-    "UPGRADE_DESCRIPTION": "Gain !M! riskofrelics:Keywords."
+    "DESCRIPTION": "The Bulwark's Ambry loses 250 HP. NL Exhaust."
+
   },
   "riskOfRelics:DefaultUncommonAttack": {
     "NAME": "Big slap",

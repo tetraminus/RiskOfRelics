@@ -7,8 +7,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.Intent;
 
-public class ApplyBlockAllEnemies extends AbstractGameAction {
-    public ApplyBlockAllEnemies(AbstractCreature source, int amount) {
+public class ApplyBlockAllEnemiesAction extends AbstractGameAction {
+    public ApplyBlockAllEnemiesAction(AbstractCreature source, int amount) {
         this.duration = 0.5F;// 15
         this.source = source;// 16
         this.amount = amount;// 17

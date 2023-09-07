@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
@@ -26,22 +27,27 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.dungeons.Exordium;
+import com.megacrit.cardcrawl.dungeons.TheBeyond;
+import com.megacrit.cardcrawl.dungeons.TheCity;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.MonsterHelper;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
+import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.logging.log4j.Level;
 import riskOfRelics.RiskOfRelics;
-import riskOfRelics.actions.ApplyBlockAllEnemies;
+import riskOfRelics.actions.ApplyBlockAllEnemiesAction;
 import riskOfRelics.actions.FixMonsterAction;
 import riskOfRelics.cards.colorless.GlowingShard;
-import riskOfRelics.patches.DissArtPatches;
 import riskOfRelics.powers.Untargetable;
-import riskOfRelics.util.TextureLoader;
+
+import java.util.ArrayList;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.getCurrRoom;
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 import static riskOfRelics.RiskOfRelics.Hack3dEnabled;
 import static riskOfRelics.RiskOfRelics.makeID;
 
@@ -51,6 +57,11 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     public static final String NAME;
     public static final String[] MOVES;
     public static final String[] DIALOG;
+
+    public static ArrayList<String> Act1Elites;
+    public static ArrayList<String> Act2Elites;
+    public static ArrayList<String> Act3Elites;
+
 
 
     private boolean isFirstMove = true;
@@ -64,6 +75,10 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
     private PointLight pointLight;
     private int ProtectBlock = 15;
+    private int BUFFSTRAMOUNT = 2;
+    private final float AnimSpeed = 0.5f;
+
+    private int elitesSpawned = 0;
 
 
     private FrameBuffer fbo;
@@ -84,18 +99,60 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         this.hb.move(this.hb.x + 200 * Settings.scale, this.hb.y + 200.0F * Settings.scale);// 68
 
         if (AbstractDungeon.ascensionLevel >= 4) {// 68
-            this.damage.add(new DamageInfo(this, 15));// 69
-            ProtectBlock = 20;
+            this.damage.add(new DamageInfo(this, 20));// 69
+            ProtectBlock = 25;
+            BUFFSTRAMOUNT = 3;
+
 
 
         } else {
             this.damage.add(new DamageInfo(this, 15));// 73
+            ProtectBlock = 20;
+            BUFFSTRAMOUNT = 2;
+
 
         }
         SetupGraphics();
 
 
     }// 77
+
+    public static void addEliteEncounterID(String dungeonID, String id) {
+        switch (dungeonID) {
+            case Exordium.ID: // 81
+                Act1Elites.add(id);// 82
+
+                break;
+            case TheCity.ID: // 83
+                Act2Elites.add(id);// 84
+
+                break;
+            case TheBeyond.ID: // 85
+                Act3Elites.add(id);// 86
+
+                break;
+        }
+    }
+
+    private void ChooseFirstAnim() {
+            switch ((int) Math.ceil(currentHealth/250f)){
+                case 5:
+                    controller.setAnimation("Armature|onFull", -1,AnimSpeed ,this );
+                    break;
+                case 4:
+                    controller.setAnimation("Armature|on3", -1,AnimSpeed ,this );
+                    break;
+                case 3:
+                    controller.setAnimation("Armature|on2", -1,AnimSpeed ,this );
+                    break;
+                case 2:
+                    controller.setAnimation("Armature|on1", -1,AnimSpeed ,this );
+                    break;
+                case 1:
+                    controller.setAnimation("Armature|off", -1,AnimSpeed ,this );
+                    break;
+            }
+    }
 
     private void SetupGraphics(){
         if (Hack3dEnabled) {
@@ -110,14 +167,15 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
             controller = new AnimationController(modelInstance);
 
 
-            onLoop(null);
+
+
+            ChooseFirstAnim();
             //controller.action("Armature|bounce", -1,0.5f ,this,0);
 
             fbo = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
-//        Gdx.gl.glEnable(GL20.GL_BLEND);
-//        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-            //modelInstance.materials.get(2).set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, 1f));
+
+            modelInstance.materials.get(2).set(new BlendingAttribute());
 
             cam = new OrthographicCamera(Settings.WIDTH / 100f, Settings.HEIGHT / 100f);
             cam.position.set(0, 0, 5);
@@ -129,12 +187,12 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
             environment = new Environment();
             environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-            environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+            environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, 0.2f));
             environment.add(pointLight = new PointLight().set(1f, 0.5f, 1f, 0, 0, 0, 5f));
 
             RiskOfRelics.logger.log(Level.DEBUG, "SetupModel3");
         }
-        this.img = TextureLoader.getTexture("riskOfRelicsResources/models/textures/Fallback.png");// 81
+        this.img = ImageMaster.loadImage("riskOfRelicsResources/models/textures/Fallback.png");// 81
     }
 
     @Override
@@ -162,10 +220,11 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
             }
             if (modelInstance != null){
                 modelInstance.transform.setTranslation(cam.unproject(screenpos).add(0, 0, -cam.position.z));// 880
+                if (pointLight != null){
+                    pointLight.position.set(modelInstance.transform.getTranslation(Vector3.Zero).cpy());// 880
+                }
             }
-            if (pointLight != null){
-                pointLight.position.set(modelInstance.transform.getTranslation(Vector3.Zero).cpy());// 880
-            }
+
         }
 
 
@@ -186,9 +245,6 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
             } else {
                 sb.draw(this.img, this.drawX - hb_w /3, this.drawY + this.animY, (float)this.hb.width, (float)this.hb.height, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);// 866 868 870 871 874 875
             }
-
-
-
 
             if (!this.isDying && !this.isEscaping && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && !AbstractDungeon.player.isDead && !AbstractDungeon.player.hasRelic("Runic Dome") && this.intent != AbstractMonster.Intent.NONE && !Settings.hideCombatElements) {// 916 918
 
@@ -233,6 +289,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         AbstractDungeon.scene.fadeOutAmbiance();// 82
         getCurrRoom().playBgmInstantly("BOSS_ENDING");// 83
 
+
         this.addToBot(new ApplyPowerAction(this, this, new Untargetable(this,this,-1)));// 85
     }// 96
 
@@ -245,7 +302,13 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                 AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AbstractGameAction.AttackEffect.BLUNT_LIGHT));// 247
                 break;
             case 3:
-                this.addToBot(new ApplyBlockAllEnemies(this, ProtectBlock));
+                this.addToBot(new ApplyBlockAllEnemiesAction(this, ProtectBlock));
+                for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                    if (!m.isDeadOrEscaped()) {
+                        this.addToBot(new ApplyPowerAction(m, this, new StrengthPower(m,BUFFSTRAMOUNT)));// 85
+                    }
+
+                }
             default:
                 break;
         }
@@ -256,13 +319,39 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
 
     public void SpawnElite(){
-        MonsterGroup monsters = MonsterHelper.getEncounter(DissArtPatches.getTrulyRandomEliteEncounter());// 100
+        String eliteID;
+        switch (elitesSpawned){
+            // pattern: 1 1 2 3 4
+            case 0:
+            case 1:
+                eliteID = Act1Elites.get(AbstractDungeon.aiRng.random(Act1Elites.size() - 1));
+                break;
+            case 2:
+                eliteID = Act2Elites.get(AbstractDungeon.aiRng.random(Act2Elites.size() - 1));
+                break;
+            case 3:
+                eliteID = Act3Elites.get(AbstractDungeon.aiRng.random(Act3Elites.size() - 1));
+                break;
+            default:
+                eliteID = "Shield and Spear";
+                break;
+        }
+
+        if (eliteID.equals("Shield and Spear")){
+            player.movePosition((Settings.WIDTH / 2.0F)-200.0F * Settings.scale,AbstractDungeon.floorY);
+        } else {
+            player.movePosition((Settings.WIDTH / 4.0F) * Settings.scale,AbstractDungeon.floorY);
+        }
+
+        MonsterGroup monsters = MonsterHelper.getEncounter(eliteID);// 100
         monsters.monsters.forEach((m) -> {// 101
             this.addToBot(new SpawnMonsterAction(m, false));// 102
             this.addToBot(new FixMonsterAction(m));// 103
             m.hb.translate(-200.0F * Settings.scale, 0);// 104
             m.drawX -= 200.0F * Settings.scale;// 105
+
         });
+        this.elitesSpawned++;
     }
 
     protected void getMove(int num) {
@@ -328,7 +417,10 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     }
 
     public void onMonsterDeath(AbstractMonster instance) {
-        this.addToBot(new MakeTempCardInDrawPileAction(new GlowingShard(), 1, true, true));// 291
+        if (instance != null && instance != this && ( instance.isDying || instance.isEscaping || instance.halfDead || instance.isDead) && isLastAlive() ) {// 295
+            this.addToBot(new MakeTempCardInDrawPileAction(new GlowingShard(), 1, true, true));// 291
+        }
+
     }
 
     @Override
@@ -338,24 +430,72 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
     @Override
     public void onLoop(AnimationController.AnimationDesc animationDesc) {
+        if (controller == null){
+            return;
+        }
+        if (controller.current == null){
+            return;
+        }
         switch ((int) Math.ceil(currentHealth/250f)){
             case 5:
-                controller.setAnimation("Armature|onFull", -1,0.5f ,this );
+                if (controller.current.animation.id.equals("Armature|onFull")){
+                    return;
+                }
+                controller.setAnimation("Armature|onFull", -1,AnimSpeed ,this );
                 break;
             case 4:
-                controller.setAnimation("Armature|on3", -1,0.5f ,this );
+                if (controller.current.animation.id.equals("Armature|on3")){
+                    return;
+                }
+                controller.setAnimation("Armature|on3", -1,AnimSpeed ,this );
                 break;
             case 3:
-                controller.setAnimation("Armature|on2", -1,0.5f ,this );
+                if (controller.current.animation.id.equals("Armature|on2")){
+                    return;
+                }
+                controller.setAnimation("Armature|on2", -1,AnimSpeed ,this );
                 break;
             case 2:
-                controller.setAnimation("Armature|on1", -1,0.5f ,this );
+                if (controller.current.animation.id.equals("Armature|on1")){
+                    return;
+                }
+                controller.setAnimation("Armature|on1", -1,AnimSpeed ,this );
                 break;
             case 1:
-                controller.setAnimation("Armature|off", -1,0.5f ,this );
+                if (controller.current.animation.id.equals("Armature|off")){
+                    return;
+                }
+                controller.setAnimation("Armature|off", -1,AnimSpeed ,this );
                 break;
         }
 
 
-    }
+  }
+
+  static {
+        Act1Elites = new ArrayList<String>() {
+            {
+                this.add("Gremlin Nob");// 182
+                this.add("Lagavulin");// 183
+                this.add("3 Sentries");// 184
+            }
+        };
+        Act2Elites = new ArrayList<String>() {
+            {
+                this.add("Gremlin Leader");// 188
+                this.add("Book of Stabbing");// 189
+                this.add("Slavers");// 190
+                this.add("Snecko and Mystics");// 191
+            }
+        };
+        Act3Elites = new ArrayList<String>() {
+            {
+                this.add("Giant Head");// 194
+                this.add("Nemesis");// 195
+                this.add("Reptomancer");// 196
+            }
+        };
+
+
+  }
 }

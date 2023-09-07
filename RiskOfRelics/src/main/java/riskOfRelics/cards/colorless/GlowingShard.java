@@ -25,6 +25,7 @@ public class GlowingShard extends AbstractDefaultCard {
 
     public GlowingShard() {
         super(ID, cardStrings.NAME, makeCardPath("TonicAffliction.png"), 0, cardStrings.DESCRIPTION, AbstractCard.CardType.ATTACK, AbstractCard.CardColor.COLORLESS, AbstractCard.CardRarity.SPECIAL, CardTarget.NONE);
+        this.exhaust = true;
     }
 
     @Override
