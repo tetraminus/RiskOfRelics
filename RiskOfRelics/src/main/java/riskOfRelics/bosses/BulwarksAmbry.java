@@ -23,6 +23,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonReader;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.*;
+import com.megacrit.cardcrawl.audio.MainMusic;
+import com.megacrit.cardcrawl.audio.MusicMaster;
+import com.megacrit.cardcrawl.audio.TempMusic;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -43,6 +46,7 @@ import riskOfRelics.actions.ApplyBlockAllEnemiesAction;
 import riskOfRelics.actions.FixMonsterAction;
 import riskOfRelics.cards.colorless.GlowingShard;
 import riskOfRelics.powers.Untargetable;
+import riskOfRelics.util.BossMusic;
 
 import java.util.ArrayList;
 
@@ -287,9 +291,12 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     public void usePreBattleAction() {
         CardCrawlGame.music.unsilenceBGM();// 81
         AbstractDungeon.scene.fadeOutAmbiance();// 82
-        getCurrRoom().playBgmInstantly("BOSS_ENDING");// 83
-
-
+//        ArrayList<TempMusic> musics =  ReflectionHacks.getPrivate(CardCrawlGame.music, MusicMaster.class, "tempTrack");
+//        BossMusic music = new BossMusic(this);
+//        music.silenceInstantly();
+//        musics.add(music);
+//        ReflectionHacks.setPrivate(CardCrawlGame.music, MusicMaster.class, "tempTrack", musics);// 8
+        AbstractDungeon.getCurrRoom().playBgmInstantly("BOSS_ENDING");
         this.addToBot(new ApplyPowerAction(this, this, new Untargetable(this,this,-1)));// 85
     }// 96
 
