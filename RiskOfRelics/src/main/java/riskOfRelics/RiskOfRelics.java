@@ -68,7 +68,8 @@ public class RiskOfRelics implements
         EditCharactersSubscriber,
         PostInitializeSubscriber,
         StartGameSubscriber,
-        MaxHPChangeSubscriber
+        MaxHPChangeSubscriber,
+        AddAudioSubscriber
 
 
     {
@@ -355,6 +356,8 @@ public class RiskOfRelics implements
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
+
+
 
 //         Create the on/off button:
         ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton("Enable Aspect Descriptions(Default: OFF) | Restart required.",
@@ -877,7 +880,10 @@ public class RiskOfRelics implements
             return relic;
         }
 
-
+        @Override
+        public void receiveAddAudio() {
+            BaseMod.addAudio(makeID("AmbryPart1"), "riskOfRelicsResources/music/AmbryThemePart1.ogg");
+        }
 
 
         public enum Artifacts {

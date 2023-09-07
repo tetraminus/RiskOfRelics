@@ -5,6 +5,7 @@
 
 package riskOfRelics.bosses;
 
+import basemod.BaseMod;
 import basemod.ReflectionHacks;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
@@ -297,6 +298,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 //        musics.add(music);
 //        ReflectionHacks.setPrivate(CardCrawlGame.music, MusicMaster.class, "tempTrack", musics);// 8
         AbstractDungeon.getCurrRoom().playBgmInstantly("BOSS_ENDING");
+        //BaseMod.addAudio();
         this.addToBot(new ApplyPowerAction(this, this, new Untargetable(this,this,-1)));// 85
     }// 96
 
