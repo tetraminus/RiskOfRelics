@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -347,11 +348,39 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         monsters.monsters.forEach((m) -> {// 101
             this.addToBot(new SpawnMonsterAction(m, false));// 102
             this.addToBot(new FixMonsterAction(m));// 103
-            m.hb.translate(-200.0F * Settings.scale, 0);// 104
-            m.drawX -= 200.0F * Settings.scale;// 105
+            m.drawX -= 200 * Settings.scale;
+            m.updateAnimations();
+            addToBot(new AbstractGameAction() {
+                @Override
+                public void update() {
+                    SetFreeSpawnPoint(m);
 
+                    isDone = true;
+                }
+            });
         });
+
+
         this.elitesSpawned++;
+    }
+
+    public void SetFreeSpawnPoint(AbstractCreature m){
+        m.drawX -= 2;
+        m.updateAnimations();
+        if (checkOverlap(m)){
+            SetFreeSpawnPoint(m);
+        }
+    }
+
+    public boolean checkOverlap(AbstractCreature m){
+        for (AbstractCreature c : AbstractDungeon.getCurrRoom().monsters.monsters) {
+
+            if (c.hb.intersects(m.hb) && c != m && !c.isDeadOrEscaped()){
+                return true;
+            }
+
+        }
+        return false;
     }
 
     protected void getMove(int num) {

@@ -15,6 +15,8 @@ import riskOfRelics.bosses.BulwarksAmbry;
         public static SpireReturn<Object> Prefix(SuicideAction __instance) {
             if (ReflectionHacks.getPrivate(__instance, SuicideAction.class, "m") instanceof BulwarksAmbry) {
                 __instance.isDone = true;
+                ((BulwarksAmbry) ReflectionHacks.getPrivate(__instance, SuicideAction.class, "m")).showHealthBar();
+
                 return SpireReturn.Return(null);
             }
             return SpireReturn.Continue();
