@@ -298,7 +298,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 //        music.silenceInstantly();
 //        musics.add(music);
 //        ReflectionHacks.setPrivate(CardCrawlGame.music, MusicMaster.class, "tempTrack", musics);// 8
-        AbstractDungeon.getCurrRoom().playBgmInstantly("BOSS_ENDING");
+        CardCrawlGame.music.playTempBgmInstantly(makeID("AMBRY_BOSS"));// 83
         //BaseMod.addAudio();
         this.addToBot(new ApplyPowerAction(this, this, new Untargetable(this,this,-1)));// 85
     }// 96
@@ -384,7 +384,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     public boolean checkOverlap(AbstractCreature m){
         for (AbstractCreature c : AbstractDungeon.getCurrRoom().monsters.monsters) {
 
-            if (c.hb.intersects(m.hb) && c != m && !c.isDeadOrEscaped()){
+            if (c.hb.intersects(m.hb) && c != m && !c.isDeadOrEscaped() && c!= this) {
                 return true;
             }
 

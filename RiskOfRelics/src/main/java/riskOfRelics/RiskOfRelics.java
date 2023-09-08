@@ -68,8 +68,7 @@ public class RiskOfRelics implements
         EditCharactersSubscriber,
         PostInitializeSubscriber,
         StartGameSubscriber,
-        MaxHPChangeSubscriber,
-        AddAudioSubscriber
+        MaxHPChangeSubscriber
 
 
     {
@@ -880,10 +879,7 @@ public class RiskOfRelics implements
             return relic;
         }
 
-        @Override
-        public void receiveAddAudio() {
-            BaseMod.addAudio(makeID("AmbryPart1"), "riskOfRelicsResources/music/AmbryThemePart1.ogg");
-        }
+
 
 
         public enum Artifacts {
