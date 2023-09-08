@@ -14,7 +14,8 @@ import riskOfRelics.powers.RuinPower;
 public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
 
 
-    public static final int AMOUNT = 4;
+    public static final int STRENGH_LOSS = 4;
+    public static final int RUIN_AMOUNT = 5;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("EssenceOfHeresy");
     private static final String IMAGENAME = "EssenceOfHeresy.png";
@@ -27,7 +28,7 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
     @Override
     public void atBattleStart() {
         this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,
-                new StrengthPower(AbstractDungeon.player, (-AMOUNT)), (-AMOUNT)));
+                new StrengthPower(AbstractDungeon.player, (-STRENGH_LOSS)), (-STRENGH_LOSS)));
         super.atBattleStart();
     }
 
@@ -35,7 +36,7 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
         if (damageAmount > target.currentBlock && info.type == DamageInfo.DamageType.NORMAL) {
             this.addToBot(new ApplyPowerAction(target, AbstractDungeon.player,
-                    new RuinPower(target, AMOUNT-1), AMOUNT-1));
+                    new RuinPower(target, RUIN_AMOUNT), RUIN_AMOUNT));
         }
 
         super.onAttack(info, damageAmount, target);
@@ -43,7 +44,7 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1]+(AMOUNT+1)+DESCRIPTIONS[2];
+        return DESCRIPTIONS[0]+STRENGH_LOSS+DESCRIPTIONS[1]+(RUIN_AMOUNT)+DESCRIPTIONS[2];
     }
 
     @Override
