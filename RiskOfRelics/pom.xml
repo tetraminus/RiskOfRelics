@@ -132,6 +132,9 @@
                     <excludes>
                         <exclude>**/*.psd</exclude>
                         <exclude>**/*.xcf</exclude>
+                        <exclude>**/*.blend</exclude>
+                        <exclude>**/*.blend1</exclude>
+                        <exclude>**/*.fbx</exclude>
 
                     </excludes>
                 </configuration>

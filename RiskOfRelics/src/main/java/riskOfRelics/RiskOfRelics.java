@@ -30,6 +30,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.artifacts.DeathArt;
 import riskOfRelics.artifacts.GlassArt;
+import riskOfRelics.bosses.BulwarksAmbry;
 import riskOfRelics.cards.AbstractDynamicCard;
 import riskOfRelics.events.*;
 import riskOfRelics.patches.ArtifactFTUEPatches;
@@ -79,7 +80,9 @@ public class RiskOfRelics implements
     // Mod-settings settings. This is if you want an on/off savable button
     public static Properties riskOfRelicsDefaultSettings = new Properties();
     public static final String ENABLE_ASPECT_DESC_SETTINGS = "enableAspectDesc";
+    public static final String ENABLE_3D_HACK_SETTINGS = "enable3dHack";
     public static boolean AspectDescEnabled = true; // The boolean we'll be setting on/off (true/false)
+    public static boolean Hack3dEnabled = true; // The boolean we'll be setting on/off (true/false)
 
     //This is for the in-game mod settings panel.
     private static final String MODNAME = "Risk of Relics";
@@ -106,6 +109,10 @@ public class RiskOfRelics implements
 
     public static String makeCardPath(String resourcePath) {
         return getModID() + "Resources/images/cards/" + resourcePath;
+    }
+
+    public static String makeBossPath(String resourcePath) {
+        return getModID() + "Resources/images/ui/map/icon/" + resourcePath;
     }
 
     public static String makeRelicPath(String resourcePath) {
@@ -205,15 +212,23 @@ public class RiskOfRelics implements
         // This loads the mod settings.
         // The actual mod Button is added below in receivePostInitialize()
         riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE");
+        riskOfRelicsDefaultSettings.setProperty(ENABLE_3D_HACK_SETTINGS, "TRUE");
         riskOfRelicsDefaultSettings.setProperty("hasShownFTUE", "FALSE");
         try {
             ModConfig = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
             // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
             ModConfig.load(); // Load the setting and set the boolean to equal it
             AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
+            Hack3dEnabled = ModConfig.getBool(ENABLE_3D_HACK_SETTINGS);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (Hack3dEnabled){
+            logger.warn("3d Hack enabled, if you crash when fighting a certain boss, turn this off.");
+        }
+
         logger.info("Done adding mod settings");
 
         ActiveArtifacts = new ArrayList<>();
@@ -341,6 +356,8 @@ public class RiskOfRelics implements
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
 
+
+
 //         Create the on/off button:
         ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton("Enable Aspect Descriptions(Default: OFF) | Restart required.",
                 350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
@@ -363,6 +380,26 @@ public class RiskOfRelics implements
 
         settingsPanel.addUIElement(enableAspectDescButton); // Add the button to the settings panel. Button is a go.
 
+        ModLabeledToggleButton enable3dButton = new ModLabeledToggleButton("3d Hack (Default: ON) | Restart required. turn off if getting crashes in the bulwarks ambry.",
+                350.0f, 650.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
+                Hack3dEnabled, // Boolean it uses
+                settingsPanel, // The mod panel in which this button will be in
+                (label) -> {
+                }, // thing??????? idk
+                (button) -> { // The actual button:
+
+                    Hack3dEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
+                    try {
+                        // And based on that boolean, set the settings and save them
+                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);;
+                        config.setBool(ENABLE_3D_HACK_SETTINGS, Hack3dEnabled);
+                        config.save();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        settingsPanel.addUIElement(enable3dButton); // Add the button to the settings panel. Button is a go.
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
 
@@ -432,6 +469,10 @@ public class RiskOfRelics implements
             RiskOfRelics.setHasShownFTUE(true);
 
         }
+
+        BaseMod.addMonster(BulwarksAmbry.ID , BulwarksAmbry::new);
+
+
 
     }
 
@@ -584,6 +625,9 @@ public class RiskOfRelics implements
 
         BaseMod.loadCustomStringsFile(TutorialStrings.class,
                 getModID() + "Resources/localization/eng/RiskOfRelics-Tutorial-Strings.json");
+
+        BaseMod.loadCustomStringsFile(MonsterStrings.class,
+                getModID() + "Resources/localization/eng/RiskOfRelics-Monster-Strings.json");
 
         logger.info("Done editing strings");
     }

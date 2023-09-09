@@ -16,6 +16,7 @@ import com.megacrit.cardcrawl.dungeons.TheEnding;
 import com.megacrit.cardcrawl.monsters.MonsterInfo;
 import javassist.*;
 import org.clapper.util.classutil.*;
+import riskOfRelics.bosses.BulwarksAmbry;
 
 import java.io.File;
 import java.lang.reflect.Modifier;
@@ -145,7 +146,8 @@ public class DissArtPatches {
             strongencounterIDs.add(id);
         }
     }
-    public static void addEliteEncounterID(String id) {
+    public static void addEliteEncounterID(String DungeonID,String id) {
+        BulwarksAmbry.addEliteEncounterID(DungeonID,id);
         if (!eliteencounterIDs.contains(id)) {
             eliteencounterIDs.add(id);
         }
@@ -166,6 +168,22 @@ public class DissArtPatches {
 
 
 
+    }
+
+    // function to get a random encounter
+    public static String getTrulyRandomEliteEncounter() {
+
+
+
+        ArrayList<String> encounterIDs = new ArrayList<>();
+
+        encounterIDs.addAll(eliteencounterIDs);
+        EliteMonsterStrings.forEach((monsterInfo) -> {
+            encounterIDs.add(monsterInfo.name);
+        });
+
+
+        return encounterIDs.get(AbstractDungeon.monsterRng.random(encounterIDs.size() - 1));
     }
 
     protected static void generateWeakEnemies(int count, AbstractDungeon __instance) {
@@ -244,14 +262,8 @@ public class DissArtPatches {
             finder.findClasses(abstractDungeonFoundClasses, abstractDungeonFilter);
 
 
-
-
-            CtClass ctClass;
-            CtMethod[] methods;
-
-
-                ctClass = pool.get(BaseMod.class.getName());
-                methods = ctClass.getDeclaredMethods();
+            CtClass ctClass = pool.get(BaseMod.class.getName());
+            CtMethod[] methods = ctClass.getDeclaredMethods();
                 for(CtMethod m : methods) {
 
 
@@ -262,7 +274,7 @@ public class DissArtPatches {
                         m.insertBefore("{riskOfRelics.patches.DissArtPatches.addStrongEncounterID(encounter.name);}");
                     }
                     if (m.getName().equals("addEliteEncounter")) {
-                        m.insertBefore("{riskOfRelics.patches.DissArtPatches.addEliteEncounterID(encounter.name);}");
+                        m.insertBefore("{riskOfRelics.patches.DissArtPatches.addEliteEncounterID(dungeonID, encounter.name);}");
                     }
 
                     if (m.getName().equals("addBoss")) {

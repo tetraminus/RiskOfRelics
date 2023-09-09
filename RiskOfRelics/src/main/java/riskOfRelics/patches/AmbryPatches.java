@@ -6,6 +6,7 @@ import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheEnding;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.map.DungeonMap;
 import com.megacrit.cardcrawl.map.MapEdge;
 import com.megacrit.cardcrawl.map.MapGenerator;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.fadeIn;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+import static riskOfRelics.RiskOfRelics.makeBossPath;
+import static riskOfRelics.RiskOfRelics.makeID;
 
 
 public class AmbryPatches {// Don't worry about the "never used" warning - *You* usually don't use/call them anywhere. Mod The Spire does.
@@ -84,6 +87,42 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
 
 
     }
+    @SpirePatch2(
+            clz = TheEnding.class,
+            method = "initializeBoss"
+    )
+    public static class BossPatch{
+        @SpirePrefixPatch
+        //"A patch method must be a public static method."
+        public static SpireReturn<Object> PatchMethod(TheEnding __instance) { // This is the name of the method that will be inserted.
+            if (player.hasRelic(YellowKey.ID)) {
+                AbstractDungeon.bossList.add(makeID("BulwarksAmbry"));
+                AbstractDungeon.bossList.add(makeID("BulwarksAmbry"));
+                AbstractDungeon.bossList.add(makeID("BulwarksAmbry"));
+                return SpireReturn.Return(null);
+            }
+            return SpireReturn.Continue();
+        }
+
+    }
+
+    @SpirePatch2(
+            clz = AbstractDungeon.class,
+            method = "setBoss"
+    )
+    public static class BossPatch2 {
+        @SpirePostfixPatch
+        //"A patch method must be a public static method."
+        public static void PatchMethod(AbstractDungeon __instance, String key) { // This is the name of the method that will be inserted.
+            if (player.hasRelic(YellowKey.ID) && AbstractDungeon.bossKey.equals(makeID("BulwarksAmbry"))) {
+                DungeonMap.boss = ImageMaster.loadImage(makeBossPath("Ambry.png"));// 436
+                DungeonMap.bossOutline = ImageMaster.loadImage(makeBossPath("AmbryOutline.png"));// 436
+
+            }
+
+        }
+    }
+
 
      @SpirePatch(    // "Use the @SpirePatch annotation on the patch class."
             clz = TheEnding.class, // This is the class where the method we will be patching is. In our case - Abstract Dungeon
