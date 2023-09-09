@@ -13,8 +13,8 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class KjarosBand extends BaseRelic {
 
 
-    public static final int AMOUNT = 16;
-    public static final int THRESHOLD = 20;
+    public static final int AMOUNT = 12;
+    public static final int THRESHOLD = 24;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("KjarosBand");
     private static final String IMAGENAME = "KjarosBand.png";

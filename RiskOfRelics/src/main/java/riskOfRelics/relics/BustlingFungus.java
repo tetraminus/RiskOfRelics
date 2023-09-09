@@ -16,6 +16,7 @@ public class BustlingFungus extends BaseRelic {
     public static boolean Canceledthisfight = false;
     public static final int HEAL_AMOUNT = 3;
     public static final int HEAL_AMOUNT_END = 10;
+    public static final int MAX_USES = 5;
 
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("BustlingFungus");
@@ -29,6 +30,7 @@ public class BustlingFungus extends BaseRelic {
     public void atBattleStart() {
         Canceledthisturn = false;
         Canceledthisfight = false;
+        counter = MAX_USES;
     }
 
     @Override
@@ -41,10 +43,11 @@ public class BustlingFungus extends BaseRelic {
     @Override
     public void onPlayerEndTurn() {
 
-        if (!Canceledthisturn){
+        if (!Canceledthisturn && counter > 0){
             flash();
             this.addToBot(new ApplyPowerAction(player, player, new RegenPower(player, HEAL_AMOUNT)));
             AbstractDungeon.actionManager.addToTop(new RelicAboveCreatureAction(player, this));
+            counter--;
         }
 
 
@@ -59,6 +62,7 @@ public class BustlingFungus extends BaseRelic {
         player.heal(player.maxHealth/HEAL_AMOUNT_END);
         }
         super.onVictory();
+        counter = -1;
     }
 
     @Override
@@ -74,7 +78,7 @@ public class BustlingFungus extends BaseRelic {
     // Description
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0]+HEAL_AMOUNT+DESCRIPTIONS[1]+HEAL_AMOUNT_END+DESCRIPTIONS[2];
+        return DESCRIPTIONS[0]+HEAL_AMOUNT+DESCRIPTIONS[1]+HEAL_AMOUNT_END+DESCRIPTIONS[2] + MAX_USES + DESCRIPTIONS[3];
     }
 
 }

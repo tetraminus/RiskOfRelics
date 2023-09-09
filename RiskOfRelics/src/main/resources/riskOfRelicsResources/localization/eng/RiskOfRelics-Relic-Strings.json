@@ -408,7 +408,7 @@
     "NAME": "Bustling Fungus",
     "FLAVOR": "Engineers Best Friend",
     "DESCRIPTIONS": [
-      "If you don't play a card this turn, gain #b"," #yRegen. if you complete combat without playing an attack, heal #b","% #yMax HP"
+      "If you don't play a card this turn, gain #b"," #yRegen. If you complete combat without playing an attack, heal #b","% #yMax HP. The first effect can only trigger "," times per combat."
     ]
   }
 }

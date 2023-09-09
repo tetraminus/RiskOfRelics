@@ -16,7 +16,7 @@ public class Pennies extends BaseRelic{
     public static final String ID = RiskOfRelics.makeID("Pennies");
     private static final String IMAGENAME = "Pennies.png";
 
-    public Pennies() {super(ID,IMAGENAME, RelicTier.COMMON, LandingSound.CLINK);}
+    public Pennies() {super(ID,IMAGENAME, RelicTier.UNCOMMON, LandingSound.CLINK);}
 
     @Override
     public void onLoseHp(int damageAmount) {
