@@ -1,7 +1,6 @@
 package riskOfRelics.artifacts;
 
 import com.megacrit.cardcrawl.actions.common.SpawnMonsterAction;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.exordium.LouseNormal;
@@ -21,7 +20,8 @@ public class SoulArt {
     }
     public static void onMonsterDeath(AbstractMonster monster) {
         if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.SOUL) && !SpawnedLice.contains(monster) && !monster.hasPower(MinionPower.POWER_ID)) {
-            AbstractMonster louse = new LouseNormal(monster.drawX - Settings.WIDTH *0.75f, monster.drawY - AbstractDungeon.floorY * Settings.scale);
+            AbstractMonster louse = new LouseNormal(0,0);// 181 , 10.0F);
+            louse.drawX = monster.drawX;
             louse.currentHealth = louse.maxHealth = monster.maxHealth / 2;
 
             AbstractDungeon.actionManager.addToBottom(new SpawnMonsterAction(louse, false,-99));// 122

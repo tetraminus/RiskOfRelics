@@ -27,8 +27,8 @@ public class ShrineOfChance extends AbstractImageEvent {
 
     private int screenNum = 0; // The initial screen we will see when encountering the event - screen 0;
     private int relicObtainChance = 25;
-    private int cost = 75;
-    private static final int GOLD_GAIN = 20;
+    private int cost = 35;
+    private static final int GOLD_GAIN = 15;
     private int totalGoldGiven = 0;
 
     public ShrineOfChance() {

@@ -26,6 +26,7 @@ import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import com.megacrit.cardcrawl.vfx.TextCenteredEffect;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.artifacts.DeathArt;
@@ -678,7 +679,7 @@ public class RiskOfRelics implements
                 MetamorphCharacter = null;
             }
             if (ActiveArtifacts.contains(Artifacts.METAMORPHOSIS)) {
-                DoMetamorphosisShtuff();
+                ReinitializeCardPools();
             }
 
 
@@ -726,11 +727,13 @@ public class RiskOfRelics implements
             }else {
                 ReinitializeCardPools();
             }
-            effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH /2, (float) Settings.HEIGHT /2, Artifacts.METAMORPHOSIS));
+
         }
 
         private static void ReinitializeCardPools() {
             AbstractPlayer NewChar = CardCrawlGame.characterManager.getAllCharacters().get(MathUtils.random(0, CardCrawlGame.characterManager.getAllCharacters().size() - 1));
+            effectsQueue.add(new TextCenteredEffect(NewChar.getLocalizedCharacterName()));
+            effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH /2, (float) Settings.HEIGHT /2, Artifacts.METAMORPHOSIS));
             ReinitializeCardPools(NewChar, false);
         }
 

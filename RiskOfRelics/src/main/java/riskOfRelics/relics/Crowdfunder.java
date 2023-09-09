@@ -18,8 +18,8 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class Crowdfunder extends AbstractEquipment {
 
 
-    public static final int AMOUNT = 2;
-    public static final int COST = 15;
+    public static final int AMOUNT = 3;
+    public static final int COST = 10;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("Crowdfunder");
     private static final String IMAGENAME = "Crowdfunder.png";
