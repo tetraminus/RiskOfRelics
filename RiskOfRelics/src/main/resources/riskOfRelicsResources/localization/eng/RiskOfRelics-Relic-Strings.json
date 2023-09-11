@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:MolotovPack": {
+    "NAME": "Molotov (6-Pack)",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Apply #b"," burning to all enemies."
+    ]
+  },
   "riskOfRelics:OcularHud": {
     "NAME": "Ocular HUD",
     "FLAVOR": "",

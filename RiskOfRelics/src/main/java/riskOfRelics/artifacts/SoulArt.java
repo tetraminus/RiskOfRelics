@@ -29,8 +29,6 @@ public class SoulArt {
 
             SpawnedLice.add(louse);
             //logger.log(java.util.logging.Level.INFO, "Spawned Louse at " + louse.drawX + ", " + louse.drawY);
-
-
         }
     }
 }
