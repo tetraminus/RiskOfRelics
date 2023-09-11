@@ -5,7 +5,6 @@
 
 package riskOfRelics.bosses;
 
-import basemod.BaseMod;
 import basemod.ReflectionHacks;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
@@ -24,9 +23,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonReader;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.*;
-import com.megacrit.cardcrawl.audio.MainMusic;
-import com.megacrit.cardcrawl.audio.MusicMaster;
-import com.megacrit.cardcrawl.audio.TempMusic;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -48,7 +44,6 @@ import riskOfRelics.actions.ApplyBlockAllEnemiesAction;
 import riskOfRelics.actions.FixMonsterAction;
 import riskOfRelics.cards.colorless.GlowingShard;
 import riskOfRelics.powers.Untargetable;
-import riskOfRelics.util.BossMusic;
 
 import java.util.ArrayList;
 
@@ -218,7 +213,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     public void update() {
 
 
-        Vector3 screenpos = new Vector3(hb.cX, (float) (hb.cY - hb_h * Settings.scale), 0);// 878
+        Vector3 screenpos = new Vector3(drawX, (float) (drawY-hb_h/2), 0);// 878
 
         if (Hack3dEnabled) {
             if (controller != null){
@@ -348,9 +343,9 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         }
 
         if (eliteID.equals("Shield and Spear")){
-            player.movePosition((Settings.WIDTH / 2.0F)-200.0F * Settings.scale,AbstractDungeon.floorY);
+            player.movePosition((Settings.WIDTH / 2.0F)- 200.0F * Settings.scale,AbstractDungeon.floorY);
         } else {
-            player.movePosition((Settings.WIDTH / 4.0F) * Settings.scale,AbstractDungeon.floorY);
+           // player.movePosition((Settings.WIDTH / 4.0F),AbstractDungeon.floorY);
         }
 
         MonsterGroup monsters = MonsterHelper.getEncounter(eliteID);// 100

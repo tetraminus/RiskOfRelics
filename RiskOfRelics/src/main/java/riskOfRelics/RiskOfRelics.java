@@ -42,6 +42,7 @@ import riskOfRelics.potions.EnergyDrink;
 import riskOfRelics.potions.TonicPotion;
 import riskOfRelics.relics.BackupMag;
 import riskOfRelics.relics.BaseRelic;
+import riskOfRelics.relics.BisonSteak;
 import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
@@ -69,7 +70,8 @@ public class RiskOfRelics implements
         EditCharactersSubscriber,
         PostInitializeSubscriber,
         StartGameSubscriber,
-        MaxHPChangeSubscriber
+        MaxHPChangeSubscriber,
+        RelicGetSubscriber
 
 
     {
@@ -882,7 +884,17 @@ public class RiskOfRelics implements
             return relic;
         }
 
-
+        @Override
+        public void receiveRelicGet(AbstractRelic abstractRelic) {
+            if (player != null) {
+                for (AbstractRelic r:
+                     player.relics) {
+                    if (r instanceof BisonSteak) {
+                        ((BisonSteak) r).onRelicGet(abstractRelic);
+                    }
+                }
+            }
+        }
 
 
         public enum Artifacts {

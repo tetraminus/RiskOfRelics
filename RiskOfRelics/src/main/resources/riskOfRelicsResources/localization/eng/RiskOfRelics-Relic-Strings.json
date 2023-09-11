@@ -1,11 +1,30 @@
 {
+  "riskOfRelics:OcularHud": {
+    "NAME": "Ocular HUD",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Deal double damage this turn."
+    ]
+  },
+  "riskOfRelics:CautiousSlug": {
+    "NAME": "Cautious Slug",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "When you enter a non-combat room, heal #b"," HP."
+    ]
+  },
+  "riskOfRelics:FuelCanister": {
+    "NAME": "Fuel Canister",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "When you apply or receive a debuff, increase it's amount by #b","."
+    ]
+  },
   "riskOfRelics:MilkyChrysalis": {
     "NAME": "Milky Chrysalis",
     "FLAVOR": "",
     "DESCRIPTIONS": [
       "#yriskofrelics:Equipment NL Stun an enemy. A charge comes back after #b"," rooms."
-
-
     ]
   },
   "riskOfRelics:TricornUsed": {
@@ -29,7 +48,7 @@
     "NAME": "The Crowdfunder",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "#yriskofrelics:Equipment NL Lose #b"," gold. Deal #b"," damage to a random enemy, can be used any number of times."
+      "#yriskofrelics:Equipment NL Pay #b"," gold to deal #b"," damage to a random enemy, can be used any number of times."
 
     ]
   },
@@ -251,7 +270,7 @@
     "NAME": "Bison Steak",
     "FLAVOR": "Always carry extra.",
     "DESCRIPTIONS": [
-      "When you enter a room with a chest, gain #b"," Max HP"
+      "When you gain a relic, gain #b"," Max HP"
     ]
   },
 

@@ -1,7 +1,12 @@
 {
   "riskOfRelics:GlowingShard": {
     "NAME": "Glowing Shard",
-    "DESCRIPTION": "The Bulwark's Ambry loses 250 HP. NL Exhaust."
+    "DESCRIPTION": "The Bulwark's Ambry loses !M! HP. NL Exhaust."
+
+  },
+  "riskOfRelics:TonicAffliction": {
+    "NAME": "Tonic Affliction",
+    "DESCRIPTION": "When drawn, reduce damage and Block by !M!% for the turn."
 
   },
   "riskOfRelics:DefaultUncommonAttack": {
