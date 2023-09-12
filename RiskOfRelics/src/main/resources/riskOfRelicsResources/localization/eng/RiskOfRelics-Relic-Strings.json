@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:ExecutiveCard": {
+    "NAME": "Executive Card",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Passively get a #b","% discount in shops. NL You may take #b"," cards from card rewards."
+    ]
+  },
   "riskOfRelics:MolotovPack": {
     "NAME": "Molotov (6-Pack)",
     "FLAVOR": "",
@@ -20,8 +27,8 @@
       "When you enter a non-combat room, heal #b"," HP."
     ]
   },
-  "riskOfRelics:FuelCanister": {
-    "NAME": "Fuel Canister",
+  "riskOfRelics:IgnitionTank": {
+    "NAME": "Ignition Tank",
     "FLAVOR": "",
     "DESCRIPTIONS": [
       "When you apply or receive a debuff, increase it's amount by #b","."

@@ -8,15 +8,15 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import riskOfRelics.RiskOfRelics;
 
 
-public class FuelCanister extends BaseRelic implements OnApplyPowerRelic, OnReceivePowerRelic {
+public class IgnitionTank extends BaseRelic implements OnApplyPowerRelic, OnReceivePowerRelic {
 
 
     public static final int AMOUNT = 1;
     // ID, images, text.
-    public static final String ID = RiskOfRelics.makeID("FuelCanister");
-    private static final String IMAGENAME = "FuelCanister.png";
+    public static final String ID = RiskOfRelics.makeID("IgnitionTank");
+    private static final String IMAGENAME = "IgnitionTank.png";
 
-    public FuelCanister() {
+    public IgnitionTank() {
         super(ID, IMAGENAME, RelicTier.RARE, LandingSound.MAGICAL);
     }
 

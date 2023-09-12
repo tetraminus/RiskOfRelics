@@ -3,6 +3,7 @@ package riskOfRelics.powers;
 import basemod.interfaces.CloneablePowerInterface;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.evacipated.cardcrawl.mod.stslib.patches.NeutralPowertypePatch;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -33,7 +34,7 @@ public class Untargetable extends AbstractPower implements CloneablePowerInterfa
         this.amount = amount;
         this.source = source;
 
-        type = PowerType.BUFF;
+        type = NeutralPowertypePatch.NEUTRAL;
         isTurnBased = false;
 
         // We load those txtures here.

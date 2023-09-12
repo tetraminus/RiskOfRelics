@@ -3,6 +3,7 @@ package riskOfRelics.patches.equipment;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
 import javassist.CtBehavior;
@@ -55,6 +56,18 @@ public class EQTriggerPatches {
         public static boolean Postfix(boolean __result, AbstractPlayer __instance, String targetID){
             if (EquipmentFieldPatch.PlayerEquipment.get(__instance) != null && EquipmentFieldPatch.PlayerEquipment.get(__instance).relicId.equals(targetID)) {
                 return true;
+            }
+            return __result;
+        }
+    }
+    @SpirePatch2(
+            clz = AbstractPlayer.class,
+            method = "getRelic"
+    )
+    public static class EQGetRelic {
+        public static AbstractRelic Postfix(AbstractRelic __result, AbstractPlayer __instance, String targetID){
+            if (EquipmentFieldPatch.PlayerEquipment.get(__instance) != null && EquipmentFieldPatch.PlayerEquipment.get(__instance).relicId.equals(targetID)) {
+                return EquipmentFieldPatch.PlayerEquipment.get(__instance);
             }
             return __result;
         }

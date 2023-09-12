@@ -18,7 +18,7 @@ public class saferSpaces extends BaseRelic {
 
     public saferSpaces() {
         super(ID, IMAGENAME, RelicTier.UNCOMMON, LandingSound.MAGICAL);
-        counter= 0;
+        counter = 0;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class saferSpaces extends BaseRelic {
     @Override
     public void atTurnStart() {
         counter++;
-        if (counter > 3){
+        if (counter >= AMOUNT){
             this.addToBot(new ApplyPowerAction(player,player,new BufferPower(player,1)));
             this.addToBot(new RelicAboveCreatureAction(player, this));
             flash();
