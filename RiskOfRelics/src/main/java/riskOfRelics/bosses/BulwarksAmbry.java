@@ -422,6 +422,13 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     }
 
     public void die() {
+        for (RiskOfRelics.Artifacts a:
+                RiskOfRelics.ActiveArtifacts) {
+            if (!RiskOfRelics.UnlockedArtifacts.contains(a)) {
+                RiskOfRelics.UnlockedArtifacts.add(a);
+            }
+        }
+        RiskOfRelics.saveData();
         if (!getCurrRoom().cannotLose) {// 282
             super.die();// 283
             for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {

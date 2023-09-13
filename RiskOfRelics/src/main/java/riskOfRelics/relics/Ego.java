@@ -31,9 +31,10 @@ public class Ego extends BaseRelic {
             flash();
             ArrayList<AbstractRelic> otherRelics = new ArrayList<AbstractRelic> (player.relics);
             otherRelics.remove(this);
-            if (otherRelics.size() > 0) {
-                relicToremove = otherRelics.get(AbstractDungeon.relicRng.random(otherRelics.size() - 1));
+            otherRelics.removeIf(r -> r instanceof YellowKey);
 
+            if (!otherRelics.isEmpty()) {
+                relicToremove = otherRelics.get(AbstractDungeon.relicRng.random(otherRelics.size() - 1));
             }
     }
     public void postUpdate(){
