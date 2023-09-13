@@ -113,6 +113,9 @@ public class RiskOfRelics implements
     public static String makeCardPath(String resourcePath) {
         return getModID() + "Resources/images/cards/" + resourcePath;
     }
+        public static String makeUIPath(String resourcePath) {
+            return getModID() + "Resources/images/ui/" + resourcePath;
+        }
 
     public static String makeBossPath(String resourcePath) {
         return getModID() + "Resources/images/ui/map/icon/" + resourcePath;

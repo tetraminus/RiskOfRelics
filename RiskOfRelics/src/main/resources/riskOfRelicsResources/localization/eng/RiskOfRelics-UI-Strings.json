@@ -1,4 +1,11 @@
 {
+        "riskOfRelics:WarbannerOption" : {
+                "TEXT": [
+                        "Reduce Cost",
+                        "Choose a card to reduce the cost of.",
+                        "HUH?"
+                ]
+        },
         "riskOfRelics:ArtifactSelect" : {
                 "TEXT": [
                         "Artifact Selection",

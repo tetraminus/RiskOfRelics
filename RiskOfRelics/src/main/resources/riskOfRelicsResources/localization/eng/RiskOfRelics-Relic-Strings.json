@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:Warbanner": {
+    "NAME": "Warbanner",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "While at a campfire, you may permanently reduce a card's cost by #b1. You may only use this #b"," times. "
+    ]
+  },
   "riskOfRelics:ExecutiveCard": {
     "NAME": "Executive Card",
     "FLAVOR": "",
