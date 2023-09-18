@@ -72,7 +72,8 @@ public class RiskOfRelics implements
         PostInitializeSubscriber,
         StartGameSubscriber,
         MaxHPChangeSubscriber,
-        RelicGetSubscriber
+        RelicGetSubscriber,
+        PostDeathSubscriber
 
 
     {
@@ -900,6 +901,22 @@ public class RiskOfRelics implements
                         ((BisonSteak) r).onRelicGet(abstractRelic);
                     }
                 }
+            }
+        }
+
+        @Override
+        public void receivePostDeath() {
+            try {
+                ActiveArtifacts.clear();
+                for (String A: ModConfig.getString("EnabledArtifacts").split(",")) {
+                    Artifacts a = getArtifactfromName(A);
+                    if (UnlockedArtifacts.contains(a) && !ActiveArtifacts.contains(a)) {
+                        ActiveArtifacts.add(a);
+                    }
+
+                }
+            } catch (Exception e) {
+                ModConfig.setString("EnabledArtifacts","");
             }
         }
 
