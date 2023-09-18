@@ -1,5 +1,6 @@
 package riskOfRelics.relics.equipment;
 
+import basemod.BaseMod;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -38,6 +39,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
 
     @Override
     public void obtain() {
+        BaseMod.publishRelicGet(this);// 295
         this.hb.hovered = false;// 299
         Reposition(getHomePosX(), getHomePosY(),false);
         EquipmentFieldPatch.PlayerEquipment.set(player, this);// 303
@@ -54,6 +56,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
 
     @Override
     public void instantObtain(AbstractPlayer p, int slot, boolean callOnEquip) {
+
         this.playLandingSFX();// 269
         this.isDone = true;// 270
         this.isObtained = true;// 271
@@ -61,6 +64,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
         EquipmentFieldPatch.PlayerEquipment.set(player, this);// 303
         this.hb.move(this.currentX, this.currentY);// 279
         if (callOnEquip ){
+            BaseMod.publishRelicGet(this);// 295
             this.flash();// 276
             this.onEquip();// 280
         }
@@ -70,6 +74,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
 
     @Override
     public void instantObtain() {
+        BaseMod.publishRelicGet(this);// 295
         this.playLandingSFX();// 269
         this.isDone = true;// 270
         this.isObtained = true;// 271

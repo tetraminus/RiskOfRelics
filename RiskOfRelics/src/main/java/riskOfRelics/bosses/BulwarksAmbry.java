@@ -188,10 +188,11 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
             environment = new Environment();
             environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-            environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, 0.2f));
-            environment.add(pointLight = new PointLight().set(1f, 0.5f, 1f, 0, 0, 0, 5f));
+            environment.add(new DirectionalLight().set(1f, 0.5f, 1f, -0.3f, -0.3f, -1f));
+            pointLight = new PointLight().set(1f, 0.5f, 1f, 0, 0, 0, 20f);
+            environment.add(pointLight);
 
-            RiskOfRelics.logger.log(Level.DEBUG, "SetupModel3");
+            //RiskOfRelics.logger.log(Level.DEBUG, "SetupModel3");
         }
         this.img = ImageMaster.loadImage("riskOfRelicsResources/models/textures/Fallback.png");// 81
     }
@@ -213,7 +214,10 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     public void update() {
 
 
-        Vector3 screenpos = new Vector3(drawX, (float) (drawY-hb_h/2), 0);// 878
+        Vector3 screenpos = new Vector3(drawX+32*Settings.scale, (float) ((drawY-32*Settings.scale) + hb_h/2), 0);// 878
+        Vector3 lightpos = screenpos.add(0, 0, -0.05f);// 879
+
+
 
         if (Hack3dEnabled) {
             if (controller != null){
@@ -222,7 +226,8 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
             if (modelInstance != null){
                 modelInstance.transform.setTranslation(cam.unproject(screenpos).add(0, 0, -cam.position.z));// 880
                 if (pointLight != null){
-                    pointLight.position.set(modelInstance.transform.getTranslation(Vector3.Zero).cpy());// 880
+                    pointLight.setPosition(cam.unproject(lightpos));// 880)
+
                 }
             }
 
@@ -281,7 +286,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         fbo.end();// 889
         sb.begin();// 890
 
-        sb.draw(fbo.getColorBufferTexture(), 0, 0, Settings.WIDTH, Settings.HEIGHT, 0, 0, fbo.getWidth(), fbo.getHeight(), false, true);// 890
+        sb.draw(fbo.getColorBufferTexture(), 0, 0, Settings.WIDTH, Settings.HEIGHT, 0, 0, fbo.getWidth(), fbo.getHeight(), false, false);// 890
         sb.setBlendFunction(770, 771);// 891
     }
 
@@ -343,7 +348,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         }
 
         if (eliteID.equals("Shield and Spear")){
-            player.movePosition((Settings.WIDTH / 2.0F)- 200.0F * Settings.scale,AbstractDungeon.floorY);
+            player.movePosition((Settings.WIDTH / 2.0F) - 200.0F * Settings.scale,AbstractDungeon.floorY);
         } else {
            // player.movePosition((Settings.WIDTH / 4.0F),AbstractDungeon.floorY);
         }
@@ -460,6 +465,8 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     public void onEnd(AnimationController.AnimationDesc animationDesc) {
 
     }
+
+
 
     @Override
     public void onLoop(AnimationController.AnimationDesc animationDesc) {

@@ -55,6 +55,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.megacrit.cardcrawl.core.CardCrawlGame.dungeon;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.*;
@@ -113,9 +114,9 @@ public class RiskOfRelics implements
     public static String makeCardPath(String resourcePath) {
         return getModID() + "Resources/images/cards/" + resourcePath;
     }
-        public static String makeUIPath(String resourcePath) {
-            return getModID() + "Resources/images/ui/" + resourcePath;
-        }
+    public static String makeUIPath(String resourcePath) {
+        return getModID() + "Resources/images/ui/" + resourcePath;
+    }
 
     public static String makeBossPath(String resourcePath) {
         return getModID() + "Resources/images/ui/map/icon/" + resourcePath;
@@ -524,6 +525,8 @@ public class RiskOfRelics implements
         // This adds a relic to the Shared pool. Every character can find this relic.
         // This finds and adds all relics inheriting from CustomRelic that are in the same package
         // as MyRelic, keeping all as unseen except those annotated with @AutoAdd.Seen
+        AtomicInteger RelicCount = new AtomicInteger();
+
         new AutoAdd("RiskOfRelics")
                 .packageFilter(BaseRelic.class)
                 .any(BaseRelic.class, (info, relic) -> {
@@ -534,12 +537,13 @@ public class RiskOfRelics implements
                     if (!info.seen) {
                         UnlockTracker.markRelicAsSeen(relic.relicId);
                     }
+                    RelicCount.getAndIncrement();
+
+
                 });
+        logger.info("Added " + RelicCount + " relics to the pool.");
 
-
-
-
-        logger.info(BaseMod.getAllCustomRelics());
+        //logger.info(BaseMod.getAllCustomRelics());
         logger.info("Done adding relics!");
         receiveEditPotions();
     }

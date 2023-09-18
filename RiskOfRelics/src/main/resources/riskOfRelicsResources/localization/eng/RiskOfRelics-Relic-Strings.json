@@ -384,7 +384,7 @@
     "FLAVOR": "spicy.",
     "DESCRIPTIONS": [
       "Become an aspect of fire.",
-      "When you attack, apply #b"," Burning."
+      "When you deal attack damage, apply #b"," Burning."
     ]
   },
   "riskOfRelics:iceAspect": {

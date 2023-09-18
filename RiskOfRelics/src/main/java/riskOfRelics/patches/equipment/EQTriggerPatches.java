@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.saveAndContinue.SaveFile;
 import javassist.CtBehavior;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.nextRoom;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -55,6 +56,22 @@ public class EQTriggerPatches {
     public static class EQHasRelic {
         public static boolean Postfix(boolean __result, AbstractPlayer __instance, String targetID){
             if (EquipmentFieldPatch.PlayerEquipment.get(__instance) != null && EquipmentFieldPatch.PlayerEquipment.get(__instance).relicId.equals(targetID)) {
+                return true;
+            }
+            return __result;
+        }
+    }
+    @SpirePatch2(
+            clz = AbstractPlayer.class,
+            method = "loseRelic"
+    )
+    public static class EQLoseRelic {
+        private static final Logger logger = Logger.getLogger(EQLoseRelic.class.getName());
+        public static boolean Postfix(boolean __result, AbstractPlayer __instance, String targetID){
+            if (EquipmentFieldPatch.PlayerEquipment.get(__instance) != null && EquipmentFieldPatch.PlayerEquipment.get(__instance).relicId.equals(targetID)) {
+                EquipmentFieldPatch.PlayerEquipment.get(__instance).onUnequip();
+                EquipmentFieldPatch.PlayerEquipment.set(__instance, null);
+                logger.fine("It was, chill out.");
                 return true;
             }
             return __result;
