@@ -23,6 +23,16 @@
 
 
         },
+        "riskOfRelics:ScrapTopPanelItem": {
+                "TEXT": [
+                        "Scrap",
+                        "You have #b"," common scrap. NL ",
+                        " uncommon scrap. NL ",
+                        " rare scrap. NL Gain scrap by removing cards. Starter and Curse cards do not count."
+                ]
+
+
+        },
 
         "riskOfRelics:SPITE": {
                 "TEXT": [

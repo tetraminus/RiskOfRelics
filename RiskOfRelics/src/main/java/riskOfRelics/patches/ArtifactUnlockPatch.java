@@ -7,10 +7,10 @@ import com.megacrit.cardcrawl.rooms.TrueVictoryRoom;
 import riskOfRelics.RiskOfRelics;
 public class ArtifactUnlockPatch {
     @SpirePatch2(clz = CorruptHeart.class, method = "die")
-    @SpirePatch2(clz = TrueVictoryRoom.class, method = "onPlayerEntry")
+    //@SpirePatch2(clz = TrueVictoryRoom.class, method = "onPlayerEntry")
     public static class OnWinPatch {
         @SpirePrefixPatch
-        public static void onPlayerEntry(TrueVictoryRoom __instance) {
+        public static void onPlayerEntry(CorruptHeart __instance) {
             for (RiskOfRelics.Artifacts a :
                     RiskOfRelics.ActiveArtifacts) {
                 if (!RiskOfRelics.UnlockedArtifacts.contains(a)) {

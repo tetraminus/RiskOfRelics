@@ -47,6 +47,7 @@ import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
 import riskOfRelics.screens.ArtifactTopPanelItem;
+import riskOfRelics.screens.ScrapTopPanelItem;
 import riskOfRelics.util.*;
 import riskOfRelics.vfx.ArtifactAboveCreatureAction;
 
@@ -352,6 +353,7 @@ public class RiskOfRelics implements
         BaseMod.addCustomScreen(new ArtifactSelectScreen());
         //BaseMod.addCustomScreen(new ArtifactInfoScreen());
         BaseMod.addTopPanelItem(new ArtifactTopPanelItem());
+        BaseMod.addTopPanelItem(new ScrapTopPanelItem());
         BaseMod.addSaveField(makeID("ActiveArtifacts"),new ArtifactSaver());
         BaseMod.addSaveField(makeID("MetamorphCharacter"),new MetamorphSaver());
         BaseMod.addSaveField(makeID("EnigmaCounter"),new CounterSavers.EnigmaCounterSaver());
