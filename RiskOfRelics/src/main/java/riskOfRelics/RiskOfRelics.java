@@ -362,6 +362,8 @@ public class RiskOfRelics implements
         BaseMod.addSaveField(makeID("PlayerEquipment") , new EquipmentSaver());
         BaseMod.addSaveField(makeID("ChargeTimer") , new ChargeTimerSaver());
         BaseMod.addSaveField(makeID("PlayerEquipmentCounter") , new EQCounterSaver());
+        BaseMod.addSaveField(makeID("PlayerScrapInfo") , new ScrapInfoSaver());
+
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
