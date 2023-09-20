@@ -26,6 +26,7 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import org.apache.logging.log4j.Level;
 import riskOfRelics.RiskOfRelics;
 import riskOfRelics.patches.scrap.ScrapField;
@@ -253,8 +254,11 @@ public class Printer extends AbstractChest {
 
     @Override
     public void open(boolean bossChest) {
+        AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
+        AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.INCOMPLETE;// 77
 
         AbstractDungeon.overlayMenu.proceedButton.setLabel(TEXT[0]);// 79
+        AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
 
         CardCrawlGame.sound.play("CHEST_OPEN");// 83
 
@@ -262,12 +266,15 @@ public class Printer extends AbstractChest {
 
             this.isOpen = true;// 85
 
+
             controller.action("Armature|Armature|DuplicatorArmature|IdleToOpenToIdle|Base Layer", 1, 1, new AnimationController.AnimationListener() {
                 @Override
                 public void onEnd(AnimationController.AnimationDesc animation) {
                     //controller.setAnimation("Armature|Armature|DuplicatorArmature|Idle|Base Layer", -1);
                     AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X,CHEST_LOC_Y, relicToPrint);// 87
                     relicToPrint = null;
+                    AbstractDungeon.overlayMenu.proceedButton.show();
+                    AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
                 }
 
                 @Override
@@ -276,8 +283,13 @@ public class Printer extends AbstractChest {
                 }
             }, 0.2f);
 
+        }else{
+            AbstractDungeon.overlayMenu.proceedButton.show();
+            AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
         }
-        AbstractDungeon.overlayMenu.proceedButton.show();
+
+
+
 
 
     }
