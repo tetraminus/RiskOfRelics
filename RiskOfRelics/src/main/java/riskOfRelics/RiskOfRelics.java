@@ -6,7 +6,12 @@ import basemod.eventUtil.EventUtils;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
@@ -257,6 +262,8 @@ public class RiskOfRelics implements
         }
 
 
+
+
     }
     public static boolean hasShownFTUE() {
 
@@ -345,6 +352,13 @@ public class RiskOfRelics implements
 
     @Override
     public void receivePostInitialize() {
+        fbo = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
+        cam = new OrthographicCamera(Settings.WIDTH / 100f, Settings.HEIGHT / 100f);
+        cam.position.set(0, 0, 5);
+        cam.lookAt(0, 0, 0);
+        cam.near = 0.1f;
+        cam.far = 10f;
+        mb = new ModelBatch();
 
         logger.info("Loading badge image and mod options");
 
@@ -991,4 +1005,13 @@ public class RiskOfRelics implements
             }
         }
     }
+
+
+        public static FrameBuffer fbo;
+        public static Camera cam;
+        public static ModelBatch mb;
+
+
+
+
 }

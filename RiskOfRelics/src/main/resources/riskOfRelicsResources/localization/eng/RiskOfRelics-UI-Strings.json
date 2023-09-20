@@ -1,4 +1,17 @@
 {
+        "riskOfRelics:Printer" : {
+                "TEXT": [
+                        "3D printer",
+                        "Pay #b",
+                        " relic ",
+                        " scrap ",
+                        " to gain ",
+                        ".",
+                        " common",
+                        " uncommon",
+                        " rare"
+                ]
+        },
         "riskOfRelics:WarbannerOption" : {
                 "TEXT": [
                         "Reduce Cost",

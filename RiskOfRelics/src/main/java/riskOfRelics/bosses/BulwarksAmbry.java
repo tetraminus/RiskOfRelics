@@ -7,7 +7,9 @@ package riskOfRelics.bosses;
 
 import basemod.ReflectionHacks;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -158,9 +160,10 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     private void SetupGraphics(){
         if (Hack3dEnabled) {
 
+
             RiskOfRelics.logger.warn("3d Hack enabled, if you crash when fighting a certain boss, turn this off.");
             RiskOfRelics.logger.log(Level.DEBUG, "SetupModel1");
-            mb = new ModelBatch();
+            mb = RiskOfRelics.mb;
             modelInstance = new ModelInstance(new G3dModelLoader(new JsonReader()).loadModel(Gdx.files.internal("riskOfRelicsResources/models/ambry.g3dj")));
 
             modelInstance.transform.scale(.8f * Settings.scale, .8f * Settings.scale, .8f * Settings.scale);
@@ -173,16 +176,12 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
             ChooseFirstAnim();
             //controller.action("Armature|bounce", -1,0.5f ,this,0);
 
-            fbo = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
+            fbo = RiskOfRelics.fbo;
 
 
             modelInstance.materials.get(2).set(new BlendingAttribute());
 
-            cam = new OrthographicCamera(Settings.WIDTH / 100f, Settings.HEIGHT / 100f);
-            cam.position.set(0, 0, 5);
-            cam.lookAt(0, 0, 0);
-            cam.near = 0.1f;
-            cam.far = 10f;
+            cam = RiskOfRelics.cam;
 
             cam.update();
 
@@ -197,18 +196,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         this.img = ImageMaster.loadImage("riskOfRelicsResources/models/textures/Fallback.png");// 81
     }
 
-    @Override
-    public void dispose() {
 
-
-        super.dispose();
-        if (Hack3dEnabled) {
-            mb.dispose();
-            fbo.dispose();
-        }
-
-
-    }
 
     @Override
     public void update() {
@@ -245,6 +233,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                 try {
                     Render3D(sb);
                 } catch (NullPointerException e ){
+                    sb.begin();
                     sb.draw(this.img, this.drawX -hb_w/3, this.drawY + this.animY, (float)this.hb.width, (float)this.hb.height, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);// 866 868 870 871 874 875
                 }
 
