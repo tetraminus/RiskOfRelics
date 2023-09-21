@@ -2,7 +2,6 @@ package riskOfRelics.patches.scrap;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpireInstrumentPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rewards.chests.MediumChest;
 import javassist.CannotCompileException;
@@ -26,7 +25,7 @@ public class PrinterReplacePatch {
 
                         m.replace(
                                 "{ " +
-                                    "if (" + AbstractDungeon.class.getName() + ".actNum == 3 && !"+Settings.class.getName()+".hasSapphireKey){" +
+                                    "if (!"+Printer.class.getName()+".canSpawn()){" +
                                         "$_ = $proceed($$);" +
                                     "} else {" +
                                         "$_ = new " + Printer.class.getName() + "(); " +

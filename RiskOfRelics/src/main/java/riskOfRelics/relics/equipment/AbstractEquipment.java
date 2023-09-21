@@ -1,11 +1,14 @@
 package riskOfRelics.relics.equipment;
 
 import basemod.BaseMod;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.ShaderHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
@@ -36,6 +39,7 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
     public int GetBaseCounter() {
         return BASE_COUNTER;
     }
+
 
     @Override
     public void obtain() {
@@ -181,20 +185,56 @@ public abstract class AbstractEquipment extends BaseRelic implements ClickableRe
 
     @Override
     public void update() {
+
+        super.update();
         if (canClick()){
             this.clickUpdate();
         }
-
-        super.update();
     }
+
 
     @Override
     public void renderInTopPanel(SpriteBatch sb) {
         if (EquipmentFieldPatch.PlayerEquipment.get(player) == this && this.hb.hovered){
             renderTip(sb);
         }
+
         this.grayscale = shouldGrayscale();
-        super.renderInTopPanel(sb);
+        if (!Settings.hideRelics) {// 699
+            this.renderOutline(sb, true);// 703
+            if (this.grayscale) {// 704
+                ShaderHelper.setShader(sb, ShaderHelper.Shader.GRAYSCALE);// 705
+            }
+
+            sb.setColor(Color.WHITE);// 707
+            sb.draw(this.img, this.currentX - 64.0F , this.currentY - 64.0F, 64.0F, 64.0F, 128.0F, 128.0F, this.scale, this.scale, 0, 0, 0, 128, 128, false, false);// 708
+            if (this.grayscale) {// 725
+                ShaderHelper.setShader(sb, ShaderHelper.Shader.DEFAULT);// 726
+            }
+
+            this.renderCounter(sb, true);// 728
+            this.renderFlash(sb, true);// 729
+            this.hb.render(sb);// 730
+        }
+    }
+    @Override
+    public void renderCounter(SpriteBatch sb, boolean inTopPanel) {
+        if (this.counter > -1) {// 1119
+            if (inTopPanel) {// 1120
+                FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.counter),  this.currentX + 30.0F * Settings.scale, this.currentY - 7.0F * Settings.scale, Color.WHITE);// 1121 1124
+            } else {
+                FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.counter), this.currentX + 30.0F * Settings.scale, this.currentY - 7.0F * Settings.scale, Color.WHITE);// 1129 1132
+            }
+        }
+
+    }// 1138
+
+    @Override
+    public void renderOutline(SpriteBatch sb, boolean inTopPanel) {
+        float tmpX = this.currentX - 64.0F;// 1206
+        sb.setColor(PASSIVE_OUTLINE_COLOR);// 1235
+        sb.draw(this.outlineImg, tmpX, this.currentY - 64.0F, 64.0F, 64.0F, 128.0F, 128.0F, this.scale, this.scale, 0, 0, 0, 128, 128, false, false);// 1236
+
     }
 
     public boolean shouldGrayscale() {

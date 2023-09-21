@@ -93,8 +93,10 @@ public class RiskOfRelics implements
     public static Properties riskOfRelicsDefaultSettings = new Properties();
     public static final String ENABLE_ASPECT_DESC_SETTINGS = "enableAspectDesc";
     public static final String ENABLE_3D_HACK_SETTINGS = "enable3dHack";
+    public static final String ENABLE_PRINTERS_SETTINGS = "enablePrinters";
     public static boolean AspectDescEnabled = true; // The boolean we'll be setting on/off (true/false)
     public static boolean Hack3dEnabled = true; // The boolean we'll be setting on/off (true/false)
+    public static boolean PrintersEnabled = true; // The boolean we'll be setting on/off (true/false)
 
     //This is for the in-game mod settings panel.
     private static final String MODNAME = "Risk of Relics";
@@ -228,6 +230,7 @@ public class RiskOfRelics implements
         // The actual mod Button is added below in receivePostInitialize()
         riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE");
         riskOfRelicsDefaultSettings.setProperty(ENABLE_3D_HACK_SETTINGS, "TRUE");
+        riskOfRelicsDefaultSettings.setProperty(ENABLE_PRINTERS_SETTINGS, "TRUE");
         riskOfRelicsDefaultSettings.setProperty("hasShownFTUE", "FALSE");
         try {
             ModConfig = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
@@ -235,6 +238,7 @@ public class RiskOfRelics implements
             ModConfig.load(); // Load the setting and set the boolean to equal it
             AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
             Hack3dEnabled = ModConfig.getBool(ENABLE_3D_HACK_SETTINGS);
+            PrintersEnabled = ModConfig.getBool(ENABLE_PRINTERS_SETTINGS);
 
 
         } catch (Exception e) {
@@ -386,7 +390,7 @@ public class RiskOfRelics implements
 
 
 //         Create the on/off button:
-        ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton("Enable Aspect Descriptions(Default: OFF) | Restart required.",
+        ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton("Enable Aspect Descriptions (Default: OFF) | Restart required.",
                 350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
                 AspectDescEnabled, // Boolean it uses
                 settingsPanel, // The mod panel in which this button will be in
@@ -407,7 +411,7 @@ public class RiskOfRelics implements
 
         settingsPanel.addUIElement(enableAspectDescButton); // Add the button to the settings panel. Button is a go.
 
-        ModLabeledToggleButton enable3dButton = new ModLabeledToggleButton("3d Hack (Default: ON) | Restart required. turn off if getting crashes in the bulwarks ambry.",
+        ModLabeledToggleButton enable3dButton = new ModLabeledToggleButton("3d Render Hack (Default: ON) | turn off if getting crashes in the bulwarks ambry.",
                 350.0f, 650.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
                 Hack3dEnabled, // Boolean it uses
                 settingsPanel, // The mod panel in which this button will be in
@@ -427,6 +431,29 @@ public class RiskOfRelics implements
                 });
 
         settingsPanel.addUIElement(enable3dButton); // Add the button to the settings panel. Button is a go.
+
+        ModLabeledToggleButton enablePrintersButton = new ModLabeledToggleButton("Enable 3D printers (Default: ON) | 3d printers allow you to trade relics and scrap for other relics.",
+                350.0f, 600.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
+                PrintersEnabled, // Boolean it uses
+                settingsPanel, // The mod panel in which this button will be in
+                (label) -> {
+                }, // thing??????? idk
+                (button) -> { // The actual button:
+
+                    PrintersEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
+                    try {
+                        // And based on that boolean, set the settings and save them
+                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);;
+                        config.setBool(ENABLE_PRINTERS_SETTINGS, PrintersEnabled);
+                        config.save();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        settingsPanel.addUIElement(enablePrintersButton); // Add the button to the settings panel. Button is a go.
+
+
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
 

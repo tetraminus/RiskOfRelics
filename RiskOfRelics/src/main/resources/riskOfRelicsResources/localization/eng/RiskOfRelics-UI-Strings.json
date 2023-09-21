@@ -9,7 +9,9 @@
                         ".",
                         " common",
                         " uncommon",
-                        " rare"
+                        " rare",
+                        " NL Possible relics: ",
+                        " NL "
                 ]
         },
         "riskOfRelics:WarbannerOption" : {
@@ -41,7 +43,7 @@
                         "Scrap",
                         "You have #b"," common scrap. NL ",
                         " uncommon scrap. NL ",
-                        " rare scrap. NL Gain scrap by removing cards. Starter and Curse cards do not count."
+                        " rare scrap. NL Gain scrap by removing cards. Starter and Curse cards do not count. Multiple scrap is used in 3d-Printers in place of relics."
                 ]
 
 

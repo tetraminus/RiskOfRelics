@@ -61,6 +61,8 @@ public class Printer extends AbstractChest {
 
     private static final float DISPLAY_OFFSET_X;
     private static final float DISPLAY_OFFSET_Y;
+    private boolean justPaidWithScrap;
+
     public Printer() {
         super();
         this.img = ImageMaster.loadImage("riskOfRelicsResources/images/2DPrinter_1.png");// 25
@@ -78,24 +80,25 @@ public class Printer extends AbstractChest {
         relicToPrint.hb.move(CHEST_LOC_X, CHEST_LOC_Y);
         relicToPrint.hb.update();
         SetupGraphics();
+        justPaidWithScrap = false;
         
 
     }
 
 
-
+    @SuppressWarnings("unused") //Used in patch
     public static boolean canSpawn(){
+        if (!RiskOfRelics.PrintersEnabled ||(AbstractDungeon.actNum == 3 && !Settings.hasSapphireKey)){
+            return false;
+        }
+
         if (tierAvailable(AbstractRelic.RelicTier.COMMON) || canPayWithScrap(AbstractRelic.RelicTier.COMMON)){
             return true;
         }
         if (tierAvailable(AbstractRelic.RelicTier.UNCOMMON) || canPayWithScrap(AbstractRelic.RelicTier.UNCOMMON)){
             return true;
         }
-        if (tierAvailable(AbstractRelic.RelicTier.RARE) || canPayWithScrap(AbstractRelic.RelicTier.RARE)){
-            return true;
-        }
-
-        return false;
+        return tierAvailable(AbstractRelic.RelicTier.RARE) || canPayWithScrap(AbstractRelic.RelicTier.RARE);
     }
 
     private static boolean tierAvailable(AbstractRelic.RelicTier tier){
@@ -269,6 +272,16 @@ public class Printer extends AbstractChest {
         desc += relicToPrint.name;
         desc += uiStrings.TEXT[5];
 
+        if (!canPayWithScrap(relicToPrint)){
+            desc += uiStrings.TEXT[9];
+            for (AbstractRelic r : player.relics) {
+                if (r.tier == relicToPrint.tier) {
+                    desc += uiStrings.TEXT[10];
+                    desc += r.name;
+                }
+            }
+        }
+
 
 
         return desc;
@@ -281,25 +294,25 @@ public class Printer extends AbstractChest {
 
     @Override
     public void open(boolean bossChest) {
+
         AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.INCOMPLETE;// 77
 
         AbstractDungeon.overlayMenu.proceedButton.setLabel(TEXT[0]);// 79
         AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
 
-        CardCrawlGame.sound.play(makeID("PRINTER_USE"));// 83
+
 
         if ( relicToPrint != null && tryToPay(relicToPrint)) {
 
             this.isOpen = true;// 85
-            if (Hack3dEnabled) {
-
-            } else {
+            if (!Hack3dEnabled) {
                 AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
                 relicToPrint = null;
                 AbstractDungeon.overlayMenu.proceedButton.show();
                 AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77\
                 relicToRemove = null;
+                player.reorganizeRelics();
             }
 
         }else{
@@ -342,6 +355,7 @@ public class Printer extends AbstractChest {
                     info.rareScrap -= RARE_SCRAP_COST;
                     break;
             }
+            justPaidWithScrap = true;
         }else {
             ArrayList<AbstractRelic> relics = (ArrayList<AbstractRelic>) player.relics.clone();
 
@@ -351,6 +365,7 @@ public class Printer extends AbstractChest {
             if (!relics.isEmpty()) {
                 relicToRemove = relics.get(AbstractDungeon.miscRng.random(relics.size() - 1));
                 player.loseRelic(relicToRemove.relicId);
+                player.reorganizeRelics();
             }
         }
     }
@@ -431,28 +446,27 @@ public class Printer extends AbstractChest {
                     relicToRemove.currentY = relicToRemove.targetY;// 375
                 }
             }
+        }
+        if (justPaidWithScrap ||( relicToRemove != null && relicToRemove.currentX == relicToRemove.targetX && relicToRemove.currentY == relicToRemove.targetY)  ) {// 378
+            relicToRemove = null;// 379
+            justPaidWithScrap = false;
+            CardCrawlGame.sound.play(makeID("PRINTER_USE"));// 83
+            controller.action("Armature|Armature|DuplicatorArmature|IdleToOpenToIdle|Base Layer", 1, 1, new AnimationController.AnimationListener() {
+                @Override
+                public void onEnd(AnimationController.AnimationDesc animation) {
+                    //controller.setAnimation("Armature|Armature|DuplicatorArmature|Idle|Base Layer", -1);
+                    AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
+                    relicToPrint = null;
+                    AbstractDungeon.overlayMenu.proceedButton.show();
+                    AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
+                    player.reorganizeRelics();
+                }
 
-            if (relicToRemove.currentX == relicToRemove.targetX && relicToRemove.currentY == relicToRemove.targetY) {// 378
-                relicToRemove = null;// 379
-                controller.action("Armature|Armature|DuplicatorArmature|IdleToOpenToIdle|Base Layer", 1, 1, new AnimationController.AnimationListener() {
-                    @Override
-                    public void onEnd(AnimationController.AnimationDesc animation) {
-                        //controller.setAnimation("Armature|Armature|DuplicatorArmature|Idle|Base Layer", -1);
-                        AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
-                        relicToPrint = null;
-                        AbstractDungeon.overlayMenu.proceedButton.show();
-                        AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
+                @Override
+                public void onLoop(AnimationController.AnimationDesc animation) {
 
-                    }
-
-                    @Override
-                    public void onLoop(AnimationController.AnimationDesc animation) {
-
-                    }
-                }, 0.2f);
-            }
-            
-            
+                }
+            }, 0.2f);
         }
 
         if (Hack3dEnabled) {
