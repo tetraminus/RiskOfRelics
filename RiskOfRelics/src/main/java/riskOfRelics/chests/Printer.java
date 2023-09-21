@@ -12,7 +12,10 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.JsonReader;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -36,6 +39,7 @@ import java.util.ArrayList;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 import static riskOfRelics.RiskOfRelics.Hack3dEnabled;
+import static riskOfRelics.RiskOfRelics.makeID;
 
 public class Printer extends AbstractChest {
     public static final int COMMON_SCRAP_COST = 3;
@@ -51,10 +55,16 @@ public class Printer extends AbstractChest {
     private ModelInstance modelInstance;
     private Environment environment;
     private AnimationController controller;
+    private AbstractRelic relicToRemove;
+    private static final float OFFSET_X;
+    private static final float OFFSET_Y;
+
+    private static final float DISPLAY_OFFSET_X;
+    private static final float DISPLAY_OFFSET_Y;
     public Printer() {
         super();
-        this.img = ImageMaster.BOSS_CHEST;// 25
-        this.openedImg = ImageMaster.BOSS_CHEST_OPEN;// 26
+        this.img = ImageMaster.loadImage("riskOfRelicsResources/images/2DPrinter_1.png");// 25
+        this.openedImg = ImageMaster.loadImage("riskOfRelicsResources/images/2DPrinter_2.png");// 26
         this.hb = new Hitbox(256.0F * Settings.scale, 200.0F * Settings.scale);// 28
         this.hb.move(CHEST_LOC_X, CHEST_LOC_Y - 100.0F * Settings.scale);// 29
         AbstractRelic.RelicTier tier;
@@ -109,10 +119,13 @@ public class Printer extends AbstractChest {
 
 
     public void render(SpriteBatch sb) {
+
         if (Hack3dEnabled) {
             try {
                 Render3D(sb);
             } catch (NullPointerException e) {
+                RiskOfRelics.logger.log(Level.WARN, "3d Render failed, falling back to 2d");
+                sb.begin();
                 Render2D(sb);
             }
         } else {
@@ -124,18 +137,30 @@ public class Printer extends AbstractChest {
             sb.draw(CInputActionSet.select.getKeyImg(), CHEST_LOC_X - 32.0F - 150.0F * Settings.scale, CHEST_LOC_Y - 32.0F - 210.0F * Settings.scale, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 64, 64, false, false);// 226 227
         }
         sb.setColor(Color.WHITE);// 154
-        if (this.relicToPrint != null) {
-            relicToPrint.renderWithoutAmount(sb, new Color(0.0F, 0.0F, 0.0F, 0.25F));
+        sb.flush();
+
+        Rectangle scissors = new Rectangle();
+        Rectangle clipBounds = new Rectangle(0,CHEST_LOC_Y-85*Settings.scale,Settings.WIDTH,Settings.HEIGHT-CHEST_LOC_Y-85*Settings.scale);
+        ScissorStack.calculateScissors(CardCrawlGame.viewport.getCamera(), sb.getTransformMatrix(), clipBounds, scissors);
+        if (ScissorStack.pushScissors(scissors)) {
+            if (this.relicToRemove != null) {
+                relicToRemove.renderWithoutAmount(sb, new Color(0.0F, 0.0F, 0.0F, 0.25F));
+            }
+            if (this.relicToPrint != null) {
+                relicToPrint.renderWithoutAmount(sb, new Color(0.0F, 0.0F, 0.0F, 0.25F));
+            }
+
+            sb.flush();
+            ScissorStack.popScissors();
         }
+
 
         this.hb.render(sb);// 245
     }// 246
 
     private void Render2D(SpriteBatch sb) {
-        sb.begin();
+
         sb.setColor(Color.WHITE);// 154
-
-
         float angle = 0.0F;// 155
         if (this.isOpen && this.openedImg == null) {// 157
             angle = 180.0F;// 158
@@ -147,12 +172,14 @@ public class Printer extends AbstractChest {
         } else {
             sb.draw(this.img, CHEST_LOC_X - 256.0F, CHEST_LOC_Y - 256.0F, 256.0F, 256.0F, 512.0F, 512.0F, Settings.scale, Settings.scale, angle, 0, 0, 512, 512, false, false);// 164
             if (this.hb.hovered) {// 182
-                  sb.setBlendFunction(770, 1);// 183
+                sb.setBlendFunction(770, 1);// 183
                 sb.setColor(new Color(1.0F, 1.0F, 1.0F, 0.3F));// 184
                 sb.draw(this.img, CHEST_LOC_X - 256.0F, CHEST_LOC_Y - 256.0F, 256.0F, 256.0F, 512.0F, 512.0F, Settings.scale, Settings.scale, angle, 0, 0, 512, 512, false, false);// 185
                 sb.setBlendFunction(770, 771);// 202
             }
         }
+
+
     }
     private void SetupGraphics(){
         if (Hack3dEnabled) {
@@ -260,28 +287,20 @@ public class Printer extends AbstractChest {
         AbstractDungeon.overlayMenu.proceedButton.setLabel(TEXT[0]);// 79
         AbstractDungeon.overlayMenu.proceedButton.hideInstantly();
 
-        CardCrawlGame.sound.play("CHEST_OPEN");// 83
+        CardCrawlGame.sound.play(makeID("PRINTER_USE"));// 83
 
         if ( relicToPrint != null && tryToPay(relicToPrint)) {
 
             this.isOpen = true;// 85
+            if (Hack3dEnabled) {
 
-
-            controller.action("Armature|Armature|DuplicatorArmature|IdleToOpenToIdle|Base Layer", 1, 1, new AnimationController.AnimationListener() {
-                @Override
-                public void onEnd(AnimationController.AnimationDesc animation) {
-                    //controller.setAnimation("Armature|Armature|DuplicatorArmature|Idle|Base Layer", -1);
-                    AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X,CHEST_LOC_Y, relicToPrint);// 87
-                    relicToPrint = null;
-                    AbstractDungeon.overlayMenu.proceedButton.show();
-                    AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
-                }
-
-                @Override
-                public void onLoop(AnimationController.AnimationDesc animation) {
-
-                }
-            }, 0.2f);
+            } else {
+                AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
+                relicToPrint = null;
+                AbstractDungeon.overlayMenu.proceedButton.show();
+                AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77\
+                relicToRemove = null;
+            }
 
         }else{
             AbstractDungeon.overlayMenu.proceedButton.show();
@@ -330,7 +349,8 @@ public class Printer extends AbstractChest {
             relics.removeIf(r -> r.tier != relicToPrint.tier);
 
             if (!relics.isEmpty()) {
-                player.loseRelic(relics.get(AbstractDungeon.miscRng.random(relics.size() - 1)).relicId);
+                relicToRemove = relics.get(AbstractDungeon.miscRng.random(relics.size() - 1));
+                player.loseRelic(relicToRemove.relicId);
             }
         }
     }
@@ -371,28 +391,14 @@ public class Printer extends AbstractChest {
 
     @Override
     public void update() {
-            Vector3 screenpos = new Vector3(CHEST_LOC_X, (float) (CHEST_LOC_Y-125*Settings.scale), 0);// 878
-            //Vector3 screenpos = new Vector3(InputHelper.mX, InputHelper.mY, 0);// 878
+        
+        Vector3 screenpos = new Vector3(CHEST_LOC_X, (float) (CHEST_LOC_Y-125*Settings.scale), 0);// 878
+            //Vector2 relicpos = new Vector2(InputHelper.mX, InputHelper.mY);// 878
             //modelInstance.transform.rotate(0, 1, 0, Gdx.graphics.getDeltaTime() *5);
-
-            if (Hack3dEnabled) {
-                if (controller != null){
-                    controller.update(Gdx.graphics.getDeltaTime());
-                }
-                if (modelInstance != null){
-                    modelInstance.transform.setTranslation(cam.unproject(screenpos).add(0, 0, -cam.position.z));// 880
-                }
-
-            }
-            if (relicToPrint != null && hb.hovered){
-                TipHelper.renderGenericTip((float)InputHelper.mX + 60.0F * Settings.scale, (float)InputHelper.mY + 180.0F * Settings.scale, GetTipName(), GetTipDesc());// 183
-
-            }
-
         if (relicToPrint != null){
             relicToPrint.hb.update();
-            relicToPrint.currentX = CHEST_LOC_X;
-            relicToPrint.currentY = CHEST_LOC_Y;
+            relicToPrint.currentX = CHEST_LOC_X + DISPLAY_OFFSET_X;
+            relicToPrint.currentY = CHEST_LOC_Y + DISPLAY_OFFSET_Y;
             relicToPrint.hb.move(relicToPrint.currentX, relicToPrint.currentY);// 54
             relicToPrint.hb.update();// 57
             if (relicToPrint.hb.hovered) {// 58
@@ -405,7 +411,80 @@ public class Printer extends AbstractChest {
                 CardCrawlGame.relicPopup.open(relicToPrint);// 70
             }
         }
+        
+        if (relicToRemove != null){
+            relicToRemove.hb.update();
+            relicToRemove.targetX = CHEST_LOC_X + OFFSET_X;
+            relicToRemove.targetY = CHEST_LOC_Y + OFFSET_Y;
+            relicToRemove.hb.move(relicToRemove.currentX, relicToRemove.currentY);// 54
 
-        super.update();
+            if (relicToRemove.currentX != relicToRemove.targetX) {// 366
+                relicToRemove.currentX = MathUtils.lerp(relicToRemove.currentX, relicToRemove.targetX, Gdx.graphics.getDeltaTime() * 12.0F);// 367
+                if (Math.abs(relicToRemove.currentX - relicToRemove.targetX) < 0.5F) {// 368
+                    relicToRemove.currentX = relicToRemove.targetX;// 369
+                }
+            }
+
+            if (relicToRemove.currentY != relicToRemove.targetY) {// 372
+                relicToRemove.currentY = MathUtils.lerp(relicToRemove.currentY, relicToRemove.targetY, Gdx.graphics.getDeltaTime() * 3.0F);// 373
+                if (Math.abs(relicToRemove.currentY - relicToRemove.targetY) < 0.5F) {// 374
+                    relicToRemove.currentY = relicToRemove.targetY;// 375
+                }
+            }
+
+            if (relicToRemove.currentX == relicToRemove.targetX && relicToRemove.currentY == relicToRemove.targetY) {// 378
+                relicToRemove = null;// 379
+                controller.action("Armature|Armature|DuplicatorArmature|IdleToOpenToIdle|Base Layer", 1, 1, new AnimationController.AnimationListener() {
+                    @Override
+                    public void onEnd(AnimationController.AnimationDesc animation) {
+                        //controller.setAnimation("Armature|Armature|DuplicatorArmature|Idle|Base Layer", -1);
+                        AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
+                        relicToPrint = null;
+                        AbstractDungeon.overlayMenu.proceedButton.show();
+                        AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
+
+                    }
+
+                    @Override
+                    public void onLoop(AnimationController.AnimationDesc animation) {
+
+                    }
+                }, 0.2f);
+            }
+            
+            
+        }
+
+        if (Hack3dEnabled) {
+            if (controller != null){
+                controller.update(Gdx.graphics.getDeltaTime());
+            }
+            if (modelInstance != null){
+                modelInstance.transform.setTranslation(cam.unproject(screenpos).add(0, 0, -cam.position.z));// 880
+            }
+
+        }
+        if (relicToPrint != null && !relicToPrint.hb.hovered && hb.hovered){
+            TipHelper.renderGenericTip((float)InputHelper.mX + 60.0F * Settings.scale, (float)InputHelper.mY + 180.0F * Settings.scale, GetTipName(), GetTipDesc());// 183
+
+        }
+
+
+
+
+
+        this.hb.update();// 141
+        if ( relicToPrint != null && !this.relicToPrint.hb.hovered &&(this.hb.hovered && InputHelper.justClickedLeft || CInputActionSet.select.isJustPressed()) && !AbstractDungeon.isScreenUp && !this.isOpen && this.keyRequirement()) {// 142 143
+            InputHelper.justClickedLeft = false;// 144
+            this.open(false);// 145
+        }
+    }
+
+    static {
+        DISPLAY_OFFSET_X = -70*Settings.scale;// 31
+        DISPLAY_OFFSET_Y = -30*Settings.scale;// 32
+        OFFSET_X = 75*Settings.scale;// 31
+        OFFSET_Y = -125*Settings.scale;// 32
+
     }
 }

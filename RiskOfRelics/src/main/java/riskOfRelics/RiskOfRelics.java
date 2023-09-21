@@ -79,7 +79,8 @@ public class RiskOfRelics implements
         StartGameSubscriber,
         MaxHPChangeSubscriber,
         RelicGetSubscriber,
-        PostDeathSubscriber
+        PostDeathSubscriber,
+        AddAudioSubscriber
 
 
     {
@@ -936,6 +937,11 @@ public class RiskOfRelics implements
             } catch (Exception e) {
                 ModConfig.setString("EnabledArtifacts","");
             }
+        }
+
+        @Override
+        public void receiveAddAudio() {
+            BaseMod.addAudio(makeID("PRINTER_USE"), "riskOfRelicsResources/sfx/PrinterUse.mp3");
         }
 
 
