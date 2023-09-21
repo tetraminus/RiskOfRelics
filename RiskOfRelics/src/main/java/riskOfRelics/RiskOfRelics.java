@@ -32,6 +32,7 @@ import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.TextCenteredEffect;
+import jdk.internal.misc.OSEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.artifacts.DeathArt;
@@ -230,6 +231,8 @@ public class RiskOfRelics implements
         // The actual mod Button is added below in receivePostInitialize()
         riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE");
         riskOfRelicsDefaultSettings.setProperty(ENABLE_3D_HACK_SETTINGS, "TRUE");
+
+
         riskOfRelicsDefaultSettings.setProperty(ENABLE_PRINTERS_SETTINGS, "TRUE");
         riskOfRelicsDefaultSettings.setProperty("hasShownFTUE", "FALSE");
         try {
@@ -279,8 +282,6 @@ public class RiskOfRelics implements
         saveData();
 
     }
-
-
 
     public static void saveData() {
         try {
@@ -387,14 +388,16 @@ public class RiskOfRelics implements
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
 
+        UIStrings strings = CardCrawlGame.languagePack.getUIString(makeID("ModPanelText"));
 
 
 //         Create the on/off button:
-        ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton("Enable Aspect Descriptions (Default: OFF) | Restart required.",
-                350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
+        ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton(strings.TEXT[0],
+                350.0f, 750.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
                 AspectDescEnabled, // Boolean it uses
                 settingsPanel, // The mod panel in which this button will be in
                 (label) -> {
+
                 }, // thing??????? idk
                 (button) -> { // The actual button:
 
@@ -411,7 +414,7 @@ public class RiskOfRelics implements
 
         settingsPanel.addUIElement(enableAspectDescButton); // Add the button to the settings panel. Button is a go.
 
-        ModLabeledToggleButton enable3dButton = new ModLabeledToggleButton("3d Render Hack (Default: ON) | turn off if getting crashes in the bulwarks ambry.",
+        ModLabeledToggleButton enable3dButton = new ModLabeledToggleButton(strings.TEXT[1],
                 350.0f, 650.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
                 Hack3dEnabled, // Boolean it uses
                 settingsPanel, // The mod panel in which this button will be in
@@ -432,7 +435,7 @@ public class RiskOfRelics implements
 
         settingsPanel.addUIElement(enable3dButton); // Add the button to the settings panel. Button is a go.
 
-        ModLabeledToggleButton enablePrintersButton = new ModLabeledToggleButton("Enable 3D printers (Default: ON) | 3d printers allow you to trade relics and scrap for other relics.",
+        ModLabeledToggleButton enablePrintersButton = new ModLabeledToggleButton(strings.TEXT[2],
                 350.0f, 600.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
                 PrintersEnabled, // Boolean it uses
                 settingsPanel, // The mod panel in which this button will be in

@@ -14,6 +14,13 @@
                         " NL "
                 ]
         },
+        "riskOfRelics:ModPanelText" : {
+                "TEXT": [
+                        "Enable Aspect Descriptions (Default: OFF) | Restart required.",
+                        "3d Render Hack (Default: ON) | Crashes on Apple silicon. \n turn off if getting crashes in the bulwarks ambry.",
+                        "Enable 3D printers (Default: ON) | 3d printers allow you to trade relics and scrap for other relics."
+                ]
+        },
         "riskOfRelics:WarbannerOption" : {
                 "TEXT": [
                         "Reduce Cost",
