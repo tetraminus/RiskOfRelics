@@ -6,7 +6,12 @@ import basemod.eventUtil.EventUtils;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
@@ -26,10 +31,13 @@ import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import com.megacrit.cardcrawl.vfx.TextCenteredEffect;
+import jdk.internal.misc.OSEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.artifacts.DeathArt;
 import riskOfRelics.artifacts.GlassArt;
+import riskOfRelics.bosses.BulwarksAmbry;
 import riskOfRelics.cards.AbstractDynamicCard;
 import riskOfRelics.events.*;
 import riskOfRelics.patches.ArtifactFTUEPatches;
@@ -40,23 +48,21 @@ import riskOfRelics.potions.EnergyDrink;
 import riskOfRelics.potions.TonicPotion;
 import riskOfRelics.relics.BackupMag;
 import riskOfRelics.relics.BaseRelic;
+import riskOfRelics.relics.BisonSteak;
 import riskOfRelics.relics.Ego;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
 import riskOfRelics.screens.ArtifactTopPanelItem;
+import riskOfRelics.screens.ScrapTopPanelItem;
 import riskOfRelics.util.*;
-import riskOfRelics.variables.DefaultCustomVariable;
-import riskOfRelics.variables.DefaultSecondMagicNumber;
 import riskOfRelics.vfx.ArtifactAboveCreatureAction;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.megacrit.cardcrawl.core.CardCrawlGame.dungeon;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.*;
@@ -72,7 +78,11 @@ public class RiskOfRelics implements
         EditCharactersSubscriber,
         PostInitializeSubscriber,
         StartGameSubscriber,
-        MaxHPChangeSubscriber
+        MaxHPChangeSubscriber,
+        RelicGetSubscriber,
+        PostDeathSubscriber,
+        AddAudioSubscriber
+
 
     {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
@@ -83,7 +93,11 @@ public class RiskOfRelics implements
     // Mod-settings settings. This is if you want an on/off savable button
     public static Properties riskOfRelicsDefaultSettings = new Properties();
     public static final String ENABLE_ASPECT_DESC_SETTINGS = "enableAspectDesc";
+    public static final String ENABLE_3D_HACK_SETTINGS = "enable3dHack";
+    public static final String ENABLE_PRINTERS_SETTINGS = "enablePrinters";
     public static boolean AspectDescEnabled = true; // The boolean we'll be setting on/off (true/false)
+    public static boolean Hack3dEnabled = true; // The boolean we'll be setting on/off (true/false)
+    public static boolean PrintersEnabled = true; // The boolean we'll be setting on/off (true/false)
 
     //This is for the in-game mod settings panel.
     private static final String MODNAME = "Risk of Relics";
@@ -110,6 +124,13 @@ public class RiskOfRelics implements
 
     public static String makeCardPath(String resourcePath) {
         return getModID() + "Resources/images/cards/" + resourcePath;
+    }
+    public static String makeUIPath(String resourcePath) {
+        return getModID() + "Resources/images/ui/" + resourcePath;
+    }
+
+    public static String makeBossPath(String resourcePath) {
+        return getModID() + "Resources/images/ui/map/icon/" + resourcePath;
     }
 
     public static String makeRelicPath(String resourcePath) {
@@ -209,15 +230,27 @@ public class RiskOfRelics implements
         // This loads the mod settings.
         // The actual mod Button is added below in receivePostInitialize()
         riskOfRelicsDefaultSettings.setProperty(ENABLE_ASPECT_DESC_SETTINGS, "FALSE");
+        riskOfRelicsDefaultSettings.setProperty(ENABLE_3D_HACK_SETTINGS, "TRUE");
+
+
+        riskOfRelicsDefaultSettings.setProperty(ENABLE_PRINTERS_SETTINGS, "TRUE");
         riskOfRelicsDefaultSettings.setProperty("hasShownFTUE", "FALSE");
         try {
             ModConfig = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings); // ...right here
             // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
             ModConfig.load(); // Load the setting and set the boolean to equal it
             AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
+            Hack3dEnabled = ModConfig.getBool(ENABLE_3D_HACK_SETTINGS);
+            PrintersEnabled = ModConfig.getBool(ENABLE_PRINTERS_SETTINGS);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (Hack3dEnabled){
+            logger.warn("3d Hack enabled, if you crash when fighting a certain boss, turn this off.");
+        }
+
         logger.info("Done adding mod settings");
 
         ActiveArtifacts = new ArrayList<>();
@@ -237,6 +270,8 @@ public class RiskOfRelics implements
         }
 
 
+
+
     }
     public static boolean hasShownFTUE() {
 
@@ -248,14 +283,15 @@ public class RiskOfRelics implements
 
     }
 
-
-
     public static void saveData() {
         try {
             ModConfig.setString("Artifacts","");
             for (Artifacts A:
                     UnlockedArtifacts) {
-                ModConfig.setString("Artifacts",ModConfig.getString("Artifacts")+A.name()+",");
+                if (!ModConfig.getString("Artifacts").contains(A.name()+",")) {
+                    ModConfig.setString("Artifacts",ModConfig.getString("Artifacts")+A.name()+",");
+                }
+
 
             }
             ModConfig.save();
@@ -264,8 +300,16 @@ public class RiskOfRelics implements
         }
         try {
             ModConfig.setString("EnabledArtifacts","");
+
+            //remove duplicates from ActiveArtifacts
+            Set<Artifacts> hs = new HashSet<>(ActiveArtifacts);
+            ActiveArtifacts.clear();
+            ActiveArtifacts.addAll(hs);
+
+
             for (Artifacts A:
                     ActiveArtifacts) {
+
                 ModConfig.setString("EnabledArtifacts",ModConfig.getString("EnabledArtifacts")+A.name()+",");
 
             }
@@ -314,6 +358,13 @@ public class RiskOfRelics implements
 
     @Override
     public void receivePostInitialize() {
+        fbo = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
+        cam = new OrthographicCamera(Settings.WIDTH / 100f, Settings.HEIGHT / 100f);
+        cam.position.set(0, 0, 5);
+        cam.lookAt(0, 0, 0);
+        cam.near = 0.1f;
+        cam.far = 10f;
+        mb = new ModelBatch();
 
         logger.info("Loading badge image and mod options");
 
@@ -322,21 +373,31 @@ public class RiskOfRelics implements
         BaseMod.addCustomScreen(new ArtifactSelectScreen());
         //BaseMod.addCustomScreen(new ArtifactInfoScreen());
         BaseMod.addTopPanelItem(new ArtifactTopPanelItem());
+        BaseMod.addTopPanelItem(new ScrapTopPanelItem());
         BaseMod.addSaveField(makeID("ActiveArtifacts"),new ArtifactSaver());
         BaseMod.addSaveField(makeID("MetamorphCharacter"),new MetamorphSaver());
         BaseMod.addSaveField(makeID("EnigmaCounter"),new CounterSavers.EnigmaCounterSaver());
         BaseMod.addSaveField(makeID("MetamorphCounter"),new CounterSavers.MetamorphCounterSaver());
         BaseMod.addSaveField(makeID("VengCounter") ,new CounterSavers.VengCounterSaver());
+        BaseMod.addSaveField(makeID("PlayerEquipment") , new EquipmentSaver());
+        BaseMod.addSaveField(makeID("ChargeTimer") , new ChargeTimerSaver());
+        BaseMod.addSaveField(makeID("PlayerEquipmentCounter") , new EQCounterSaver());
+        BaseMod.addSaveField(makeID("PlayerScrapInfo") , new ScrapInfoSaver());
+
 
         // Create the Mod Menu
         ModPanel settingsPanel = new ModPanel();
 
+        UIStrings strings = CardCrawlGame.languagePack.getUIString(makeID("ModPanelText"));
+
+
 //         Create the on/off button:
-        ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton("Enable Aspect Descriptions(Default: OFF) | Restart required.",
-                350.0f, 700.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
+        ModLabeledToggleButton enableAspectDescButton = new ModLabeledToggleButton(strings.TEXT[0],
+                350.0f, 750.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
                 AspectDescEnabled, // Boolean it uses
                 settingsPanel, // The mod panel in which this button will be in
                 (label) -> {
+
                 }, // thing??????? idk
                 (button) -> { // The actual button:
 
@@ -352,6 +413,49 @@ public class RiskOfRelics implements
                 });
 
         settingsPanel.addUIElement(enableAspectDescButton); // Add the button to the settings panel. Button is a go.
+
+        ModLabeledToggleButton enable3dButton = new ModLabeledToggleButton(strings.TEXT[1],
+                350.0f, 650.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
+                Hack3dEnabled, // Boolean it uses
+                settingsPanel, // The mod panel in which this button will be in
+                (label) -> {
+                }, // thing??????? idk
+                (button) -> { // The actual button:
+
+                    Hack3dEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
+                    try {
+                        // And based on that boolean, set the settings and save them
+                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);;
+                        config.setBool(ENABLE_3D_HACK_SETTINGS, Hack3dEnabled);
+                        config.save();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        settingsPanel.addUIElement(enable3dButton); // Add the button to the settings panel. Button is a go.
+
+        ModLabeledToggleButton enablePrintersButton = new ModLabeledToggleButton(strings.TEXT[2],
+                350.0f, 600.0f, Settings.CREAM_COLOR, FontHelper.charDescFont, // Position (trial and error it), color, font
+                PrintersEnabled, // Boolean it uses
+                settingsPanel, // The mod panel in which this button will be in
+                (label) -> {
+                }, // thing??????? idk
+                (button) -> { // The actual button:
+
+                    PrintersEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
+                    try {
+                        // And based on that boolean, set the settings and save them
+                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);;
+                        config.setBool(ENABLE_PRINTERS_SETTINGS, PrintersEnabled);
+                        config.save();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        settingsPanel.addUIElement(enablePrintersButton); // Add the button to the settings panel. Button is a go.
+
 
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
@@ -423,6 +527,10 @@ public class RiskOfRelics implements
 
         }
 
+        BaseMod.addMonster(BulwarksAmbry.ID , BulwarksAmbry::new);
+
+
+
     }
 
     // =============== / POST-INITIALIZE/ =================
@@ -467,6 +575,8 @@ public class RiskOfRelics implements
         // This adds a relic to the Shared pool. Every character can find this relic.
         // This finds and adds all relics inheriting from CustomRelic that are in the same package
         // as MyRelic, keeping all as unseen except those annotated with @AutoAdd.Seen
+        AtomicInteger RelicCount = new AtomicInteger();
+
         new AutoAdd("RiskOfRelics")
                 .packageFilter(BaseRelic.class)
                 .any(BaseRelic.class, (info, relic) -> {
@@ -477,12 +587,13 @@ public class RiskOfRelics implements
                     if (!info.seen) {
                         UnlockTracker.markRelicAsSeen(relic.relicId);
                     }
+                    RelicCount.getAndIncrement();
+
+
                 });
+        logger.info("Added " + RelicCount + " relics to the pool.");
 
-
-
-
-        logger.info(BaseMod.getAllCustomRelics());
+        //logger.info(BaseMod.getAllCustomRelics());
         logger.info("Done adding relics!");
         receiveEditPotions();
     }
@@ -500,9 +611,7 @@ public class RiskOfRelics implements
         // Add the Custom Dynamic Variables
         logger.info("Add variables");
         // Add the Custom Dynamic variables
-        BaseMod.addDynamicVariable(new DefaultCustomVariable());
-        BaseMod.addDynamicVariable(new DefaultSecondMagicNumber());
-        BaseMod.addDynamicVariable(new ChargesVariable());
+
 
 
         logger.info("Adding cards");
@@ -577,6 +686,9 @@ public class RiskOfRelics implements
         BaseMod.loadCustomStringsFile(TutorialStrings.class,
                 getModID() + "Resources/localization/eng/RiskOfRelics-Tutorial-Strings.json");
 
+        BaseMod.loadCustomStringsFile(MonsterStrings.class,
+                getModID() + "Resources/localization/eng/RiskOfRelics-Monster-Strings.json");
+
         logger.info("Done editing strings");
     }
 
@@ -613,21 +725,30 @@ public class RiskOfRelics implements
         @Override
         public void receiveStartGame() {
             if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
-                player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
-                player.currentHealth = player.maxHealth;
+                ApplyGlassArtHealth();
+
+            }
+            if(!CardCrawlGame.loadingSave){
                 EnigmaAndMetaPatches.enigmaCounter = -1;
-                EnigmaAndMetaPatches.vengCounter = 0;
+                EnigmaAndMetaPatches.vengCounter = 1;
                 EnigmaAndMetaPatches.metamorphCounter = -1;
             }
+
             if (!CardCrawlGame.loadingSave){
                 MetamorphCharacter = null;
             }
             if (ActiveArtifacts.contains(Artifacts.METAMORPHOSIS)) {
-                DoMetamorphosisShtuff();
+                ReinitializeCardPools();
             }
 
 
         }
+
+        public static void ApplyGlassArtHealth() {
+            player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
+            player.currentHealth = player.maxHealth;
+        }
+
         @Override
         public int receiveMaxHPChange(int amount) {
             if (ActiveArtifacts.contains(Artifacts.DEATH)){
@@ -665,11 +786,13 @@ public class RiskOfRelics implements
             }else {
                 ReinitializeCardPools();
             }
-            effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH /2, (float) Settings.HEIGHT /2, Artifacts.METAMORPHOSIS));
+
         }
 
         private static void ReinitializeCardPools() {
             AbstractPlayer NewChar = CardCrawlGame.characterManager.getAllCharacters().get(MathUtils.random(0, CardCrawlGame.characterManager.getAllCharacters().size() - 1));
+            effectsQueue.add(new TextCenteredEffect(NewChar.getLocalizedCharacterName()));
+            effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH /2, (float) Settings.HEIGHT /2, Artifacts.METAMORPHOSIS));
             ReinitializeCardPools(NewChar, false);
         }
 
@@ -818,6 +941,39 @@ public class RiskOfRelics implements
             return relic;
         }
 
+        @Override
+        public void receiveRelicGet(AbstractRelic abstractRelic) {
+            if (player != null) {
+                for (AbstractRelic r:
+                     player.relics) {
+                    if (r instanceof BisonSteak) {
+                        ((BisonSteak) r).onRelicGet(abstractRelic);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void receivePostDeath() {
+            try {
+                ActiveArtifacts.clear();
+                for (String A: ModConfig.getString("EnabledArtifacts").split(",")) {
+                    Artifacts a = getArtifactfromName(A);
+                    if (UnlockedArtifacts.contains(a) && !ActiveArtifacts.contains(a)) {
+                        ActiveArtifacts.add(a);
+                    }
+
+                }
+            } catch (Exception e) {
+                ModConfig.setString("EnabledArtifacts","");
+            }
+        }
+
+        @Override
+        public void receiveAddAudio() {
+            BaseMod.addAudio(makeID("PRINTER_USE"), "riskOfRelicsResources/sfx/PrinterUse.mp3");
+        }
+
 
         public enum Artifacts {
         SPITE,
@@ -887,4 +1043,13 @@ public class RiskOfRelics implements
             }
         }
     }
+
+
+        public static FrameBuffer fbo;
+        public static Camera cam;
+        public static ModelBatch mb;
+
+
+
+
 }

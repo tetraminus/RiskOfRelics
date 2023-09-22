@@ -1,7 +1,6 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.megacrit.cardcrawl.rooms.TreasureRoom;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -20,17 +19,12 @@ public class BisonSteak extends BaseRelic {
     }
 
     @Override
-    public void onEnterRoom(AbstractRoom room) {
-        if (room instanceof TreasureRoom) {// 22
-            this.flash();// 23
-            player.increaseMaxHp(AMOUNT,true);
-        }
-        super.onEnterRoom(room);
-    }
-
-    @Override
     public String getUpdatedDescription() {
         return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
     }
 
+    public void onRelicGet(AbstractRelic abstractRelic) {
+        this.flash();// 23
+        player.increaseMaxHp(AMOUNT,true);
+    }
 }

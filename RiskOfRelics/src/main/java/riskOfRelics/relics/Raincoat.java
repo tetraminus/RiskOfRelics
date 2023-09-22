@@ -2,6 +2,7 @@ package riskOfRelics.relics;
 
 import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.ArtifactPower;
 import riskOfRelics.RiskOfRelics;
@@ -24,6 +25,7 @@ public class Raincoat extends BaseRelic implements OnLoseArtifactRelic {
 
     @Override
     public void atBattleStart() {
+        addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
         this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new ArtifactPower(AbstractDungeon.player, ARTIFACT), ARTIFACT));
         super.atBattleStart();
     }
@@ -37,6 +39,7 @@ public class Raincoat extends BaseRelic implements OnLoseArtifactRelic {
 
     @Override
     public void onLoseArtifact() {
+        addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
         this.addToBot(new AddTemporaryHPAction(AbstractDungeon.player, AbstractDungeon.player, AMOUNT));
     }
 }

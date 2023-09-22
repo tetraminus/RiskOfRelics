@@ -10,12 +10,14 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import riskOfRelics.RiskOfRelics;
 import riskOfRelics.powers.RuinPower;
 
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
+
 
 public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
 
 
     public static final int STRENGH_LOSS = 4;
-    public static final int RUIN_AMOUNT = 5;
+    public static final int RUIN_AMOUNT = 4;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("EssenceOfHeresy");
     private static final String IMAGENAME = "EssenceOfHeresy.png";
@@ -27,15 +29,15 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
 
     @Override
     public void atBattleStart() {
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,
-                new StrengthPower(AbstractDungeon.player, (-STRENGH_LOSS)), (-STRENGH_LOSS)));
+        this.addToBot(new ApplyPowerAction(player, player,
+                new StrengthPower(player, (-STRENGH_LOSS)), (-STRENGH_LOSS)));
         super.atBattleStart();
     }
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (damageAmount > target.currentBlock && info.type == DamageInfo.DamageType.NORMAL) {
-            this.addToBot(new ApplyPowerAction(target, AbstractDungeon.player,
+        if (damageAmount > target.currentBlock && target != player) {
+            this.addToBot(new ApplyPowerAction(target, player,
                     new RuinPower(target, RUIN_AMOUNT), RUIN_AMOUNT));
         }
 

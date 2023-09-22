@@ -1,8 +1,10 @@
 package riskOfRelics.powers;
 
 import basemod.interfaces.CloneablePowerInterface;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.evacipated.cardcrawl.mod.stslib.powers.interfaces.HealthBarRenderPower;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
@@ -18,7 +20,7 @@ import riskOfRelics.util.TextureLoader;
 
 import static riskOfRelics.RiskOfRelics.makePowerPath;
 
-public class BurningPower extends AbstractPower implements CloneablePowerInterface {
+public class BurningPower extends AbstractPower implements CloneablePowerInterface, HealthBarRenderPower {
     public AbstractCreature source;
 
     public static final String POWER_ID = RiskOfRelics.makeID("Burning");
@@ -82,6 +84,16 @@ public class BurningPower extends AbstractPower implements CloneablePowerInterfa
     @Override
     public AbstractPower makeCopy() {
         return new BurningPower(owner, source, amount);
+    }
+
+    @Override
+    public int getHealthBarAmount() {
+        return amount - owner.currentBlock;
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.ORANGE;
     }
 }
 

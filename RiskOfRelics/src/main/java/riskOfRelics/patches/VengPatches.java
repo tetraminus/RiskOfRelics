@@ -8,6 +8,8 @@ import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import javassist.CtBehavior;
 import riskOfRelics.RiskOfRelics;
 
+import java.util.Collections;
+
 import static com.megacrit.cardcrawl.core.CardCrawlGame.dungeon;
 
 public class VengPatches {
@@ -43,7 +45,7 @@ public class VengPatches {
 
                 AbstractDungeon.eliteMonsterList.remove(0);
                 FinalFight.monsters.forEach(m -> {
-                    m.currentHealth = m.maxHealth/3;
+                    m.currentHealth = m.maxHealth/2;
                     m.healthBarUpdatedEvent();});
                 return SpireReturn.Return(FinalFight);
 
@@ -74,7 +76,7 @@ public class VengPatches {
         @SpirePostfixPatch
         public static void Postfix(){
 
-            AbstractDungeon.bossList.remove(AbstractDungeon.bossKey);
+            Collections.shuffle(AbstractDungeon.bossList);
 
         }
     }

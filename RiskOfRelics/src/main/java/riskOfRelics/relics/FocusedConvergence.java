@@ -37,7 +37,7 @@ public class FocusedConvergence extends BaseRelic {
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
+        return DESCRIPTIONS[0]+(int)AMOUNT+DESCRIPTIONS[1];
     }
 
 }

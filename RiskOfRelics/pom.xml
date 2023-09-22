@@ -6,7 +6,7 @@
     <groupId>us.tetramin</groupId>
     <artifactId>RiskOfRelics</artifactId> <!--Keep a note of this one: this is the ID used in the "auto add cards" method-->
     <name>Risk Of Relics</name>
-    <version>2.0.2</version>
+    <version>2.2.3</version>
     <description>A mod that adds relics and mechanics from Risk of Rain 2 into slay the spire.</description>
 
 
@@ -53,6 +53,15 @@
             <version>1.3.2</version>
             <scope>system</scope>
             <systemPath>${Steam.path}/workshop/content/646570/1609158507/StSLib.jar</systemPath>
+            <!--<systemPath>${basedir}/../lib/StSLib.jar</systemPath>-->
+        </dependency>
+
+        <dependency>
+            <groupId>downfall</groupId>
+            <artifactId>Downfall</artifactId>
+            <version>5.0.2</version>
+            <scope>system</scope>
+            <systemPath>${Steam.path}/workshop/content/646570/1610056683/downfall.jar</systemPath>
             <!--<systemPath>${basedir}/../lib/StSLib.jar</systemPath>-->
         </dependency>
     </dependencies>
@@ -123,6 +132,9 @@
                     <excludes>
                         <exclude>**/*.psd</exclude>
                         <exclude>**/*.xcf</exclude>
+                        <exclude>**/*.blend</exclude>
+                        <exclude>**/*.blend1</exclude>
+                        <exclude>**/*.fbx</exclude>
 
                     </excludes>
                 </configuration>

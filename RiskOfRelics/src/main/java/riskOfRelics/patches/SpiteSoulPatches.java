@@ -10,6 +10,10 @@ import riskOfRelics.actions.FixMonsterAction;
 import riskOfRelics.artifacts.KinArt;
 import riskOfRelics.artifacts.SoulArt;
 import riskOfRelics.artifacts.SpiteArt;
+import riskOfRelics.bosses.BulwarksAmbry;
+
+import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.getCurrRoom;
+
 public class SpiteSoulPatches {
     @SpirePatch2(
             clz = AbstractMonster.class,
@@ -27,6 +31,13 @@ public class SpiteSoulPatches {
                 SoulArt.onMonsterDeath(__instance);
                 KinArt.onMonsterDeath();
             }
+            getCurrRoom().monsters.monsters.forEach( m -> {
+                    if (m instanceof BulwarksAmbry) {
+                ((BulwarksAmbry) m).onMonsterDeath(__instance);
+            }
+            });
+
+
         }
 
         private static class Locator extends SpireInsertLocator {

@@ -1,4 +1,102 @@
 {
+  "riskOfRelics:Warbanner": {
+    "NAME": "Warbanner",
+    "FLAVOR": "The only proof of their last stand was a single banner, fluttering in the wind, flying over a mountain of corpses.",
+    "DESCRIPTIONS": [
+      "While at a campfire, you may permanently reduce a card's cost by #b1. You may only use this #b"," times. "
+    ]
+  },
+  "riskOfRelics:ExecutiveCard": {
+    "NAME": "Executive Card",
+    "FLAVOR": "\"No, you just uh... well you see, the way these cards work is that, uh... [?] well you can take out a low-interest loan to... the buying power of debt is...[??]\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Cannot be used. NL Passively get a #b","% discount in shops. NL You may take #b"," cards from card rewards."
+    ]
+  },
+  "riskOfRelics:MolotovPack": {
+    "NAME": "Molotov (6-Pack)",
+    "FLAVOR": "\"It'll be a hell of a party, they should probably hit the road before things get too out of hand.\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Apply #b"," burning to all enemies."
+    ]
+  },
+  "riskOfRelics:OcularHud": {
+    "NAME": "Ocular HUD",
+    "FLAVOR": "\"I wish you hadn't asked me for help.\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Deal double damage this turn."
+    ]
+  },
+  "riskOfRelics:CautiousSlug": {
+    "NAME": "Cautious Slug",
+    "FLAVOR": "\"always remember: if your companion warns you of danger in the dark, you had better well listen.\"",
+    "DESCRIPTIONS": [
+      "When you enter a non-combat room, heal #b"," HP."
+    ]
+  },
+  "riskOfRelics:IgnitionTank": {
+    "NAME": "Ignition Tank",
+    "FLAVOR": "\"Contains a cocktail of the galaxy's most flammable substances. Y'know, methane, ethylene, butane... A single spark would be more than enough to set this baby off!\"",
+    "DESCRIPTIONS": [
+      "When you apply or receive a debuff, increase it's amount by #b","."
+    ]
+  },
+  "riskOfRelics:MilkyChrysalis": {
+    "NAME": "Milky Chrysalis",
+    "FLAVOR": "\"Please be careful with it, as it’s frozen in a cryo cell mid-transformation.\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Stun an enemy. A charge comes back after #b"," rooms."
+    ]
+  },
+  "riskOfRelics:TricornUsed": {
+    "NAME": "Trophy Hunter's Tricorn",
+    "FLAVOR": "Ahoy!",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL This item has been used.",
+      "Ahoy!"
+
+    ]
+  },
+  "riskOfRelics:Tricorn": {
+    "NAME": "Trophy Hunter's Tricorn",
+    "FLAVOR": "\"There's no fun to the hunt, or any game for that matter, if there is no risk involved...\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL ONE USE. NL Can only be used in elite combat. All enemies lose #b"," HP. Add a extra relic to the rewards."
+
+    ]
+  },
+  "riskOfRelics:Crowdfunder": {
+    "NAME": "The Crowdfunder",
+    "FLAVOR": "\"To further highlight the vast differences in status, their extravagant weapons were fueled by currency - they were literally throwing money at them.\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Pay #b"," gold to deal #b"," damage to a random enemy, can be used any number of times."
+
+    ]
+  },
+  "riskOfRelics:BlastShower": {
+    "NAME": "Blast Shower",
+    "FLAVOR": "Disclaimer: Wear your protective suit while cleansing. Do not use product directly on skin.",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Remove your debuffs. A charge comes back after #b"," rooms."
+
+    ]
+  },
+  "riskOfRelics:MissileLauncher": {
+    "NAME": "Disposable Missile Launcher",
+    "FLAVOR": "\"Consumers were shocked when a beloved game company released its latest cardboard assembly kit: a missile launcher.\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Deal #b"," damage to a random enemy #b"," times. Calculates damage like a card."
+
+    ]
+  },
+  "riskOfRelics:TestEquipment": {
+    "NAME": "test",
+    "FLAVOR": "test",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL Deal #b"," damage to a to all enemies."
+
+    ]
+  },
   "riskOfRelics:EssenceOfHeresy": {
     "NAME": "Essence of Heresy",
     "FLAVOR": "\"…and her heart, too wicked and full of hate, was left where she once stood – at the site of her betrayal.\"",
@@ -75,7 +173,7 @@
     "NAME": "Gesture of the Drowned",
     "FLAVOR": "\"Fossils. Remnants. How cruel. \"",
     "DESCRIPTIONS": [
-      "When you draw a colorless card, play it."
+      "When you draw a colorless card, play it. If it is a status, take #b"," damage."
 
     ]
   },
@@ -83,7 +181,7 @@
     "NAME": "Topaz Brooch",
     "FLAVOR": "\"the shield can be... reactivated, but we’d like to keep casualties to a minimum.\"",
     "DESCRIPTIONS": [
-      "When you kill an enemy, gain #b"," Block."
+      "When you kill an enemy, gain #b"," #yTemporary_HP."
 
     ]
   },
@@ -191,9 +289,9 @@
   },
   "riskOfRelics:BisonSteak": {
     "NAME": "Bison Steak",
-    "FLAVOR": "Always carry extra.",
+    "FLAVOR": "Always carry a snack.",
     "DESCRIPTIONS": [
-      "When you enter a room with a chest, gain #b"," Max HP"
+      "When you gain a relic, gain #b"," Max HP"
     ]
   },
 
@@ -208,7 +306,7 @@
     "NAME": "Fuel Cell",
     "FLAVOR": "ZAP!",
     "DESCRIPTIONS": [
-      "#yriskofrelics:Equipment gain #b"," #yriskofrelics:Charge"
+      "#yriskofrelics:Equipment gain #b"," max #yriskofrelics:Charge"
     ]
   },
   "riskOfRelics:tougherTimes": {
@@ -286,7 +384,7 @@
     "FLAVOR": "spicy.",
     "DESCRIPTIONS": [
       "Become an aspect of fire.",
-      "When you attack, apply #b"," Burning."
+      "When you deal attack damage, apply #b"," Burning."
     ]
   },
   "riskOfRelics:iceAspect": {
@@ -350,7 +448,7 @@
     "NAME": "Bustling Fungus",
     "FLAVOR": "Engineers Best Friend",
     "DESCRIPTIONS": [
-      "If you don't play a card this turn, gain #b"," #yRegen. if you complete combat without playing an attack, heal #b","% #yMax HP"
+      "If you don't play a card this turn, gain #b"," #yRegen. If you complete combat without playing an attack, heal #b","% #yMax HP. The first effect can only trigger "," times per combat."
     ]
   }
 }

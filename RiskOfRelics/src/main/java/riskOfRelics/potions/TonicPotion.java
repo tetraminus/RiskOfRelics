@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.localization.PotionStrings;
 import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import riskOfRelics.RiskOfRelics;
-import riskOfRelics.cards.curses.tonicAffliction;
+import riskOfRelics.cards.curses.TonicAffliction;
 import riskOfRelics.powers.TonicPower;
 
 public class TonicPotion extends CustomPotion {
@@ -63,7 +63,7 @@ public class TonicPotion extends CustomPotion {
         // If you are in combat, gain strength and the "lose strength at the end of your turn" power, equal to the potency of this potion.
         if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
             AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(target, AbstractDungeon.player, new TonicPower(target, AbstractDungeon.player,potency)));
-            AbstractDungeon.actionManager.addToBottom(new AddCardToDeckAction(new tonicAffliction()));
+            AbstractDungeon.actionManager.addToBottom(new AddCardToDeckAction(new TonicAffliction()));
         }
     }
     

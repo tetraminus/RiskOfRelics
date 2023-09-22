@@ -45,7 +45,7 @@ public class ArtifactTopPanelItem extends TopPanelItem {
             this.description = description;
             this.CurrentX = CurrentX;
             this.CurrentY = CurrentY;
-            this.hb = new Hitbox(CurrentX+ (float) texture.getWidth() /3.33f, CurrentY + (float) texture.getHeight() /3.33f , texture.getWidth(), texture.getHeight());
+            this.hb = new Hitbox(CurrentX, CurrentY , 100*Settings.scale, 100*Settings.scale);
         }
 
     }
@@ -55,8 +55,8 @@ public class ArtifactTopPanelItem extends TopPanelItem {
             artifacts.add(new Artifact(ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_off.png"),
                     ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_on.png"),
                     RiskOfRelics.getArtifact(i),RiskOfRelics.getArtifactName(RiskOfRelics.getArtifact(i)), RiskOfRelics.getArtifactDescription(RiskOfRelics.getArtifact(i)),
-                    (int) Settings.WIDTH / 2 - 200 + 100 * (i % 4),
-                    (int) Settings.HEIGHT / 2 - 200 + 100 * (i / 4)));
+                    (int) ( Settings.WIDTH / 2 - (200*Settings.scale) + (100*Settings.scale) * (i % 4)),
+                    (int) ((int) Settings.HEIGHT / 2 - (200*Settings.scale) + (100*Settings.scale) * (i / 4))));
             if (artifacts.get(i).texture == null){
                 artifacts.get(i).texture = ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Badge.png");
             }
@@ -103,7 +103,7 @@ public class ArtifactTopPanelItem extends TopPanelItem {
 
     @Override
     protected void onHover() {
-        if (RiskOfRelics.ActiveArtifacts.size() > 0) {
+        if (!RiskOfRelics.ActiveArtifacts.isEmpty()) {
             TipHelper.renderGenericTip(this.x, this.y-100,  uiStrings[0], uiStrings[1] );
             super.onHover();
 
@@ -130,14 +130,14 @@ public class ArtifactTopPanelItem extends TopPanelItem {
 
                             spriteBatch.draw(artifact.ontexture,
                                     artifact.CurrentX,
-                                    artifact.CurrentY, 100, 100);
+                                    artifact.CurrentY, 100*Settings.scale, 100*Settings.scale);
                         } else {
                             //draw a background
 
 
                             spriteBatch.draw(artifact.texture,
                                     artifact.CurrentX,
-                                    artifact.CurrentY, 100, 100);
+                                    artifact.CurrentY, 100*Settings.scale, 100*Settings.scale);
                             artifact.hb.render(spriteBatch);
                         }
 

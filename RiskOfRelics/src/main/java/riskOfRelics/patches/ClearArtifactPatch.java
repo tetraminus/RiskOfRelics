@@ -15,8 +15,13 @@ public class ClearArtifactPatch {
 
     public static void Postfix(com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen __instance, boolean playBgm) {
         try {
+            ActiveArtifacts.clear();
             for (String A: ModConfig.getString("EnabledArtifacts").split(",")) {
-                ActiveArtifacts.add(getArtifactfromName(A));
+                Artifacts a = getArtifactfromName(A);
+                if (UnlockedArtifacts.contains(a) && !ActiveArtifacts.contains(a)) {
+                    ActiveArtifacts.add(a);
+                }
+
             }
         } catch (Exception e) {
             ModConfig.setString("EnabledArtifacts","");

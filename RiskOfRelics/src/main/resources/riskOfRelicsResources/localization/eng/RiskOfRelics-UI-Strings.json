@@ -1,4 +1,33 @@
 {
+        "riskOfRelics:Printer" : {
+                "TEXT": [
+                        "3D printer",
+                        "Pay #b",
+                        " relic ",
+                        " scrap ",
+                        "to gain ",
+                        ".",
+                        " common",
+                        " uncommon",
+                        " rare",
+                        " NL Will randomly pick one of these relics: ",
+                        " NL "
+                ]
+        },
+        "riskOfRelics:ModPanelText" : {
+                "TEXT": [
+                        "Enable Aspect Descriptions (Default: OFF) | Restart required.",
+                        "3d Render Hack (Default: ON) | Crashes on Apple silicon. \n turn off if getting crashes in the bulwarks ambry.",
+                        "Enable 3D printers (Default: ON) | 3d printers allow you to trade relics and scrap for other relics."
+                ]
+        },
+        "riskOfRelics:WarbannerOption" : {
+                "TEXT": [
+                        "Reduce Cost",
+                        "Choose a card to reduce the cost of.",
+                        "HUH?"
+                ]
+        },
         "riskOfRelics:ArtifactSelect" : {
                 "TEXT": [
                         "Artifact Selection",
@@ -12,6 +41,16 @@
                         "Artifacts",
                         "Shows your active artifacts.",
                         "You have no active artifacts."
+                ]
+
+
+        },
+        "riskOfRelics:ScrapTopPanelItem": {
+                "TEXT": [
+                        "Scrap",
+                        "You have #b"," common scrap. NL ",
+                        " uncommon scrap. NL ",
+                        " rare scrap. NL Gain scrap by removing cards. Starter and Curse cards do not count. Multiple scrap is used in 3d-Printers in place of relics."
                 ]
 
 
@@ -35,7 +74,7 @@
         "riskOfRelics:DEATH": {
                 "TEXT": [
                 "Death",
-                "Lose #b2 Max HP when losing hp. Max HP increases are Multiplied by #b2."
+                "Lose #b2 Max HP when losing HP. Max HP increases are Multiplied by #b2."
                 ]
 
 

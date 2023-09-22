@@ -13,8 +13,6 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
-import com.megacrit.cardcrawl.localization.UIStrings;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import riskOfRelics.RiskOfRelics;
 
 import java.util.ArrayList;
@@ -55,7 +53,7 @@ public class ArtifactSelectScreen extends CustomScreen
                         this.description = description;
                         this.CurrentX = CurrentX;
                         this.CurrentY = CurrentY;
-                        this.hb = new Hitbox(CurrentX+ (float) texture.getWidth() /3.33f, CurrentY + (float) texture.getHeight() /3.33f , texture.getWidth(), texture.getHeight());
+                        this.hb = new Hitbox(CurrentX, CurrentY , 100*Settings.scale, 100*Settings.scale);
                 }
 
         }
@@ -64,8 +62,8 @@ public class ArtifactSelectScreen extends CustomScreen
                         artifacts.add(new Artifact(ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_off.png"),
                                 ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_on.png"),
                                 RiskOfRelics.getArtifact(i),RiskOfRelics.getArtifactName(RiskOfRelics.getArtifact(i)), RiskOfRelics.getArtifactDescription(RiskOfRelics.getArtifact(i)),
-                                (int) Settings.WIDTH / 2 - 200 + 100 * (i % 4),
-                                (int) Settings.HEIGHT / 2 - 200 + 100 * (i / 4)));
+                                (int) ( Settings.WIDTH / 2 - (200*Settings.scale) + (100*Settings.scale) * (i % 4)),
+                                (int) ((int) Settings.HEIGHT / 2 - (200*Settings.scale) + (100*Settings.scale) * (i / 4))));
                         if (artifacts.get(i).texture == null){
                                 artifacts.get(i).texture = ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Badge.png");
                         }
@@ -138,6 +136,9 @@ public class ArtifactSelectScreen extends CustomScreen
                         if (InputHelper.justClickedLeft && a.hb.hovered && !RiskOfRelics.UnlockedArtifacts.contains(a.artifact)){
                                 RiskOfRelics.ActiveArtifacts.add(a.artifact);
                                 if (this.CloseOnSelect){
+                                        if (a.artifact == RiskOfRelics.Artifacts.GLASS){
+                                                RiskOfRelics.ApplyGlassArtHealth();
+                                        }
                                         CardCrawlGame.sound.play("UI_CLICK_1");
                                         CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.HIGH, ScreenShake.ShakeDur.LONG, false);
                                         AbstractDungeon.screen = AbstractDungeon.CurrentScreen.NONE;
@@ -177,14 +178,14 @@ public class ArtifactSelectScreen extends CustomScreen
 
                                                 spriteBatch.draw(artifact.ontexture,
                                                         artifact.CurrentX,
-                                                        artifact.CurrentY,100,100);
+                                                        artifact.CurrentY,100*Settings.scale,100*Settings.scale);
                                         }else {
                                                 //draw a background
 
 
                                                 spriteBatch.draw(artifact.texture,
                                                         artifact.CurrentX,
-                                                        artifact.CurrentY, 100, 100);
+                                                        artifact.CurrentY, 100*Settings.scale, 100*Settings.scale);
                                                 artifact.hb.render(spriteBatch);
                                         }
 

@@ -9,7 +9,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
@@ -28,7 +27,7 @@ public class CharselectPatch {
     public static Texture ontex = new Texture("riskOfRelicsResources/images/ui/ambrySelect/Artifact1_on.png");
 
     public static UIStrings buttonstrs = CardCrawlGame.languagePack.getUIString("riskOfRelics:ArtifactSelect");
-    public static Hitbox buttonHB = new Hitbox(1000 * Settings.scale, 25* Settings.scale, tex.getWidth(), tex.getHeight());
+    public static Hitbox buttonHB = new Hitbox(1350 * Settings.scale, 25* Settings.scale, 100*Settings.scale, 100*Settings.scale);
     public static ArrayList<Artifact> artifacts = new ArrayList<>();
     public static boolean ShouldRender = false;
     public static boolean AnyEnabled = false;
@@ -61,7 +60,7 @@ public class CharselectPatch {
             this.description = description;
             this.CurrentX = CurrentX;
             this.CurrentY = CurrentY;
-            this.hb = new Hitbox(CurrentX+ (float) texture.getWidth() /3.33f, CurrentY + (float) texture.getHeight() /3.33f , texture.getWidth(), texture.getHeight());
+            this.hb = new Hitbox(CurrentX, CurrentY , 100*Settings.scale, 100*Settings.scale);
         }
 
     }
@@ -71,8 +70,8 @@ public class CharselectPatch {
             artifacts.add(new Artifact(ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_off.png"),
                     ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Artifact"+(i+1)+"_on.png"),
                     RiskOfRelics.getArtifact(i),RiskOfRelics.getArtifactName(RiskOfRelics.getArtifact(i)), RiskOfRelics.getArtifactDescription(RiskOfRelics.getArtifact(i)),
-                    (int) Settings.WIDTH / 2 - 200 + 100 * (i % 4),
-                    (int) Settings.HEIGHT / 2 - 200 + 100 * (i / 4)));
+                    (int) ( Settings.WIDTH / 2 - (200*Settings.scale) + (100*Settings.scale) * (i % 4)),
+                    (int) ((int) Settings.HEIGHT / 2 - (200*Settings.scale) + (100*Settings.scale) * (i / 4))));
             if (artifacts.get(i).texture == null){
                 artifacts.get(i).texture = ImageMaster.loadImage("riskOfRelicsResources/images/ui/ambrySelect/Badge.png");
             }
@@ -109,14 +108,14 @@ public class CharselectPatch {
             if (ReflectionHacks.getPrivate(__instance, com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen.class, "anySelected")) {
                 if (buttonHB.hovered) {
                     TipHelper.renderGenericTip(InputHelper.mX + 100, InputHelper.mY + 100, buttonstrs.TEXT[0], (RiskOfRelics.UnlockedArtifacts.size() == 0) ? buttonstrs.TEXT[2] : buttonstrs.TEXT[1]);
-                    sb.draw(ontex, buttonHB.x, buttonHB.y);
-                    if (RiskOfRelics.UnlockedArtifacts.size() == 0) {
-                        sb.draw(ImageMaster.RELIC_LOCK, buttonHB.x, buttonHB.y, (float) ontex.getWidth(), (float) ontex.getHeight());
+                    sb.draw(ontex, buttonHB.x, buttonHB.y, (float) 100*Settings.scale, (float) 100*Settings.scale);
+                    if (RiskOfRelics.UnlockedArtifacts.isEmpty()) {
+                        sb.draw(ImageMaster.RELIC_LOCK, buttonHB.x, buttonHB.y, (float) 100*Settings.scale, (float) 100*Settings.scale);
                     }
                 } else {
-                    sb.draw(tex, buttonHB.x, buttonHB.y);
-                    if (RiskOfRelics.UnlockedArtifacts.size() == 0) {
-                        sb.draw(ImageMaster.RELIC_LOCK, buttonHB.x, buttonHB.y, (float) tex.getWidth(), (float) tex.getHeight());
+                    sb.draw(tex, buttonHB.x, buttonHB.y,(float) 100*Settings.scale, (float) 100*Settings.scale);
+                    if (RiskOfRelics.UnlockedArtifacts.isEmpty()) {
+                        sb.draw(ImageMaster.RELIC_LOCK, buttonHB.x, buttonHB.y, (float) 100*Settings.scale, (float) 100*Settings.scale);
                     }
                 }
             }
@@ -133,13 +132,21 @@ public class CharselectPatch {
                                 TipHelper.renderGenericTip(InputHelper.mX+100, InputHelper.mY+100, artifact.name, artifact.description);
                             }
                             if (artifact.hb.hovered || RiskOfRelics.ActiveArtifacts.contains(artifact.artifact)) {
+                                if (artifact.hb.hovered && RiskOfRelics.UnlockedArtifacts.contains(artifact.artifact)){
+                                    if (RiskOfRelics.ActiveArtifacts.contains(artifact.artifact)) {
+                                        sb.setColor(Color.RED);
+                                    } else {
+                                        sb.setColor(Color.GREEN);
+                                    }
+                                }
 
                                 sb.draw(artifact.ontexture,
                                         artifact.CurrentX,
-                                        artifact.CurrentY, 100, 100);
+                                        artifact.CurrentY, 100*Settings.scale, 100*Settings.scale);
                                 if (!RiskOfRelics.UnlockedArtifacts.contains(artifact.artifact)) {
-                                    sb.draw(ImageMaster.RELIC_LOCK, artifact.CurrentX, artifact.CurrentY,  100,  100);
+                                    sb.draw(ImageMaster.RELIC_LOCK, artifact.CurrentX, artifact.CurrentY,  100*Settings.scale,  100*Settings.scale);
                                 }
+                                sb.setColor(Color.WHITE);
 
                             } else {
                                 //draw a background
@@ -147,10 +154,10 @@ public class CharselectPatch {
 
                                 sb.draw(artifact.texture,
                                         artifact.CurrentX,
-                                        artifact.CurrentY, 100, 100);
+                                        artifact.CurrentY, 100*Settings.scale, 100*Settings.scale);
                                 artifact.hb.render(sb);
                                 if (!RiskOfRelics.UnlockedArtifacts.contains(artifact.artifact)) {
-                                    sb.draw(ImageMaster.RELIC_LOCK, artifact.CurrentX, artifact.CurrentY, 100, 100);
+                                    sb.draw(ImageMaster.RELIC_LOCK, artifact.CurrentX, artifact.CurrentY, 100*Settings.scale, 100*Settings.scale);
                                 }
                             }
 

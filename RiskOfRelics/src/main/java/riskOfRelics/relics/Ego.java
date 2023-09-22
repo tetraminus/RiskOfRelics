@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import riskOfRelics.RiskOfRelics;
+import riskOfRelics.patches.equipment.EquipmentFieldPatch;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,18 @@ public class Ego extends BaseRelic {
             flash();
             ArrayList<AbstractRelic> otherRelics = new ArrayList<AbstractRelic> (player.relics);
             otherRelics.remove(this);
-            if (otherRelics.size() > 0) {
+            if (EquipmentFieldPatch.PlayerEquipment.get(player) != null) {
+                otherRelics.add(EquipmentFieldPatch.PlayerEquipment.get(player));
+            }
+        for (AbstractRelic r : player.relics) {
+            if (r instanceof YellowKey) {
+                otherRelics.remove(r);
+            }
+
+
+        }
+
+            if (!otherRelics.isEmpty()) {
                 relicToremove = otherRelics.get(AbstractDungeon.relicRng.random(otherRelics.size() - 1));
 
             }
