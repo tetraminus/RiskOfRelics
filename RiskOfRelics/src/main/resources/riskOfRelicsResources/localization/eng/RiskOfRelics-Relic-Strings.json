@@ -10,7 +10,7 @@
     "NAME": "Executive Card",
     "FLAVOR": "\"No, you just uh... well you see, the way these cards work is that, uh... [?] well you can take out a low-interest loan to... the buying power of debt is...[??]\"",
     "DESCRIPTIONS": [
-      "#yriskofrelics:Equipment NL Passively get a #b","% discount in shops. NL You may take #b"," cards from card rewards."
+      "#yriskofrelics:Equipment NL Cannot be used. NL Passively get a #b","% discount in shops. NL You may take #b"," cards from card rewards."
     ]
   },
   "riskOfRelics:MolotovPack": {
@@ -289,7 +289,7 @@
   },
   "riskOfRelics:BisonSteak": {
     "NAME": "Bison Steak",
-    "FLAVOR": "Always carry extra.",
+    "FLAVOR": "Always carry a snack.",
     "DESCRIPTIONS": [
       "When you gain a relic, gain #b"," Max HP"
     ]

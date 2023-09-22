@@ -49,6 +49,7 @@ public class Printer extends AbstractChest {
 
     public static UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("riskOfRelics:Printer");
     private FrameBuffer fbo;
+    private ArrayList <AbstractRelic> possibleRelics;
 
     private Camera cam;
     private ModelBatch mb;
@@ -58,6 +59,7 @@ public class Printer extends AbstractChest {
     private AbstractRelic relicToRemove;
     private static final float OFFSET_X;
     private static final float OFFSET_Y;
+    private static final int MAX_POSSIBLE_RELICS = 3;
 
     private static final float DISPLAY_OFFSET_X;
     private static final float DISPLAY_OFFSET_Y;
@@ -79,6 +81,20 @@ public class Printer extends AbstractChest {
         relicToPrint.currentY = CHEST_LOC_Y;
         relicToPrint.hb.move(CHEST_LOC_X, CHEST_LOC_Y);
         relicToPrint.hb.update();
+
+        possibleRelics = new ArrayList<>();
+        for (AbstractRelic r : player.relics) {
+            if (r.tier == relicToPrint.tier) {
+                possibleRelics.add(r);
+            }
+        }
+
+        while (possibleRelics.size() > MAX_POSSIBLE_RELICS){
+            possibleRelics.remove(AbstractDungeon.miscRng.random(possibleRelics.size()-1));
+        }
+
+
+
         SetupGraphics();
         justPaidWithScrap = false;
         
@@ -274,7 +290,7 @@ public class Printer extends AbstractChest {
 
         if (!canPayWithScrap(relicToPrint)){
             desc += uiStrings.TEXT[9];
-            for (AbstractRelic r : player.relics) {
+            for (AbstractRelic r : possibleRelics) {
                 if (r.tier == relicToPrint.tier) {
                     desc += uiStrings.TEXT[10];
                     desc += r.name;
@@ -357,13 +373,10 @@ public class Printer extends AbstractChest {
             }
             justPaidWithScrap = true;
         }else {
-            ArrayList<AbstractRelic> relics = (ArrayList<AbstractRelic>) player.relics.clone();
 
 
-            relics.removeIf(r -> r.tier != relicToPrint.tier);
-
-            if (!relics.isEmpty()) {
-                relicToRemove = relics.get(AbstractDungeon.miscRng.random(relics.size() - 1));
+            if (!possibleRelics.isEmpty()) {
+                relicToRemove = possibleRelics.get(AbstractDungeon.miscRng.random(possibleRelics.size() - 1));
                 player.loseRelic(relicToRemove.relicId);
                 player.reorganizeRelics();
             }

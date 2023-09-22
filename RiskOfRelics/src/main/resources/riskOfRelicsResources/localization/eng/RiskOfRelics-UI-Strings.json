@@ -10,7 +10,7 @@
                         " common",
                         " uncommon",
                         " rare",
-                        " NL Possible relics: ",
+                        " NL Will randomly pick one of these relics: ",
                         " NL "
                 ]
         },
