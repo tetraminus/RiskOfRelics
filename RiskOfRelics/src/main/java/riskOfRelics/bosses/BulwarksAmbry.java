@@ -88,6 +88,8 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
     private Camera cam;
 
+
+
     public BulwarksAmbry() {
         super(NAME, ID, 750, 30.0F, -30.0F, 476.0F, 410.0F, (String)null, -50.0F, 30.0F);// 54
         //

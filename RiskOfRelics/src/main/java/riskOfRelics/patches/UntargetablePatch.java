@@ -49,6 +49,60 @@ public class UntargetablePatch {
         }
 
     }
+//    @SpirePatch2(
+//            clz = DamageRandomEnemyAction.class,
+//            method = "update"
+//    )
+//
+//    public static class DamageRandomEnemyActionPatch {
+//        @SpireInsertPatch(
+//                locator = Locator.class
+//        )
+//        public static SpireReturn<Void> patch(DamageRandomEnemyAction __instance) {
+//            if (__instance.target != null && __instance.target.hasPower(makeID("UntargetablePower"))) {
+//                __instance.isDone = true;
+//
+//                return SpireReturn.Return(null);
+//            }
+//            return SpireReturn.Continue();
+//        }
+//        private static class Locator extends SpireInsertLocator {
+//
+//            @Override
+//            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+//                Matcher matcher = new Matcher.FieldAccessMatcher(DamageRandomEnemyAction.class, "target");
+//                return new int[] {LineFinder.findAllInOrder(ctBehavior, matcher)[0] + 1} ;
+//            }
+//        }
+//
+//    }
+//    @SpirePatch2(
+//            clz = AttackDamageRandomEnemyAction.class,
+//            method = "update"
+//    )
+//
+//    public static class AttackDamageRandomEnemyActionPatch {
+//        @SpireInsertPatch(
+//                locator = Locator.class
+//        )
+//        public static SpireReturn<Void> patch(AttackDamageRandomEnemyAction __instance) {
+//            if (__instance.target != null && __instance.target.hasPower(makeID("UntargetablePower"))) {
+//                __instance.isDone = true;
+//
+//                return SpireReturn.Return(null);
+//            }
+//            return SpireReturn.Continue();
+//        }
+//        private static class Locator extends SpireInsertLocator {
+//
+//            @Override
+//            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+//                Matcher matcher = new Matcher.FieldAccessMatcher(AttackDamageRandomEnemyAction.class, "target");
+//                return new int[] {LineFinder.findAllInOrder(ctBehavior, matcher)[0] + 1} ;
+//            }
+//        }
+//
+//    }
 
 
 

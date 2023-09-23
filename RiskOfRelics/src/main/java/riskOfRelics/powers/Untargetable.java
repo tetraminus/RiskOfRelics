@@ -4,12 +4,19 @@ import basemod.interfaces.CloneablePowerInterface;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.mod.stslib.patches.NeutralPowertypePatch;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import riskOfRelics.RiskOfRelics;
+import riskOfRelics.bosses.BulwarksAmbry;
 import riskOfRelics.util.TextureLoader;
+
+import java.util.ArrayList;
 
 import static riskOfRelics.RiskOfRelics.makePowerPath;
 
@@ -25,6 +32,20 @@ public class Untargetable extends AbstractPower implements CloneablePowerInterfa
     // There's a fallback "missing texture" image, so the game shouldn't crash if you accidentally put a non-existent file.
     private static final Texture tex84 = TextureLoader.getTexture(makePowerPath("Untargetable_84.png"));
     private static final Texture tex32 = TextureLoader.getTexture(makePowerPath("Untargetable_32.png"));
+
+    @Override
+    public int onAttackedToChangeDamage(DamageInfo info, int damageAmount) {
+        if (info.type == DamageInfo.DamageType.HP_LOSS) {
+            return damageAmount;
+        }
+        ArrayList<AbstractMonster> monsters = new ArrayList<>(AbstractDungeon.getCurrRoom().monsters.monsters);
+        monsters.removeIf(AbstractCreature::isDeadOrEscaped);
+        if (!monsters.isEmpty() && !(monsters.get(0) instanceof BulwarksAmbry)) {
+            addToBot(new DamageAction(AbstractDungeon.getRandomMonster((AbstractMonster) this.owner), new DamageInfo(null, damageAmount, DamageInfo.DamageType.THORNS)));
+        }
+
+        return 0;
+    }
 
     public Untargetable(final AbstractCreature owner, final AbstractCreature source, final int amount) {
         name = NAME;

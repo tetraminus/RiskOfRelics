@@ -16,7 +16,7 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class Ego extends BaseRelic {
 
 
-    public static final int AMOUNT = 10;
+    public static final int AMOUNT = 6;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("Ego");
     private static final String IMAGENAME = "Ego.png";

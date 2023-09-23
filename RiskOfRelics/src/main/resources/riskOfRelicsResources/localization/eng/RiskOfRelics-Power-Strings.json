@@ -1,7 +1,7 @@
 {
         "riskOfRelics:UntargetablePower": {
                 "NAME": "Untargetable",
-                "DESCRIPTIONS": ["This enemy cannot be targeted, it must be killed through other means."]
+                "DESCRIPTIONS": ["This enemy cannot be targeted, and will redirect other damage to random enemies."]
         },
         "riskOfRelics:RuinPower": {
                 "NAME": "Ruin",
