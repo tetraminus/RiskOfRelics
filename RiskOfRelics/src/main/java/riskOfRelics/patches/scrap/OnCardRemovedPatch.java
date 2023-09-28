@@ -19,9 +19,12 @@ public class OnCardRemovedPatch {
         if (__instance.type == CardGroup.CardGroupType.MASTER_DECK) {// 19
             ScrapInfo info = ScrapField.scrapFieldPatch.scrapInfo.get(player);
             switch (c.rarity) {
+                case BASIC:
                 case COMMON:
                     info.commonScrap++;
                     break;
+                case SPECIAL:
+                case CURSE:
                 case UNCOMMON:
                     info.uncommonScrap++;
                     break;

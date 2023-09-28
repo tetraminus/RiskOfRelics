@@ -42,8 +42,8 @@ import static riskOfRelics.RiskOfRelics.Hack3dEnabled;
 import static riskOfRelics.RiskOfRelics.makeID;
 
 public class Printer extends AbstractChest {
-    public static final int COMMON_SCRAP_COST = 3;
-    public static final int UNCOMMON_SCRAP_COST = 2;
+    public static final int COMMON_SCRAP_COST = 1;
+    public static final int UNCOMMON_SCRAP_COST = 1;
     public static final int RARE_SCRAP_COST = 1;
     private AbstractRelic relicToPrint;
 
@@ -71,6 +71,16 @@ public class Printer extends AbstractChest {
         this.openedImg = ImageMaster.loadImage("riskOfRelicsResources/images/2DPrinter_2.png");// 26
         this.hb = new Hitbox(256.0F * Settings.scale, 200.0F * Settings.scale);// 28
         this.hb.move(CHEST_LOC_X, CHEST_LOC_Y - 100.0F * Settings.scale);// 29
+        SetRelicToPrint();
+
+
+        SetupGraphics();
+
+        
+
+    }
+
+    private void SetRelicToPrint() {
         AbstractRelic.RelicTier tier;
         do {
             tier = AbstractDungeon.returnRandomRelicTier();
@@ -92,13 +102,8 @@ public class Printer extends AbstractChest {
         while (possibleRelics.size() > MAX_POSSIBLE_RELICS){
             possibleRelics.remove(AbstractDungeon.miscRng.random(possibleRelics.size()-1));
         }
-
-
-
-        SetupGraphics();
         justPaidWithScrap = false;
-        
-
+        isOpen = false;
     }
 
 
@@ -126,11 +131,11 @@ public class Printer extends AbstractChest {
         ScrapInfo info = ScrapField.scrapFieldPatch.scrapInfo.get(player);
         switch (tier) {
             case COMMON:
-                return info.commonScrap >= 3;
+                return info.commonScrap >= COMMON_SCRAP_COST;
             case UNCOMMON:
-                return info.uncommonScrap >= 3;
+                return info.uncommonScrap >= UNCOMMON_SCRAP_COST;
             case RARE:
-                return info.rareScrap >= 2;
+                return info.rareScrap >= RARE_SCRAP_COST;
             default:
                 return false;
         }
@@ -323,12 +328,7 @@ public class Printer extends AbstractChest {
 
             this.isOpen = true;// 85
             if (!Hack3dEnabled) {
-                AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
-                relicToPrint = null;
-                AbstractDungeon.overlayMenu.proceedButton.show();
-                AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77\
-                relicToRemove = null;
-                player.reorganizeRelics();
+                EndAnim();
             }
 
         }else{
@@ -390,11 +390,11 @@ public class Printer extends AbstractChest {
 
         switch (relic.tier) {
             case COMMON:
-                return info.commonScrap >= 3;
+                return info.commonScrap >= COMMON_SCRAP_COST;
             case UNCOMMON:
-                return info.uncommonScrap >= 3;
+                return info.uncommonScrap >= UNCOMMON_SCRAP_COST;
             case RARE:
-                return info.rareScrap >= 2;
+                return info.rareScrap >= RARE_SCRAP_COST;
             default:
                 return false;
         }
@@ -406,11 +406,11 @@ public class Printer extends AbstractChest {
 
         switch (tier) {
             case COMMON:
-                return info.commonScrap >= 3;
+                return info.commonScrap >= COMMON_SCRAP_COST;
             case UNCOMMON:
-                return info.uncommonScrap >= 3;
+                return info.uncommonScrap >= UNCOMMON_SCRAP_COST;
             case RARE:
-                return info.rareScrap >= 2;
+                return info.rareScrap >= RARE_SCRAP_COST;
             default:
                 return false;
         }
@@ -467,12 +467,8 @@ public class Printer extends AbstractChest {
             controller.action("Armature|Armature|DuplicatorArmature|IdleToOpenToIdle|Base Layer", 1, 1, new AnimationController.AnimationListener() {
                 @Override
                 public void onEnd(AnimationController.AnimationDesc animation) {
-                    //controller.setAnimation("Armature|Armature|DuplicatorArmature|Idle|Base Layer", -1);
-                    AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
-                    relicToPrint = null;
-                    AbstractDungeon.overlayMenu.proceedButton.show();
-                    AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
-                    player.reorganizeRelics();
+                    EndAnim();
+
                 }
 
                 @Override
@@ -505,6 +501,19 @@ public class Printer extends AbstractChest {
             InputHelper.justClickedLeft = false;// 144
             this.open(false);// 145
         }
+    }
+
+    private void EndAnim() {
+        //controller.setAnimation("Armature|Armature|DuplicatorArmature|Idle|Base Layer", -1);
+        AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
+        relicToPrint = null;
+        AbstractDungeon.overlayMenu.proceedButton.show();
+        AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
+        player.reorganizeRelics();
+        relicToRemove = null;
+        player.reorganizeRelics();
+
+        SetRelicToPrint();
     }
 
     static {
