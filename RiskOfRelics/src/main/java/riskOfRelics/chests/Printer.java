@@ -506,10 +506,11 @@ public class Printer extends AbstractChest {
     private void EndAnim() {
         //controller.setAnimation("Armature|Armature|DuplicatorArmature|Idle|Base Layer", -1);
         AbstractDungeon.getCurrRoom().spawnRelicAndObtain(CHEST_LOC_X, CHEST_LOC_Y, relicToPrint);// 87
+        relicToPrint.onEquip();
         relicToPrint = null;
         AbstractDungeon.overlayMenu.proceedButton.show();
         AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.COMPLETE;// 77
-        player.reorganizeRelics();
+
         relicToRemove = null;
         player.reorganizeRelics();
 

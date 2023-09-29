@@ -32,7 +32,7 @@ public class BackupMag extends BaseRelic {
             }
         }
 
-        if (otherRelics.size() > 0) {
+        if (!otherRelics.isEmpty()) {
             relToAdd = player.relics.get(AbstractDungeon.relicRng.random(otherRelics.size()-1));
 
         }
