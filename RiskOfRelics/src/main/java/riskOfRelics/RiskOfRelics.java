@@ -32,7 +32,6 @@ import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.TextCenteredEffect;
-import jdk.internal.misc.OSEnvironment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import riskOfRelics.artifacts.DeathArt;
@@ -736,6 +735,7 @@ public class RiskOfRelics implements
 
             if (!CardCrawlGame.loadingSave){
                 MetamorphCharacter = null;
+                ActiveArtifacts.removeIf(A -> !UnlockedArtifacts.contains(A));
             }
             if (ActiveArtifacts.contains(Artifacts.METAMORPHOSIS)) {
                 ReinitializeCardPools();
