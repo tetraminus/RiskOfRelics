@@ -168,15 +168,7 @@ public class RecyclerPatches {
 
 
         ((BossChest) ((TreasureRoomBoss) (AbstractDungeon.getCurrRoom())).chest).open(true);
-
-
     }
-
-
-
-
-
-
 
         @SpirePatch2(
                 clz = BossRelicSelectScreen.class,

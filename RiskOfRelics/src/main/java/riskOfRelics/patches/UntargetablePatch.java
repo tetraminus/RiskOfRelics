@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.PotionPopUp;
 import javassist.CtBehavior;
+import riskOfRelics.cards.colorless.GlowingShard;
 
 import static riskOfRelics.RiskOfRelics.makeID;
 
@@ -15,8 +16,12 @@ public class UntargetablePatch {
             method = "cardPlayable"
     )
     public static class UntargetablePatchMethod {
-        public static SpireReturn<Boolean> Prefix(AbstractMonster m) {
-            if (m != null && m.hasPower(makeID("UntargetablePower"))) {
+        public static SpireReturn<Boolean> Prefix(AbstractCard __instance, AbstractMonster m) {
+            if (__instance instanceof GlowingShard) {
+                return SpireReturn.Continue();
+            }
+
+            if (m != null && (m.hasPower(makeID("UntargetablePower")))) {
                 return SpireReturn.Return(false);
             }
             return SpireReturn.Continue();
