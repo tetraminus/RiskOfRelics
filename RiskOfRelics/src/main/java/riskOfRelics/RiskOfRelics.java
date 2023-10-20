@@ -418,6 +418,7 @@ public class RiskOfRelics implements
                 Hack3dEnabled, // Boolean it uses
                 settingsPanel, // The mod panel in which this button will be in
                 (label) -> {
+
                 }, // thing??????? idk
                 (button) -> { // The actual button:
 
