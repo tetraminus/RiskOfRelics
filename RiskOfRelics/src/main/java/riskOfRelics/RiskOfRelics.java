@@ -527,7 +527,7 @@ public class RiskOfRelics implements
 
         }
 
-        BaseMod.addMonster(BulwarksAmbry.ID , BulwarksAmbry::new);
+        BaseMod.addMonster(BulwarksAmbry.ID, makeID("Bulwarks_Ambry"), BulwarksAmbry::new);
 
 
 
