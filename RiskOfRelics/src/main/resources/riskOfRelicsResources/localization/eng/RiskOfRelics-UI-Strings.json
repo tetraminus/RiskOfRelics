@@ -11,7 +11,10 @@
                         " uncommon",
                         " rare",
                         " NL Will randomly pick one of these relics: ",
-                        " NL "
+                        " NL ",
+                        " NL Can be used multiple times. ",
+                        " Free to use once!",
+                        " nothing "
                 ]
         },
         "riskOfRelics:ModPanelText" : {

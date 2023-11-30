@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.JsonReader;
@@ -36,6 +38,7 @@ import riskOfRelics.patches.scrap.ScrapField;
 import riskOfRelics.util.ScrapInfo;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 import static riskOfRelics.RiskOfRelics.Hack3dEnabled;
@@ -47,7 +50,11 @@ public class Printer extends AbstractChest {
     public static final int RARE_SCRAP_COST = 1;
     private AbstractRelic relicToPrint;
 
+    private boolean freeUse = true;
+
     public static UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("riskOfRelics:Printer");
+
+    public static final Texture freeImg = ImageMaster.loadImage("riskOfRelicsResources/images/ui/Printer/FreeIcon.png");// 25
     private FrameBuffer fbo;
     private ArrayList <AbstractRelic> possibleRelics;
 
@@ -84,7 +91,7 @@ public class Printer extends AbstractChest {
         AbstractRelic.RelicTier tier;
         do {
             tier = AbstractDungeon.returnRandomRelicTier();
-        } while (!tierAvailable(tier));
+        } while (!tierAvailable(tier) && !freeUse);
 
         relicToPrint = AbstractDungeon.returnRandomRelic(tier);
         relicToPrint.currentX = CHEST_LOC_X;
@@ -109,6 +116,9 @@ public class Printer extends AbstractChest {
 
     @SuppressWarnings("unused") //Used in patch
     public static boolean canSpawn(){
+        if (Objects.equals(AbstractDungeon.getCurrRoom().getMapSymbol(), "T")){
+            return false;
+        }
         if (!RiskOfRelics.PrintersEnabled ||(AbstractDungeon.actNum == 3 && !Settings.hasSapphireKey)){
             return false;
         }
@@ -144,6 +154,7 @@ public class Printer extends AbstractChest {
 
     public void render(SpriteBatch sb) {
 
+
         if (Hack3dEnabled) {
             try {
                 Render3D(sb);
@@ -176,6 +187,13 @@ public class Printer extends AbstractChest {
 
             sb.flush();
             ScissorStack.popScissors();
+        }
+
+        if (freeUse){
+            float scale = .25f;
+            Vector2 offset = new Vector2((freeImg.getWidth()*scale * Settings.scale)/2,(freeImg.getHeight()*scale * Settings.scale)/2);
+            offset.y += 100*Settings.scale;
+            sb.draw(freeImg,CHEST_LOC_X - offset.x, CHEST_LOC_Y - offset.y, freeImg.getWidth()*scale * Settings.scale, freeImg.getHeight()*scale * Settings.scale);
         }
 
 
@@ -255,45 +273,50 @@ public class Printer extends AbstractChest {
     private String GetTipDesc() {
         String desc ="";
         desc += uiStrings.TEXT[1];
-        if (canPayWithScrap(relicToPrint)) {
-
-            switch (relicToPrint.tier) {
-                case COMMON:
-                    desc += COMMON_SCRAP_COST;
-                    desc += uiStrings.TEXT[6];
-                    break;
-                case UNCOMMON:
-                    desc += UNCOMMON_SCRAP_COST;
-                    desc += uiStrings.TEXT[7];
-                    break;
-                case RARE:
-                    desc += RARE_SCRAP_COST;
-                    desc += uiStrings.TEXT[8];
-                    break;
-            }
-
-            desc += uiStrings.TEXT[3];
+        if (freeUse) {
+            desc += uiStrings.TEXT[13];
         }else {
-            desc += 1;
-            switch (relicToPrint.tier) {
+            if (canPayWithScrap(relicToPrint)) {
 
-                case COMMON:
-                    desc += uiStrings.TEXT[6];
-                    break;
-                case UNCOMMON:
-                    desc += uiStrings.TEXT[7];
-                    break;
-                case RARE:
-                    desc += uiStrings.TEXT[8];
-                    break;
+                switch (relicToPrint.tier) {
+                    case COMMON:
+                        desc += COMMON_SCRAP_COST;
+                        desc += uiStrings.TEXT[6];
+                        break;
+                    case UNCOMMON:
+                        desc += UNCOMMON_SCRAP_COST;
+                        desc += uiStrings.TEXT[7];
+                        break;
+                    case RARE:
+                        desc += RARE_SCRAP_COST;
+                        desc += uiStrings.TEXT[8];
+                        break;
+                }
+
+                desc += uiStrings.TEXT[3];
+            } else {
+                desc += 1;
+                switch (relicToPrint.tier) {
+
+                    case COMMON:
+                        desc += uiStrings.TEXT[6];
+                        break;
+                    case UNCOMMON:
+                        desc += uiStrings.TEXT[7];
+                        break;
+                    case RARE:
+                        desc += uiStrings.TEXT[8];
+                        break;
+                }
+                desc += uiStrings.TEXT[2];
             }
-            desc += uiStrings.TEXT[2];
         }
         desc += uiStrings.TEXT[4];
         desc += relicToPrint.name;
         desc += uiStrings.TEXT[5];
-
-        if (!canPayWithScrap(relicToPrint)){
+        if (freeUse){
+            desc += uiStrings.TEXT[12];
+        }else if (!canPayWithScrap(relicToPrint) ){
             desc += uiStrings.TEXT[9];
             for (AbstractRelic r : possibleRelics) {
                 if (r.tier == relicToPrint.tier) {
@@ -343,7 +366,7 @@ public class Printer extends AbstractChest {
     }
 
     private boolean tryToPay(AbstractRelic relicToPrint) {
-        if (canPayWithScrap(relicToPrint) || canPayWithRelic(relicToPrint)) {
+        if (canPayWithScrap(relicToPrint) || canPayWithRelic(relicToPrint) || freeUse) {
             payForPrint(relicToPrint);
             return true;
         }
@@ -357,6 +380,11 @@ public class Printer extends AbstractChest {
     }
 
     private void payForPrint(AbstractRelic relicToPrint) {
+        if (freeUse){
+            freeUse = false;
+            justPaidWithScrap = true;
+            return;
+        }
 
         if (canPayWithScrap(relicToPrint)) {
             ScrapInfo info = ScrapField.scrapFieldPatch.scrapInfo.get(player);
@@ -425,8 +453,13 @@ public class Printer extends AbstractChest {
             //modelInstance.transform.rotate(0, 1, 0, Gdx.graphics.getDeltaTime() *5);
         if (relicToPrint != null){
             relicToPrint.hb.update();
-            relicToPrint.currentX = CHEST_LOC_X + DISPLAY_OFFSET_X;
-            relicToPrint.currentY = CHEST_LOC_Y + DISPLAY_OFFSET_Y;
+
+            float wigglerX = MathUtils.cosDeg((float) (System.currentTimeMillis() / 10L % 360L)) * 3.0F * Settings.scale;// 51
+            float wigglerY = MathUtils.sinDeg((float) (System.currentTimeMillis() / 6L % 360L)) * 5.0F * Settings.scale;// 52
+
+
+            relicToPrint.currentX = CHEST_LOC_X + DISPLAY_OFFSET_X + wigglerX;
+            relicToPrint.currentY = CHEST_LOC_Y + DISPLAY_OFFSET_Y + wigglerY;
             relicToPrint.hb.move(relicToPrint.currentX, relicToPrint.currentY);// 54
             relicToPrint.hb.update();// 57
             if (relicToPrint.hb.hovered) {// 58
@@ -519,7 +552,7 @@ public class Printer extends AbstractChest {
 
     static {
         DISPLAY_OFFSET_X = -70*Settings.scale;// 31
-        DISPLAY_OFFSET_Y = -30*Settings.scale;// 32
+        DISPLAY_OFFSET_Y = -25*Settings.scale;// 32
         OFFSET_X = 75*Settings.scale;// 31
         OFFSET_Y = -125*Settings.scale;// 32
 

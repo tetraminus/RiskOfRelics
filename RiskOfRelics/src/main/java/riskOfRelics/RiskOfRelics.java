@@ -80,50 +80,66 @@ public class RiskOfRelics implements
         MaxHPChangeSubscriber,
         RelicGetSubscriber,
         PostDeathSubscriber,
-        AddAudioSubscriber
-
-
-    {
+        AddAudioSubscriber {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
     // Making relics? EditRelicsSubscriber. etc., etc., for a full list and how to make your own, visit the basemod wiki.
     public static final Logger logger = LogManager.getLogger(RiskOfRelics.class.getName());
-    private static String modID;
-
-    // Mod-settings settings. This is if you want an on/off savable button
-    public static Properties riskOfRelicsDefaultSettings = new Properties();
     public static final String ENABLE_ASPECT_DESC_SETTINGS = "enableAspectDesc";
     public static final String ENABLE_3D_HACK_SETTINGS = "enable3dHack";
     public static final String ENABLE_PRINTERS_SETTINGS = "enablePrinters";
-    public static boolean AspectDescEnabled = true; // The boolean we'll be setting on/off (true/false)
-    public static boolean Hack3dEnabled = true; // The boolean we'll be setting on/off (true/false)
-    public static boolean PrintersEnabled = true; // The boolean we'll be setting on/off (true/false)
-
+    //Mod Badge - A small icon that appears in the mod settings menu next to your mod.
+    public static final String BADGE_IMAGE = "riskOfRelicsResources/images/Badge.png";
+    public static final ArrayList<String> NonScreenBlacklist = new ArrayList<String>() {{
+        add(EmptyCage.ID);
+        add(CallingBell.ID);
+        add(PandorasBox.ID);
+        add(Orrery.ID);
+        add(Strawberry.ID);
+        add(Pear.ID);
+        add(Mango.ID);
+        add(Waffle.ID);
+        add(TinyHouse.ID);
+    }};
     //This is for the in-game mod settings panel.
     private static final String MODNAME = "Risk of Relics";
     private static final String AUTHOR = "Tetraminus"; // And pretty soon - You!
     private static final String DESCRIPTION = "Risk of Rain 2 mod for Slay the Spire.";
-
+    // Mod-settings settings. This is if you want an on/off savable button
+    public static Properties riskOfRelicsDefaultSettings = new Properties();
+    public static boolean AspectDescEnabled = true; // The boolean we'll be setting on/off (true/false)
+    public static boolean Hack3dEnabled = true; // The boolean we'll be setting on/off (true/false)
+    public static boolean PrintersEnabled = true; // The boolean we'll be setting on/off (true/false)
     public static ArrayList<Artifacts> ActiveArtifacts = new ArrayList<Artifacts>();
     public static ArrayList<Artifacts> UnlockedArtifacts = new ArrayList<Artifacts>();
     public static SpireConfig ModConfig;
+    public static String MetamorphCharacter;
+    public static boolean justLoadedMetamorphosis = false;
+    public static ArrayList<AbstractRelic> enigmatoremove = new ArrayList<>();
+    public static FrameBuffer fbo;
+    public static Camera cam;
+    public static ModelBatch mb;
+    private static String modID;
 
-    // =============== INPUT TEXTURE LOCATION =================
+    public RiskOfRelics() {
+        logger.info("Subscribe to BaseMod hooks");
+
+        BaseMod.subscribe(this);
 
 
+        setModID("riskOfRelics");
+
+        logger.info("Done subscribing");
 
 
+        logger.info("Done creating the color");
 
 
-
-    //Mod Badge - A small icon that appears in the mod settings menu next to your mod.
-    public static final String BADGE_IMAGE = "riskOfRelicsResources/images/Badge.png";
-
-
-    // =============== MAKE IMAGE PATHS =================
+    }
 
     public static String makeCardPath(String resourcePath) {
         return getModID() + "Resources/images/cards/" + resourcePath;
     }
+
     public static String makeUIPath(String resourcePath) {
         return getModID() + "Resources/images/ui/" + resourcePath;
     }
@@ -135,6 +151,8 @@ public class RiskOfRelics implements
     public static String makeRelicPath(String resourcePath) {
         return getModID() + "Resources/images/relics/" + resourcePath;
     }
+
+
 
     public static String makeRelicOutlinePath(String resourcePath) {
         return getModID() + "Resources/images/relics/outline/" + resourcePath;
@@ -152,34 +170,15 @@ public class RiskOfRelics implements
         return getModID() + "Resources/images/events/" + resourcePath;
     }
 
-    // =============== /MAKE IMAGE PATHS/ =================
-
-    // =============== /INPUT TEXTURE LOCATION/ =================
-
-
-    // =============== SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE =================
-
-    public RiskOfRelics() {
-        logger.info("Subscribe to BaseMod hooks");
-
-        BaseMod.subscribe(this);
+    public static String getModID() { // NO
+        return modID; // DOUBLE NO
+    } // NU-UH
 
 
-        setModID("riskOfRelics");
-
-        logger.info("Done subscribing");
+    // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
 
 
-        logger.info("Done creating the color");
-
-
-
-
-    }
-
-    // ====== NO EDIT AREA ======
-    // DON'T TOUCH THIS STUFF. IT IS HERE FOR STANDARDIZATION BETWEEN MODS AND TO ENSURE GOOD CODE PRACTICES.
-    // IF YOU MODIFY THIS I WILL HUNT YOU DOWN AND DOWNVOTE YOUR MOD ON WORKSHOP
+    // =============== LOAD THE CHARACTER =================
 
     public static void setModID(String ID) { // DON'T EDIT
         Gson coolG = new Gson(); // EY DON'T EDIT THIS
@@ -197,9 +196,10 @@ public class RiskOfRelics implements
         logger.info("Success! ID is " + modID); // WHY WOULD U WANT IT NOT TO LOG?? DON'T EDIT THIS.
     } // NO
 
-    public static String getModID() { // NO
-        return modID; // DOUBLE NO
-    } // NU-UH
+    // =============== /LOAD THE CHARACTER/ =================
+
+
+    // =============== POST-INITIALIZE =================
 
     private static void pathCheck() { // ALSO NO
         Gson coolG = new Gson(); // NOPE DON'T EDIT THIS
@@ -218,8 +218,10 @@ public class RiskOfRelics implements
         }// NO
     }// NO
 
-    // ====== YOU CAN EDIT AGAIN ======
+    // =============== / POST-INITIALIZE/ =================
 
+
+    // ================ ADD POTIONS ===================
 
     public static void initialize() {
         logger.info("========================= Initializing Risk Of Relics. Hi. =========================");
@@ -246,7 +248,7 @@ public class RiskOfRelics implements
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (Hack3dEnabled){
+        if (Hack3dEnabled) {
             logger.warn("3d Hack enabled, if you crash when fighting a certain boss, turn this off.");
         }
 
@@ -254,41 +256,57 @@ public class RiskOfRelics implements
 
         ActiveArtifacts = new ArrayList<>();
         try {
-                for (String A: ModConfig.getString("Artifacts").split(",")) {
-                    if (!UnlockedArtifacts.contains(getArtifactfromName(A))) {
-                        UnlockedArtifacts.add(getArtifactfromName(A));
-                    }
+            for (String A : ModConfig.getString("Artifacts").split(",")) {
+                if (!UnlockedArtifacts.contains(getArtifactfromName(A))) {
+                    UnlockedArtifacts.add(getArtifactfromName(A));
                 }
+            }
         } catch (Exception e) {
-                ModConfig.setString("Artifacts","");
+            ModConfig.setString("Artifacts", "");
         }
         try {
-                ModConfig.save();
+            ModConfig.save();
         } catch (IOException e) {
-                throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
-
-
 
 
     }
+
+    // ================ /ADD POTIONS/ ===================
+
+
+    // ================ ADD RELICS ===================
+
     public static boolean hasShownFTUE() {
 
         return ModConfig.getBool("hasShownFTUE");
     }
+
+    // ================ /ADD RELICS/ ===================
+
+
+    // ================ ADD CARDS ===================
+
     public static void setHasShownFTUE(boolean b) {
         ModConfig.setBool("hasShownFTUE", b);
         saveData();
 
     }
 
+
+    // ================ /ADD CARDS/ ===================
+
+
+    // ================ LOAD THE TEXT ===================
+
     public static void saveData() {
         try {
-            ModConfig.setString("Artifacts","");
-            for (Artifacts A:
+            ModConfig.setString("Artifacts", "");
+            for (Artifacts A :
                     UnlockedArtifacts) {
-                if (!ModConfig.getString("Artifacts").contains(A.name()+",")) {
-                    ModConfig.setString("Artifacts",ModConfig.getString("Artifacts")+A.name()+",");
+                if (!ModConfig.getString("Artifacts").contains(A.name() + ",")) {
+                    ModConfig.setString("Artifacts", ModConfig.getString("Artifacts") + A.name() + ",");
                 }
 
 
@@ -298,7 +316,7 @@ public class RiskOfRelics implements
             throw new RuntimeException(e);
         }
         try {
-            ModConfig.setString("EnabledArtifacts","");
+            ModConfig.setString("EnabledArtifacts", "");
 
             //remove duplicates from ActiveArtifacts
             Set<Artifacts> hs = new HashSet<>(ActiveArtifacts);
@@ -306,10 +324,10 @@ public class RiskOfRelics implements
             ActiveArtifacts.addAll(hs);
 
 
-            for (Artifacts A:
+            for (Artifacts A :
                     ActiveArtifacts) {
 
-                ModConfig.setString("EnabledArtifacts",ModConfig.getString("EnabledArtifacts")+A.name()+",");
+                ModConfig.setString("EnabledArtifacts", ModConfig.getString("EnabledArtifacts") + A.name() + ",");
 
             }
             ModConfig.save();
@@ -323,21 +341,196 @@ public class RiskOfRelics implements
         }
     }
 
+    // ================ /LOAD THE TEXT/ ===================
+
+    // ================ LOAD THE KEYWORDS ===================
+
     public static Texture getArtifactImage(Artifacts artifact, boolean On) {
         if (On) {
-            return TextureLoader.getTexture("riskOfRelicsResources/images/ui/ambrySelect/Artifact" + (artifact.ordinal()+1) +  "_on.png");
+            return TextureLoader.getTexture("riskOfRelicsResources/images/ui/ambrySelect/Artifact" + (artifact.ordinal() + 1) + "_on.png");
         } else {
-            return TextureLoader.getTexture("riskOfRelicsResources/images/ui/ambrySelect/Artifact" + (artifact.ordinal()+1) + "_off.png");
+            return TextureLoader.getTexture("riskOfRelicsResources/images/ui/ambrySelect/Artifact" + (artifact.ordinal() + 1) + "_off.png");
         }
     }
 
+    public static String makeID(String idText) {
+        return getModID() + ":" + idText;
+    }
+
+    public static void ApplyGlassArtHealth() {
+        player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
+        player.currentHealth = player.maxHealth;
+    }
+
+    public static void DoMetamorphosisShtuff() {
+        if (MetamorphCharacter != null) {
+            for (AbstractPlayer p : CardCrawlGame.characterManager.getAllCharacters()) {
+                if (p.chosenClass.name().equals(MetamorphCharacter)) {
+                    ReinitializeCardPools(p, true);
+                    break;
+                }
+            }
+        } else {
+            ReinitializeCardPools();
+        }
+
+    }
+
+    private static void ReinitializeCardPools() {
+        AbstractPlayer NewChar = CardCrawlGame.characterManager.getAllCharacters().get(MathUtils.random(0, CardCrawlGame.characterManager.getAllCharacters().size() - 1));
+        effectsQueue.add(new TextCenteredEffect(NewChar.getLocalizedCharacterName()));
+        effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH / 2, (float) Settings.HEIGHT / 2, Artifacts.METAMORPHOSIS));
+        ReinitializeCardPools(NewChar, false);
+    }
+
+    public static void ReinitializeCardPools(AbstractPlayer NewChar, boolean isSave) {
+        logger.info("INIT CARD POOL");// 1419
+        long startTime = System.currentTimeMillis();// 1420
+        commonCardPool.clear();// 1423
+        uncommonCardPool.clear();// 1424
+        rareCardPool.clear();// 1425
+        colorlessCardPool.clear();// 1426
+        curseCardPool.clear();// 1427
+        ArrayList<AbstractCard> tmpPool = new ArrayList();// 1429
+        if (ModHelper.isModEnabled("Colorless Cards")) {// 1430
+            CardLibrary.addColorlessCards(tmpPool);// 1431
+        }
 
 
+        ReflectionHacks.privateMethod(AbstractDungeon.class, "addColorlessCards").invoke(dungeon);// 1447
+        ReflectionHacks.privateMethod(AbstractDungeon.class, "addCurseCards").invoke(dungeon);// 1448
+        tmpPool.addAll(NewChar.getCardPool(tmpPool));
+        if (!isSave) {
+            MetamorphCharacter = NewChar.chosenClass.name();
+        } else {
+            justLoadedMetamorphosis = true;
+        }
 
-        // ============== /SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE/ =================
+        Iterator var4 = tmpPool.iterator();// 1449
+
+        AbstractCard c;
+        while (var4.hasNext()) {
+            c = (AbstractCard) var4.next();
+            switch (c.rarity) {// 1450
+                case COMMON:
+                    commonCardPool.addToTop(c);// 1452
+                    break;// 1453
+                case UNCOMMON:
+                    uncommonCardPool.addToTop(c);// 1455
+                    break;// 1456
+                case RARE:
+                    rareCardPool.addToTop(c);// 1458
+                    break;// 1459
+                case CURSE:
+                    curseCardPool.addToTop(c);// 1461
+                    break;// 1462
+                default:
+                    logger.info("Unspecified rarity: " + c.rarity.name() + " when creating pools! AbstractDungeon: Line 827");// 1464 1465
+            }
+        }
+
+        srcColorlessCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1471
+        srcCurseCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1472
+        srcRareCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1473
+        srcUncommonCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1474
+        srcCommonCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1475
+        var4 = colorlessCardPool.group.iterator();// 1477
+
+        while (var4.hasNext()) {
+            c = (AbstractCard) var4.next();
+            srcColorlessCardPool.addToBottom(c);// 1478
+        }
+
+        var4 = curseCardPool.group.iterator();// 1480
+
+        while (var4.hasNext()) {
+            c = (AbstractCard) var4.next();
+            srcCurseCardPool.addToBottom(c);// 1481
+        }
+
+        var4 = rareCardPool.group.iterator();// 1483
+
+        while (var4.hasNext()) {
+            c = (AbstractCard) var4.next();
+            srcRareCardPool.addToBottom(c);// 1484
+        }
+
+        var4 = uncommonCardPool.group.iterator();// 1486
+
+        while (var4.hasNext()) {
+            c = (AbstractCard) var4.next();
+            srcUncommonCardPool.addToBottom(c);// 1487
+        }
+
+        var4 = commonCardPool.group.iterator();// 1489
+
+        while (var4.hasNext()) {
+            c = (AbstractCard) var4.next();
+            srcCommonCardPool.addToBottom(c);// 1490
+        }
+
+        logger.info("Cardpool load time: " + (System.currentTimeMillis() - startTime) + "ms");// 1493
+    }// 1494
+
+    public static void DoEnigmaShtuff() {
+        ArrayList<AbstractRelic> relicsToAdd = new ArrayList<>();
+        if (ActiveArtifacts.contains(Artifacts.ENIGMA)) {
+            enigmatoremove.addAll(player.relics);
+            enigmatoremove.removeIf(r -> r.tier == AbstractRelic.RelicTier.STARTER);
+            AbstractDungeon.relicsToRemoveOnStart.clear();
+            ReflectionHacks.privateMethod(AbstractDungeon.class, "initializeRelicList").invoke(dungeon);
+            for (AbstractRelic r :
+                    player.relics) {
+                if (r.tier != AbstractRelic.RelicTier.STARTER) {
+                    relicsToAdd.add(GetActualNonScreenRelic(r.tier));
+                }
+            }
+            for (AbstractRelic r :
+                    enigmatoremove) {
+                player.loseRelic(r.relicId);
+            }
+            for (AbstractRelic r :
+                    relicsToAdd) {
+                r.instantObtain();
+            }
+        }
 
 
-    // =============== LOAD THE CHARACTER =================
+    }
+
+    private static AbstractRelic GetActualNonScreenRelic(AbstractRelic.RelicTier r) {
+        AbstractRelic relic;
+        do {
+            if (!(r == AbstractRelic.RelicTier.SPECIAL)) {
+                relic = AbstractDungeon.returnRandomScreenlessRelic(r);
+            } else {
+                relic = AbstractDungeon.returnRandomScreenlessRelic(AbstractRelic.RelicTier.RARE);
+            }
+        } while (NonScreenBlacklist.contains(relic.relicId));
+
+
+        return relic;
+    }
+
+    public static Artifacts getArtifact(int artifactNum) {
+        return Artifacts.values()[artifactNum];
+    }
+
+    public static Artifacts getArtifactfromName(String a) {
+        return Artifacts.valueOf(a);
+    }
+
+    public static String getArtifactName(Artifacts a) {
+        UIStrings Str = CardCrawlGame.languagePack.getUIString(makeID(a.toString()));
+        return Str.TEXT[0];
+
+
+    }
+
+    public static String getArtifactDescription(Artifacts a) {
+        UIStrings Str = CardCrawlGame.languagePack.getUIString(makeID(a.toString()));
+        return Str.TEXT[1];
+    }
 
     @Override
     public void receiveEditCharacters() {
@@ -349,11 +542,6 @@ public class RiskOfRelics implements
         // receiveEditPotions();
         //logger.info("Added " + TheDefault.Enums.THE_DEFAULT.toString());
     }
-
-    // =============== /LOAD THE CHARACTER/ =================
-
-
-    // =============== POST-INITIALIZE =================
 
     @Override
     public void receivePostInitialize() {
@@ -373,15 +561,15 @@ public class RiskOfRelics implements
         //BaseMod.addCustomScreen(new ArtifactInfoScreen());
         BaseMod.addTopPanelItem(new ArtifactTopPanelItem());
         BaseMod.addTopPanelItem(new ScrapTopPanelItem());
-        BaseMod.addSaveField(makeID("ActiveArtifacts"),new ArtifactSaver());
-        BaseMod.addSaveField(makeID("MetamorphCharacter"),new MetamorphSaver());
-        BaseMod.addSaveField(makeID("EnigmaCounter"),new CounterSavers.EnigmaCounterSaver());
-        BaseMod.addSaveField(makeID("MetamorphCounter"),new CounterSavers.MetamorphCounterSaver());
-        BaseMod.addSaveField(makeID("VengCounter") ,new CounterSavers.VengCounterSaver());
-        BaseMod.addSaveField(makeID("PlayerEquipment") , new EquipmentSaver());
-        BaseMod.addSaveField(makeID("ChargeTimer") , new ChargeTimerSaver());
-        BaseMod.addSaveField(makeID("PlayerEquipmentCounter") , new EQCounterSaver());
-        BaseMod.addSaveField(makeID("PlayerScrapInfo") , new ScrapInfoSaver());
+        BaseMod.addSaveField(makeID("ActiveArtifacts"), new ArtifactSaver());
+        BaseMod.addSaveField(makeID("MetamorphCharacter"), new MetamorphSaver());
+        BaseMod.addSaveField(makeID("EnigmaCounter"), new CounterSavers.EnigmaCounterSaver());
+        BaseMod.addSaveField(makeID("MetamorphCounter"), new CounterSavers.MetamorphCounterSaver());
+        BaseMod.addSaveField(makeID("VengCounter"), new CounterSavers.VengCounterSaver());
+        BaseMod.addSaveField(makeID("PlayerEquipment"), new EquipmentSaver());
+        BaseMod.addSaveField(makeID("ChargeTimer"), new ChargeTimerSaver());
+        BaseMod.addSaveField(makeID("PlayerEquipmentCounter"), new EQCounterSaver());
+        BaseMod.addSaveField(makeID("PlayerScrapInfo"), new ScrapInfoSaver());
 
 
         // Create the Mod Menu
@@ -403,7 +591,8 @@ public class RiskOfRelics implements
                     AspectDescEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
                     try {
                         // And based on that boolean, set the settings and save them
-                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);;
+                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);
+                        ;
                         config.setBool(ENABLE_ASPECT_DESC_SETTINGS, AspectDescEnabled);
                         config.save();
                     } catch (Exception e) {
@@ -425,7 +614,8 @@ public class RiskOfRelics implements
                     Hack3dEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
                     try {
                         // And based on that boolean, set the settings and save them
-                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);;
+                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);
+                        ;
                         config.setBool(ENABLE_3D_HACK_SETTINGS, Hack3dEnabled);
                         config.save();
                     } catch (Exception e) {
@@ -446,7 +636,8 @@ public class RiskOfRelics implements
                     PrintersEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
                     try {
                         // And based on that boolean, set the settings and save them
-                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);;
+                        SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);
+                        ;
                         config.setBool(ENABLE_PRINTERS_SETTINGS, PrintersEnabled);
                         config.save();
                     } catch (Exception e) {
@@ -503,7 +694,7 @@ public class RiskOfRelics implements
 
                 //can only spawn in endless
                 .eventType(EventUtils.EventType.SHRINE)
-                .spawnCondition(() -> Settings.isEndless )
+                .spawnCondition(() -> Settings.isEndless)
                 .create();
 
         BaseMod.addEvent(eventParams);
@@ -512,13 +703,11 @@ public class RiskOfRelics implements
         logger.info("Done loading badge Image and mod options");
 
 
-
-
         BaseMod.registerCustomReward(RerollRewardPatch.RISKOFRELICS_REROLL, (rewardSave) -> { // this handles what to do when this quest type is loaded.
                     return new RerollReward();
                 },
                 (customReward) -> { // this handles what to do when this quest type is saved.
-                    return new RewardSave(customReward.type.toString(), null,0, 0);
+                    return new RewardSave(customReward.type.toString(), null, 0, 0);
                 });
 
         if (!RiskOfRelics.hasShownFTUE()) {
@@ -530,14 +719,7 @@ public class RiskOfRelics implements
         BaseMod.addMonster(BulwarksAmbry.ID, makeID("Bulwarks_Ambry"), BulwarksAmbry::new);
 
 
-
     }
-
-    // =============== / POST-INITIALIZE/ =================
-
-
-
-    // ================ ADD POTIONS ===================
 
     public void receiveEditPotions() {
         logger.info("Beginning to edit potions");
@@ -551,11 +733,6 @@ public class RiskOfRelics implements
 
         logger.info("Done editing potions");
     }
-
-    // ================ /ADD POTIONS/ ===================
-
-
-    // ================ ADD RELICS ===================
 
     @Override
     public void receiveEditRelics() {
@@ -582,7 +759,7 @@ public class RiskOfRelics implements
                 .any(BaseRelic.class, (info, relic) -> {
                     logger.info("Adding relic: " + relic.getClass().getSimpleName() + " to pool: " + relic.relicType);
 
-                        BaseMod.addRelic(relic, relic.relicType);
+                    BaseMod.addRelic(relic, relic.relicType);
 
                     if (!info.seen) {
                         UnlockTracker.markRelicAsSeen(relic.relicId);
@@ -598,11 +775,6 @@ public class RiskOfRelics implements
         receiveEditPotions();
     }
 
-    // ================ /ADD RELICS/ ===================
-
-
-    // ================ ADD CARDS ===================
-
     @Override
     public void receiveEditCards() {
         logger.info("Adding variables");
@@ -611,7 +783,6 @@ public class RiskOfRelics implements
         // Add the Custom Dynamic Variables
         logger.info("Add variables");
         // Add the Custom Dynamic variables
-
 
 
         logger.info("Adding cards");
@@ -639,12 +810,6 @@ public class RiskOfRelics implements
 
         logger.info("Done adding cards!");
     }
-
-
-    // ================ /ADD CARDS/ ===================
-
-
-    // ================ LOAD THE TEXT ===================
 
     @Override
     public void receiveEditStrings() {
@@ -692,10 +857,6 @@ public class RiskOfRelics implements
         logger.info("Done editing strings");
     }
 
-    // ================ /LOAD THE TEXT/ ===================
-
-    // ================ LOAD THE KEYWORDS ===================
-
     @Override
     public void receiveEditKeywords() {
         // Keywords on cards are supposed to be Capitalized, while in Keyword-String.json they're lowercase
@@ -718,265 +879,112 @@ public class RiskOfRelics implements
         }
     }
 
-        public static String makeID(String idText) {
-        return getModID() + ":" + idText;
+    @Override
+    public void receiveStartGame() {
+        if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
+            ApplyGlassArtHealth();
+
+        }
+        if (!CardCrawlGame.loadingSave) {
+            EnigmaAndMetaPatches.enigmaCounter = 0;
+            EnigmaAndMetaPatches.vengCounter = 1;
+            EnigmaAndMetaPatches.metamorphCounter = -1;
+        }
+
+        if (!CardCrawlGame.loadingSave) {
+            MetamorphCharacter = null;
+            ActiveArtifacts.removeIf(A -> !UnlockedArtifacts.contains(A));
+        }
+        if (ActiveArtifacts.contains(Artifacts.METAMORPHOSIS)) {
+            ReinitializeCardPools();
+        }
+
+
     }
 
-        @Override
-        public void receiveStartGame() {
-            if (!CardCrawlGame.loadingSave && ActiveArtifacts.contains(Artifacts.GLASS)) {
-                ApplyGlassArtHealth();
-
-            }
-            if(!CardCrawlGame.loadingSave){
-                EnigmaAndMetaPatches.enigmaCounter = -1;
-                EnigmaAndMetaPatches.vengCounter = 1;
-                EnigmaAndMetaPatches.metamorphCounter = -1;
-            }
-
-            if (!CardCrawlGame.loadingSave){
-                MetamorphCharacter = null;
-                ActiveArtifacts.removeIf(A -> !UnlockedArtifacts.contains(A));
-            }
-            if (ActiveArtifacts.contains(Artifacts.METAMORPHOSIS)) {
-                ReinitializeCardPools();
-            }
-
-
-        }
-
-        public static void ApplyGlassArtHealth() {
-            player.maxHealth = player.maxHealth / GlassArt.GlassHealthReduction;
-            player.currentHealth = player.maxHealth;
-        }
-
-        @Override
-        public int receiveMaxHPChange(int amount) {
-            if (ActiveArtifacts.contains(Artifacts.DEATH)){
-                if (amount > 0) {
-                    amount = amount * DeathArt.MULTIPLIER;
-                }
-
-            }
-            if (ActiveArtifacts.contains(Artifacts.GLASS)) {
-                amount = amount / GlassArt.GlassHealthReduction;
-
-                if (amount > 0) {
-                    amount = Math.max(amount, 1);
-                }
-            }
-
-
-
-
-            return amount;
-        }
-        public static String MetamorphCharacter;
-        public static boolean justLoadedMetamorphosis = false;
-
-
-
-        public static void DoMetamorphosisShtuff() {
-            if (MetamorphCharacter != null ) {
-                for (AbstractPlayer p : CardCrawlGame.characterManager.getAllCharacters()) {
-                    if (p.chosenClass.name().equals(MetamorphCharacter)) {
-                        ReinitializeCardPools(p,true);
-                        break;
-                    }
-                }
-            }else {
-                ReinitializeCardPools();
+    @Override
+    public int receiveMaxHPChange(int amount) {
+        if (ActiveArtifacts.contains(Artifacts.DEATH)) {
+            if (amount > 0) {
+                amount = amount * DeathArt.MULTIPLIER;
             }
 
         }
+        if (ActiveArtifacts.contains(Artifacts.GLASS)) {
+            amount = amount / GlassArt.GlassHealthReduction;
 
-        private static void ReinitializeCardPools() {
-            AbstractPlayer NewChar = CardCrawlGame.characterManager.getAllCharacters().get(MathUtils.random(0, CardCrawlGame.characterManager.getAllCharacters().size() - 1));
-            effectsQueue.add(new TextCenteredEffect(NewChar.getLocalizedCharacterName()));
-            effectsQueue.add(new ArtifactAboveCreatureAction((float) Settings.WIDTH /2, (float) Settings.HEIGHT /2, Artifacts.METAMORPHOSIS));
-            ReinitializeCardPools(NewChar, false);
-        }
-
-        public static void ReinitializeCardPools(AbstractPlayer NewChar, boolean isSave) {
-            logger.info("INIT CARD POOL");// 1419
-            long startTime = System.currentTimeMillis();// 1420
-            commonCardPool.clear();// 1423
-            uncommonCardPool.clear();// 1424
-            rareCardPool.clear();// 1425
-            colorlessCardPool.clear();// 1426
-            curseCardPool.clear();// 1427
-            ArrayList<AbstractCard> tmpPool = new ArrayList();// 1429
-            if (ModHelper.isModEnabled("Colorless Cards")) {// 1430
-                CardLibrary.addColorlessCards(tmpPool);// 1431
-            }
-
-
-            ReflectionHacks.privateMethod(AbstractDungeon.class, "addColorlessCards").invoke(dungeon);// 1447
-            ReflectionHacks.privateMethod(AbstractDungeon.class, "addCurseCards").invoke(dungeon);// 1448
-            tmpPool.addAll(NewChar.getCardPool(tmpPool));
-            if (!isSave) {
-                MetamorphCharacter = NewChar.chosenClass.name();
-            } else {
-                justLoadedMetamorphosis = true;
-            }
-
-            Iterator var4 = tmpPool.iterator();// 1449
-
-            AbstractCard c;
-            while(var4.hasNext()) {
-                c = (AbstractCard)var4.next();
-                switch (c.rarity) {// 1450
-                    case COMMON:
-                        commonCardPool.addToTop(c);// 1452
-                        break;// 1453
-                    case UNCOMMON:
-                        uncommonCardPool.addToTop(c);// 1455
-                        break;// 1456
-                    case RARE:
-                        rareCardPool.addToTop(c);// 1458
-                        break;// 1459
-                    case CURSE:
-                        curseCardPool.addToTop(c);// 1461
-                        break;// 1462
-                    default:
-                        logger.info("Unspecified rarity: " + c.rarity.name() + " when creating pools! AbstractDungeon: Line 827");// 1464 1465
-                }
-            }
-
-            srcColorlessCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1471
-            srcCurseCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1472
-            srcRareCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1473
-            srcUncommonCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1474
-            srcCommonCardPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);// 1475
-            var4 = colorlessCardPool.group.iterator();// 1477
-
-            while(var4.hasNext()) {
-                c = (AbstractCard)var4.next();
-                srcColorlessCardPool.addToBottom(c);// 1478
-            }
-
-            var4 = curseCardPool.group.iterator();// 1480
-
-            while(var4.hasNext()) {
-                c = (AbstractCard)var4.next();
-                srcCurseCardPool.addToBottom(c);// 1481
-            }
-
-            var4 = rareCardPool.group.iterator();// 1483
-
-            while(var4.hasNext()) {
-                c = (AbstractCard)var4.next();
-                srcRareCardPool.addToBottom(c);// 1484
-            }
-
-            var4 = uncommonCardPool.group.iterator();// 1486
-
-            while(var4.hasNext()) {
-                c = (AbstractCard)var4.next();
-                srcUncommonCardPool.addToBottom(c);// 1487
-            }
-
-            var4 = commonCardPool.group.iterator();// 1489
-
-            while(var4.hasNext()) {
-                c = (AbstractCard)var4.next();
-                srcCommonCardPool.addToBottom(c);// 1490
-            }
-
-            logger.info("Cardpool load time: " + (System.currentTimeMillis() - startTime) + "ms");// 1493
-        }// 1494
-
-        public static ArrayList<AbstractRelic> enigmatoremove = new ArrayList<>();
-
-        public static void DoEnigmaShtuff() {
-            ArrayList<AbstractRelic> relicsToAdd = new ArrayList<>();
-            if (ActiveArtifacts.contains(Artifacts.ENIGMA)) {
-                enigmatoremove.addAll(player.relics);
-                enigmatoremove.removeIf(r -> r.tier == AbstractRelic.RelicTier.STARTER);
-                AbstractDungeon.relicsToRemoveOnStart.clear();
-                ReflectionHacks.privateMethod(AbstractDungeon.class, "initializeRelicList").invoke(dungeon);
-                for (AbstractRelic r:
-                     player.relics) {
-                    if (r.tier != AbstractRelic.RelicTier.STARTER) {
-                        relicsToAdd.add(GetActualNonScreenRelic(r.tier));
-                    }
-                }
-                for (AbstractRelic r:
-                        enigmatoremove) {
-                    player.loseRelic(r.relicId);
-                }
-                for (AbstractRelic r:
-                        relicsToAdd) {
-                    r.instantObtain();
-                }
-            }
-
-
-
-        }
-
-        public static final ArrayList<String> NonScreenBlacklist = new ArrayList<String>() {{
-            add(EmptyCage.ID);
-            add(CallingBell.ID);
-            add(PandorasBox.ID);
-            add(Orrery.ID);
-            add(Strawberry.ID);
-            add(Pear.ID);
-            add(Mango.ID);
-            add(Waffle.ID);
-            add(TinyHouse.ID);
-        }};
-
-        private static AbstractRelic GetActualNonScreenRelic(AbstractRelic.RelicTier r) {
-            AbstractRelic relic;
-            do {
-                if (!(r == AbstractRelic.RelicTier.SPECIAL)) {
-                    relic = AbstractDungeon.returnRandomScreenlessRelic(r);
-                } else {
-                    relic = AbstractDungeon.returnRandomScreenlessRelic(AbstractRelic.RelicTier.RARE);
-                }
-            } while (NonScreenBlacklist.contains(relic.relicId));
-
-
-
-            return relic;
-        }
-
-        @Override
-        public void receiveRelicGet(AbstractRelic abstractRelic) {
-            if (player != null) {
-                for (AbstractRelic r:
-                     player.relics) {
-                    if (r instanceof BisonSteak) {
-                        ((BisonSteak) r).onRelicGet(abstractRelic);
-                    }
-                }
+            if (amount > 0) {
+                amount = Math.max(amount, 1);
             }
         }
 
-        @Override
-        public void receivePostDeath() {
-            try {
-                ActiveArtifacts.clear();
-                for (String A: ModConfig.getString("EnabledArtifacts").split(",")) {
-                    Artifacts a = getArtifactfromName(A);
-                    if (UnlockedArtifacts.contains(a) && !ActiveArtifacts.contains(a)) {
-                        ActiveArtifacts.add(a);
-                    }
 
+        return amount;
+    }
+
+    @Override
+    public void receiveRelicGet(AbstractRelic abstractRelic) {
+        if (player != null) {
+            for (AbstractRelic r :
+                    player.relics) {
+                if (r instanceof BisonSteak) {
+                    ((BisonSteak) r).onRelicGet(abstractRelic);
                 }
-            } catch (Exception e) {
-                ModConfig.setString("EnabledArtifacts","");
             }
         }
+    }
 
-        @Override
-        public void receiveAddAudio() {
-            BaseMod.addAudio(makeID("PRINTER_USE"), "riskOfRelicsResources/sfx/PrinterUse.mp3");
+    @Override
+    public void receivePostDeath() {
+        try {
+            ActiveArtifacts.clear();
+            for (String A : ModConfig.getString("EnabledArtifacts").split(",")) {
+                Artifacts a = getArtifactfromName(A);
+                if (UnlockedArtifacts.contains(a) && !ActiveArtifacts.contains(a)) {
+                    ActiveArtifacts.add(a);
+                }
+
+            }
+        } catch (Exception e) {
+            ModConfig.setString("EnabledArtifacts", "");
         }
+    }
 
+    @Override
+    public void receiveAddAudio() {
+        BaseMod.addAudio(makeID("PRINTER_USE"), "riskOfRelicsResources/sfx/PrinterUse.mp3");
+    }
 
-        public enum Artifacts {
+    @Override
+    public void receivePostUpdate() {
+        if (player != null) {
+            List<Ego> playeregos = new ArrayList<>();
+            for (AbstractRelic r :
+                    player.relics) {
+                if (r instanceof Ego) {
+                    playeregos.add((Ego) r);
+                }
+            }
+
+            for (Ego e :
+                    playeregos) {
+                e.postUpdate();
+            }
+            List<BackupMag> playerMags = new ArrayList<>();
+            for (AbstractRelic r :
+                    player.relics) {
+                if (r instanceof BackupMag) {
+                    playerMags.add((BackupMag) r);
+                }
+            }
+
+            for (BackupMag b :
+                    playerMags) {
+                b.postUpdate();
+            }
+        }
+    }
+    public enum Artifacts {
         SPITE,
         COMMAND,
         DEATH,
@@ -994,63 +1002,6 @@ public class RiskOfRelics implements
         SWARMS,
         SOUL
     }
-
-    public static Artifacts getArtifact(int artifactNum) {
-        return Artifacts.values()[artifactNum];
-    }
-    public static Artifacts getArtifactfromName(String a) {
-        return Artifacts.valueOf(a);
-    }
-
-    public static String getArtifactName(Artifacts a){
-        UIStrings Str = CardCrawlGame.languagePack.getUIString(makeID(a.toString()));
-        return Str.TEXT[0];
-
-
-    }
-
-    public static String getArtifactDescription(Artifacts a) {
-        UIStrings Str = CardCrawlGame.languagePack.getUIString(makeID(a.toString()));
-        return Str.TEXT[1];
-    }
-
-
-    @Override
-    public void receivePostUpdate() {
-        if (player != null) {
-            List<Ego> playeregos = new ArrayList<>();
-            for (AbstractRelic r:
-                 player.relics) {
-                if (r instanceof Ego) {
-                    playeregos.add((Ego)r);
-                }
-            }
-
-            for (Ego e:
-                 playeregos) {
-                e.postUpdate();
-            }
-            List<BackupMag> playerMags = new ArrayList<>();
-            for (AbstractRelic r:
-                    player.relics) {
-                if (r instanceof BackupMag) {
-                    playerMags.add((BackupMag)r);
-                }
-            }
-
-            for (BackupMag b:
-                    playerMags) {
-                b.postUpdate();
-            }
-        }
-    }
-
-
-        public static FrameBuffer fbo;
-        public static Camera cam;
-        public static ModelBatch mb;
-
-
 
 
 }

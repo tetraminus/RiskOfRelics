@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:PrimordialCube": {
+    "NAME": "Primordial Cube",
+    "FLAVOR": "The galaxy’s first singularity containment lattice – or SCL, for short – has finished tests and is confirmed to be perfectly safe.",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL This turn, whenever you would damage an enemy, damage all enemies instead."
+    ]
+  },
   "riskOfRelics:Warbanner": {
     "NAME": "Warbanner",
     "FLAVOR": "The only proof of their last stand was a single banner, fluttering in the wind, flying over a mountain of corpses.",
