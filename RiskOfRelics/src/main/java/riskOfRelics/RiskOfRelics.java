@@ -100,6 +100,8 @@ public class RiskOfRelics implements
         add(Waffle.ID);
         add(TinyHouse.ID);
     }};
+
+    public static ScrapTopPanelItem scrapTopPanelItem;
     //This is for the in-game mod settings panel.
     private static final String MODNAME = "Risk of Relics";
     private static final String AUTHOR = "Tetraminus"; // And pretty soon - You!
@@ -243,6 +245,8 @@ public class RiskOfRelics implements
             AspectDescEnabled = ModConfig.getBool(ENABLE_ASPECT_DESC_SETTINGS);
             Hack3dEnabled = ModConfig.getBool(ENABLE_3D_HACK_SETTINGS);
             PrintersEnabled = ModConfig.getBool(ENABLE_PRINTERS_SETTINGS);
+
+
 
 
         } catch (Exception e) {
@@ -560,7 +564,11 @@ public class RiskOfRelics implements
         BaseMod.addCustomScreen(new ArtifactSelectScreen());
         //BaseMod.addCustomScreen(new ArtifactInfoScreen());
         BaseMod.addTopPanelItem(new ArtifactTopPanelItem());
-        BaseMod.addTopPanelItem(new ScrapTopPanelItem());
+        scrapTopPanelItem = new ScrapTopPanelItem();
+        if (PrintersEnabled) {
+            BaseMod.addTopPanelItem(scrapTopPanelItem);
+        }
+
         BaseMod.addSaveField(makeID("ActiveArtifacts"), new ArtifactSaver());
         BaseMod.addSaveField(makeID("MetamorphCharacter"), new MetamorphSaver());
         BaseMod.addSaveField(makeID("EnigmaCounter"), new CounterSavers.EnigmaCounterSaver());
@@ -634,12 +642,19 @@ public class RiskOfRelics implements
                 (button) -> { // The actual button:
 
                     PrintersEnabled = button.enabled; // The boolean true/false will be whether the button is enabled or not
+                    if (!PrintersEnabled) {
+                       BaseMod.removeTopPanelItem(scrapTopPanelItem);
+                    } else {
+                        BaseMod.addTopPanelItem(scrapTopPanelItem);
+                    }
                     try {
                         // And based on that boolean, set the settings and save them
                         SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);
                         ;
                         config.setBool(ENABLE_PRINTERS_SETTINGS, PrintersEnabled);
                         config.save();
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
