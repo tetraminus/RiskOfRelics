@@ -9,6 +9,7 @@ import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.HandMirrorAction;
 
 @AutoAdd.Ignore
+@Deprecated
 public class HandMirror extends BaseRelic implements ClickableRelic { // You must implement things you want to use from StSlib
     /*
      * https://github.com/daviscook477/BaseMod/wiki/Custom-Relics

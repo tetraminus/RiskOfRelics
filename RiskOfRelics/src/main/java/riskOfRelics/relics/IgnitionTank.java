@@ -11,7 +11,7 @@ import riskOfRelics.RiskOfRelics;
 public class IgnitionTank extends BaseRelic implements OnApplyPowerRelic, OnReceivePowerRelic {
 
 
-    public static final int AMOUNT = 1;
+    public static final int AMOUNT = 2;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("IgnitionTank");
     private static final String IMAGENAME = "IgnitionTank.png";

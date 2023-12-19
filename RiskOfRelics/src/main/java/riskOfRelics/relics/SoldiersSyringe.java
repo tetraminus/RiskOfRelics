@@ -10,7 +10,7 @@ import riskOfRelics.RiskOfRelics;
 public class SoldiersSyringe extends BaseRelic {
 
 
-    public static final int AMOUNT = 10;
+    public static final int AMOUNT = 8;
     public static final int DRAW = 1;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("SoldiersSyringe");

@@ -37,7 +37,7 @@ public class DamageRandomEntityAction extends AbstractGameAction {
         creatures.add(AbstractDungeon.player);
         AbstractCreature target = creatures.get(AbstractDungeon.cardRandomRng.random(creatures.size() - 1));
         if (target == AbstractDungeon.player) {
-            info.base = (int) (info.base * playerDamageMultiplier);
+            info.output = (int) (info.output * playerDamageMultiplier);
         }
         this.addToTop(new DamageAction(target, info, attackEffect));
         isDone = true;

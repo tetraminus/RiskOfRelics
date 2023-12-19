@@ -1,4 +1,8 @@
 {
+        "riskOfRelics:CrowbarPower": {
+                "NAME": "Crowbar",
+                "DESCRIPTIONS": ["Takes #b", "% more damage from the next attack."]
+        },
         "riskOfRelics:PrimordialCubePower": {
                 "NAME": "Primordial Cube",
                 "DESCRIPTIONS": ["When attacked, deals equal damage to all other enemies."]

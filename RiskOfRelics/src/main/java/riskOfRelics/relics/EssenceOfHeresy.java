@@ -17,7 +17,7 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
 
 
     public static final int STRENGH_LOSS = 4;
-    public static final int RUIN_AMOUNT = 4;
+    public static final int RUIN_AMOUNT = 6;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("EssenceOfHeresy");
     private static final String IMAGENAME = "EssenceOfHeresy.png";

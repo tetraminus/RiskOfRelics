@@ -196,7 +196,7 @@
     "NAME": "Roll of Pennies",
     "FLAVOR": "\"At least I'm getting paid after this.\"",
     "DESCRIPTIONS": [
-      "Gain #b"," gold when you lose HP."
+      "Gain #b"," gold when you lose HP, then reduce that amount by #b","."
 
     ]
   },
@@ -335,7 +335,7 @@
     "NAME": "Crowbar",
     "FLAVOR": "Is this Half-Life 3?",
     "DESCRIPTIONS": [
-      "Deal #b+","% damage to enemies above #b","% health."
+      "Deal #b+","% damage to enemies the first time you attack them."
     ]
   },
   "riskOfRelics:APRounds": {

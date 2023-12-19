@@ -11,6 +11,7 @@ public class Pennies extends BaseRelic{
 
 
     public static final float SCALAR = 0.2f;
+    public static final int DECREMENT = 1;
     public static final int AMOUNT = 15;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("Pennies");
@@ -19,16 +20,33 @@ public class Pennies extends BaseRelic{
     public Pennies() {super(ID,IMAGENAME, RelicTier.UNCOMMON, LandingSound.CLINK);}
 
     @Override
+    public void atBattleStart() {
+        counter = AMOUNT;
+        super.atBattleStart();
+    }
+
+    @Override
     public void onLoseHp(int damageAmount) {
-        player.gainGold(AMOUNT);
-        this.addToBot(new VFXAction(new GainGoldTextEffect(AMOUNT)));
-        this.addToBot(new VFXAction(new RainingGoldEffect(15, true)));
+        if (counter <= 0) {
+            super.onLoseHp(damageAmount);
+            return;
+        }
+        player.gainGold(counter);
+        this.addToBot(new VFXAction(new GainGoldTextEffect(counter)));
+        this.addToBot(new VFXAction(new RainingGoldEffect(counter, true)));
+        counter -= DECREMENT;
         super.onLoseHp(damageAmount);
     }
 
     @Override
+    public void onVictory() {
+        counter = -1;
+        super.onVictory();
+    }
+
+    @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0]+ AMOUNT + DESCRIPTIONS[1];
+        return DESCRIPTIONS[0]+ AMOUNT + DESCRIPTIONS[1] + DECREMENT + DESCRIPTIONS[2];
     }
 
 }
