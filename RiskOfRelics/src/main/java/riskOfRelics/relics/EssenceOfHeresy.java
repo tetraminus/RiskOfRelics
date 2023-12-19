@@ -36,7 +36,7 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (damageAmount > target.currentBlock && target != player) {
+        if (damageAmount > target.currentBlock && target != player && info.type == DamageInfo.DamageType.NORMAL) {
             this.addToBot(new ApplyPowerAction(target, player,
                     new RuinPower(target, RUIN_AMOUNT), RUIN_AMOUNT));
         }
