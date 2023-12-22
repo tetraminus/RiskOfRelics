@@ -45,10 +45,7 @@ import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.BottledChaos;
 import riskOfRelics.potions.EnergyDrink;
 import riskOfRelics.potions.TonicPotion;
-import riskOfRelics.relics.BackupMag;
-import riskOfRelics.relics.BaseRelic;
-import riskOfRelics.relics.BisonSteak;
-import riskOfRelics.relics.Ego;
+import riskOfRelics.relics.*;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
 import riskOfRelics.screens.ArtifactTopPanelItem;
@@ -481,6 +478,7 @@ public class RiskOfRelics implements
         if (ActiveArtifacts.contains(Artifacts.ENIGMA)) {
             enigmatoremove.addAll(player.relics);
             enigmatoremove.removeIf(r -> r.tier == AbstractRelic.RelicTier.STARTER);
+            enigmatoremove.removeIf(r -> r instanceof YellowKey);
             AbstractDungeon.relicsToRemoveOnStart.clear();
             ReflectionHacks.privateMethod(AbstractDungeon.class, "initializeRelicList").invoke(dungeon);
             for (AbstractRelic r :
