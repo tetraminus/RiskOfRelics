@@ -11,7 +11,7 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class MonsterTooth extends BaseRelic {
 
 
-    public static final int AMOUNT = 2;
+    public static final int AMOUNT = 1;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("MonsterTooth");
     private static final String IMAGENAME = "MonsterTooth.png";

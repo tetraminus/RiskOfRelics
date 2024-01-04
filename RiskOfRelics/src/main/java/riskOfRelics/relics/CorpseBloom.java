@@ -12,7 +12,7 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class CorpseBloom extends BaseRelic {
 
     boolean isCorpsebloomHeal;
-    public static final float HEAL_AMOUNT = 0.25f;
+    public static final float HEAL_AMOUNT = 0.33f;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("corpsebloom");
 

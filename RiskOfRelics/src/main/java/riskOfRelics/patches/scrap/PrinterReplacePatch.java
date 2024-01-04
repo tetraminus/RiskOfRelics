@@ -3,7 +3,7 @@ package riskOfRelics.patches.scrap;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInstrumentPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.rewards.chests.MediumChest;
+import com.megacrit.cardcrawl.rewards.chests.SmallChest;
 import javassist.CannotCompileException;
 import javassist.expr.ExprEditor;
 import javassist.expr.NewExpr;
@@ -21,7 +21,7 @@ public class PrinterReplacePatch {
             return new ExprEditor() {
                 @Override
                 public void edit(NewExpr m) throws CannotCompileException {
-                    if (m.getClassName().equals(MediumChest.class.getName())) {
+                    if (m.getClassName().equals(SmallChest.class.getName())) {
 
                         m.replace(
                                 "{ " +

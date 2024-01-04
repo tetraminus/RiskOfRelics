@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonReader;
+import com.esotericsoftware.spine.Skeleton;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -88,6 +89,8 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
     private Camera cam;
 
+
+
     public BulwarksAmbry() {
         super(NAME, ID, 750, 30.0F, -30.0F, 476.0F, 410.0F, (String)null, -50.0F, 30.0F);// 54
         //
@@ -116,7 +119,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
         }
         SetupGraphics();
-
+        dialogY = -99999f;
 
     }// 77
 
@@ -158,6 +161,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     }
 
     private void SetupGraphics(){
+
         if (Hack3dEnabled) {
 
 
@@ -263,6 +267,11 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
             ReflectionHacks.privateMethod(AbstractMonster.class, "renderName",SpriteBatch.class).invoke(this, sb);// 935
         }
     }
+    public void refreshIntentHbLocation() {
+        float INTENT_HB_W = 64.0F * Settings.scale;// 210
+        this.intentHb.move(this.hb.cX + this.intentOffsetX - this.hb_w / 2.0F, this.hb.cY );// 212
+    }// 213
+
 
     private void Render3D(SpriteBatch sb) {
         sb.end();// 886
@@ -322,9 +331,10 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         switch (elitesSpawned){
             // pattern: 1 1 2 3 4
             case 0:
-            case 1:
+
                 eliteID = Act1Elites.get(AbstractDungeon.aiRng.random(Act1Elites.size() - 1));
                 break;
+            case 1:
             case 2:
                 eliteID = Act2Elites.get(AbstractDungeon.aiRng.random(Act2Elites.size() - 1));
                 break;
@@ -336,37 +346,89 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                 break;
         }
 
-        if (eliteID.equals("Shield and Spear")){
-            player.movePosition((Settings.WIDTH / 2.0F) - 200.0F * Settings.scale,AbstractDungeon.floorY);
-        } else {
-           // player.movePosition((Settings.WIDTH / 4.0F),AbstractDungeon.floorY);
-        }
+//        if (eliteID.equals("Shield and Spear")){
+//            player.movePosition((Settings.WIDTH / 2.0F) - 200.0F * Settings.scale,AbstractDungeon.floorY);
+//        } else {
+//           // player.movePosition((Settings.WIDTH / 4.0F),AbstractDungeon.floorY);
+//        }
+
+
 
         MonsterGroup monsters = MonsterHelper.getEncounter(eliteID);// 100
         monsters.monsters.forEach((m) -> {// 101
             this.addToBot(new SpawnMonsterAction(m, false));// 102
             this.addToBot(new FixMonsterAction(m));// 103
-            m.drawX -= 200 * Settings.scale;
+            m.drawX = Settings.WIDTH - m.hb_w/2;
             m.updateAnimations();
+            Skeleton skel = ReflectionHacks.<Skeleton>getPrivate(m, AbstractCreature.class, "skeleton");
+
+            if (skel != null){
+                skel.getRootBone().setScale(skel.getRootBone().getScaleX() * 0.8f);
+                skel.updateWorldTransform();
+            }else {
+                RiskOfRelics.logger.warn("Skeleton is null");
+            }
+
+            m.hb.width *= 0.8f;
+            m.hb.height *= 0.8f;
+
             addToBot(new AbstractGameAction() {
                 @Override
                 public void update() {
                     SetFreeSpawnPoint(m);
 
+                    if (m.drawX < 0){
+                        scaleSpawnsToFit();
+                    }
+
                     isDone = true;
                 }
             });
+            addToBot(new ApplyPowerAction(m, this, new StrengthPower(m, 2)));
         });
 
 
         this.elitesSpawned++;
     }
 
+    public void scaleSpawnsToFit(){
+        for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            if (m == this){
+                continue;
+            }
+            Skeleton skel = ReflectionHacks.<Skeleton>getPrivate(m, AbstractCreature.class, "skeleton");
+
+            if (skel != null){
+                skel.getRootBone().setScale(skel.getRootBone().getScaleX() * 0.8f);
+                skel.updateWorldTransform();
+            }else {
+                RiskOfRelics.logger.warn("Skeleton is null");
+            }
+
+
+            //ReflectionHacks.<Skeleton>getPrivate(m, AbstractMonster.class, "skeleton").setScale(0.8f);
+            m.hb.width *= 0.8f;
+            m.hb.height *= 0.8f;
+
+            m.drawX = Settings.WIDTH - m.hb_w/2;
+            m.updateAnimations();
+
+            SetFreeSpawnPoint(m);
+
+
+        }
+    }
+
     public void SetFreeSpawnPoint(AbstractCreature m){
         m.drawX -= 2;
         m.updateAnimations();
         if (checkOverlap(m)){
+            if (m.drawX < 0){
+                scaleSpawnsToFit();
+                return;
+            }
             SetFreeSpawnPoint(m);
+
         }
     }
 
@@ -377,6 +439,11 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                 return true;
             }
 
+
+        }
+        //on or past player
+        if (m.hb.intersects(player.hb) || m.drawX < player.drawX){
+            return true;
         }
         return false;
     }
@@ -385,19 +452,24 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         if (this.isFirstMove) {// 251
             this.setMove((byte)1, Intent.MAGIC);// 252
             this.isFirstMove = false;// 253
-            moveCount++;
         } else {
             if (isLastAlive()){
                 this.setMove((byte)1, Intent.MAGIC);// 252
+                if (moveCount %3 == 1){
+                    moveCount++;
+                }
             }
             else{
                 moveCount++;
-                switch (moveCount %2){
+                switch (moveCount %3){
                     case 0:
                         this.setMove((byte)2, Intent.ATTACK, this.damage.get(0).base);// 252
                         break;
                     case 1:
-                        this.setMove((byte)3, Intent.BUFF);// 252
+                        this.setMove((byte)3, Intent.DEFEND_BUFF);// 252
+                        break;
+                    case 2:
+                        this.setMove((byte)1, Intent.MAGIC);// 252
                         break;
                 }
 
@@ -451,9 +523,20 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     }
 
     public void onMonsterDeath(AbstractMonster instance) {
+        this.addToBot(new AbstractGameAction() {
+            @Override
+            public void update() {
+                setMove((byte)1, Intent.MAGIC);
+                createIntent();
+                isDone = true;
+            }
+        });
         if (instance != null && instance != this && ( instance.isDying || instance.isEscaping || instance.halfDead || instance.isDead) && isLastAlive() ) {// 295
             this.addToBot(new MakeTempCardInDrawPileAction(new GlowingShard(), 1, true, true));// 291
+
+
         }
+
 
     }
 
@@ -508,7 +591,44 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
   }
 
-  static {
+    @Override
+    public void renderHealth(SpriteBatch sb) {
+        if (!Settings.hideCombatElements) {// 1012
+            float x = this.hb.cX - this.hb.width / 2.0F;// 1016
+            float y = this.hb.cY + this.hb.height / 2.0F + ReflectionHacks.<Float>getPrivate(this, AbstractCreature.class, "hbYOffset");// 1017
+            ReflectionHacks.privateMethod(AbstractCreature.class, "renderHealthBg",SpriteBatch.class, float.class, float.class).invoke(this, sb, x, y);// 1018
+            if (ReflectionHacks.<Float>getPrivate(this, AbstractCreature.class, "targetHealthBarWidth") != 0.0F) {// 1019
+                //this.renderOrangeHealthBar(sb, x, y);// 1022
+                ReflectionHacks.privateMethod(AbstractCreature.class, "renderOrangeHealthBar",SpriteBatch.class, float.class, float.class).invoke(this, sb, x, y);// 1022
+                if (this.hasPower("Poison")) {// 1023
+                    //this.renderGreenHealthBar(sb, x, y);// 1024
+                    ReflectionHacks.privateMethod(AbstractCreature.class, "renderGreenHealthBar",SpriteBatch.class, float.class, float.class).invoke(this, sb, x, y);// 1024
+                }
+
+                //this.renderRedHealthBar(sb, x, y);// 1026
+                ReflectionHacks.privateMethod(AbstractCreature.class, "renderRedHealthBar",SpriteBatch.class, float.class, float.class).invoke(this, sb, x, y);// 1026
+            }
+
+            if (this.currentBlock != 0 && this.hbAlpha != 0.0F) {// 1030
+                //this.renderBlockOutline(sb, x, y);// 1031
+                ReflectionHacks.privateMethod(AbstractCreature.class, "renderBlockOutline",SpriteBatch.class, float.class, float.class).invoke(this, sb, x, y);// 1031
+            }
+
+            //this.renderHealthText(sb, y);// 1034
+            ReflectionHacks.privateMethod(AbstractCreature.class, "renderHealthText",SpriteBatch.class, float.class).invoke(this, sb, y);// 1034
+            if (this.currentBlock != 0 && this.hbAlpha != 0.0F) {// 1037
+                //this.renderBlockIconAndValue(sb, x, y);// 1038
+                ReflectionHacks.privateMethod(AbstractCreature.class, "renderBlockIconAndValue",SpriteBatch.class, float.class, float.class).invoke(this, sb, x, y);// 1038
+            }
+
+            //this.renderPowerIcons(sb, x, y);// 1041
+            ReflectionHacks.privateMethod(AbstractCreature.class, "renderPowerIcons",SpriteBatch.class, float.class, float.class).invoke(this, sb, x, y);// 1041
+        }
+    }
+
+    static {
+
+
         Act1Elites = new ArrayList<String>() {
             {
                 this.add("Gremlin Nob");// 182

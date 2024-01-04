@@ -1,9 +1,8 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.RiskOfRelics;
-
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 
 public class BisonSteak extends BaseRelic {
@@ -22,9 +21,29 @@ public class BisonSteak extends BaseRelic {
     public String getUpdatedDescription() {
         return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
     }
+    
+    @Override
+    public void onEquip() {
+        this.counter = AbstractDungeon.player.relics.size();
+    }
 
-    public void onRelicGet(AbstractRelic abstractRelic) {
-        this.flash();// 23
-        player.increaseMaxHp(AMOUNT,true);
+    @Override
+    public void renderCounter(SpriteBatch sb, boolean inTopPanel) {
+
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (AbstractDungeon.id != null){
+            if (AbstractDungeon.player != null){
+                if (AbstractDungeon.player.relics.size() > this.counter){
+                    this.counter++;
+                    AbstractDungeon.player.increaseMaxHp(AMOUNT, true);
+                }else if (this.counter > AbstractDungeon.player.relics.size()){
+                    this.counter = AbstractDungeon.player.relics.size();
+                }
+            }
+        }
     }
 }

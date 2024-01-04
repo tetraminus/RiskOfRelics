@@ -17,7 +17,7 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
 
 
     public static final int STRENGH_LOSS = 4;
-    public static final int RUIN_AMOUNT = 4;
+    public static final int RUIN_AMOUNT = 6;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("EssenceOfHeresy");
     private static final String IMAGENAME = "EssenceOfHeresy.png";
@@ -36,7 +36,7 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
 
     @Override
     public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (damageAmount > target.currentBlock && target != player) {
+        if (damageAmount > target.currentBlock && target != player && info.type == DamageInfo.DamageType.NORMAL) {
             this.addToBot(new ApplyPowerAction(target, player,
                     new RuinPower(target, RUIN_AMOUNT), RUIN_AMOUNT));
         }

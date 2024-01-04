@@ -4,6 +4,7 @@ import basemod.abstracts.CustomPotion;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.unique.AddCardToDeckAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -63,6 +64,9 @@ public class TonicPotion extends CustomPotion {
         // If you are in combat, gain strength and the "lose strength at the end of your turn" power, equal to the potency of this potion.
         if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
             AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(target, AbstractDungeon.player, new TonicPower(target, AbstractDungeon.player,potency)));
+            for (AbstractCard c : AbstractDungeon.player.masterDeck.group)
+                if (c.cardID.equals(TonicAffliction.ID))
+                    return;
             AbstractDungeon.actionManager.addToBottom(new AddCardToDeckAction(new TonicAffliction()));
         }
     }

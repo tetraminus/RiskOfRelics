@@ -13,11 +13,20 @@ import java.util.List;
 public class DamageRandomEntityAction extends AbstractGameAction {
     private DamageInfo info;
     private AttackEffect attackEffect;
+    private float playerDamageMultiplier = 1.0F;
 
     public DamageRandomEntityAction(DamageInfo damageInfo, AttackEffect attackEffect) {
         info = damageInfo;
 
         this.attackEffect = attackEffect;
+
+    }
+
+    public DamageRandomEntityAction(DamageInfo damageInfo, AttackEffect attackEffect, float playerDamageMultiplier) {
+        info = damageInfo;
+        this.attackEffect = attackEffect;
+        this.playerDamageMultiplier = playerDamageMultiplier;
+
     }
 
     @Override
@@ -26,7 +35,11 @@ public class DamageRandomEntityAction extends AbstractGameAction {
         monsters.removeIf(AbstractCreature::isDeadOrEscaped);
         List<AbstractCreature> creatures = new ArrayList<>(monsters);
         creatures.add(AbstractDungeon.player);
-        this.addToBot(new DamageAction(creatures.get(AbstractDungeon.relicRng.random(creatures.size() - 1)), info, attackEffect));
+        AbstractCreature target = creatures.get(AbstractDungeon.cardRandomRng.random(creatures.size() - 1));
+        if (target == AbstractDungeon.player) {
+            info.output = (int) (info.output * playerDamageMultiplier);
+        }
+        this.addToTop(new DamageAction(target, info, attackEffect));
         isDone = true;
     }
 }

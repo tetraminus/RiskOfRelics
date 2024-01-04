@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:PrimordialCube": {
+    "NAME": "Primordial Cube",
+    "FLAVOR": "The galaxy’s first singularity containment lattice – or SCL, for short – has finished tests and is confirmed to be perfectly safe.",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:Equipment NL This turn, whenever you would damage an enemy, damage ALL enemies instead."
+    ]
+  },
   "riskOfRelics:Warbanner": {
     "NAME": "Warbanner",
     "FLAVOR": "The only proof of their last stand was a single banner, fluttering in the wind, flying over a mountain of corpses.",
@@ -17,7 +24,7 @@
     "NAME": "Molotov (6-Pack)",
     "FLAVOR": "\"It'll be a hell of a party, they should probably hit the road before things get too out of hand.\"",
     "DESCRIPTIONS": [
-      "#yriskofrelics:Equipment NL Apply #b"," burning to all enemies."
+      "#yriskofrelics:Equipment NL Apply #b"," #yriskofrelics:Burning to all enemies."
     ]
   },
   "riskOfRelics:OcularHud": {
@@ -157,7 +164,7 @@
     "NAME": "Hopoo Feather",
     "FLAVOR": "\"...Europan laws have cracked down heavily on poaching, with the intent to help the reemergence of the hopoo.\"",
     "DESCRIPTIONS": [
-      "Skip the enemy's first turn."
+      "Skip the enemy's third turn."
 
     ]
   },
@@ -189,7 +196,7 @@
     "NAME": "Roll of Pennies",
     "FLAVOR": "\"At least I'm getting paid after this.\"",
     "DESCRIPTIONS": [
-      "Gain #b"," gold when you lose HP."
+      "Gain #b"," gold when you lose HP, then reduce that amount by #b","."
 
     ]
   },
@@ -284,7 +291,7 @@
     "NAME": "Monster Tooth",
     "FLAVOR": "Only a little stinky.",
     "DESCRIPTIONS": [
-      "When you kill an enemy, heal #b"," HP."
+      "When you kill an non-minion enemy, heal #b"," HP."
     ]
   },
   "riskOfRelics:BisonSteak": {
@@ -328,7 +335,7 @@
     "NAME": "Crowbar",
     "FLAVOR": "Is this Half-Life 3?",
     "DESCRIPTIONS": [
-      "Deal #b+","% damage to enemies above #b","% health."
+      "Deal #b+","% damage to enemies the first time you attack them."
     ]
   },
   "riskOfRelics:APRounds": {

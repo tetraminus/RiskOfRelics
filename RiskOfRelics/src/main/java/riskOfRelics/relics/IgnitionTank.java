@@ -2,7 +2,6 @@ package riskOfRelics.relics;
 
 import com.evacipated.cardcrawl.mod.stslib.relics.OnApplyPowerRelic;
 import com.evacipated.cardcrawl.mod.stslib.relics.OnReceivePowerRelic;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import riskOfRelics.RiskOfRelics;
@@ -11,19 +10,13 @@ import riskOfRelics.RiskOfRelics;
 public class IgnitionTank extends BaseRelic implements OnApplyPowerRelic, OnReceivePowerRelic {
 
 
-    public static final int AMOUNT = 1;
+    public static final int AMOUNT = 2;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("IgnitionTank");
     private static final String IMAGENAME = "IgnitionTank.png";
 
     public IgnitionTank() {
         super(ID, IMAGENAME, RelicTier.RARE, LandingSound.MAGICAL);
-    }
-
-    @Override
-    public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-
-
     }
 
     @Override
@@ -36,7 +29,13 @@ public class IgnitionTank extends BaseRelic implements OnApplyPowerRelic, OnRece
     public boolean onApplyPower(AbstractPower abstractPower, AbstractCreature abstractCreature, AbstractCreature abstractCreature1) {
         if (abstractPower.type == AbstractPower.PowerType.DEBUFF) {
             flash();
-            abstractPower.amount += AMOUNT;
+            if (abstractPower.amount < 0) {
+                abstractPower.amount -= AMOUNT;
+            }
+            else {
+                abstractPower.amount += AMOUNT;
+            }
+
         }
         return true;
     }
@@ -45,7 +44,13 @@ public class IgnitionTank extends BaseRelic implements OnApplyPowerRelic, OnRece
     public int onApplyPowerStacks(AbstractPower power, AbstractCreature target, AbstractCreature source, int stackAmount) {
         if (power.type == AbstractPower.PowerType.DEBUFF) {
             flash();
-            stackAmount += AMOUNT;
+            if (stackAmount < 0) {
+                stackAmount -= AMOUNT;
+            }
+            else {
+                stackAmount += AMOUNT;
+            }
+
         }
         return OnApplyPowerRelic.super.onApplyPowerStacks(power, target, source, stackAmount);
     }
@@ -54,7 +59,13 @@ public class IgnitionTank extends BaseRelic implements OnApplyPowerRelic, OnRece
     public boolean onReceivePower(AbstractPower abstractPower, AbstractCreature abstractCreature) {
         if (abstractPower.type == AbstractPower.PowerType.DEBUFF) {
             flash();
-            abstractPower.amount += AMOUNT;
+            if (abstractPower.amount < 0) {
+                abstractPower.amount -= AMOUNT;
+            }
+            else {
+                abstractPower.amount += AMOUNT;
+            }
+
         }
         return true;
     }
@@ -63,7 +74,12 @@ public class IgnitionTank extends BaseRelic implements OnApplyPowerRelic, OnRece
     public int onReceivePowerStacks(AbstractPower power, AbstractCreature source, int stackAmount) {
         if (power.type == AbstractPower.PowerType.DEBUFF) {
             flash();
-            stackAmount += AMOUNT;
+            if (stackAmount < 0) {
+                stackAmount -= AMOUNT;
+            }
+            else {
+                stackAmount += AMOUNT;
+            }
         }
         return OnReceivePowerRelic.super.onReceivePowerStacks(power, source, stackAmount);
     }

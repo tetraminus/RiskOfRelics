@@ -1,10 +1,10 @@
 package riskOfRelics.relics;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import riskOfRelics.RiskOfRelics;
+import riskOfRelics.powers.CrowbarPower;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
@@ -23,21 +23,16 @@ public class Crowbar extends BaseRelic {
     }
 
     @Override
-    public void onAttack(DamageInfo info, int damageAmount, AbstractCreature target) {
-        if (target != player && target.currentHealth >= (target.maxHealth*(THRESH/100f)) && info.type == DamageInfo.DamageType.NORMAL){
-
-            this.addToBot(new DamageAction(target, new DamageInfo(player, Math.round(info.base*(AMOUNT/100f)), DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.BLUNT_LIGHT));
+    public void atBattleStart() {
+        for (AbstractCreature m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            addToBot(new ApplyPowerAction(m, player, new CrowbarPower(m, player, 1), 1));
         }
-
-
     }
-
-
 
 
     @Override
     public String getUpdatedDescription() {
-        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1]+THRESH+DESCRIPTIONS[2];
+        return DESCRIPTIONS[0]+AMOUNT+DESCRIPTIONS[1];
     }
 
 }

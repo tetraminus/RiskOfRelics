@@ -7,7 +7,7 @@ import riskOfRelics.RiskOfRelics;
 public class Feather extends BaseRelic {
 
 
-    public static final int AMOUNT = 1;
+    public static final int AMOUNT = 3;
     // ID, images, text.
     public static final String ID = RiskOfRelics.makeID("Feather");
     private static final String IMAGENAME = "Feather.png";
@@ -18,9 +18,26 @@ public class Feather extends BaseRelic {
 
     @Override
     public void atBattleStart() {
-        beginPulse();
-        this.addToBot(new SkipEnemiesTurnAction());// 36
+        counter = 0;
         super.atBattleStart();
+    }
+
+    @Override
+    public void atTurnStart() {
+        counter++;
+
+        if (counter == AMOUNT) {
+            flash();
+            addToBot(new SkipEnemiesTurnAction());
+
+        }
+        super.atTurnStart();
+    }
+
+    @Override
+    public void onVictory() {
+        counter = -1;
+        super.onVictory();
     }
 
     @Override

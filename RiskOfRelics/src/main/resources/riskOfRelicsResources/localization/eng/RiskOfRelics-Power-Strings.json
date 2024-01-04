@@ -1,11 +1,19 @@
 {
-        "riskOfRelics:UntargetablePower": {
-                "NAME": "Untargetable",
-                "DESCRIPTIONS": ["This enemy cannot be targeted, it must be killed through other means."]
+        "riskOfRelics:CrowbarPower": {
+                "NAME": "Crowbar",
+                "DESCRIPTIONS": ["Takes #b", "% more damage from the next attack."]
+        },
+        "riskOfRelics:PrimordialCubePower": {
+                "NAME": "Primordial Cube",
+                "DESCRIPTIONS": ["When attacked, deals equal damage to all other enemies."]
         },
         "riskOfRelics:RuinPower": {
                 "NAME": "Ruin",
                 "DESCRIPTIONS": ["When triggered, this enemy takes #b"," damage, and loses this debuff."]
+        },
+        "riskOfRelics:UntargetablePower": {
+                "NAME": "Untargetable",
+                "DESCRIPTIONS": ["This enemy cannot be targeted, and will redirect other damage to random enemies."]
         },
 
         "riskOfRelics:SpitePower": {

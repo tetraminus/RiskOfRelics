@@ -28,11 +28,11 @@ public class EnigmaAndMetaPatches {
         )
         public static void Insert(AbstractDungeon __instance, SaveFile saveFile) {
 
-
+            enigmaCounter++;
             if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.ENIGMA) && enigmaCounter % EnigmaArt.FREQUENCY == 0) {
                 RiskOfRelics.DoEnigmaShtuff();
             }
-            enigmaCounter++;
+
             if (RiskOfRelics.ActiveArtifacts.contains(RiskOfRelics.Artifacts.METAMORPHOSIS) && metamorphCounter % MetamorphosisArt.FREQUENCY == 0
                 && !CardCrawlGame.loadingSave) {
                 if(RiskOfRelics.justLoadedMetamorphosis){
@@ -48,6 +48,7 @@ public class EnigmaAndMetaPatches {
 
 
             SoulArt.ClearLice();
+            RiskOfRelics.logger.info(enigmaCounter);
 
         }
 

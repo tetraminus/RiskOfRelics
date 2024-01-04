@@ -35,7 +35,7 @@ public class YellowKeyPatches {
             if (!player.hasRelic(YellowKey.ID) && !(dungeon instanceof TheEnding)){
                 AbstractRelic r = new YellowKey();
                 StoreRelic sr = new StoreRelic(r, -1, __instance);
-                sr.price = 500;
+                sr.price = 200;
                 sr.relic.currentX = 950.0F*Settings.scale;
                 sr.relic.currentY = 950.0F*Settings.scale;
                 ReflectionHacks.<ArrayList<StoreRelic>>getPrivate(__instance, ShopScreen.class, "relics").add(sr);

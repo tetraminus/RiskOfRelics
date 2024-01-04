@@ -11,7 +11,10 @@
                         " uncommon",
                         " rare",
                         " NL Will randomly pick one of these relics: ",
-                        " NL "
+                        " NL ",
+                        " NL Can be used multiple times. ",
+                        " Free to use once!",
+                        " nothing "
                 ]
         },
         "riskOfRelics:ModPanelText" : {
@@ -50,7 +53,7 @@
                         "Scrap",
                         "You have #b"," common scrap. NL ",
                         " uncommon scrap. NL ",
-                        " rare scrap. NL Gain scrap by removing cards. Starter and Curse cards do not count. Multiple scrap is used in 3d-Printers in place of relics."
+                        " rare scrap. NL Gain scrap by removing cards. Curse cards count as uncommon. Scrap is used in 3d-Printers in place of relics."
                 ]
 
 

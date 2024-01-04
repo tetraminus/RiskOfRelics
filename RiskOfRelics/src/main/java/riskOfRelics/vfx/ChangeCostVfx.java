@@ -100,7 +100,7 @@ public class ChangeCostVfx extends AbstractGameEffect {
                 break;// 121
             default:
                 this.card.target_x = MathUtils.random((float) Settings.WIDTH * 0.1F, (float) Settings.WIDTH * 0.9F);// 123
-                this.card.target_y = MathUtils.random((float) Settings.HEIGHT * 0.2F, (float) Settings.HEIGHT * 0.8F);// 124
+                this.card.target_y = MathUtils.random((float) Settings.HEIGHT * 0.2F, (float) Settings.HEIGHT * 0.8F);//  124
         }
 
     }// 127
