@@ -1,7 +1,7 @@
 {
         "riskOfRelics:tonicPotion": {
                 "NAME": "Spinel Tonic",
-                "DESCRIPTIONS": ["this fight, deal double #ydamage and gain double #yBlock. Add a Tonic Affliction to your deck."]
+                "DESCRIPTIONS": ["this fight, deal double #ydamage and gain double #yBlock. Add a Tonic Affliction to your deck if you don't already have one."]
         },
         "riskOfRelics:energyDrink": {
                 "NAME": "Energy Drink",

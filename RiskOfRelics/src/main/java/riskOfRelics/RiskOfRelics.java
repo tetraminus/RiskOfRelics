@@ -45,7 +45,10 @@ import riskOfRelics.patches.RerollRewardPatch;
 import riskOfRelics.potions.BottledChaos;
 import riskOfRelics.potions.EnergyDrink;
 import riskOfRelics.potions.TonicPotion;
-import riskOfRelics.relics.*;
+import riskOfRelics.relics.BackupMag;
+import riskOfRelics.relics.BaseRelic;
+import riskOfRelics.relics.Ego;
+import riskOfRelics.relics.YellowKey;
 import riskOfRelics.rewards.RerollReward;
 import riskOfRelics.screens.ArtifactSelectScreen;
 import riskOfRelics.screens.ArtifactTopPanelItem;
@@ -75,7 +78,6 @@ public class RiskOfRelics implements
         PostInitializeSubscriber,
         StartGameSubscriber,
         MaxHPChangeSubscriber,
-        RelicGetSubscriber,
         PostDeathSubscriber,
         AddAudioSubscriber {
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
@@ -935,17 +937,7 @@ public class RiskOfRelics implements
         return amount;
     }
 
-    @Override
-    public void receiveRelicGet(AbstractRelic abstractRelic) {
-        if (player != null) {
-            for (AbstractRelic r :
-                    player.relics) {
-                if (r instanceof BisonSteak) {
-                    ((BisonSteak) r).onRelicGet(abstractRelic);
-                }
-            }
-        }
-    }
+
 
     @Override
     public void receivePostDeath() {
