@@ -600,7 +600,7 @@ public class RiskOfRelics implements
                     try {
                         // And based on that boolean, set the settings and save them
                         SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);
-                        ;
+
                         config.setBool(ENABLE_ASPECT_DESC_SETTINGS, AspectDescEnabled);
                         config.save();
                     } catch (Exception e) {
