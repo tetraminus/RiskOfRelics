@@ -469,7 +469,18 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                         this.setMove((byte)3, Intent.DEFEND_BUFF);// 252
                         break;
                     case 2:
-                        this.setMove((byte)1, Intent.MAGIC);// 252
+                        // if there are less than 3 other monsters left, spawn one\
+                        int alive = 0;
+                        for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                            if (!m.isDeadOrEscaped() && m != this) {
+                                alive++;
+                            }
+                        }
+                        if (alive < 3){
+                            this.setMove((byte)1, Intent.MAGIC);// 252
+                        } else {
+                            this.setMove((byte)2, Intent.ATTACK, this.damage.get(0).base);// 252
+                        }
                         break;
                 }
 

@@ -35,7 +35,10 @@ public class BrittleCrown extends BaseRelic {
 
     @Override
     public void onLoseHp(int damageAmount) {
-        this.addToBot(new LoseGoldAction(Math.round(((float)damageAmount/(float)player.maxHealth)*AMOUNTLOSS*100f)));
+        float percentLoss = (float) damageAmount / (float) player.maxHealth;
+        // lose percent of gold equal to percent of max health lost
+        this.addToBot(new LoseGoldAction((int) (player.gold * percentLoss)));
+
         super.onLoseHp(damageAmount);
     }
 
