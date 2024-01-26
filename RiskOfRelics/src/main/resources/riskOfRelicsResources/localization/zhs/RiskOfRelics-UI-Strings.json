@@ -1,0 +1,171 @@
+{
+        "riskOfRelics:Printer" : {
+                "TEXT": [
+                        "3D打印机",
+                        "支付 #b",
+                        " 遗物 ",
+                        " scrap ",
+                        "获得 ",
+                        ".",
+                        " 普通",
+                        " 罕见",
+                        " 稀有",
+                        " NL 将从这些遗物中随机选择一件： ",
+                        " NL ",
+                        " NL 可多次使用 ",
+                        " 免费使用一次！",
+                        " 无 "
+                ]
+        },
+        "riskOfRelics:ModPanelText" : {
+                "TEXT": [
+                        "启用特性描述 （默认关闭：关闭） | 需要重启游戏",
+                        "3D渲染 （默认：开启）| 如果在打新boss时闪退请关闭",
+                        "开启3D打印机 （默认：开启） | 3D打印机可以让你用遗物和废料来交换其他遗物"
+                ]
+        },
+        "riskOfRelics:WarbannerOption" : {
+                "TEXT": [
+                        "降低耗费",
+                        "选择一张卡牌，来降低其耗费",
+                        "啊?"
+                ]
+        },
+        "riskOfRelics:ArtifactSelect" : {
+                "TEXT": [
+                        "神器选择",
+                        "选择你的神器",
+                        "你未激活任何神器",
+                        "选择一件神器"
+                ]
+        },
+        "riskOfRelics:ArtifactTopPanelItem": {
+                "TEXT": [
+                        "神器",
+                        "显示你激活的神器",
+                        "你未激活任何神器"
+                ]
+
+
+        },
+        "riskOfRelics:ScrapTopPanelItem": {
+                "TEXT": [
+                        "废料",
+                        "你有 #b"," 普通废料。 NL ",
+                        " 罕见废料。 NL ",
+                        " 稀有废料。 NL 通过移除卡牌可获得废料。诅咒牌视为罕见牌，废料可在3D打印机中换为其他遗物"
+                ]
+
+
+        },
+
+        "riskOfRelics:SPITE": {
+                "TEXT": [
+                "怨恨",
+                "当你杀死一名敌人后，在 #b3 回合后会受到 #b30 点伤害"
+
+
+                ]
+        },
+        "riskOfRelics:COMMAND": {
+                "TEXT": [
+                "Command",
+                "卡牌奖励包含 #b20 张额外卡牌"
+                ]
+
+        },
+        "riskOfRelics:DEATH": {
+                "TEXT": [
+                "死亡",
+                "每当你失去生命值时，再失去 #b2 点最大生命值。 最大生命值将增加 #b2 倍"
+                ]
+
+
+        },
+        "riskOfRelics:HONOR": {
+                "TEXT": [
+                "荣耀", "所有战斗都变为带有 \"燃烧\" 标志的战斗"
+                ]
+        },
+        "riskOfRelics:EVOLUTION": {
+                "TEXT": [
+                "进化",
+                        "战斗开始时，每爬过一幕，所有敌人获得 #b2 随机 #y力量 、 #y敏捷 或 #y缓冲"
+                ]
+        },
+        "riskOfRelics:WEAKASSKNEES":{
+                "TEXT": [
+                        "弱点",
+                        "战斗外，受到双倍伤害（例如事件受伤等）"
+                ]
+
+        },
+        "riskOfRelics:CHAOS": {
+                "TEXT": [
+                "混乱",
+                        "卡牌耗能将在 #b0.1X 至 #b2X 之间随机变化"
+                ]
+        },
+        "riskOfRelics:GLASS": {
+                "TEXT": [
+                "玻璃大炮",
+                "造成 #b500% 伤害，但仅有 #b10% 最大生命值。最大生命值的增加和减少都会除以 #b10"
+                ]
+
+
+        },
+        "riskOfRelics:KIN": {
+                "TEXT": [
+                "为它报仇",
+                        "你杀死一个敌人后，所有其余敌人本回合获得 #b10 点力量"
+                ]
+        },
+        "riskOfRelics:METAMORPHOSIS": {
+                "TEXT": [
+                "变形记",
+                "每爬 #b3 层，你的卡牌池将完全替换为一位新角色的卡池（包括MOD角色）"
+
+                ]
+        },
+        "riskOfRelics:DISSONANCE": {
+                "TEXT": [
+                "乱为一团",
+                "敌人不再有幕数限制，任意敌人都可能出现在任意房间（不影响遭遇类型）"
+
+                ]
+
+        },
+        "riskOfRelics:ENIGMA": {
+                "TEXT": [
+                "谜团",
+                "每爬 #b5 层，遗物就会被替换为同稀有度的一件随机遗物（初始遗物不受影响）"
+                ]
+
+        },
+        "riskOfRelics:SACRIFICE": {
+                "TEXT": [
+                "献祭",
+                        "非Boss宝箱将被替换为精英，精英战斗有 #b50% 几率掉落额外遗物"
+                ]
+        },
+        "riskOfRelics:VENGEANCE": {
+                "TEXT": [
+                "复仇",
+                        "每进行 #b10th 场战斗，打一只Boss "
+                ]
+        },
+        "riskOfRelics:SWARMS": {
+                "TEXT": [
+                "蜂拥而至",
+                        "所有常规战斗变为精英战斗，但它们仅有 #b50% 生命值"
+                ]
+        },
+        "riskOfRelics:SOUL": {
+                "TEXT": [
+                "灵魂",
+                        "杀死敌人后，敌人原位置生成一只虱虫"
+                ]
+        }
+
+
+}

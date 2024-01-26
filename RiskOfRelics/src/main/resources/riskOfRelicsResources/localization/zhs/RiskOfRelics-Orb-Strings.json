@@ -1,0 +1,12 @@
+{
+  "riskOfRelics:DefaultOrb": {
+    "NAME": "默认充能球",
+    "DESCRIPTION": [
+      "#y被动 ：你的回合开始时，抽 #b",
+      " 张牌",
+      " 张牌",
+      " NL #y激活 ：对所有敌人造成 #b",
+      " 点伤害"
+    ]
+  }
+}

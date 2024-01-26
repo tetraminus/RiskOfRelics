@@ -1,0 +1,50 @@
+{
+  "riskOfRelics:GlowingShard": {
+    "NAME": "闪光碎片",
+    "DESCRIPTION": "相位圣龛失去 !M! 生命 NL 消耗"
+
+  },
+  "riskOfRelics:TonicAffliction": {
+    "NAME": "腰肌劳损",
+    "DESCRIPTION": "抽到时，本回合降低 !M!% 点伤害与格挡"
+
+  },
+  "riskOfRelics:DefaultUncommonAttack": {
+    "NAME": "大逼兜",
+    "DESCRIPTION": "造成 !D! 点伤害"
+  },
+  "riskOfRelics:DefaultUncommonSkill": {
+    "NAME": "更好的防守",
+    "DESCRIPTION": "获得 !B! 层多重护甲。 可受敏捷值影响"
+  },
+  "riskOfRelics:DefaultUncommonPower": {
+    "NAME": "奇异",
+    "DESCRIPTION": "获得 X riskofrelics:关键词",
+    "UPGRADE_DESCRIPTION": "获得 X +1 riskofrelics:关键词"
+  },
+  "riskOfRelics:DefaultRareAttack": {
+    "NAME": "触控",
+    "DESCRIPTION": "造成 !D! 点伤害"
+  },
+  "riskOfRelics:DefaultRareSkill": {
+    "NAME": "程序回转",
+    "DESCRIPTION": "对所有敌人施加 !M! 层脆弱，2 次",
+    "UPGRADE_DESCRIPTION": "对所有敌人施加 !M! 层脆弱，3 次"
+  },
+  "riskOfRelics:DefaultRarePower": {
+    "NAME": "运行",
+    "DESCRIPTION": "你的回合开始时，打出一张触控"
+  },
+  "riskOfRelics:DefaultAttackWithVariable": {
+    "NAME": "特殊攻击",
+    "DESCRIPTION": "造成 !D! 点伤害 [E] 次 NL （共造成 !riskOfRelics:ENERGY_DAMAGE! 点伤害)"
+  },
+  "riskOfRelics:DefaultSecondMagicNumberSkill": {
+    "NAME": "双卡双待",
+    "DESCRIPTION": "对一名敌人施加 !M! 层脆弱和 !riskOfRelics:SecondMagic! 层中毒"
+  },
+  "riskOfRelics:OrbSkill": {
+    "NAME": "充能",
+    "DESCRIPTION": "生成 1 个默认充能球"
+  }
+}
