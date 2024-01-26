@@ -1,0 +1,14 @@
+{
+        "riskOfRelics:tonicPotion": {
+                "NAME": "滋补品",
+                "DESCRIPTIONS": ["本场战斗，造成双倍 #y伤害 并获得双倍 #y格挡 。如果你的牌组中没有腰肌劳损，添加一张"]
+        },
+        "riskOfRelics:energyDrink": {
+                "NAME": "能量饮料",
+                "DESCRIPTIONS": ["打出 #b"," 张牌"," 张牌", " （0耗费）"]
+        },
+        "riskOfRelics:BottledChaos": {
+                "NAME": "瓶装混乱",
+                "DESCRIPTIONS": ["使用 #b"," 随机药水"]
+        }
+}
