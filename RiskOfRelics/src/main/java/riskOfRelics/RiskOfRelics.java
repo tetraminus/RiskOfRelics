@@ -827,48 +827,64 @@ public class RiskOfRelics implements
         logger.info("Done adding cards!");
     }
 
+    public static Settings.GameLanguage[] SupportedLanguages = {
+            Settings.GameLanguage.ENG,
+            Settings.GameLanguage.ZHS
+    };
+
+    private String getLangString() {
+        for (Settings.GameLanguage lang : SupportedLanguages) {
+            if (lang.equals(Settings.language)) {
+                return Settings.language.name().toLowerCase();
+            }
+        }
+        return "eng";
+    }
+
     @Override
     public void receiveEditStrings() {
         //logger.info("You seeing this?");
         logger.info("Beginning to edit strings for mod with ID: " + getModID());
 
+        String language = getLangString();
+
         // CardStrings
         BaseMod.loadCustomStringsFile(CardStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Card-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Card-Strings.json");
 
         // PowerStrings
         BaseMod.loadCustomStringsFile(PowerStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Power-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Power-Strings.json");
 
         // RelicStrings
         BaseMod.loadCustomStringsFile(RelicStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Relic-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Relic-Strings.json");
 
         // Event Strings
         BaseMod.loadCustomStringsFile(EventStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Event-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Event-Strings.json");
 
         // PotionStrings
         BaseMod.loadCustomStringsFile(PotionStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Potion-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Potion-Strings.json");
 
         // CharacterStrings
         BaseMod.loadCustomStringsFile(CharacterStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Character-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Character-Strings.json");
 
         // OrbStrings
         BaseMod.loadCustomStringsFile(OrbStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Orb-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Orb-Strings.json");
 
         // UIStrings
         BaseMod.loadCustomStringsFile(UIStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-UI-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-UI-Strings.json");
 
         BaseMod.loadCustomStringsFile(TutorialStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Tutorial-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Tutorial-Strings.json");
 
         BaseMod.loadCustomStringsFile(MonsterStrings.class,
-                getModID() + "Resources/localization/eng/RiskOfRelics-Monster-Strings.json");
+                getModID() + "Resources/localization/" + language + "/RiskOfRelics-Monster-Strings.json");
 
         logger.info("Done editing strings");
     }
@@ -883,8 +899,10 @@ public class RiskOfRelics implements
         // That is, in Card-Strings.json you would have #yA_Long_Keyword (#y highlights the keyword in yellow).
         // In Keyword-Strings.json you would have PROPER_NAME as A Long Keyword and the first element in NAMES be a long keyword, and the second element be a_long_keyword
 
+        String language = getLangString();
+
         Gson gson = new Gson();
-        String json = Gdx.files.internal(getModID() + "Resources/localization/eng/RiskOfRelics-Keyword-Strings.json").readString(String.valueOf(StandardCharsets.UTF_8));
+        String json = Gdx.files.internal(getModID() + "Resources/localization/" + language + "/RiskOfRelics-Keyword-Strings.json").readString(String.valueOf(StandardCharsets.UTF_8));
         com.evacipated.cardcrawl.mod.stslib.Keyword[] keywords = gson.fromJson(json, com.evacipated.cardcrawl.mod.stslib.Keyword[].class);
 
         if (keywords != null) {
