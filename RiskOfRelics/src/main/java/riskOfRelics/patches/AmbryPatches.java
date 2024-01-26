@@ -36,7 +36,7 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
     // So if you need to put 4 patches all for 1 purpose (for example they all make a specific relic effect happen) - you can keep them organized together.
     // Do keep in mind that "A patch class must be a public static class."
     
-    private static final Logger logger = LogManager.getLogger(AmbryPatches.class.getName()); // This is our logger! It prints stuff out in the console.
+    public static final Logger logger = LogManager.getLogger(AmbryPatches.class.getName()); // This is our logger! It prints stuff out in the console.
     // It's like a very fancy System.out.println();
 
     @SpirePatch2(
@@ -72,11 +72,7 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
                         if (count == 2) {
 
                             m.replace("{" +
-                                    "if (com.megacrit.cardcrawl.dungeons.AbstractDungeon.player.hasRelic(riskOfRelics.relics.YellowKey.ID)) {" +
-                                    "$_ = $proceed()-1;" +
-                                    "} else {" +
-                                    "$_ = $proceed();" +
-                                    "}" +
+                                    "$_ = " + AmbryPatches.class.getName() + ".getMapY($proceed($$));" +
                                     "}");
 
                         }
@@ -84,9 +80,22 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
                 }
             };
         }
-
-
     }
+
+
+    public static float getMapY(int y) {
+        if (MapGenPatch.isEvil()){
+            return y;
+        }
+
+        if (player.hasRelic(YellowKey.ID) && AbstractDungeon.id.equals(TheEnding.ID)) {
+            return y - 1;
+        }
+        return y;
+    }
+
+
+
     @SpirePatch2(
             clz = TheEnding.class,
             method = "initializeBoss"
@@ -235,106 +244,6 @@ public class AmbryPatches {// Don't worry about the "never used" warning - *You*
     }
 
     
-//    @SpirePatch2(
-//            clz = FlipMap.MapFlipper.class,
-//            method = "SWFAct4Override",
-//            optional = true
-//    )
-//    public static class DownfallPatch1 {
-//
-//        public static SpireReturn<ArrayList<ArrayList<MapRoomNode>>> Prefix(){
-//            if (player.hasRelic(YellowKey.ID)) {
-//                ArrayList<ArrayList<MapRoomNode>> map = new ArrayList();// 112
-//                MapRoomNode courierNode = new MapRoomNode(3, 0);// 114
-//                courierNode.room = ModCrossoverHelperClass.returnCourierRoom();// 115
-//                MapRoomNode restNode = new MapRoomNode(3, 1);// 116
-//                restNode.room = new RestRoom();// 117
-//                MapRoomNode shopNode = new MapRoomNode(3, 2);// 118
-//                shopNode.room = new ShopRoom();// 119
-//                MapRoomNode ambryNode = new MapRoomNode(3, 3);// 118
-//                ambryNode.room = new AmbrySelectRoom();// 119
-//                MapRoomNode enemyNode = new MapRoomNode(3, 4);// 120
-//                enemyNode.room = new MonsterRoomElite();// 121
-//                MapRoomNode bossNode = new MapRoomNode(3, 5);// 122
-//                bossNode.room = new MonsterRoomBoss();// 123
-//                MapRoomNode victoryNode = new MapRoomNode(3, 6);// 124
-//                victoryNode.room = new TrueVictoryRoom();// 125
-//                connectNode(courierNode, restNode);// 128
-//                connectNode(restNode, shopNode);// 129
-//                connectNode(shopNode, ambryNode);// 129
-//                connectNode(ambryNode, enemyNode);// 130
-//                enemyNode.addEdge(new MapEdge(enemyNode.x, enemyNode.y, enemyNode.offsetX, enemyNode.offsetY, bossNode.x, bossNode.y, bossNode.offsetX, bossNode.offsetY, false));// 132
-//                ArrayList<MapRoomNode> row1 = new ArrayList();// 135
-//                row1.add(new MapRoomNode(0, 0));// 136
-//                row1.add(new MapRoomNode(1, 0));// 137
-//                row1.add(new MapRoomNode(2, 0));// 138
-//                row1.add(courierNode);// 139
-//                row1.add(new MapRoomNode(4, 0));// 140
-//                row1.add(new MapRoomNode(5, 0));// 141
-//                row1.add(new MapRoomNode(6, 0));// 142
-//                ArrayList<MapRoomNode> row2 = new ArrayList();// 144
-//                row2.add(new MapRoomNode(0, 1));// 145
-//                row2.add(new MapRoomNode(1, 1));// 146
-//                row2.add(new MapRoomNode(2, 1));// 147
-//                row2.add(restNode);// 148
-//                row2.add(new MapRoomNode(4, 1));// 149
-//                row2.add(new MapRoomNode(5, 1));// 150
-//                row2.add(new MapRoomNode(6, 1));// 151
-//                ArrayList<MapRoomNode> row3 = new ArrayList();// 153
-//                row3.add(new MapRoomNode(0, 2));// 154
-//                row3.add(new MapRoomNode(1, 2));// 155
-//                row3.add(new MapRoomNode(2, 2));// 156
-//                row3.add(shopNode);// 157
-//                row3.add(new MapRoomNode(4, 2));// 158
-//                row3.add(new MapRoomNode(5, 2));// 159
-//                row3.add(new MapRoomNode(6, 2));// 160
-//                ArrayList<MapRoomNode> rowINS = new ArrayList();// 153
-//                rowINS.add(new MapRoomNode(0, 3));// 154
-//                rowINS.add(new MapRoomNode(1, 3));// 155
-//                rowINS.add(new MapRoomNode(2, 3));// 156
-//                rowINS.add(ambryNode);// 157
-//                rowINS.add(new MapRoomNode(4, 3));// 158
-//                rowINS.add(new MapRoomNode(5, 3));// 159
-//                rowINS.add(new MapRoomNode(6, 3));// 160
-//                ArrayList<MapRoomNode> row4 = new ArrayList();// 162
-//                row4.add(new MapRoomNode(0, 4));// 164
-//                row4.add(new MapRoomNode(1, 4));// 164
-//                row4.add(new MapRoomNode(2, 4));// 165
-//                row4.add(enemyNode);// 166
-//                row4.add(new MapRoomNode(4, 4));// 167
-//                row4.add(new MapRoomNode(5, 4));// 168
-//                row4.add(new MapRoomNode(6, 4));// 169
-//                ArrayList<MapRoomNode> row5 = new ArrayList();// 171
-//                row5.add(new MapRoomNode(0, 5));// 172
-//                row5.add(new MapRoomNode(1, 5));// 173
-//                row5.add(new MapRoomNode(2, 5));// 175
-//                row5.add(bossNode);// 175
-//                row5.add(new MapRoomNode(4, 5));// 176
-//                row5.add(new MapRoomNode(5, 5));// 177
-//                row5.add(new MapRoomNode(6, 5));// 178
-//                ArrayList<MapRoomNode> row6 = new ArrayList();// 181
-//                row6.add(new MapRoomNode(0, 6));// 182
-//                row6.add(new MapRoomNode(1, 6));// 183
-//                row6.add(new MapRoomNode(2, 6));// 184
-//                row6.add(victoryNode);// 186
-//                row6.add(new MapRoomNode(4, 6));// 186
-//                row6.add(new MapRoomNode(5, 6));// 187
-//                row6.add(new MapRoomNode(6, 6));// 188
-//                map.add(row1);// 191
-//                map.add(row2);// 192
-//                map.add(row3);// 193
-//                map.add(rowINS);
-//                map.add(row4);// 194
-//                map.add(row5);// 195
-//                map.add(row6);// 196
-//                AbstractDungeon.map.clear();// 198
-//                AbstractDungeon.map = map;// 199
-//                return SpireReturn.Return(map);
-//
-//            }
-//            return SpireReturn.Continue();
-//        }
-//
-//    }
+
 
 }

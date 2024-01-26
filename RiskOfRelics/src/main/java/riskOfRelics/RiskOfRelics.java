@@ -79,7 +79,8 @@ public class RiskOfRelics implements
         StartGameSubscriber,
         MaxHPChangeSubscriber,
         PostDeathSubscriber,
-        AddAudioSubscriber {
+        AddAudioSubscriber
+{
     // Make sure to implement the subscribers *you* are using (read basemod wiki). Editing cards? EditCardsSubscriber.
     // Making relics? EditRelicsSubscriber. etc., etc., for a full list and how to make your own, visit the basemod wiki.
     public static final Logger logger = LogManager.getLogger(RiskOfRelics.class.getName());
@@ -600,7 +601,7 @@ public class RiskOfRelics implements
                     try {
                         // And based on that boolean, set the settings and save them
                         SpireConfig config = new SpireConfig("riskOfRelicsMod", "riskOfRelicsConfig", riskOfRelicsDefaultSettings);
-                        ;
+
                         config.setBool(ENABLE_ASPECT_DESC_SETTINGS, AspectDescEnabled);
                         config.save();
                     } catch (Exception e) {
@@ -989,6 +990,15 @@ public class RiskOfRelics implements
             }
         }
     }
+
+//    @Override
+//    public void receivePostShopInitialize() {
+//        if (!(dungeon instanceof TheEnding) && !player.hasRelic(YellowKey.ID)) {
+//            ShopItemGrid.addItem(new YellowKeyShopItem(ShopItemGrid.getNextSlot(), shopScreen));
+//        }
+//    }
+
+
     public enum Artifacts {
         SPITE,
         COMMAND,
