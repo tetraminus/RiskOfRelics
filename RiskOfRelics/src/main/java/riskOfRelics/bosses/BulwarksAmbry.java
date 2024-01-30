@@ -39,6 +39,7 @@ import com.megacrit.cardcrawl.helpers.MonsterHelper;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
+import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import org.apache.logging.log4j.Level;
@@ -490,12 +491,13 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     }// 254 278
 
     public boolean isLastAlive(){
+        int alive = 0;
         for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
             if (!m.isDeadOrEscaped() && m != this) {
-                return false;
+                alive++;
             }
         }
-        return true;
+        return alive == 0;
     }
 
     public void die() {
@@ -534,21 +536,31 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     }
 
     public void onMonsterDeath(AbstractMonster instance) {
-        this.addToBot(new AbstractGameAction() {
-            @Override
-            public void update() {
-                setMove((byte)1, Intent.MAGIC);
-                createIntent();
-                isDone = true;
-            }
-        });
-        if (instance != null && instance != this && ( instance.isDying || instance.isEscaping || instance.halfDead || instance.isDead) && isLastAlive() ) {// 295
+
+        if (instance == null || instance.hasPower(MinionPower.POWER_ID)) return;
+
+        if (instance != this && ( instance.isDying || instance.isEscaping || instance.halfDead || instance.isDead) && isLastAlive() ) {// 295
             this.addToBot(new MakeTempCardInDrawPileAction(new GlowingShard(), 1, true, true));// 291
 
 
         }
 
-
+        int alive = 0;
+        for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            if (!m.isDeadOrEscaped() && m != this) {
+                alive++;
+            }
+        }
+        if (alive < 3){
+            this.addToBot(new AbstractGameAction() {
+                @Override
+                public void update() {
+                    setMove((byte)1, Intent.MAGIC);
+                    createIntent();
+                    isDone = true;
+                }
+            });
+        }
     }
 
     @Override
