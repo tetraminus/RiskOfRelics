@@ -1,0 +1,56 @@
+[
+  {
+    "PROPER_NAME": "毁灭",
+    "NAMES": [
+      "ruin",
+      "毁灭"
+
+    ],
+    "DESCRIPTION": "一个可叠加的Debuff，触发后造成伤害，然后移除"
+  },
+  {
+    "PROPER_NAME": "着火",
+    "NAMES": [
+      "着火",
+      "着火"
+
+    ],
+    "DESCRIPTION": "其回合结束时，会受到伤害，之后降低一半层数"
+  },
+  {
+    "PROPER_NAME": "装备",
+    "NAMES": [
+      "装备",
+      "equipment"
+
+    ],
+    "DESCRIPTION": "右键点击来使用。 NL 一件强大的遗物，你只能拥有其中一个。当你得到一个新的时，旧的就会被摧毁。计数器会显示你在战斗中可以使用的次数。"
+  },
+  {
+    "PROPER_NAME": "充能",
+    "NAMES": [
+      "充能",
+      "charge",
+      "charges"
+    ],
+    "DESCRIPTION": "在充能之前，只能使用一定次数"
+  },
+  {
+    "PROPER_NAME": "易碎",
+    "NAMES": [
+      "易碎",
+      "fragile",
+      "breaks"
+    ],
+    "DESCRIPTION": "当你失去生命值时，本场战斗之后的回合将不再生效"
+  },
+
+    {
+      "PROPER_NAME": "腐蚀",
+      "NAMES": [
+        "腐蚀",
+        "corrupts"
+      ],
+      "DESCRIPTION": "此遗物将取代指定遗物，如果你在拥有此遗物后获得了指定遗物，则指定遗物将被销毁。"
+    }
+]

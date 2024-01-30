@@ -1,0 +1,461 @@
+{
+  "riskOfRelics:PrimordialCube": {
+    "NAME": "原始魔方",
+    "FLAVOR": "一个外形有点奇怪的魔方",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 本回合，每当你对单个敌人造成伤害时，目标变为全体敌人"
+    ]
+  },
+  "riskOfRelics:Warbanner": {
+    "NAME": "战旗",
+    "FLAVOR": "他们最后活下来的唯一证据是一面旗帜，在风中飘扬，飞过堆积如山的尸体。",
+    "DESCRIPTIONS": [
+      "在营火处，你可以永久降低一张卡牌的 #b1 耗费。本遗物仅能使用 #b"," 次 "
+    ]
+  },
+  "riskOfRelics:ExecutiveCard": {
+    "NAME": "信用卡",
+    "FLAVOR": "\"不，你只是... 你看，这些卡的工作方式是，呃... [?] 你可以申请低息贷款…你的抵押是...[??]\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 不能主动使用 NL 在商店中购物获得 #b","% 折扣 NL 你可以在卡牌奖励中拿取 #b"," 张牌"
+    ]
+  },
+  "riskOfRelics:MolotovPack": {
+    "NAME": "莫洛托夫",
+    "FLAVOR": "\"这将是一场地狱般的派对，他们可能应该在事情失控之前上路。\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 对所有敌人施加 #b"," 层 #yriskofrelics:燃烧"
+    ]
+  },
+  "riskOfRelics:OcularHud": {
+    "NAME": "魔力之眼",
+    "FLAVOR": "\"我希望你没有向我求助。\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 本回合造成双倍伤害"
+    ]
+  },
+  "riskOfRelics:CautiousSlug": {
+    "NAME": "谨慎",
+    "FLAVOR": "\"注意：如果你的同伴在黑暗中警告你危险，你最好牢记\"",
+    "DESCRIPTIONS": [
+      "当你进入非战斗房间时，回复 #b"," 生命"
+    ]
+  },
+  "riskOfRelics:IgnitionTank": {
+    "NAME": "打火机",
+    "FLAVOR": "\"含有最易燃物质的混合物：甲烷、乙烯、丁烷... 一个火花就足以燃尽一切！\"",
+    "DESCRIPTIONS": [
+      "当你施加或受到Debuff时，额外增加 #b"," 层 "
+    ]
+  },
+  "riskOfRelics:MilkyChrysalis": {
+    "NAME": "乳白的蛹",
+    "FLAVOR": "\"请小心，因为它在转化过程中被冷冻在冷冻细胞中里\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 击晕一个敌人。经过 #b"," 个房间后充能一次"
+    ]
+  },
+  "riskOfRelics:TricornUsed": {
+    "NAME": "猎人三角帽",
+    "FLAVOR": "啊呵！",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 此件物品已使用过了",
+      "啊呵！"
+
+    ]
+  },
+  "riskOfRelics:Tricorn": {
+    "NAME": "猎人三角帽",
+    "FLAVOR": "\"如果没有风险的话，狩猎或任何游戏就都没有乐趣了...\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 仅能使用一次 NL 只能在精英战斗中使用。所有敌人失去 #b"," 生命值。 在奖励中添加一件额外遗物"
+
+    ]
+  },
+  "riskOfRelics:Crowdfunder": {
+    "NAME": "蜂式发射器",
+    "FLAVOR": "\"为了进一步突显财富上的巨大差异，他们奢侈的武器是由金币推动的——他们实际上是在向对方扔钱\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 花费 #b"," 金币对一位随机敌人造成 #b"," 点伤害，无使用次数限制"
+
+    ]
+  },
+  "riskOfRelics:BlastShower": {
+    "NAME": "鼓风浴头",
+    "FLAVOR": "免责声明：清洁时请穿上防护服。请勿将产品直接用于皮肤",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 移除你身上的所有Debuff。经过 #b"," 个房间后充能一次"
+
+    ]
+  },
+  "riskOfRelics:MissileLauncher": {
+    "NAME": "一次性导弹发射器",
+    "FLAVOR": "\"当一家备受喜爱的游戏公司发布其最新的产品：导弹发射器时，消费者会感到非常震惊\"",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 对一位随机敌人造成 #b"," 点伤害 #b"," 次。像计算卡牌一样计算伤害。"
+
+    ]
+  },
+  "riskOfRelics:TestEquipment": {
+    "NAME": "测试",
+    "FLAVOR": "测试",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 NL 对所有敌人造成 #b"," 点伤害"
+
+    ]
+  },
+  "riskOfRelics:EssenceOfHeresy": {
+    "NAME": "邪恶精华",
+    "FLAVOR": "\"…而她的心，太邪恶了，充满了仇恨，被留在了她曾经站过的地方——在她背叛的地方\"",
+    "DESCRIPTIONS": [
+      "战斗开始时，失去 #b"," 点 #y力量 。当你造成未被格挡的伤害时，对敌人施加 #b"," 层 #yriskofrelics:毁灭 。右键此遗物来触发所有 #yriskofrelics:毁灭效果"
+
+    ]
+  },
+  "riskOfRelics:Raincoat": {
+    "NAME": "本的雨衣",
+    "FLAVOR": "\"请寄一个蓝色的替代品。\"",
+    "DESCRIPTIONS": [
+      "战斗开始时，获得 #b"," 层 #y人工制品 。当 #y人工制品 触发生效时，获得 #b"," 点 #yTemporary_HP."
+
+    ]
+  },
+  "riskOfRelics:YellowKey": {
+    "NAME": "神器钥匙",
+    "FLAVOR": "\"两个兄弟，一个充满野心，一个饱含怜悯\"",
+    "DESCRIPTIONS": [
+      "打开通向最终Boss——相位圣龛的路"
+
+    ]
+  },
+  "riskOfRelics:FocusedConvergence": {
+    "NAME": "聚焦收敛",
+    "FLAVOR": "不要让它带走你。换个说法吧。在这里",
+    "DESCRIPTIONS": [
+      "Boss初始只有 #b","% 生命， #r但 奖励会更少"
+
+    ]
+  },
+  "riskOfRelics:BrittleCrown": {
+    "NAME": "易脆王冠",
+    "FLAVOR": "你的死亡是注定的。当你死亡的时候——你一定会死的——我会做好准备的。",
+    "DESCRIPTIONS": [
+      "当你攻击敌人时，获得 #b"," 金币， #r但是 当你失去生命值时，根据失去的生命值失去相应的金币数量"
+
+    ]
+  },
+  "riskOfRelics:IrradiantPearl": {
+    "NAME": "光辉珍珠",
+    "FLAVOR": "好漂亮啊！",
+    "DESCRIPTIONS": [
+      "增加 #b","% 最大生命，并且战斗开始时获得 #b"," 力量"," 与敏捷",", 敏捷与集中"
+
+    ]
+  },
+  "riskOfRelics:Pearl": {
+    "NAME": "珍珠",
+    "FLAVOR": "好漂亮啊！",
+    "DESCRIPTIONS": [
+      "增加 #b","% 最大生命"
+
+    ]
+  },
+  "riskOfRelics:Feather": {
+    "NAME": "戴胜鸟的羽毛",
+    "FLAVOR": "\"...欧洲法律严厉打击偷猎行为，目的是帮助戴胜鸟的重新出现。\"",
+    "DESCRIPTIONS": [
+      "跳过敌人的第三回合"
+
+    ]
+  },
+  "riskOfRelics:MiredUrn": {
+    "NAME": "破碎酒瓮",
+    "FLAVOR": "\"调查小组费了很大的劲才把这个带回来\"",
+    "DESCRIPTIONS": [
+      "你的回合开始时，对最前方的敌人造成 #b"," 点伤害并回复l #b"," 点生命"
+
+    ]
+  },
+  "riskOfRelics:Gesture": {
+    "NAME": "淹没神像",
+    "FLAVOR": "\"化石。残留物。真残忍。 \"",
+    "DESCRIPTIONS": [
+      "当你抽打无色牌时，自动打出它。若它是状态牌，将受到 #b"," 点伤害"
+
+    ]
+  },
+  "riskOfRelics:TopazBrooch": {
+    "NAME": "黄玉胸针",
+    "FLAVOR": "\"防护可以…重新激活，但我们希望将伤亡降至最低。\"",
+    "DESCRIPTIONS": [
+      "当你击杀一位敌人时，获得 #b"," 点 #yTemporary_HP."
+
+    ]
+  },
+  "riskOfRelics:Pennies": {
+    "NAME": "一袋便士",
+    "FLAVOR": "\"至少在这之后我得到了报酬\"",
+    "DESCRIPTIONS": [
+      "获得 #b"," 金币，当你失去生命时，降低 #b"," 点 "
+
+    ]
+  },
+  "riskOfRelics:Polylute": {
+    "NAME": "聚合笛",
+    "FLAVOR": "滴滴答答。。。",
+    "DESCRIPTIONS": [
+      "#b","% 几率造成 #b","% 点伤害 #b"," 次。 #yriskofrelics:腐蚀 尤克里里四弦琴"
+
+    ]
+  },
+  "riskOfRelics:KjarosBand": {
+    "NAME": "符文项圈",
+    "FLAVOR": "蕴涵着火焰的力量",
+    "DESCRIPTIONS": [
+      "如果你对一位敌人造成了超过 #b"," 的伤害，对所有敌人施加 #b"," 层 #yriskofrelics:燃烧"
+
+    ]
+  },
+  "riskOfRelics:Recycler": {
+    "NAME": "回收机",
+    "FLAVOR": "\"感谢您的回收！\"",
+    "DESCRIPTIONS": [
+      "你可以重置遗物奖励。",
+      "重置遗物奖励"
+    ]
+  },
+  "riskOfRelics:ShapedGlass": {
+    "NAME": "双刃玻璃剑",
+    "FLAVOR": "\"有利亦有弊\"",
+    "DESCRIPTIONS": [
+      "翻倍 #r所有 伤害（包括造成的伤害和受到的伤害）"
+    ]
+  },
+  "riskOfRelics:Eulogy": {
+    "NAME": "悼文",
+    "FLAVOR": "\"天渐渐黑了。如果你迷路了，不要担心。我希望你喜欢天上的流星。安息吧。\"",
+    "DESCRIPTIONS": [
+      "遗物有 #b","% 几率变为Boss遗物"
+    ]
+  },
+  "riskOfRelics:Meteorite": {
+    "NAME": "闪耀流星",
+    "FLAVOR": "\"多么闪亮的流星啊！\"",
+    "DESCRIPTIONS": [
+      "你的回合开始时，对随机一位参战者造成 #b"," 点伤害"
+    ]
+  },
+  "riskOfRelics:Purity": {
+    "NAME": "纯一不杂",
+    "FLAVOR": "非常纯粹，不含一丝杂质",
+    "DESCRIPTIONS": [
+      "你的回合开始时获得 [E] 。降低 #b","% 的稀有卡牌获取几率"
+    ]
+  },
+  "riskOfRelics:Ego": {
+    "NAME": "唯吾独尊",
+    "FLAVOR": "\"...说点什么。\"",
+    "DESCRIPTIONS": [
+      "你的回合开始时，对随机一位敌人造成等同此遗物计数次数的 #b"," 点伤害 NL 战斗结束时，一件随机遗物将被 #r摧毁 并累计入计数中"
+    ]
+  },
+  "riskOfRelics:GoatHoof": {
+    "NAME": "保罗的山羊蹄",
+    "FLAVOR": "咩!",
+    "DESCRIPTIONS": [
+      "每过 #b"," 回合，抽一张牌"
+    ]
+  },
+  "riskOfRelics:FrostRelic": {
+    "NAME": "冰霜遗物",
+    "FLAVOR": "用于冷却优质芝麻菜",
+    "DESCRIPTIONS": [
+      "在你的回合开始时，生成等同于本场战斗中杀死的敌人数量的冰霜充能球。"
+    ]
+  },
+  "riskOfRelics:CritGlasses": {
+    "NAME": "镜片匠的眼镜",
+    "FLAVOR": "这下看得更清楚了",
+    "DESCRIPTIONS": [
+      "每攻击 #b"," 次，造成 #b","% 点额外伤害"
+    ]
+  },
+  "riskOfRelics:SoldiersSyringe": {
+    "NAME": "注射器",
+    "FLAVOR": "一点也不疼",
+    "DESCRIPTIONS": [
+      "每过 #b"," 回合，获得 [E] 并抽 #b"," 张牌"
+    ]
+  },
+  "riskOfRelics:MonsterTooth": {
+    "NAME": "怪兽牙齿",
+    "FLAVOR": "闻起来有点臭",
+    "DESCRIPTIONS": [
+      "每当你击杀一名非爪牙敌人时，回复 #b"," 点生命"
+    ]
+  },
+  "riskOfRelics:BisonSteak": {
+    "NAME": "美味牛排",
+    "FLAVOR": "出门旅行一定要带上牛排哦",
+    "DESCRIPTIONS": [
+      "当你获得遗物时，提升 #b"," 点最大生命"
+    ]
+  },
+
+  "riskOfRelics:BackupMag": {
+    "NAME": "备用遗物",
+    "FLAVOR": "有备无患",
+    "DESCRIPTIONS": [
+      "获得一件你已拥有的随机遗物的复制。"
+    ]
+  },
+  "riskOfRelics:fuelCell": {
+    "NAME": "燃料电池",
+    "FLAVOR": "嚓咝！",
+    "DESCRIPTIONS": [
+      "#yriskofrelics:装备 获得 #b"," 最多 #yriskofrelics:充能"
+    ]
+  },
+  "riskOfRelics:tougherTimes": {
+    "NAME": "艰难时刻",
+    "FLAVOR": "需要一些爱",
+    "DESCRIPTIONS": [
+      "#b","% 几率躲避攻击",
+      "格挡！"
+    ]
+  },
+  "riskOfRelics:saferSpaces": {
+    "NAME": "安全空间",
+    "FLAVOR": "这里真的安全吗？",
+    "DESCRIPTIONS": [
+      "每过 #b"," 回合，获得1层缓冲。 #yriskofrelics:腐蚀 艰难时刻"
+    ]
+  },
+  "riskOfRelics:Crowbar": {
+    "NAME": "铁撬棍",
+    "FLAVOR": "你在玩半条命3吗？",
+    "DESCRIPTIONS": [
+      "你首次攻击敌人时，额外对敌人造成 #b+","% 点伤害"
+    ]
+  },
+  "riskOfRelics:APRounds": {
+    "NAME": "穿甲弹",
+    "FLAVOR": "研自美国冷钢公司",
+    "DESCRIPTIONS": [
+      "在Boss战中额外造成 #b","% 点伤害"
+    ]
+  },
+  "riskOfRelics:ghostAspect": {
+    "NAME": "无形之躯",
+    "FLAVOR": "你抓不住了",
+    "DESCRIPTIONS": [
+      "无形化身",
+      "每当你击杀一名敌人时，获得 #b"," 层 #y无实体"
+    ]
+  },
+  "riskOfRelics:lightningAspect": {
+    "NAME": "双击沉默",
+    "FLAVOR": "滋滋滋！",
+    "DESCRIPTIONS": [
+      "闪电化身",
+      "你每回合的第一次攻击，在敌人回合开始时，对所有敌人造成第一次的一半伤害。"
+    ]
+  },
+  "riskOfRelics:perfAspect": {
+    "NAME": "共享设计",
+    "FLAVOR": "很难把目光移开",
+    "DESCRIPTIONS": [
+      "完美化身",
+      "当你连续打出 #b"," 张攻击牌时，偷取 #b"," 点 #y敏捷"
+
+    ]
+  },
+  "riskOfRelics:malAspect": {
+    "NAME": "娜库哈纳的剧毒",
+    "FLAVOR": "极为纯粹的剧毒",
+    "DESCRIPTIONS": [
+      "剧毒化身",
+      "你的回合开始时，造成 #b"," 点伤害并对所有敌人施加 #b"," 层 #y中毒"
+    ]
+  },
+  "riskOfRelics:earthAspect": {
+    "NAME": "大地复苏",
+    "FLAVOR": "地载万物",
+    "DESCRIPTIONS": [
+      "土地化身",
+      "每击杀 #b"," 名敌人，回复 #b"," 生命"
+    ]
+  },
+  "riskOfRelics:fireAspect": {
+    "NAME": "虹膜勋章",
+    "FLAVOR": "好热啊",
+    "DESCRIPTIONS": [
+      "火焰化身",
+      "每当你造成伤害时，施加 #b"," 层燃烧"
+    ]
+  },
+  "riskOfRelics:iceAspect": {
+    "NAME": "寒冰之拥",
+    "FLAVOR": "你可能需要一张毯子",
+    "DESCRIPTIONS": [
+      "冰雪化身",
+      "战斗开始时，对所有敌人施加迟缓"
+    ]
+  },
+  "riskOfRelics:corpsebloom": {
+    "NAME": "死亡绽放",
+    "FLAVOR": "挥之不去的死亡之花",
+    "DESCRIPTIONS": [
+      "#y战斗中的回复效果翻倍， #r但它需要随着时间的推移而逐步生效。"
+    ]
+  },
+  "riskOfRelics:Ukulele": {
+    "NAME": "尤克里里四弦琴",
+    "FLAVOR": "他的音乐真好听",
+    "DESCRIPTIONS": [
+      "攻击敌人时有 #b","% 的几率击中所有敌人，但会造成更少的伤害"
+    ]
+  },
+  "riskOfRelics:HandMirror": {
+    "NAME": "手镜",
+    "FLAVOR": "镜子里的人好帅啊！",
+    "DESCRIPTIONS": [
+      "每场战斗仅一次，右键来复制一张手牌",
+      "镜子里的人好帅啊！"
+    ]
+  },
+  "riskOfRelics:DelicateWatch": {
+    "NAME": "易碎手表",
+    "FLAVOR": "注意别弄碎了",
+    "DESCRIPTIONS": [
+      "造成 #b","% 额外伤害。 #yriskofrelics:易碎",
+      "至少一天里有两次它的时间是对的",
+      "注意别弄碎了"
+    ]
+  },
+  "riskOfRelics:DefaultClickableRelic": {
+    "NAME": "右键功德",
+    "FLAVOR": "你右键点击得越多，这辈子的功德也就越多",
+    "DESCRIPTIONS": [
+      "[#2aecd7]每回合只能使用1次[] NL #y激活你最右侧的充能球",
+      "你是我的！"
+    ]
+  },
+  "riskOfRelics:BottledPlaceholderRelic": {
+    "NAME": "瓶装XX",
+    "FLAVOR": "这是什么？",
+    "DESCRIPTIONS": [
+      "选择一张牌。每当你打出任何牌时，抽出选择的卡牌",
+      "每当你打出一张牌时，抽 ",
+      ".",
+      "选择一张卡牌来瓶装 "
+    ]
+  },
+  "riskOfRelics:BustlingFungus": {
+    "NAME": "繁茂真菌",
+    "FLAVOR": "工程师最好的朋友",
+    "DESCRIPTIONS": [
+      "如果你本回合不打出任何牌，获得 #b"," 层 #y再生 。如果你不打任何攻击牌赢得了战斗，回复 #b","% #y最大生命。第一个效果每次战斗只能触发 "," 次"
+    ]
+  }
+}
