@@ -26,6 +26,7 @@ public class GlowingShard extends AbstractDefaultCard {
     public GlowingShard() {
         super(ID, cardStrings.NAME, makeCardPath("GlowingShard.png"), 1, cardStrings.DESCRIPTION, AbstractCard.CardType.ATTACK, AbstractCard.CardColor.COLORLESS, AbstractCard.CardRarity.SPECIAL, CardTarget.ENEMY);
         this.baseMagicNumber = DAMAGE;
+        exhaust = true;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class GlowingShard extends AbstractDefaultCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         for (AbstractMonster mo : (AbstractDungeon.getCurrRoom()).monsters.monsters) {
            if (!mo.isDeadOrEscaped() && mo instanceof BulwarksAmbry) {
-               addToBot(new LoseHPAction(mo, mo, DAMAGE));
+               addToBot(new LoseHPAction(mo, mo, magicNumber));
            }
 
         }
