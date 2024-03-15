@@ -9,7 +9,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.TheEnding;
 import com.megacrit.cardcrawl.helpers.MathHelper;
 import com.megacrit.cardcrawl.helpers.controller.CInputActionSet;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
@@ -20,7 +19,6 @@ import riskOfRelics.relics.YellowKey;
 
 import java.util.ArrayList;
 
-import static com.megacrit.cardcrawl.core.CardCrawlGame.dungeon;
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 
@@ -32,7 +30,7 @@ public class YellowKeyPatches {
     public static class YellowKeyShopPatch {
         @SpirePostfixPatch
         public static void Postfix(ShopScreen __instance) {
-            if (!player.hasRelic(YellowKey.ID) && !(dungeon instanceof TheEnding)){
+            if (YellowKey.IsAvailable()){
                 AbstractRelic r = new YellowKey();
                 StoreRelic sr = new StoreRelic(r, -1, __instance);
                 sr.price = 200;

@@ -24,6 +24,8 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonReader;
 import com.esotericsoftware.spine.Skeleton;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInstrumentPatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch2;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -42,10 +44,15 @@ import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.vfx.combat.MoveNameEffect;
+import javassist.CannotCompileException;
+import javassist.expr.ExprEditor;
+import javassist.expr.NewExpr;
 import org.apache.logging.log4j.Level;
 import riskOfRelics.RiskOfRelics;
 import riskOfRelics.actions.ApplyBlockAllEnemiesAction;
 import riskOfRelics.actions.FixMonsterAction;
+import riskOfRelics.actions.loseRandomRelicAction;
 import riskOfRelics.cards.colorless.GlowingShard;
 import riskOfRelics.powers.Untargetable;
 
@@ -81,6 +88,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     private PointLight pointLight;
     private int ProtectBlock = 15;
     private int BUFFSTRAMOUNT = 2;
+    private int relicsToLose = 2;
     private final float AnimSpeed = 0.5f;
 
     private int elitesSpawned = 0;
@@ -106,16 +114,18 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         this.hb.move(this.hb.x + 200 * Settings.scale, this.hb.y + 200.0F * Settings.scale);// 68
 
         if (AbstractDungeon.ascensionLevel >= 4) {// 68
-            this.damage.add(new DamageInfo(this, 20));// 69
-            ProtectBlock = 25;
-            BUFFSTRAMOUNT = 3;
+            this.damage.add(new DamageInfo(this, 35));// 69
+            ProtectBlock = 30;
+            BUFFSTRAMOUNT = 5;
+            relicsToLose = 3;
 
 
 
         } else {
-            this.damage.add(new DamageInfo(this, 15));// 73
-            ProtectBlock = 20;
-            BUFFSTRAMOUNT = 2;
+            this.damage.add(new DamageInfo(this, 25));// 73
+            ProtectBlock = 25;
+            BUFFSTRAMOUNT = 3;
+            relicsToLose = 2;
 
 
         }
@@ -305,12 +315,16 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
     public void takeTurn() {
         switch (nextMove){
             case 1:
+                // elite spawn
                 SpawnElite();
                 break;
             case 2:
+                // attack
                 AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), AbstractGameAction.AttackEffect.BLUNT_LIGHT));// 247
+                this.addToBot(new loseRandomRelicAction(2));// 291
                 break;
             case 3:
+                // buff
                 this.addToBot(new ApplyBlockAllEnemiesAction(this, ProtectBlock));
                 for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
                     if (!m.isDeadOrEscaped()) {
@@ -318,6 +332,8 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                     }
 
                 }
+
+
             default:
                 break;
         }
@@ -451,11 +467,11 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
     protected void getMove(int num) {
         if (this.isFirstMove) {// 251
-            this.setMove((byte)1, Intent.MAGIC);// 252
+            this.setMove(monsterStrings.MOVES[2],(byte)1, Intent.MAGIC);// 252
             this.isFirstMove = false;// 253
         } else {
             if (isLastAlive()){
-                this.setMove((byte)1, Intent.MAGIC);// 252
+                this.setMove(monsterStrings.MOVES[2],(byte)1, Intent.MAGIC);// 252
                 if (moveCount %3 == 1){
                     moveCount++;
                 }
@@ -464,10 +480,10 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                 moveCount++;
                 switch (moveCount %3){
                     case 0:
-                        this.setMove((byte)2, Intent.ATTACK, this.damage.get(0).base);// 252
+                        this.setMove(monsterStrings.MOVES[0],(byte)2, Intent.ATTACK_DEBUFF, this.damage.get(0).base);// 252
                         break;
                     case 1:
-                        this.setMove((byte)3, Intent.DEFEND_BUFF);// 252
+                        this.setMove(monsterStrings.MOVES[1],(byte)3, Intent.DEFEND_BUFF);// 252
                         break;
                     case 2:
                         // if there are less than 3 other monsters left, spawn one\
@@ -478,9 +494,9 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                             }
                         }
                         if (alive < 3){
-                            this.setMove((byte)1, Intent.MAGIC);// 252
+                            this.setMove(monsterStrings.MOVES[2],(byte)1, Intent.MAGIC);// 252
                         } else {
-                            this.setMove((byte)2, Intent.ATTACK, this.damage.get(0).base);// 252
+                            this.setMove(monsterStrings.MOVES[0],(byte)2, Intent.ATTACK_DEBUFF, this.damage.get(0).base);// 252
                         }
                         break;
                 }
@@ -521,6 +537,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
 
     }// 289
 
+
     @Override
     public void escape() {
 
@@ -533,6 +550,33 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
         NAME = monsterStrings.NAME;// 40
         MOVES = monsterStrings.MOVES;// 41
         DIALOG = monsterStrings.DIALOG;// 42
+    }
+
+    @SpirePatch2(clz = ShowMoveNameAction.class, method = "update")
+    public static class ShowMoveNameActionPatch {
+        @SpireInstrumentPatch
+        public static ExprEditor Instrument() {
+            return new ExprEditor() {
+                @Override
+                public void edit(NewExpr expr) throws CannotCompileException {
+                    if (expr.getClassName().equals(MoveNameEffect.class.getName())) {
+                        expr.replace(
+                                "{" +
+                                    "if (source instanceof "+BulwarksAmbry.class.getName()+") {" +
+                                        // MoveNameEffect(this.source.hb.cX - this.source.animX * 2, this.source.hb.cY, this.msg)
+                                        //RiskOfRelics.class.getName()+".logger.info(\"BulwarksAmbry MoveNameEffect x:\" + ($1 - this.source.animX * 2) + \" y:\" + ($2 - this.source.hb.height / 2.0F) + \" msg:\" + $3);" +
+                                        "$_ =  $proceed( $1 - this.source.animX * 2, $2 - this.source.hb.height / 2.0F, $3);" +
+
+                                    "} else" +
+                                    " {" +
+                                            //MoveNameEffect(this.source.hb.cX - this.source.animX, this.source.hb.cY + this.source.hb.height / 2.0F, this.msg)
+                                        "$_ = $proceed($$);" +
+                                    "}" +
+                                "}");
+                    }
+                }
+            };
+        }
     }
 
     public void onMonsterDeath(AbstractMonster instance) {
@@ -551,7 +595,7 @@ public class BulwarksAmbry extends AbstractMonster implements AnimationControlle
                 alive++;
             }
         }
-        if (alive < 3){
+        if (alive < 2){
             this.addToBot(new AbstractGameAction() {
                 @Override
                 public void update() {

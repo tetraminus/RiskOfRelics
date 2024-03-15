@@ -1,4 +1,10 @@
 {
+        "riskOfRelics:RelicDestroy" : {
+                "TEXT": [
+                        " is destroyed!"
+
+                ]
+        },
         "riskOfRelics:Printer" : {
                 "TEXT": [
                         "3D printer",

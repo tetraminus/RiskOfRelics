@@ -1,7 +1,10 @@
 {
   "riskOfRelics:BulwarksAmbry": {
     "MOVES": [
-      ""
+      "DIRECTIVE: DESTROY",
+      "DIRECTIVE: PROTECT",
+      "DIRECTIVE: ALARM"
+
     ],
     "NAME": "The Bulwarks Ambry",
     "DIALOG": [
