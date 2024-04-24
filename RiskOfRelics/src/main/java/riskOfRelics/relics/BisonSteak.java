@@ -36,7 +36,7 @@ public class BisonSteak extends BaseRelic {
     public void update() {
         super.update();
         if (AbstractDungeon.id != null){
-            if (AbstractDungeon.player != null){
+            if (AbstractDungeon.player != null && isObtained){
                 if (AbstractDungeon.player.relics.size() > this.counter){
                     this.counter++;
                     AbstractDungeon.player.increaseMaxHp(AMOUNT, true);
