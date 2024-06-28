@@ -1,4 +1,11 @@
 {
+  "riskOfRelics:LeptonDaisy": {
+    "NAME": "Lepton Daisy",
+    "FLAVOR": "The galaxy’s first singularity containment lattice – or SCL, for short – has finished tests and is confirmed to be perfectly safe.",
+    "DESCRIPTIONS": [
+      "When you bring a boss below #b","% health, heal #b"," HP."
+    ]
+  },
   "riskOfRelics:PrimordialCube": {
     "NAME": "Primordial Cube",
     "FLAVOR": "The galaxy’s first singularity containment lattice – or SCL, for short – has finished tests and is confirmed to be perfectly safe.",
