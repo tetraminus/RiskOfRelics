@@ -1,7 +1,15 @@
 {
+
+  "riskOfRelics:Shuriken": {
+    "NAME": "Aluminum Throwing Star",
+    "FLAVOR": "For the last time, shouting \"hiyahh!\" when throwing a shuriken will NOT improve your results.",
+    "DESCRIPTIONS": [
+      "The first #b"," starter Strikes you play deal #b"," damage to ALL enemies."
+    ]
+  },
   "riskOfRelics:LeptonDaisy": {
     "NAME": "Lepton Daisy",
-    "FLAVOR": "The galaxy’s first singularity containment lattice – or SCL, for short – has finished tests and is confirmed to be perfectly safe.",
+    "FLAVOR": "I'm sending this flower I picked in the Carbon Fields of Electron Valley. Just make sure Mushka can't get to it, I'm not sure what effect it'll have on dogs...",
     "DESCRIPTIONS": [
       "When you bring a boss below #b","% health, heal #b"," HP."
     ]
