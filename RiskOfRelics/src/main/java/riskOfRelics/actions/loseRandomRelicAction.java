@@ -13,11 +13,14 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 import static riskOfRelics.RiskOfRelics.makeID;
 
 public class loseRandomRelicAction extends AbstractGameAction {
-    private final int number;
+    private int number;
     private UIStrings uiStrings = languagePack.getUIString(makeID("RelicDestroy"));
     public loseRandomRelicAction(int number) {
-        this.number = number;
-
+        if (player.relics.isEmpty()) {
+            isDone = true;
+            return;
+        }
+        this.number = Math.min(number, player.relics.size());
     }
 
     @Override
@@ -37,7 +40,9 @@ public class loseRandomRelicAction extends AbstractGameAction {
         }
         AbstractDungeon.topLevelEffects.add(new RelicDestroyEffect(relicsToRemove));
         for (AbstractRelic relic : relicsToRemove) {
-            addToBot(new BetterTextCenteredAction( AbstractDungeon.player, relic.name + uiStrings.TEXT[0], 1f));
+            if (relic.name != null) {
+                addToBot(new BetterTextCenteredAction( AbstractDungeon.player, relic.name + uiStrings.TEXT[0], 1f));
+            }
         }
 
 
