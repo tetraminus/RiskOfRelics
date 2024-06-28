@@ -1,5 +1,11 @@
 {
-
+  "riskOfRelics:ATGMK1": {
+    "NAME": "AtG Missile Mk. 1",
+    "FLAVOR": "“Bring it on.”",
+    "DESCRIPTIONS": [
+      "After playing #b"," attacks, deal #b","% of the damage from the last #b"," attacks to a random enemy."
+    ]
+  },
   "riskOfRelics:Shuriken": {
     "NAME": "Aluminum Throwing Star",
     "FLAVOR": "For the last time, shouting \"hiyahh!\" when throwing a shuriken will NOT improve your results.",
