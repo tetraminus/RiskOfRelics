@@ -263,7 +263,7 @@
     "NAME": "Glowing Meteorite",
     "FLAVOR": "\"What a... peculiar piece of the stars.\"",
     "DESCRIPTIONS": [
-      "At the start of your turn, deal #b"," damage to a random combatant."
+      "At the start of your turn, deal #b"," damage to a random combatant. Deals reduced damage to the player."
     ]
   },
   "riskOfRelics:Purity": {
