@@ -19,6 +19,14 @@
     "DESCRIPTIONS": [
       "When you bring a boss below #b","% health, heal #b"," HP."
     ]
+    },
+
+  "riskOfRelics:PersonalShieldGenerator": {
+    "NAME": "Personal Shield Generator",
+    "FLAVOR": "Featured in \"Top 10 Best Personal Barriers of 2053\"",
+    "DESCRIPTIONS": [
+      "At the start of combat, gain #b"," #yTemporary_HP."
+    ]
   },
   "riskOfRelics:PrimordialCube": {
     "NAME": "Primordial Cube",

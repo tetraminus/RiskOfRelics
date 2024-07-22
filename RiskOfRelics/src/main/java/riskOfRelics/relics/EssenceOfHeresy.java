@@ -57,7 +57,7 @@ public class EssenceOfHeresy extends BaseRelic implements ClickableRelic {
         }
         for (AbstractCreature m : AbstractDungeon.getCurrRoom().monsters.monsters) {
             if (!m.isDeadOrEscaped()) {
-                if (m.hasPower(RuinPower.POWER_ID)) {
+                if (m.hasPower(RuinPower.POWER_ID) && !((RuinPower) (m.getPower(RuinPower.POWER_ID))).done) {
                     m.getPower(RuinPower.POWER_ID).onSpecificTrigger();
                 }
             }

@@ -503,7 +503,7 @@ public class RiskOfRelics implements
 
     }
 
-    private static AbstractRelic GetActualNonScreenRelic(AbstractRelic.RelicTier r) {
+    public static AbstractRelic GetActualNonScreenRelic(AbstractRelic.RelicTier r) {
         AbstractRelic relic;
         do {
             if (!(r == AbstractRelic.RelicTier.SPECIAL)) {

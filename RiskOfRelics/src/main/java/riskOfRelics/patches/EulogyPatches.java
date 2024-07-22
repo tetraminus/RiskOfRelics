@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import riskOfRelics.RiskOfRelics;
 import riskOfRelics.relics.Eulogy;
 
 
@@ -28,7 +29,7 @@ public class EulogyPatches {
             if (tier != AbstractRelic.RelicTier.BOSS
                     && AbstractDungeon.relicRng.random(99) < Eulogy.AMOUNT
                     && AbstractDungeon.player.hasRelic(Eulogy.ID)) {
-                retVal[0] = AbstractDungeon.returnRandomRelic(AbstractRelic.RelicTier.BOSS).relicId;
+                retVal[0] = RiskOfRelics.GetActualNonScreenRelic(AbstractRelic.RelicTier.BOSS).relicId;
             }
 
         }
@@ -49,7 +50,7 @@ public class EulogyPatches {
             if (tier != AbstractRelic.RelicTier.BOSS
                     && AbstractDungeon.relicRng.random(99) < Eulogy.AMOUNT
                     && AbstractDungeon.player.hasRelic(Eulogy.ID)) {
-                retVal[0] = AbstractDungeon.returnRandomRelic(AbstractRelic.RelicTier.BOSS).relicId;
+                retVal[0] = RiskOfRelics.GetActualNonScreenRelic(AbstractRelic.RelicTier.BOSS).relicId;
             }
 
         }
