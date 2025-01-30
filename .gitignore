@@ -77,3 +77,6 @@ $RECYCLE.BIN/
 
 # Spriter files
 *.autosave.scml
+/Stsifier/in
+/Stsifier/output/large
+/Stsifier/output

@@ -1,4 +1,9 @@
 {
+  "riskOfRelics:PrayerBead": {
+    "NAME": "Prayer Bead",
+    "DESCRIPTION": "Removing this card from your deck will upgrade all Prayer Bead relics."
+
+  },
   "riskOfRelics:GlowingShard": {
     "NAME": "Glowing Shard",
     "DESCRIPTION": "The Bulwark's Ambry loses !M! HP. NL Exhaust."

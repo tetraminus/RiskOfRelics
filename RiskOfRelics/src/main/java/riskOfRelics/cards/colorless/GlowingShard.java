@@ -24,7 +24,7 @@ public class GlowingShard extends AbstractDefaultCard {
 
 
     public GlowingShard() {
-        super(ID, cardStrings.NAME, makeCardPath("GlowingShard.png"), 1, cardStrings.DESCRIPTION, AbstractCard.CardType.ATTACK, AbstractCard.CardColor.COLORLESS, AbstractCard.CardRarity.SPECIAL, CardTarget.ENEMY);
+        super(ID, cardStrings.NAME, makeCardPath("GlowingShard.png"), 1, cardStrings.DESCRIPTION, AbstractCard.CardType.ATTACK, AbstractCard.CardColor.COLORLESS, AbstractCard.CardRarity.SPECIAL, CardTarget.NONE);
         this.baseMagicNumber = DAMAGE;
         exhaust = true;
     }

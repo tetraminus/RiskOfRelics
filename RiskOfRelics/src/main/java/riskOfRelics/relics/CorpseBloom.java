@@ -2,8 +2,12 @@ package riskOfRelics.relics;
 
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
+import com.megacrit.cardcrawl.cards.colorless.BandageUp;
+import com.megacrit.cardcrawl.cards.curses.Necronomicurse;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import riskOfRelics.RiskOfRelics;
 
 import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
@@ -27,6 +31,14 @@ public class CorpseBloom extends BaseRelic {
     @Override
     public void atBattleStart() {
         super.atBattleStart();
+    }
+
+    @Override
+    public void onEquip() {
+
+        super.onEquip();
+
+        AbstractDungeon.effectList.add(new ShowCardAndObtainEffect(new BandageUp(), (float) Settings.WIDTH / 2.0F, (float)Settings.HEIGHT / 2.0F));
     }
 
     @Override

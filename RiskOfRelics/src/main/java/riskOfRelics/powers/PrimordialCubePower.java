@@ -49,7 +49,7 @@ public class PrimordialCubePower extends AbstractPower{
         if(info.type == DamageInfo.DamageType.NORMAL){
             for (AbstractCreature m : AbstractDungeon.getCurrRoom().monsters.monsters) {
                 if (!m.isDeadOrEscaped() && m != this.owner) {
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(this.owner, damageAmount, DamageInfo.DamageType.THORNS)));
+                    AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(this.owner, damageAmount / 2, DamageInfo.DamageType.THORNS)));
                 }
             }
         }

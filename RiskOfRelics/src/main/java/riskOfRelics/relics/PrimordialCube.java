@@ -25,6 +25,8 @@ public class PrimordialCube extends AbstractEquipment {
         return DESCRIPTIONS[0];
     }
 
+
+
     @Override
     public void onRightClick() {
         for (AbstractCreature m : AbstractDungeon.getCurrRoom().monsters.monsters) {
